@@ -1,0 +1,120 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: url('/media/recipes-and-deliveries-banner.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: calc(100vh - 164px);
+    color: #555;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* from Bulma */
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.logo-font {
+    /*text-transform: uppercase;*/
+    font-family: 'Great Vibes', sans-serif;
+}
+
+.main-logo-link {
+    width: fit-content;
+}
+
+.shop-now-button {
+    background: #4caf50;
+    color: white;
+    min-width: 48%;
+}
+
+.info-button {
+    min-width: 48%;
+}
+
+.btn-black {
+    background: black;
+    color: white;
+}
+
+.btn-green {
+    background: #4caf50;
+    color: white;
+}
+
+.btn-amber {
+    background: #ff6f00;
+    color: white
+}
+
+.shop-now-button:hover,
+.shop-now-button:active,
+.shop-now-button:focus,
+/*.btn-black:hover,
+.btn-black:active,
+.btn-black:focus*/
+.btn-green:hover,
+.btn-green:active,
+.btn-green:focus {
+    background: white;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.btn-amber:hover,
+.btn-amber:active,
+.btn-amber:focus {
+    background: white;
+    color: #ff6f00;
+    border: 1px solid #ff6f00;
+}
+
+.text-black {
+    color: #000 !important;
+}
+
+.border-black {
+    border: 1px solid black !important;
+}
+
+.border-green {
+    border: 1px solid #4caf50 !important;
+}
+
+.collapse-card {
+    border: 1px solid #ff6f00 !important;
+}
+
+.card-header {
+    background-color: rgba(239,108,47,0.5)!important;
+}
+
+/* -------------------------------- Media Queries */
+
+/* Slightly larger container on xl screens */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 80%;
+  }
+}
+
+/* fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-top: 164px;
+    }
+}
