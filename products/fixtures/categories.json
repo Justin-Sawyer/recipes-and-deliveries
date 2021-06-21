@@ -1,0 +1,98 @@
+[
+    {
+      "pk": 1,
+      "model": "products.category",
+      "fields": {
+        "name": "asian",
+        "friendly_name": "Asian"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "products.category",
+      "fields": {
+        "name": "european",
+        "friendly_name": "European"
+      }
+    },
+    {
+      "pk": 3,
+      "model": "products.category",
+      "fields": {
+        "name": "maghreb_african",
+        "friendly_name": "Maghreb & African"
+      }
+    },
+    {
+      "pk": 4,
+      "model": "products.category",
+      "fields": {
+        "name": "north_american",
+        "friendly_name": "North American"
+      }
+    },
+    {
+      "pk": 5,
+      "model": "products.category",
+      "fields": {
+        "name": "south_american",
+        "friendly_name": "South American"
+      }
+    },
+    {
+      "pk": 6,
+      "model": "products.category",
+      "fields": {
+        "name": "vegetarian",
+        "friendly_name": "Vegetarian"
+      }
+    },
+    {
+      "pk": 7,
+      "model": "products.category",
+      "fields": {
+        "name": "vegan",
+        "friendly_name": "Vegan"
+      }
+    },
+    {
+      "pk": 8,
+      "model": "products.category",
+      "fields": {
+        "name": "gluten_free",
+        "friendly_name": "Gluten Free"
+      }
+    },
+    {
+      "pk": 9,
+      "model": "products.category",
+      "fields": {
+        "name": "unrestricted",
+        "friendly_name": "Unrestricted"
+      }
+    },
+    {
+      "pk": 10,
+      "model": "products.category",
+      "fields": {
+        "name": "breakfast",
+        "friendly_name": "Breakfast"
+      }
+    },
+    {
+      "pk": 11,
+      "model": "products.category",
+      "fields": {
+        "name": "lunch",
+        "friendly_name": "Lunch"
+      }
+    },
+    {
+      "pk": 12,
+      "model": "products.category",
+      "fields": {
+        "name": "dinner",
+        "friendly_name": "Dinner"
+      }
+    }
+  ]

@@ -1,0 +1,108 @@
+[
+    {
+      "pk": 1,
+      "model": "products.product",
+      "fields": {
+        "category": 1,
+        "rating": 4.6,
+        "sku": "rad000000001",
+        "price": 10.99,
+        "image_url": "https://res.cloudinary.com/recipeas-and-greens/image/upload/ar_1:1,b_rgb:ffffff,bo_3px_solid_rgb:4caf50,c_fill,g_auto,r_max,w_1000/v1624279296/1024px-Chicken_Adobo_over_rice_cfmuua.jpg",
+        "image": "adobo.jpg",
+        "image_credit": "Jack Lawrence - https://www.flickr.com/photos/aceofknaves/33374361143/",
+        "description": "Philippine adobo is a popular Filipino dish and cooking process in Philippine cuisine that involves meat, seafood, or vegetables marinated in vinegar, soy sauce, garlic, bay leaves, and black peppercorns, which is browned in oil, and simmered in the marinade. It has occasionally been considered the unofficial national dish in the Philippines.",
+        "name": "Adobo"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "products.product",
+      "fields": {
+        "category": 2,
+        "rating": 4.6,
+        "sku": "rad000000002",
+        "price": 6.99,
+        "image_url": "https://res.cloudinary.com/recipeas-and-greens/image/upload/ar_1:1,b_rgb:ffffff,bo_3px_solid_rgb:4caf50,c_fill,g_auto,r_max,w_1000/v1619456546/28CE301F-F622-4C9E-BBAD-8D2E0639E800_c7zczb.jpg",
+        "image": "salade-nicoise.jpg",
+        "image_credit": "Recipes and Deliveries",
+        "description": "The real thing! Often imitated, usually altered, the Recipes and Deliveries Salade Niçoise is the proper version, as served by the former Mayor of Nice, Jacques Médecin.",
+        "name": "Salade Niçoise"
+      }
+    },
+    
+    {
+      "pk": 3,
+      "model": "products.product",
+      "fields": {
+        "category": 3,
+        "rating": 4.7,
+        "sku": "rad000000003",
+        "price": 10.99,
+        "image_url": "https://res.cloudinary.com/recipeas-and-greens/image/upload/ar_1:1,b_rgb:ffffff,bo_3px_solid_rgb:4caf50,c_fill,g_auto,r_max,w_1000/v1619289138/5DFECE70-1FE6-466C-89C6-CDB2CBCBD50C_fyt5kl.jpg",
+        "image": "chorba.jpg",
+        "image_credit": "Recipes and Deliveries",
+        "description": "Chorba (or shorba) refers to several kinds of soup or stew found in national cuisines across the Balkans, Algeria, Central Europe, Eastern Europe, Central Asia, Middle East and the Indian subcontinent. It is often prepared with added ingredients but served alone as a broth or with bread.",
+        "name": "Chorba"
+      }
+    },
+    {
+      "pk": 4,
+      "model": "products.product",
+      "fields": {
+        "category": 4,
+        "rating": 3,
+        "sku": "rad000000004",
+        "price": 7.99,
+        "image_url": "https://res.cloudinary.com/recipeas-and-greens/image/upload/ar_1:1,b_rgb:ffffff,bo_3px_solid_rgb:4caf50,c_fill,g_auto,r_max,w_1000/v1624280341/RedDot_Burger_fznlez.jpg",
+        "image": "burger.jpg",
+        "image_credit": "Hongreddotbrewhouse",
+        "description": "A hamburger (also burger for short) is a food, typically considered a sandwich, consisting of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun. The patty may be pan fried, grilled, smoked or flame broiled. Hamburgers are often served with cheese, lettuce, tomato, onion, pickles, bacon, or chiles; condiments such as ketchup, mustard, mayonnaise, relish, or a 'special sauce', often a variation of Thousand Island dressing; and are frequently placed on sesame seed buns.",
+        "name": "Recipes and Deliveries Hamburger and Fries"
+      }
+    },
+    {
+      "pk": 5,
+      "model": "products.product",
+      "fields": {
+        "category": 5,
+        "rating": 5,
+        "sku": "rad000000005",
+        "price": 12.99,
+        "image_url": "https://res.cloudinary.com/recipeas-and-greens/image/upload/ar_1:1,b_rgb:ffffff,bo_3px_solid_rgb:4caf50,c_fill,g_auto,r_max,w_1000/v1619343073/BA68C088-9F8B-4C99-9619-C9918223015C_wzkrua.jpg",
+        "image": "bistec.jpg",
+        "image_credit": "Recipes and Deliveries",
+        "description": "Bistec a la Mexicana is a flavorful Mexican-style beef stew that cooks on low heat with tomatoes, jalapenos, onion, herbs and spices.",
+        "name": "Bistec a la Mexicana"
+      }
+    },
+    {
+      "pk": 6,
+      "model": "products.product",
+      "fields": {
+        "category": 6,
+        "rating": 4.7,
+        "sku": "rad000000006",
+        "price": 9.99,
+        "image_url": "https://res.cloudinary.com/recipeas-and-greens/image/upload/ar_1:1,b_rgb:ffffff,bo_3px_solid_rgb:4caf50,c_fill,g_auto,r_max,w_1000/v1624282082/Avocado-Pasta-with-Herbs-RECIPE-CARD_l4f3lw.jpg",
+        "image": "avocado-penne.jpg",
+        "image_credit": "Veggie Chick - https://veggiechick.com/avocado-cream-penne-herbs-vegan/",
+        "description": "This Avocado Pasta with Herbs is so colorful, flavorful and healthy. It’s also easy to whip up in just 15 minutes, using only your food processor (and boiling the noodles). No other cooking required!",
+        "name": "Avocado Penne"
+      }
+    },
+    {
+      "pk": 7,
+      "model": "products.product",
+      "fields": {
+        "category": 7,
+        "rating": 4.4,
+        "sku": "rad000000007",
+        "price": 7.59,
+        "image_url": "https://res.cloudinary.com/recipeas-and-greens/image/upload/ar_1:1,b_rgb:ffffff,bo_3px_solid_rgb:4caf50,c_fill,g_auto,r_max,w_1000/v1624282936/Buffalo_Cauliflower_Tacos_2_jc9kzf.jpg",
+        "image": "buffalo-cauliflower-tacos.jpg",
+        "image_credit": "Veggie Chick - https://veggiechick.com/buffalo-cauliflower-tacos/",
+        "description": "Walk a little taller in our slimming straight-leg pants. flat front slim fit straight leg front fly with nylon zipper, hook and bar closure 32\" inseam polyester/rayon/spandex washable imported ",
+        "name": "Buffalo Cauliflower Tacos"
+      }
+    }
+  ]
