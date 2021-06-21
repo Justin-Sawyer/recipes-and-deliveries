@@ -31,31 +31,39 @@
                     <div class="col">
                         <div class="collapse mb-3" id="recipesCollapse">
                             <div class="card text-black collapse-card">
-                                <h5 class="card-header">Featured</h5>
+                                <h5 class="card-header">The <strong>Recipes</strong> Community</h5>
                                 <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-green">Go somewhere</a>
+                                    <h5 class="card-title">The Blog</h5>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Write you own food articles</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Comment and contribute to the community</p>
+                                    <a href="#" class="btn btn-green">Go to the Blog</a>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-green">Go somewhere</a>
+                                    <h5 class="card-title">The Recipes</h5>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Add your own recipes</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Upvote recipes</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Earn credits when your recipe is ordered as a recipe box*</p>
+                                    <a href="#" class="btn btn-green">Go to the Recipes</a>
+                                    <br>
+                                    <br>
+                                    <p class="card-text small text-right">
+                                        *Every month, the top upvoted community recipe is added as a recipe box, and can be ordered. 
+                                        If your recipe is then ordered, you are issued with a credit. 
+                                        That credit is applied when you order your next recipe boxes.
+                                        Earn enough credits, and you could eat for free!
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="collapse mb-3" id="deliveriesCollapse">
                             <div class="card text-black collapse-card">
-                                <h5 class="card-header">Featured</h5>
+                                <h5 class="card-header">The <strong>Deliveries</strong> Service</h5>
                                 <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-green">Go somewhere</a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-green">Go somewhere</a>
+                                    <h5 class="card-title">Recipe Boxes</h5>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Order from a growing collection of recipe boxes</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Choose simply how many people you need to feed, we take care of the rest</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Free delivery when you reach the threshold</p>
+                                    <a href="#" class="btn btn-green">Go to the Recipe Box selection</a>
                                 </div>
                             </div>
                         </div>
@@ -64,5 +72,17 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script type="text/JavaScript">
+    $('#recipesCollapse').on('shown.bs.collapse', function (e) {
+        $('#deliveriesCollapse').collapse('hide');
+    })
+    $('#deliveriesCollapse').on('shown.bs.collapse', function (e) {
+        $('#recipesCollapse').collapse('hide');
+    })
+</script>
 {% endblock %}
 
