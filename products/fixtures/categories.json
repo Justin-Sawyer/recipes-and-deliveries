@@ -3,6 +3,7 @@
       "pk": 1,
       "model": "products.category",
       "fields": {
+        "sku": "a1",
         "name": "asian",
         "friendly_name": "Asian"
       }
@@ -11,6 +12,7 @@
       "pk": 2,
       "model": "products.category",
       "fields": {
+        "sku": "a2",
         "name": "european",
         "friendly_name": "European"
       }
@@ -19,6 +21,7 @@
       "pk": 3,
       "model": "products.category",
       "fields": {
+        "sku": "a3",
         "name": "maghreb_african",
         "friendly_name": "Maghreb & African"
       }
@@ -27,6 +30,7 @@
       "pk": 4,
       "model": "products.category",
       "fields": {
+        "sku": "a4",
         "name": "north_american",
         "friendly_name": "North American"
       }
@@ -35,6 +39,7 @@
       "pk": 5,
       "model": "products.category",
       "fields": {
+        "sku": "a5",
         "name": "south_american",
         "friendly_name": "South American"
       }
@@ -43,6 +48,7 @@
       "pk": 6,
       "model": "products.category",
       "fields": {
+        "sku": "b1",
         "name": "vegetarian",
         "friendly_name": "Vegetarian"
       }
@@ -51,6 +57,7 @@
       "pk": 7,
       "model": "products.category",
       "fields": {
+        "sku": "b2",
         "name": "vegan",
         "friendly_name": "Vegan"
       }
@@ -59,6 +66,7 @@
       "pk": 8,
       "model": "products.category",
       "fields": {
+        "sku": "b3",
         "name": "gluten_free",
         "friendly_name": "Gluten Free"
       }
@@ -67,6 +75,7 @@
       "pk": 9,
       "model": "products.category",
       "fields": {
+        "sku": "b4",
         "name": "unrestricted",
         "friendly_name": "Unrestricted"
       }
@@ -75,6 +84,7 @@
       "pk": 10,
       "model": "products.category",
       "fields": {
+        "sku": "c1",
         "name": "breakfast",
         "friendly_name": "Breakfast"
       }
@@ -83,6 +93,7 @@
       "pk": 11,
       "model": "products.category",
       "fields": {
+        "sku": "c2",
         "name": "lunch",
         "friendly_name": "Lunch"
       }
@@ -91,6 +102,7 @@
       "pk": 12,
       "model": "products.category",
       "fields": {
+        "sku": "c3",
         "name": "dinner",
         "friendly_name": "Dinner"
       }

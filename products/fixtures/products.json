@@ -3,7 +3,7 @@
       "pk": 1,
       "model": "products.product",
       "fields": {
-        "category": 1,
+        "category": [1, 8, 9, 12],
         "rating": 4.6,
         "sku": "rad000000001",
         "price": 10.99,
@@ -18,7 +18,7 @@
       "pk": 2,
       "model": "products.product",
       "fields": {
-        "category": 2,
+        "category": [2, 8, 9, 11],
         "rating": 4.6,
         "sku": "rad000000002",
         "price": 6.99,
@@ -34,7 +34,7 @@
       "pk": 3,
       "model": "products.product",
       "fields": {
-        "category": 3,
+        "category": [3, 8, 9, 11, 12],
         "rating": 4.7,
         "sku": "rad000000003",
         "price": 10.99,
@@ -49,7 +49,7 @@
       "pk": 4,
       "model": "products.product",
       "fields": {
-        "category": 4,
+        "category": [4, 8, 9, 11, 12],
         "rating": 3,
         "sku": "rad000000004",
         "price": 7.99,
@@ -64,7 +64,7 @@
       "pk": 5,
       "model": "products.product",
       "fields": {
-        "category": 5,
+        "category": [5, 8, 9, 11, 12],
         "rating": 5,
         "sku": "rad000000005",
         "price": 12.99,
@@ -79,7 +79,7 @@
       "pk": 6,
       "model": "products.product",
       "fields": {
-        "category": 6,
+        "category": [2, 6, 7, 8, 9, 11, 12],
         "rating": 4.7,
         "sku": "rad000000006",
         "price": 9.99,
@@ -94,7 +94,7 @@
       "pk": 7,
       "model": "products.product",
       "fields": {
-        "category": 7,
+        "category": [2, 7, 8, 9, 11, 12],
         "rating": 4.4,
         "sku": "rad000000007",
         "price": 7.59,
