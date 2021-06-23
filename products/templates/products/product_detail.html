@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% if product.image %}
+        <img class="overlay card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% else %}
+        <img class="overlay card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-lg-none">
+                <div class="image-container my-5">
+                    {% if product.image %}
+                        <a href="{{ product.image.url }}" target="_blank">
+                            <img class="card-img-top img-fluid border-green"
+                                style="height: 400px;
+                                min-width: 100%;
+                                object-fit: cover;"
+                                src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </a>
+                        {% else %}
+                        <a href="">
+                            <img class="card-img-top img-fluid border-green" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="product-details-container bg-white mb-5 p-2 mt-md-5 border-green" style="opacity:70%">
+                    <h2 class="mb-0 font-weight-bold">{{ product.name }}</h2>
+                    <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
+                    {% if product.rating %}
+                        <small class="text-muted" id="rating"><i class=" text-amber fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                    {% else %}
+                        <small class="text-muted">No Rating</small>
+                    {% endif %}
+                    <p class="mt-3 font-weight-bold">{{ product.description }}</p>
+                    {% if product.image_credit %}
+                        <small class="text-muted image-credit"><i class="far fa-image mr-1"></i> Image: {{ product.image_credit }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="product-details-container bg-white mb-5 p-2 mt-md-5 border-green" style="opacity:70%">
+                    <h3 class="mb-0 font-weight-bold">What you get:</h3>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="product-details-container bg-white mb-5 p-2 mt-md-5 border-green" style="opacity:70%">
+                    <h3 class="mb-0 font-weight-bold">Order:</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        let rate = document.getElementById('rating').innerText;
+        let icon = document.getElementById('rating').innerHTML;
+
+        let rateStr = rate.split('.')[0];
+        let rateInt = parseInt(rateStr);
+
+        let iconStr = icon.split(rate)[0];
+
+        for (let i =0; i<rateInt; i++) {
+            newRating = document.querySelector('#rating').innerHTML += iconStr;
+        }
+        let stars = newRating.split('5')[1];
+        $('#rating').html(`${stars} ${rate}`)
+    </script>
+{% endblock %}

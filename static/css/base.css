@@ -98,12 +98,48 @@ body {
     background: #4caf50 !important
 }
 
+.text-amber {
+    color: #ff6f00 !important;
+}
+
+.border-amber {
+    border: 1px solid #ff6f00 !important;
+}
+
+.bg-amber {
+    background: #ff6f00 !important
+}
+
 .collapse-card {
     border: 1px solid #ff6f00 !important;
 }
 
 .card-header {
     background-color: rgba(239,108,47,0.5)!important;
+}
+
+.overlay {
+
+    /*background: url('/media/recipes-and-deliveries-banner.jpg') no-repeat center center fixed;*/
+    /*background: url('{% product.image.url %}') no-repeat center center fixed;*/
+    min-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    /*height: 100%;
+    width: 100%;*/
+    top: 0;
+    left: auto;
+    position: fixed;
+    background: white;
+    z-index: -1;
+}
+
+.product-details-container {
+    border-radius: calc(.25rem - 1px);
+}
+
+.image-credit {
+    overflow-wrap: break-word;
 }
 
 /* -------------------------------- Media Queries */
