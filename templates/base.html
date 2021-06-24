@@ -95,7 +95,7 @@
                         </div>
                     </li>
                     <li class="list-inline-item">
-                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
+                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_bag' %}">
                             <div class="text-center">
                                 <div><i class="fas fa-shopping-bag fa-lg"></i></div>
                                 <p class="my-0">
@@ -122,7 +122,7 @@
         </div>
         <div id="delivery-banner" class="row text-center">
             <div class="col bg-green text-white">
-                <h4 class="my-1 font-weight-bold">Free delivery on orders over €{{ free_shipping_threshold }}!</h4>                
+                <h4 class="my-1 font-weight-bold">Free delivery on orders over €{{ free_delivery_threshold }}!</h4>                
             </div>            
         </div>
     </header>

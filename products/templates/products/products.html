@@ -82,7 +82,10 @@
                                             {% if product.rating %}
                                                 <p class="text-muted rating" id="rating_{{ product.id }}">
                                                     <small>
-                                                        <i class="text-amber fas fa-star mr-1"></i> {{ product.rating }} / 5
+                                                        {% for r in star_rating %}
+                                                            <i class="text-amber fas fa-star mr-1" aria-hidden="true"></i>
+                                                        {% endfor %}
+                                                        <!--<i class="text-amber fas fa-star mr-1"></i>--> {{ product.rating }} / 5
                                                     </small>
                                                 </p>
                                             {% else %}
@@ -137,6 +140,17 @@
         // Remove last | from list of categories
         $( ".category-list span:last-child" ).text('');
     </script>
+
+    <!--<script type="text/javascript">
+        var ratings = $('.rating').map(function(){
+            return $(this).text().split('/')[0].slice(-5, -4);
+        }).get().map(Number);
+        console.log(ratings);
+        var rating = $('.rating').map(function(){
+            return $(this).attr('id');
+        }).get()
+        console.log(rating)
+    </script>-->
 
     <script type="text/javascript">
         $('#sort-selector').change(function() {
