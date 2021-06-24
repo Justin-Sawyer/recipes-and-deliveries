@@ -42,7 +42,7 @@
                     <div class="col-12 col-md-6 order-md-first">
                         <p class="font-weight-bold mt-3 text-center text-md-left">
                             {% if search_term or current_categories or current_sorting != 'None_None' %}
-                                <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}?sort=sku&direction=desc">Products Home</a> | </span>
+                                <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}">Products Home</a> | </span>
                             {% endif %}
                             {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                         </p>
@@ -82,7 +82,7 @@
                                             {% if product.rating %}
                                                 <p class="text-muted rating" id="rating_{{ product.id }}">
                                                     <small>
-                                                        {% for r in star_rating %}
+                                                        {% for r in rating %}
                                                             <i class="text-amber fas fa-star mr-1" aria-hidden="true"></i>
                                                         {% endfor %}
                                                         <!--<i class="text-amber fas fa-star mr-1"></i>--> {{ product.rating }} / 5

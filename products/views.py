@@ -9,7 +9,7 @@ from decimal import Decimal
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
 
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('-pk')
     # print(products)
     query = None
     categories = None
@@ -30,7 +30,6 @@ def all_products(request):
 
     # print(ratings)
     # print(rate)
-
     if request.GET:
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
@@ -83,7 +82,7 @@ def product_detail(request, product_id):
     """ A view to show all individual product details """
 
     product = get_object_or_404(Product, pk=product_id)
-    print(product)
+    # print(product)
 
     context = {
         'product': product,
