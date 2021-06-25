@@ -11,7 +11,9 @@
         "image": "adobo.jpg",
         "image_credit": "Jack Lawrence - https://www.flickr.com/photos/aceofknaves/33374361143/",
         "description": "Philippine adobo is a popular Filipino dish and cooking process in Philippine cuisine that involves meat, seafood, or vegetables marinated in vinegar, soy sauce, garlic, bay leaves, and black peppercorns, which is browned in oil, and simmered in the marinade. It has occasionally been considered the unofficial national dish in the Philippines.",
-        "name": "Adobo"
+        "name": "Adobo",
+        "has_gluten": "False",
+        "gluten_free_option": "False"
       }
     },
     {
@@ -26,7 +28,9 @@
         "image": "salade-nicoise.jpg",
         "image_credit": "Recipes and Deliveries",
         "description": "The real thing! Often imitated, usually altered, the Recipes and Deliveries Salade Niçoise is the proper version, as served by the former Mayor of Nice, Jacques Médecin.",
-        "name": "Salade Niçoise"
+        "name": "Salade Niçoise",
+        "has_gluten": "False",
+        "gluten_free_option": "False"
       }
     },
     
@@ -42,7 +46,9 @@
         "image": "chorba.jpg",
         "image_credit": "Recipes and Deliveries",
         "description": "Chorba (or shorba) refers to several kinds of soup or stew found in national cuisines across the Balkans, Algeria, Central Europe, Eastern Europe, Central Asia, Middle East and the Indian subcontinent. It is often prepared with added ingredients but served alone as a broth or with bread.",
-        "name": "Chorba"
+        "name": "Chorba",
+        "has_gluten": "False",
+        "gluten_free_option": "False"
       }
     },
     {
@@ -57,7 +63,9 @@
         "image": "burger.jpg",
         "image_credit": "Hongreddotbrewhouse",
         "description": "A hamburger (also burger for short) is a food, typically considered a sandwich, consisting of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun. The patty may be pan fried, grilled, smoked or flame broiled. Hamburgers are often served with cheese, lettuce, tomato, onion, pickles, bacon, or chiles; condiments such as ketchup, mustard, mayonnaise, relish, or a 'special sauce', often a variation of Thousand Island dressing; and are frequently placed on sesame seed buns.",
-        "name": "Recipes and Deliveries Hamburger and Fries"
+        "name": "Recipes and Deliveries Hamburger and Fries",
+        "has_gluten": "True",
+        "gluten_free_option": "True"
       }
     },
     {
@@ -72,7 +80,9 @@
         "image": "bistec.jpg",
         "image_credit": "Recipes and Deliveries",
         "description": "Bistec a la Mexicana is a flavorful Mexican-style beef stew that cooks on low heat with tomatoes, jalapenos, onion, herbs and spices.",
-        "name": "Bistec a la Mexicana"
+        "name": "Bistec a la Mexicana",
+        "has_gluten": "False",
+        "gluten_free_option": "False"
       }
     },
     {
@@ -87,7 +97,9 @@
         "image": "avocado-penne.jpg",
         "image_credit": "Veggie Chick - https://veggiechick.com/avocado-cream-penne-herbs-vegan/",
         "description": "This Avocado Pasta with Herbs is so colorful, flavorful and healthy. It’s also easy to whip up in just 15 minutes, using only your food processor (and boiling the noodles). No other cooking required!",
-        "name": "Avocado Penne"
+        "name": "Avocado Penne",
+        "has_gluten": "True",
+        "gluten_free_option": "True"
       }
     },
     {
@@ -102,7 +114,9 @@
         "image": "buffalo-cauliflower-tacos.jpg",
         "image_credit": "Veggie Chick - https://veggiechick.com/buffalo-cauliflower-tacos/",
         "description": "These Buffalo Cauliflower Tacos are baked until crispy and loaded with spicy red-hot flavor. Top them with a little vegan ranch dressing and additional hot sauce, and you’ll have yourself an absolutely addicting meal.",
-        "name": "Buffalo Cauliflower Tacos"
+        "name": "Buffalo Cauliflower Tacos",
+        "has_gluten": "True",
+        "gluten_free_option": "True"
       }
     }
   ]
