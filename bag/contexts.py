@@ -25,7 +25,7 @@ def bag_contents(request):
             })
         else:
             product = get_object_or_404(Product, pk=item_id)
-            for gf_option, quantity in item_data['option'].items():
+            for gf_option, quantity in item_data['dietary_requirement'].items():
                 total += quantity * product.price
                 product_count += quantity
                 bag_items.append({

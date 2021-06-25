@@ -18,12 +18,12 @@ def add_to_bag(request, item_id):
 
     if gf_option:
         if item_id in list(bag.keys()):
-            if gf_option in bag[item_id]['option'].keys():
-                bag[item_id]['option'][gf_option] += quantity
+            if gf_option in bag[item_id]['dietary_requirement'].keys():
+                bag[item_id]['dietary_requirement'][gf_option] += quantity
             else:
-                bag[item_id]['option'][gf_option] = quantity
+                bag[item_id]['dietary_requirement'][gf_option] = quantity
         else:
-            bag[item_id] = {'option': {gf_option: quantity}}
+            bag[item_id] = {'dietary_requirement': {gf_option: quantity}}
     else:
         if item_id in list(bag.keys()):
             bag[item_id] += quantity
