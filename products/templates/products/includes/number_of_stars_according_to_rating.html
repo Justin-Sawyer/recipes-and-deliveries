@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    // Show number of stars equivalent to rating Int value
+    let rating = $('.rating').map(function(){
+        return $(this).attr('id');
+    }).get()
+    for (r of rating) {
+        let ratingValueForIcon = $(`#${r}`).text().split('/')[0].slice(-5, -4)
+        let ratingValue = $(`#${r}`).text()
+        icon = "<i class='text-amber fas fa-star mr-1'></i>"
+        document.getElementById(r).innerHTML = icon.repeat(`${ratingValueForIcon}`) + ratingValue;
+    }
+</script>

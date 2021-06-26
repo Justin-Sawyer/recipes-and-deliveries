@@ -48,7 +48,7 @@
                         </p>
                     {% endif %}
                     {% if product.rating %}
-                        <small class="text-muted" id="rating"><i class="text-amber fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                        <small class="text-muted rating" id="rating">{{ product.rating }} / 5</small>
                     {% else %}
                         <small class="text-muted">No Rating</small>
                     {% endif %}
@@ -135,22 +135,5 @@
 {% block postloadjs %}
     {{ block.super }}
     {% include 'products/includes/quantity_input_script.html' %}
-    <script type="text/javascript">
-        // Show number of stars equivalent to rating Int value
-        let rate = $('#rating').text();
-        let icon = $('#rating').html();
-
-        let rateStr = rate.split('.')[0];
-        let rateInt = parseInt(rateStr);
-
-        let iconStr = icon.split(rate)[0];
-
-        for (let i =0; i<rateInt; i++) {
-            newRating = document.querySelector('#rating').innerHTML += iconStr;
-        }
-        let stars = newRating.split('5')[1];
-        $('#rating').html(`${stars} ${rate}`);
-
-        $('.category-link-divider:last').text('');
-    </script>
+    {% include 'products/includes/number_of_stars_according_to_rating.html' %}
 {% endblock %}
