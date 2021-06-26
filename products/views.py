@@ -10,26 +10,10 @@ def all_products(request):
     """ A view to show all products, including sorting and search queries """
 
     products = Product.objects.all().order_by('-pk')
-    # print(products)
     query = None
     categories = None
     sort = None
     direction = None
-    # ratings = products.filter(rating=Decimal('rating'))
-    # print(ratings)
-    # delivery = products.filter(Decimal(delivery)=='rating')
-    # x = Decimal(delivery)
-    # ratings = list(products.filter(rating__in=products))
-    # print(ratings)
-    # ratings = list(Product.objects.all().values_list('rating'))
-    # ratings = [str(elem) for elem in list(Product.objects.all().values_list('rating'))]
-    # ratings = [str(elem) for elem in list(Product.objects.all().values_list('rating'))]
-    # for rate in ratings:
-    #    rate[8:10]
-    # ratings = Product.objects.all().values_list('rating', flat=True)
-
-    # print(ratings)
-    # print(rate)
     if request.GET:
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
@@ -69,10 +53,6 @@ def all_products(request):
         'search_term': query,
         'current_categories': categories,
         'current_sorting': current_sorting,
-        # 'product': product,
-        # 'ratings': range(int(ratings))
-        # 'ratings': ratings,
-        # 'star_rating': range(int(product.rating)),
     }
 
     return render(request, 'products/products.html', context)
@@ -82,7 +62,6 @@ def product_detail(request, product_id):
     """ A view to show all individual product details """
 
     product = get_object_or_404(Product, pk=product_id)
-    # print(product)
 
     context = {
         'product': product,
