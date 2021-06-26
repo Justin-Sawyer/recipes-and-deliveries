@@ -99,7 +99,7 @@
                                                                 {% for r in rating %}
                                                                     <i class="text-amber fas fa-star mr-1" aria-hidden="true"></i>
                                                                 {% endfor %}
-                                                                <!--<i class="text-amber fas fa-star mr-1"></i>--> {{ product.rating }} / 5
+                                                                {{ product.rating }} / 5
                                                             </small>
                                                         </p>
                                                     {% else %}
@@ -147,6 +147,7 @@
 {% block postloadjs %}
     {{ block.super }}
     <script type="text/javascript">
+        // Back to top button
         $('.btt-link').click(function(e) {
             window.scrollTo(0,0);
         })
@@ -157,18 +158,21 @@
         $( ".category-list span:last-child" ).text('');
     </script>
 
-    <!--<script type="text/javascript">
-        var ratings = $('.rating').map(function(){
-            return $(this).text().split('/')[0].slice(-5, -4);
-        }).get().map(Number);
-        console.log(ratings);
-        var rating = $('.rating').map(function(){
+    <script type="text/javascript">
+        // Show number of stars equivalent to rating Int value
+        let rating = $('.rating').map(function(){
             return $(this).attr('id');
         }).get()
-        console.log(rating)
-    </script>-->
+        for (r of rating) {
+            let ratingValueForIcon = $(`#${r}`).text().split('/')[0].slice(-5, -4)
+            let ratingValue = $(`#${r}`).text()
+            icon = "<i class='text-amber fas fa-star mr-1'></i>"
+            document.getElementById(r).innerHTML = icon.repeat(`${ratingValueForIcon}`) + ratingValue;
+        }
+    </script>
 
     <script type="text/javascript">
+        // Sorting by
         $('#sort-selector').change(function() {
             var selector = $(this);
             var currentUrl = new URL(window.location);

@@ -105,6 +105,10 @@ body {
     background: #ff6f00 !important
 }
 
+.text-red {
+    color: #d9534f !important
+}
+
 .bg-white-80 {
     background-color: rgba(255,255,255,0.8) !important;
 }
@@ -153,7 +157,9 @@ body {
     background-color: white;
 }
 
-.btt-link {
+.btt-link,
+.update-link,
+.remove-item {
     cursor: pointer;
 }
 

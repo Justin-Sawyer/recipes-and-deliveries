@@ -26,7 +26,7 @@ def all_products(request):
     # ratings = [str(elem) for elem in list(Product.objects.all().values_list('rating'))]
     # for rate in ratings:
     #    rate[8:10]
-    #ratings = Product.objects.all().values_list('rating', flat=True)
+    # ratings = Product.objects.all().values_list('rating', flat=True)
 
     # print(ratings)
     # print(rate)
@@ -71,7 +71,7 @@ def all_products(request):
         'current_sorting': current_sorting,
         # 'product': product,
         # 'ratings': range(int(ratings))
-        #'ratings': ratings,
+        # 'ratings': ratings,
         # 'star_rating': range(int(product.rating)),
     }
 
