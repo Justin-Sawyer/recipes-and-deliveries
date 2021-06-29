@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_title %}
+ | Bag
+{% endblock %}
+
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -10,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container content">
     <div class="col-12 bag-products-container">
         <div class="shopping-details-container row bg-white border-green mb-5 p-2 mt-md-5">
             <div class="col mt-3">
@@ -37,8 +41,8 @@
                         </td>
                         <td class="py-3">
                             <p class="my-0"><strong>{{ item.product.name }}</strong></p>
-                            <p class="my-0"><strong>Dietary Requirement:
-                                </strong>{% if item.product.gluten_free_option %}{{ item.gf_option|upper }}{% else %}N/A{% endif %}
+                            <p class="my-0">Dietary Requirement:
+                                {% if item.product.gluten_free_option %}<strong>{{ item.gf_option|upper }}</strong>{% else %}N/A{% endif %}
                             </p>
                             <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
                         </td>
@@ -90,7 +94,7 @@
                             <h6>Delivery: ${{ delivery|floatformat:2 }}</h6>
                             <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
                             {% if free_delivery_delta > 0 %}
-                            <p class="mb-1 text-danger">
+                            <p class="mb-1 text-amber">
                                 You could get free delivery by spending just <strong>${{ free_delivery_delta }}</strong>
                                 more!
                             </p>
@@ -114,19 +118,20 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </div> 
             {% else %}
-            <p class="lead mb-5">Your bag is empty.</p>
+            <p class="lead col-12 mb-2">Your bag is empty.</p>
             <a href="{% url 'products' %}" class="btn btn-green">
                 <span class="icon">
                     <i class="fas fa-chevron-left"></i>
                 </span>
                 <span class="text-uppercase">Keep Shopping</span>
             </a>
-            {% endif %}
+            {% endif %} 
         </div>
     </div>
 </div>
+
 {% endblock %}
 
 {% block postloadjs %}

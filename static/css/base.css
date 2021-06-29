@@ -7,9 +7,25 @@ body {
     https://www.pexels.com/photo/flatlay-photography-of-strawberries-and-sliced-bread-1660030/ */
     background: url('/media/recipes-and-deliveries-banner.jpg') no-repeat center center fixed;
     background-size: cover;
-    height: calc(100vh - 164px);
+    min-height: 100%;
+    /*height: calc(100vh - 164px);*/
     color: black;
     font-family: 'Raleway', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+    /*min-height: calc(100vh - 200px);*/
+  }
+
+.footer {
+    flex-shrink: 0;
+}
+
+.site-title {
+    font-size: 1.8rem;
 }
 
 /* from Bulma */
@@ -130,6 +146,8 @@ body {
     position: fixed;
     background: white;
     z-index: -1;
+    /*background-size: cover;
+    height: calc(100vh - 164px);*/
 }
 
 .all-products-container,

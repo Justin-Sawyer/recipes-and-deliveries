@@ -23,6 +23,9 @@
                 href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600;1,800&display=swap"
                 rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <!-- Apple touch / Android / Favicon icon credit: <a href='https://pngtree.com/so/food'>food png from pngtree.com</a>clipart png from pngtree.com</a>-->
+        <link rel="apple-touch-icon" href="{{ MEDIA_URL }}apple-touch-icon.png }}">
+        <link rel="icon" type="image/png" href="{{ MEDIA_URL }}favicon.png }}">
     {% endblock %}
 
     {% block extra_css %}
@@ -57,7 +60,7 @@
         <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
             <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
                 <a href="{% url 'home' %}" class="nav-link main-logo-link">
-                    <h2 class="text-black my-0"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h2>
+                    <h2 class="text-black site-title my-0"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h2>
                 </a>
             </div>
             <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
@@ -139,7 +142,14 @@
     {% block content %}
     {% endblock %}
 
+    {% block footer %}
+        {% include 'includes/footer.html' %}
+    {% endblock %}
+
     {% block postloadjs %}
+    <script>
+        $("#copyright").text(new Date().getFullYear());
+    </script>
     {% endblock %}
 </body>
 

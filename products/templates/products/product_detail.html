@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_title %}
+ | {{ product.name }}
+{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -13,7 +17,7 @@
     {% if product.image %}
         <img class="overlay card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
     {% else %}
-        <img class="overlay card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+        <img class="overlay card-img-top img-fluid" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
     {% endif %}
     <div class="container">
         <div class="row">
@@ -29,7 +33,7 @@
                         </a>
                         {% else %}
                         <a href="">
-                            <img class="card-img-top img-fluid border-green" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                            <img class="card-img-top img-fluid border-green" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
                         </a>
                     {% endif %}
                 </div>

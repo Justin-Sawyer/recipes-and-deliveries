@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_title %}
+ | Home
+{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -10,12 +14,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container h-100">
-        <div class="row h-100">
+    <div class="container content">
+        <div class="row">
             <div class="col-12 col-md-6 my-auto">
-                <h1 class="display-4 logo-font text-black">
+                <h1 class="text-black d-lg-none my-0" style="font-size: 1.5rem;"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
+                <br>
+                <h2 class="display-4 logo-font text-black">
                     Your one-stop shop-for Recipes and Deliveries
-                </h1>
+                </h2>
                 <div class="my-5">
                     <h4>
                         <a href="" class="shop-now-button btn btn-lg py-3 mb-3"><strong>Read Me!</strong></a>
