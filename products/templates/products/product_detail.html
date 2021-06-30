@@ -25,15 +25,11 @@
                 <div class="image-container my-5">
                     {% if product.image %}
                         <a href="{{ product.image.url }}" target="_blank">
-                            <img class="card-img-top img-fluid border-green"
-                                style="height: 400px;
-                                min-width: 100%;
-                                object-fit: cover;"
-                                src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <img class="card-img-top img-fluid product-image border-green" src="{{ product.image.url }}" alt="{{ product.name }}">
                         </a>
                         {% else %}
                         <a href="">
-                            <img class="card-img-top img-fluid border-green" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                            <img class="card-img-top img-fluid product-image border-green" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
                         </a>
                     {% endif %}
                 </div>

@@ -60,13 +60,11 @@
                                     <div class="card h-100 border-0">
                                         {% if product.image %}
                                         <a href="{% url 'product_detail' product.id %}">
-                                            <img class="card-img-top img-fluid" style="height: 200px;
-                                            min-width: 100%;
-                                            object-fit: cover;" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                            <img class="card-img-top img-fluid card-image" src="{{ product.image.url }}" alt="{{ product.name }}">
                                         </a>
                                         {% else %}
                                         <a href="{% url 'product_detail' product.id %}">
-                                            <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                                            <img class="card-img-top img-fluid card-image" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
                                         </a>
                                         {% endif %}
                                         <div class="card-body pb-0">
