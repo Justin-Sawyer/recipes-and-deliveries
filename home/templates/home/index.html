@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container content">
+    <div class="container content mb-3">
         <div class="row">
             <div class="col-12 col-md-6 my-auto">
                 <h1 class="text-black d-lg-none my-0 body-site-title"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
@@ -77,7 +77,7 @@
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Cold chain guaranteed</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Deliveries guaranteed within 24 hrs on your order</p>
                                     <p class="card-text text-right"> ... or your money back! <i class="fas fa-coins text-green"></i></p>
-                                    <a href="#" class="btn btn-green">Find out more</a>
+                                    <a href="{% url 'guarantee'%}" class="btn btn-green">Find out more</a>
                                 </div>
                             </div>
                         </div>
