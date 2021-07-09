@@ -43,7 +43,7 @@
                         </td>
                         <td class="py-3">
                             <p class="my-0"><strong>{{ item.product.name }}</strong></p>
-                            {% if item.product.gluten_free_option %}
+                            {% if item.product.has_gluten %}
                             <p class="my-0">Dietary Requirement:
                                 <strong class="text-green">{{ item.gf_option|upper }}</strong>
                             </p>
