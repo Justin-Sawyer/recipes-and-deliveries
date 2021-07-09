@@ -132,6 +132,10 @@ body {
     background-color: rgba(255,255,255,0.8) !important;
 }
 
+.bg-white {
+    background-color: white !important;
+}
+
 .collapse-card {
     border: 1px solid #ff6f00 !important;
 }
@@ -222,6 +226,14 @@ body {
 @media (max-width: 991px) {
     .header-container {
         padding-top: 116px;
+        /*padding-top: 92px;*/
+    }
+
+    .header-image-container {
+        /*padding-top: 116px;*/
+        /*padding-top: 92px;*/
+        position:relative;
+        top: -23px;
     }
 
     body {

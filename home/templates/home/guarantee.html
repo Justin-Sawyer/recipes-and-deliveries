@@ -17,97 +17,45 @@
     <div class="container content mb-3">
         <div class="row">
             <div class="col-12 col-md-6 my-auto">
-                <h1 class="text-black d-lg-none my-0 body-site-title"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
+                <h1 class="d-lg-none my-0 body-site-title"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
                 <br>
-                <h2 class="mb-4 display-4 logo-font text-black slogan">
+                <h2 class="display-4 logo-font slogan">
                     Your Recipes and Deliveries Guarantee
                 </h2>
-                <h3 class="text-black font-weight-bold"><i class="fas fa-hand-sparkles text-amber"></i> Hygiene:</h3>
-                <h4 class="text-black pl-5"><i class="fas fa-tractor text-green"></i> Track and Trace</h4>
-                <p class="text-black pl-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quae voluptate, atque debitis blanditiis fugiat quibusdam, expedita laborum, labore odio voluptatibus dolores natus accusantium! Voluptates et doloribus voluptas incidunt illo.</p>
-                <h4 class="text-black pl-5"><i class="fas fa-temperature-low text-green"></i> Cold Chain</h4>
-                <p class="text-black pl-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad distinctio temporibus nesciunt eos? Voluptatum omnis voluptates ea vitae maiores, itaque architecto consectetur! Repellendus in soluta ducimus laboriosam quibusdam earum excepturi.</p>
-                <h3 class="text-black font-weight-bold"><i class="fas fa-store text-amber"></i> Suppliers:</h3>
-                <p class="text-black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium error rem voluptas voluptatem, mollitia dolores optio eum sapiente. Unde, rem voluptatem laboriosam corporis eos temporibus tenetur a ratione eligendi deleniti!</p>
-                <h3 class="text-black font-weight-bold"><i class="fas fa-recycle text-amber"></i> Environment:</h3>
-                <p class="text-black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem sit asperiores distinctio officia, praesentium impedit aspernatur reiciendis facilis quam mollitia sed deserunt a. Magni aliquid aspernatur veritatis, atque soluta vel.</p>
-                <h3 class="text-black font-weight-bold"><i class="fas fa-truck text-amber"></i> Delivery:</h3>
-                <p class="text-black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero commodi, incidunt soluta, laborum ipsam asperiores neque architecto odio iure velit illo iste illum. Libero odit, tempora est ut animi voluptatum.</p>
-                <!--<div class="my-5">
+                <div class="my-5">
+                    <h3 class="font-weight-bold"><i class="fas fa-tractor text-green"></i> Track and Trace</h3>
+                    <p>All <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> products are fully traceable, 
+                        from Red Tractor certified suppliers for meat and vegetables to Marine Stewardship Council suppliers for fish.</p>
+
+                    <h3 class="font-weight-bold"><i class="fas fa-temperature-low text-green"></i> Cold Chain</h3>
+                    <p>All <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> Recipe Kits are delivered 
+                        with Heat Sensitive labels, so you can immediately see that the cold chain has been respected. It's why we ask you to 
+                        open your delivery when you receive it: If the sticker shows that the cold chain has been broken, simply reject the delivery!</p>
+
+                    <h3 class="font-weight-bold"><i class="fas fa-store text-green"></i> Suppliers</h3>
+                    <p>Where possible, only local suppliers are used, for <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> Recipe Kits, 
+                        from Red Tractor certified fresh produce to locally grown herbs.</p>
+
+                    <h3 class="font-weight-bold"><i class="fas fa-recycle text-green"></i> Environment</h3>
+                    <p>Local produce means less resources are used, thus protecting both our economy and our environment.
+                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> takes its environmental responisibility seriously.</p>
+
+                    <h3 class="font-weight-bold"><i class="fas fa-box text-green"></i> Packaging</h3>
+                    <p>Where possible, all <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> Recipe Kits packaging is recyclable.
+                        Where cool boxes or freezer boxes are used, you are asked to pay a minimal deposit on the box: When you return the box for re-use, your deposit is returned,
+                        thus ensuring less plastic is used. This deposit is included in your first order.</p>
+                        
+                    <h3 class="font-weight-bold"><i class="fas fa-shipping-fast text-green"></i> Delivery</h3>
+                    <p>All deliveries within 24 hours, guaranteed.</p>
+                    <br>
                     <h4>
-                        <a href="" class="shop-now-button btn btn-lg py-3 mb-3"><strong>Read Me!</strong></a>
-                        <a href="{% url 'products' %}" class="shop-now-button btn btn-lg py-3 mb-3 float-right"><strong>Feed Me!</strong></a>
+                        <a href="" class="shop-now-button btn mb-3"><strong>Read Me!</strong></a>
+                        <a href="{% url 'products' %}" class="shop-now-button btn mb-3 float-right"><strong>Feed Me!</strong></a>
                     </h4>
                 </div>
-                <p class="text-black"><strong>Find out more:</strong></p>
-                <p>
-                    <button class="info-button btn btn-amber mb-3" type="button" data-toggle="collapse" data-target="#recipesCollapse" aria-expanded="false" aria-controls="recipesCollapse"><strong>Recipes</strong></button>
-                    <button class="info-button btn btn-amber mb-3 float-right" type="button" data-toggle="collapse" data-target="#deliveriesCollapse" aria-expanded="false" aria-controls="deliveriesCollapse"><strong>Deliveries</strong></button>
-                </p>
-                <div class="row">
-                    <div class="col">
-                        <div class="collapse mb-3" id="recipesCollapse">
-                            <div class="card text-black collapse-card">
-                                <h5 class="card-header">The <strong>Recipes</strong> Community</h5>
-                                <div class="card-body">
-                                    <h5 class="card-title">The Blog</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Write you own food articles</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Comment and contribute to the community</p>
-                                    <a href="#" class="btn btn-green">Go to the Blog</a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">The Recipes</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Add your own recipes</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Upvote recipes</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Earn credits when your recipe is ordered as a recipe box*</p>
-                                    <a href="#" class="btn btn-green">Go to the Recipes</a>
-                                    <br>
-                                    <br>
-                                    <p class="card-text small text-right">
-                                        *Every month, the top upvoted community recipe is added as a recipe box, and can be ordered. 
-                                        If your recipe is then ordered, you are issued with a credit. 
-                                        That credit is applied when you order your next recipe boxes.
-                                        Earn enough credits, and you could eat for free!
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="collapse mb-3" id="deliveriesCollapse">
-                            <div class="card text-black collapse-card">
-                                <h5 class="card-header">The <strong>Deliveries</strong> Service</h5>
-                                <div class="card-body">
-                                    <h5 class="card-title">Recipe Boxes</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Order from a growing collection of recipe boxes</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Choose simply how many people you need to feed, we take care of the rest</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Free delivery when you reach the threshold</p>
-                                    <a href="{% url 'products' %}" class="btn btn-green">Go to the Recipe Box selection</a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">The Recipes and Deliveries Guarantee</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> 100% recycled packaging</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Cold chain guaranteed</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Deliveries guaranteed within 24 hrs on your order</p>
-                                    <p class="card-text text-right"> ... or your money back! <i class="fas fa-coins text-green"></i></p>
-                                    <a href="#" class="btn btn-green">Find out more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </div>
 {% endblock %}
 
-{% block postloadjs %}
-{{ block.super }}
-<script type="text/JavaScript">
-    $('#recipesCollapse').on('shown.bs.collapse', function (e) {
-        $('#deliveriesCollapse').collapse('hide');
-    })
-    $('#deliveriesCollapse').on('shown.bs.collapse', function (e) {
-        $('#recipesCollapse').collapse('hide');
-    })
-</script>
-{% endblock %}
 

@@ -14,16 +14,17 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container mb-3">
-        <div class="col-12 all-products-container">
-            <div class="shopping-details-container row bg-white-80 border-green mb-5 p-2 mt-md-5"">
-                <div class="col mt-3">
+    <div class="overlay"></div>
+    <div class="container content mb-3">
+        <div class="all-products-container">
+            <div class="shopping-details-container row bg-white-80 mb-5 p-2 mt-md-5"">
+                <div class="mt-3">
                     {% if current_categories %}
                         {% for c in current_categories %}
-                            <h2 class="font-weight-bold">{{ c.friendly_name }} Recipe Boxes</h2>
+                            <h2 class="font-weight-bold text-center text-md-left">{{ c.friendly_name }} Recipe Boxes</h2>
                         {% endfor %}
                     {% else %}
-                        <h2 class="font-weight-bold">Recipe Boxes</h2>
+                        <h2 class="font-weight-bold text-center text-md-left">Recipe Boxes</h2>
                     {% endif %}
                     <hr class="w-50 mb-1">
                 </div>

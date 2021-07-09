@@ -146,29 +146,29 @@ Recipe boxes are presented as cards with white backgrounds. Thus each recipe box
 
 ## Wireframes
 
-[Landing Page, highlighting the commercial service]()
+[Landing Page, highlighting the commercial service](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/1-recipes.png)
 
-[Landing Page, highlighting the community aspect]()
+[Landing Page, highlighting the community aspect](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/2-deliveries.png)
 
-[Commerce, all Recipe Boxes]()
+[Commerce, all Recipe Boxes](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/3-all-recipe-boxes.png)
 
-[Commerce, individual Recipe Box]()
+[Commerce, individual Recipe Box](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/4-recipe-box.png)
 
-[Commerce, shopping bag]()
+[Commerce, shopping bag](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/5-bag.png)
 
-[Commerce, checkout]()
+[Commerce, checkout](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/6-checkout.png)
 
-[Community, blog]()
+[Community, blog](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/7-community-blog.png)
 
-[Community, individual blog entry]()
+[Community, individual blog entry](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/8-community-blog-entry.png)
 
-[Community, add edit or delete blog post]()
+[Community, add edit or delete blog post](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/9-community-blog-add-edit-delete-post.png)
 
-[Community, recipes]()
+[Community, recipes](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/10-community-recipes.png)
 
-[Community, individual recipe entry]()
+[Community, individual recipe entry](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/11-community-recipe-entry.png)
 
-[Community, add edit or delete recipe post]()
+[Community, add edit or delete recipe post](https://github.com/Justin-Sawyer/recipes_and_deliveries/blob/master/documentation/wireframes/12-community-recipes-add-edit-delete-recipe.png)
 
 ## Features
 
