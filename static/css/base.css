@@ -186,6 +186,10 @@ body {
     cursor: pointer;
 }
 
+input[name='q']::placeholder {
+    color: #aab7c4;
+}
+
 .card-image {
     height: 200px;
     min-width: 100%;
@@ -282,6 +286,64 @@ body {
   .container {
     max-width: 80%;
   }
+}
+
+/* Allauth form formatting */
+
+.allauth-form-inner-content p {
+    margin-top: 1.5rem; /* mt-4 */
+    /*color: #6c757d; /* text-secondary */
+    color: black;
+}
+
+.allauth-form-inner-content input {
+    /*border-color: #000;*/
+    border-color: #4caf50;
+}
+
+.allauth-form-inner-content label:not([for='id_remember']) {
+    display: none;
+}
+
+.allauth-form-inner-content input::placeholder {
+    color: #aab7c4;
+}
+
+.allauth-form-inner-content button,
+.allauth-form-inner-content input[type='submit'] {
+    /* btn */
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #4caf50;
+    border: 1px solid #4caf50;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+
+    /* standard bootstrap btn transitions */
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.allauth-form-inner-content button:hover,
+.allauth-form-inner-content input[type='submit']:hover {    
+    color: #4caf50;
+    background-color: white;
+    border-color: #4caf50;
+}
+
+/*.allauth-form-inner-content a {
+    color: #4caf50; /* text-info *
+}*/
+.allauth-form-inner-content a:not(.btn-green) {
+    color: #4caf50;
 }
 
 /* fixed top navbar only on medium and up */

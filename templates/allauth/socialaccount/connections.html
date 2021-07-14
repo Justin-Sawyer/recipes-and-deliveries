@@ -4,8 +4,10 @@
 
 {% block head_title %}{% trans "Account Connections" %}{% endblock %}
 
-{% block content %}
-<h1>{% trans "Account Connections" %}</h1>
+{% block inner_content %}
+<br>
+<h2 class="font-weight-bold">{% trans "Account Connections" %}</h2>
+<br>
 
 {% if form.accounts %}
 <p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
