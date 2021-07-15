@@ -6,11 +6,11 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user'),
-        """
-        fields = ('full_name', 'email', 'phone_number',
-                  'street_address1', 'street_address2',
-                  'town_or_city', 'county', 'postcode',
-                  'country',)"""
+
+        """fields = ('default_full_name', 'default_email', 'default_phone_number',
+                  'default_street_address1', 'default_street_address2',
+                  'default_town_or_city', 'default_county', 'default_postcode',
+                  'default_country',)"""
 
     def __init__(self, *args, **kwargs):
         """
@@ -21,6 +21,7 @@ class UserProfileForm(forms.ModelForm):
         placeholders = {
             # 'default_full_name': 'Full Name',
             # 'default_email': 'Email Address',
+            'default_full_name': 'Full Name',
             'default_phone_number': 'Phone Number',
             'default_street_address1': 'Street Address 1',
             'default_street_address2': 'Street Address 2',
