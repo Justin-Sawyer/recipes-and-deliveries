@@ -73,6 +73,11 @@ body {
     color: white
 }
 
+.btn-red {
+    background: #d9534f;
+    color: white;
+}
+
 .shop-now-button:hover,
 .shop-now-button:active,
 .shop-now-button:focus,
@@ -90,6 +95,14 @@ body {
     background: white;
     color: #ff6f00;
     border: 1px solid #ff6f00;
+}
+
+.btn-red:hover,
+.btn-red:active,
+.btn-red:focus {
+    background: white;
+    color: #d9534f;
+    border: 1px solid #d9534f;
 }
 
 .text-black {
