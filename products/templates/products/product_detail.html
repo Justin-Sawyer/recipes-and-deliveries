@@ -22,21 +22,9 @@
     {% endif %}
     <div class="container content mb-3">
         <div class="row">
-            <!--<div class="col-12 d-lg-none">
-                <div class="image-container my-5">
-                    {% if product.image %}
-                        <a href="{{ product.image.url }}" target="_blank">
-                            <img class="card-img-top img-fluid product-image border-green" src="{{ product.image.url }}" alt="{{ product.name }}">
-                        </a>
-                        {% else %}
-                        <a href="">
-                            <img class="card-img-top img-fluid product-image border-green" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
-                        </a>
-                    {% endif %}
-                </div>
-            </div>-->
-            <div class="col-12 col-md-6">
-                <div class="product-details-container bg-white-80 mb-5 p-2 mt-3">
+            <!-- Product Details Container -->
+            <div class="col-12 col-lg-8">
+                <div class="mb-5 p-2 mt-3">
                     <h2 class="mb-0 font-weight-bold">{{ product.name }}</h2>
                     <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
                     {% if product.category %}
@@ -55,7 +43,7 @@
                     {% endif %}
                     {% if request.user.is_superuser %}
                         <small class="ml-3">
-                            <a class="text-amber" href="{% url 'edit_product' product.id %}">Edit</a> |
+                            <a class="text-primary" href="{% url 'edit_product' product.id %}">Edit</a> |
                             <a class="text-danger" href="{% url 'delete_product' product.id %}"">Delete</a>
                         </small>
                     {% endif %}
@@ -65,15 +53,11 @@
                     {% endif %}
                 </div>
             </div>
-            <!--<div class="col-12 col-md-6">
-                <div class="product-box-container bg-white-80 mb-5 p-2">
-                    <h3 class="mb-0 font-weight-bold">What you get:</h3>
-                    <p class="text-black">The ingredients</p>
-                </div>
-            </div>-->
-            <div class="col-12 col-md-6">
-                <div class="product-order-container bg-white-80 mt-3 mb-5 p-2">
-                    <h3 class="mb-0 font-weight-bold">Order:</h3>
+
+            <!-- Product Order Container -->
+            <div class="col-12 col-lg-4">
+                <div class="mt-3 mb-5 p-2">
+                    <h2 class="mb-0 font-weight-bold">Order:</h2>
                     <form class="form" action="{% url 'add_to_bag' product.id %}" method="POST">
                         {% csrf_token %}
                         <div class="form-row">
@@ -81,9 +65,9 @@
                                 {% if gluten %}
                                     {% with product.gluten_free_option as option %}
                                         {% if option %}
-                                            <div class="col-12">
-                                                <p class="mt-3"><strong>Dietary Requirement:</strong></p>
-                                                <select class="form-control text-black border-green w-50" name="gluten_free_option" id='id_gluten_free_option'>
+                                            <div class="col-12 col-md-6 col-lg-12">
+                                                <p class="lead mb-0 text-left font-weight-bold"><strong>Dietary Requirement:</strong></p>
+                                                <select class="form-control border-green" name="gluten_free_option" id='id_gluten_free_option'>
                                                     <option value="gluten free" selected>Gluten Free</option>
                                                     <option value="regular">Regular</option>
                                                 </select>
@@ -91,9 +75,9 @@
                                         {% endif %}
                                     {% endwith %}
                                 {% endif %}
-                            <div class="col-12">
-                                <p class="mt-3"><strong>Quantity:</strong></p>
-                                <div class="form-group border-green w-50">
+                            <div class="col-12 col-md-6 col-lg-12">
+                                <p class="mt-3 mt-md-0 mt-lg-3 lead mb-0 text-left font-weight-bold"><strong>Quantity:</strong></p>
+                                <div class="form-group border-green">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <button class="decrement-qty btn btn-green" 
@@ -103,7 +87,7 @@
                                                 </span>
                                             </button>
                                         </div>
-                                        <input class="form-control text-black qty_input" type="number" name="quantity" value="1" min="1" max="99" data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
+                                        <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99" data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
                                         <div class="input-group-append">
                                             <button class="increment-qty btn btn-green" 
                                                 data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
@@ -117,18 +101,18 @@
                             </div>
                     
                             <div class="col-12">
-                                <div class="row">
-                                    <div class="col-12 w-100">
-                                        <a href="{% url 'products' %}" class="btn btn-amber">
+                                <!--<div class="row">
+                                    <div class="col-12 w-100">-->
+                                        <a href="{% url 'products' %}" class="btn btn-amber mt-1">
                                             <span class="icon">
                                                 <i class="fas fa-chevron-left"></i>
                                             </span>
                                             <span>Keep Shopping</span>
                                         </a>
                                 
-                                        <input type="submit" class="btn btn-green" value="Add to Bag">
-                                    </div>
-                                </div>
+                                        <input type="submit" class="btn btn-green mt-1" value="Add to Bag">
+                                    <!--</div>
+                                </div>-->
                             </div>
                             <input type="hidden" name="redirect_url" value="{{ request.path }}">
                             {% endwith %}

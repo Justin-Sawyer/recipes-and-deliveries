@@ -68,16 +68,16 @@
                 </div>
             {% endfor %}
             <hr class="my-0">
-            <div class="row text-black text-right">
+            <div class="row text-right">
                 <div class="col-7 offset-2">
                     <p class="my-0">Order Total:</p>
                     <p class="my-0">Delivery:</p>
-                    <p class="my-0">Grand Total:</p>
+                    <p class="my-0 font-weight-bold">Grand Total:</p>
                 </div>
                 <div class="col-3">
                     <p class="my-0">€{{ total | floatformat:2 }}</p>
                     <p class="my-0">€{{ delivery | floatformat:2 }}</p>
-                    <p class="my-0"><strong>€{{ grand_total | floatformat:2 }}</strong></p>
+                    <p class="my-0 font-weight-bold">€{{ grand_total | floatformat:2 }}</p>
                 </div>
             </div>
         </div>
@@ -88,12 +88,12 @@
             <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                 {% csrf_token %}
                 <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Details</legend>
+                    <legend class="fieldset-label small px-2 w-auto">Details</legend>
                     {{ order_form.full_name | as_crispy_field }}
                     {{ order_form.email | as_crispy_field }}
                 </fieldset>
                 <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery</legend>
+                    <legend class="fieldset-label small px-2 w-auto">Delivery</legend>
                     {{ order_form.phone_number | as_crispy_field }}
                     {{ order_form.street_address1 | as_crispy_field }}
                     {{ order_form.street_address2 | as_crispy_field }}
@@ -115,7 +115,7 @@
                 </fieldset>
                 <!-- Stripe payment divs -->
                 <fieldset class="px-3">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
+                    <legend class="fieldset-label small px-2 w-auto">Payment</legend>
                     <!-- A Stripe card element will go here -->
                     <div class="mb-3" id="card-element"></div>
 

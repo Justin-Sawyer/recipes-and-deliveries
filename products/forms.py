@@ -1,8 +1,14 @@
 from django import forms
+from .widgets import CustomClearableFileInput
 from .models import Product, Category
 
 
 class ProductForm(forms.ModelForm):
+
+    # Replace image field
+    image = forms.ImageField(label='Image',
+                             required=False,
+                             widget=CustomClearableFileInput)
 
     class Meta():
         model = Product
@@ -13,7 +19,6 @@ class ProductForm(forms.ModelForm):
         categories = Category.objects.all()
         friendly_name = [(c.id, c.get_friendly_name()) for c in categories]
         sku = Product.objects.order_by('sku').last()
-        print(sku)
 
         placeholders = {
             'sku': f'Greater than {sku.sku}',
@@ -26,4 +31,4 @@ class ProductForm(forms.ModelForm):
 
         self.fields['category'].choices = friendly_name
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+            field.widget.attrs['class'] = 'border-primary'

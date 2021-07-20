@@ -33,16 +33,32 @@
         <div class="col-12 col-md-6">
             <form method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form | crispy }}
+                {% for field in form %}
+                    {% if field.name != 'image' %}
+                        {{ field | as_crispy_field }}
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
                 <label class="form-check-label" for="id-add-more-products">Add more products?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-products" name="add-more-products" checked>
                 <div class="text-right">
-                    <a class="btn btn-amber" href="{% url 'products' %}">Cancel</a>
-                    <button class="btn btn-green" type="submit">Add Product</button>
+                    <a class="btn btn-red" href="{% url 'products' %}">Cancel</a>
+                    <button class="btn btn-info" type="submit">Add Product</button>
                 </div>
             </form>
         </div>
     </div>       
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $('#new-image').change(function() {
+            let file = $('#new-image')[0].files[0];
+            $('#filename').text(`Image will be set to: ${file.name}`);
+        })
+    </script>
 {% endblock %}
 
