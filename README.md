@@ -476,17 +476,6 @@ From here, the devloper could delete the original JavaScript code from the indiv
 #### Recipes
 
 # Deployment
-
-
-The deployment process listed below assumes that you have
-1. A GitHub Account
-2. A Heroku Account
-3. A Stripe Account
-4. An Amazon AWS Account 
-
-## Clone this GitHub Repository 
-
-
 ## Deploying to Heroku
 ### Create the app at heroku.com 
 1. Create app and give it a name, then select your region.
@@ -905,6 +894,140 @@ Since the styling and images are available within the app (thanks to the use of 
 	```
 	STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+## Caching, Media Files & Admin
+
+### Caching
+
+If the media images and static files are unlikely to change often, they can be cached. Within the same `if` statement, add a cache control dictionary such as
+
+```
+if 'USE_AWS' in os.environ:
+    # Cache control
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'CacheControl': 'max-age=94608000',
+    }
+
+    # Bucket config (added above)
+```
+
+### Adding Media Files to S3
+
+1. Back in the aws.amazon.com site, create a new file in the relevant bucket called `media`
+
+2. Clik the file to open it, and then click "Upload", "Add files", and select all the images to be uploaded to AWS
+
+3. Under "Permissions", choose "Grant public read access" and acknowledge the risk
+
+4. Click "Upload"
+
+5. The live site should now render correctly, with styling and images displaying
+
+### Confirm admin status
+
+1. Log in to the live site using the superuser log in details from above and then navigate to `name-of-your-app.herokuapp.com/admin`
+
+2. In "Email addresses" confirm yourself as both Verified and Primary
+
+3. Click "Save"
+
+## Stripe
+
+### Stripe keys
+
+1. Go to your stripe.com account dashboard and navigate to "API keys"
+
+2. Add the "publishable key" and "Secret key" as variables in the Config Vars of your heroku dashboard
+
+	`STRIPE_PUBLIC_KEY` = Publishable key
+	
+	`STRIPE_SECRET_KEY` = Secret key
+
+### Webhooks
+
+1. Add new webhook endpoints by going to "Webhooks" in the Stripe dashboard and clicking "Add endpoint"
+
+2. Copy the url of the home page of the live site and add this to the webhook Endpoint URL box
+
+3. Add `checkout/wh/` to the end of the entered url
+
+4. Reveal the webhook signing secret and add this to a further variable in Config Vars of the heroku dashboard
+
+	`STRIPE_WH_SECRET` = Signing secret
+
+5. Test by sending a test webhook and checking the logged Response
+
+## Testing
+
+The site should now be live and runnig  perfectly. Test it by creating an order, checking the Events and Webhooks tabs in Stripe, and then by navigating to the admin of the site.
+
+## Emails
+
+For users to create accounts and use the site, they will need to receive emails. 
+
+### The email account
+
+1. Either set up an email account or use an existing account for the site. The easiest way to do this is in gmail.com
+
+2. Allow 2-step verification in gmail
+
+3. Go to "app passwords" and set a site specific password for the django app
+
+	`App`: set "email"
+	
+	`Device type`: set "django" (for example)
+
+4. Copy the 16 digit password and add this to the heroku dashboard Config Vars
+
+	`EMAIL_HOST_PASS` = the 16 digit passwird
+
+5. Set the email address in Config Vars
+
+	`EMAIL_HOST_USER` = the email account name (name@gmail.com...)
+
+### The live site
+
+1. Certain variables need to be set in app/settings.py. These are
+
+	```
+	if 'DEVELOPMENT' in os.environ:
+    	EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    	DEFAULT_FROM_EMAIL = '<emailaddresschosen@email.com>'
+	else:
+    	EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    	EMAIL_USE_TLS = True
+    	EMAIL_PORT = 587
+    	EMAIL_HOST = 'smtp.gmail.com'
+    	EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    	EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
+    	DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+	```
+
+2. Navigate to the live site's admin and go to "Sites"
+
+3. Set the "Domain name" and "Display name" as approrpiate
+
+4. Commit all changes
+
+	```
+	git add .
+	git commit -m ‘Email set up’
+	git push
+	```
+
+5. Test by creating a new account and verifiying email reception. Click the verification link in the email to verify the account and then log in
+
+# Cloning
+The cloning process listed below assumes that you have
+1. A GitHub Account
+2. A Heroku Account
+3. A Stripe Account
+4. An Amazon AWS Account 
+
+ ## Clone this GitHub Repository
+
+ 
 
 
 
