@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/product_title.css' %}">
+{% endblock %}
+
 {% block extra_title %}
  | Products
 {% endblock %}
@@ -26,7 +30,6 @@
                 {% else %}
                     <h2 class="font-weight-bold text-center text-md-left">Recipe Boxes</h2>
                 {% endif %}
-                <hbr>
             </div>
         </div>
         <!-- Main page content -->
@@ -71,7 +74,7 @@
                                 </a>
                                 {% endif %}
                                 <div class="card-body pb-0">
-                                    <p class="mb-0 font-weight-bold">{{ product.name }}</p>
+                                    <h3 class="mb-0 font-weight-bold product-name" style="font-size:1rem;">{{ product.name }}</h3>
                                 </div>
                                 <div class="card-footer bg-white pt-0 border-0 text-left">
                                     <div class="row">
