@@ -173,6 +173,7 @@ body {
 
 .card-header {
     background-color: rgba(239,108,47,0.5)!important;
+    font-size: 1.25rem;
 }
 
 .overlay {
@@ -428,6 +429,10 @@ input[name='q']::placeholder {
     .header-container {
         padding-top: 164px;
     }
+
+    #delivery-banner h2 {
+        font-size: 1.5rem !important;
+    }
 }
 
 /* pad the top a bit when navbar is collapsed on mobile */
@@ -465,8 +470,8 @@ input[name='q']::placeholder {
         font-size: 1rem;
     }
 
-    #delivery-banner h4 {
-        font-size: .9rem;
+    #delivery-banner h2 {
+        font-size: .9rem !important;
     }
 
     .product-button {

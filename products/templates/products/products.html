@@ -146,19 +146,19 @@
     {{ block.super }}
     {% include 'products/includes/number_of_stars_according_to_rating.html' %}
 
-    <script type="text/javascript">
+    <script>
         // Back to top button
         $('.btt-link').click(function(e) {
             window.scrollTo(0,0);
         })
     </script>
 
-    <script type="text/javascript">
+    <script>
         // Remove last | from list of categories
         $( ".category-list span:last-child" ).text('');
     </script>
 
-    <script type="text/javascript">
+    <script>
         // Sorting by
         $('#sort-selector').change(function() {
             var selector = $(this);

@@ -23,10 +23,10 @@
                     Your one-stop-shop for Recipes and Deliveries
                 </h2>
                 <div class="my-5">
-                    <h4>
+                    <h3>
                         <a href="" class="shop-now-button btn mb-3"><strong>Read Me!</strong></a>
                         <a href="{% url 'products' %}" class="shop-now-button btn mb-3 float-right"><strong>Feed Me!</strong></a>
-                    </h4>
+                    </h3>
                 </div>
                 <p>Find out more:</p>
                 <p>
@@ -37,7 +37,7 @@
                     <div class="col">
                         <div class="collapse mb-3" id="recipesCollapse">
                             <div class="card collapse-card">
-                                <h5 class="card-header">The <strong>Recipes</strong> Community</h5>
+                                <h4 class="card-header">The <strong>Recipes</strong> Community</h4>
                                 <div class="card-body">
                                     <h5 class="card-title">The Blog</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Write you own food articles</p>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="collapse mb-3" id="deliveriesCollapse">
                             <div class="card collapse-card">
-                                <h5 class="card-header">The <strong>Deliveries</strong> Service</h5>
+                                <h4 class="card-header">The <strong>Deliveries</strong> Service</h4>
                                 <div class="card-body">
                                     <h5 class="card-title">Recipe Boxes</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Order from a growing collection of recipe boxes</p>
@@ -90,7 +90,7 @@
 
 {% block postloadjs %}
 {{ block.super }}
-<script type="text/JavaScript">
+<script>
     $('#recipesCollapse').on('shown.bs.collapse', function (e) {
         $('#deliveriesCollapse').collapse('hide');
     })
