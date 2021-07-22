@@ -1,0 +1,7 @@
+<p class="my-0 font-weight-bold">{{ item.product.name }}</p>
+{% if item.product.has_gluten %}
+    <p class="my-0">Dietary Requirement:
+        <strong class="text-green">{{ item.gf_option|upper }}</strong>
+    </p>
+{% endif %}
+<p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
