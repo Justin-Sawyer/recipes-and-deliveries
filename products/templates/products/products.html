@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'products/css/product_title.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 
 {% block extra_title %}
@@ -74,7 +74,7 @@
                                 </a>
                                 {% endif %}
                                 <div class="card-body pb-0">
-                                    <h3 class="mb-0 font-weight-bold product-name" style="font-size:1rem;">{{ product.name }}</h3>
+                                    <h3 class="mb-0 font-weight-bold product-name">{{ product.name }}</h3>
                                 </div>
                                 <div class="card-footer bg-white pt-0 border-0 text-left">
                                     <div class="row">
