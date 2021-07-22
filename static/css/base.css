@@ -447,9 +447,9 @@ input[name='q']::placeholder {
         height: calc(100vh - 116px);
     }
 
-    .display-4.logo-font.text-black {
+    /*.display-4.logo-font.text-black {
         font-size: 2rem;
-    }
+    }*/
 
     .nav-link {
         padding: 0.15rem;
@@ -468,16 +468,20 @@ input[name='q']::placeholder {
         font-size: .9rem;
     }
 
-    /*.btn.btn-outline-black.rounded-0,
-    .btn.btn-black.rounded-0 {
+    .product-button {
         padding: .375rem .375rem;
     }
 
-    .btn.btn-outline-black.rounded-0.btn-lg,
+    /*.btn.btn-outline-black.rounded-0.btn-lg,
     .btn.btn-black.rounded-0.btn-lg {
         padding: .375rem .375rem;
         font-size: .75rem;
     }*/
+
+    .bag-button {
+        padding: .375rem .375rem;
+        font-size: .75rem;
+    }
 
     .increment-qty, .decrement-qty {
         padding: .25rem .5rem !important;

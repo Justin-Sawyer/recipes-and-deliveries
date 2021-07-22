@@ -29,6 +29,7 @@
     position: relative;
     right: .5rem;
 }
+
 #payment-form .form-control,
 #card-element {
     color: #000;
@@ -43,6 +44,10 @@ select option {
 select:invalid,
 select option[value=""] {
     color: #aab7c4 !important
+}
+
+.wordbreak {
+    word-break: break-all;
 }
 
 /*------------------------------------------------------- Overlay */

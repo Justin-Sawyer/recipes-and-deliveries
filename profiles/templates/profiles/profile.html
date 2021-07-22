@@ -21,25 +21,25 @@
 <div class="overlay"></div>
 <div class="container content mb-3">
     <div class="row">
-        <div class="col">
+        <div class="col mt-3">
+            <h2 class="font-weight-bold">{{ user.username }}'s Profile</h2>
             <br>
-            <h2 class="font-weight-bold">My Profile</h2>
-            <br>
+
             <div class="row">
-                <div class="col-12 col-lg-6">
-                    <p>Profile Details</p>
-                    <p>My Username: <span class="font-weight-bold">{{user.username}}</span></p>
-                    <p>My Email: <span class="font-weight-bold">{{user.email}}</span></p>
-                    <p>Default Delivery Information</p>
-                    
+                <div class="col-12 col-md-6 col-lg-4 mb-md-2">
+                    <p>My Profile Details</p>
+                    <p class="mb-0">Username: <span class="font-weight-bold">{{user.username}}</span></p>
+                    <p>Email: <span class="font-weight-bold">{{user.email}}</span></p>
+                    <p>My Default Delivery Information</p>    
                     <form class="mt-3" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <button class="btn btn-green float-right">Update Information</button>
                     </form>
                 </div>
-                <div class="col-12 col-lg-6">
-                    <p>Order History</p>
+
+                <div class="col-12 col-md-6 col-lg-4 mt-2 mt-lg-0 mb-md-2">
+                    <p>My Order History</p>
                     <div class="order-history table-responsive">
                         <table class="table table-sm table-borderless">
                             <thead>
@@ -70,13 +70,34 @@
                                                     </li>
                                                 {% endfor%}
                                             </ul>
-                                            <hr>
                                         </td>
                                         <td>€{{ order.grand_total }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 mt-2 mt-lg-0">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-12"><p>My Articles</p>  
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque nemo tenetur, libero
+                                minima blanditiis saepe commodi omnis totam, quidem consectetur rerum ut adipisci sunt
+                                praesentium aspernatur voluptate! Eum, debitis quasi.
+                            </p>
+                            <br>
+                        </div>
+                    
+                        <div class="col-12 col-md-6 col-lg-12"><p>My Recipes</p> 
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque nemo tenetur, libero
+                                minima blanditiis saepe commodi omnis totam, quidem consectetur rerum ut adipisci sunt
+                                praesentium aspernatur voluptate! Eum, debitis quasi.
+                            </p>
+                            <br>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,4 +109,5 @@
 {% block postloadjs %}
 {{ block.super }}
     <script type="text/javascript" src="{% static 'profiles/js/countryfield.js' %}"></script>
+    <script type="text/javascript" src="{% static 'profiles/js/table-row-color.js' %}"></script>
 {% endblock %}
