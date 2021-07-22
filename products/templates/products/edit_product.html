@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block extra_title %}
- | Product Management
+ | Edit {{ product.name }}
 {% endblock %}
 
 {% block page_header %}
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-12 col-md-6 mt-3">
             <h2 class="font-weight-bold">Product Management</h2>
-            <h5 class="text-muted">Edit a Product</h5>
+            <h5 class="text-primary">You are editing {{ product.name }}</h5>
             <br>
         </div>
     </div>
@@ -54,8 +54,9 @@
 {% block postloadjs %}
     {{ block.super }}
     <script>
-        $('#new-image').change(function() {
-            let file = $('#new-image')[0].files[0];
+        $('.btn-file').children('input').addClass('new-image');
+        $('.new-image').change(function() {
+            let file = $('.new-image')[0].files[0];
             $('#filename').text(`Image will be set to ${file.name}`);
         })
     </script>
