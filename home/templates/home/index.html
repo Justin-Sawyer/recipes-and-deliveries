@@ -22,13 +22,10 @@
                 <h2 class="display-4 logo-font slogan">
                     Your one-stop-shop for Recipes and Deliveries
                 </h2>
-                <div class="my-5">
-                    <h3>
-                        <a href="" class="shop-now-button btn mb-3"><strong>Read Me!</strong></a>
-                        <a href="{% url 'products' %}" class="shop-now-button btn mb-3 float-right"><strong>Feed Me!</strong></a>
-                    </h3>
-                </div>
+                <p>You've found your new culinary home. Too busy to cook at home? Order our Recipe Boxes!</p>
+                <p>Amateur chef? Share your creations and gain inspiration from others in the community.</p>
                 <p>Find out more:</p>
+                
                 <p>
                     <button class="info-button btn btn-amber mb-3" type="button" data-toggle="collapse" data-target="#recipesCollapse" aria-expanded="false" aria-controls="recipesCollapse"><strong>Recipes</strong></button>
                     <button class="info-button btn btn-amber mb-3 float-right" type="button" data-toggle="collapse" data-target="#deliveriesCollapse" aria-expanded="false" aria-controls="deliveriesCollapse"><strong>Deliveries</strong></button>
@@ -72,7 +69,7 @@
                                     <a href="{% url 'products' %}" class="btn btn-green">Go to the Recipe Box selection</a>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">The Recipes and Deliveries Guarantee</h5>
+                                    <h5 class="card-title">The <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> Guarantee</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> 100% recycled packaging</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Cold chain guaranteed</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Deliveries guaranteed within 24 hrs on your order</p>
@@ -83,6 +80,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="my-5">
+                    <h3>
+                        <a href="{% url 'blog-home' %}" class="shop-now-button btn mb-3"><strong>Read Me!</strong></a>
+                        <a href="{% url 'products' %}" class="shop-now-button btn mb-3 float-right"><strong>Feed Me!</strong></a>
+                    </h3>
+                </div>
             </div>
         </div>
     </div>
@@ -91,10 +94,10 @@
 {% block postloadjs %}
 {{ block.super }}
 <script>
-    $('#recipesCollapse').on('shown.bs.collapse', function (e) {
+    $('#recipesCollapse').on('show.bs.collapse', function (e) {
         $('#deliveriesCollapse').collapse('hide');
     })
-    $('#deliveriesCollapse').on('shown.bs.collapse', function (e) {
+    $('#deliveriesCollapse').on('show.bs.collapse', function (e) {
         $('#recipesCollapse').collapse('hide');
     })
 </script>

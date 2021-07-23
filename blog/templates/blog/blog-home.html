@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+ | Blog Home
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <!--<div class="overlay-image"></div>-->
+    <div class="container content mb-3">
+        <div class="row">
+            <div class="col-12 col-md-6 my-auto">
+                <h1 class="d-lg-none my-0 body-site-title"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
+                <br>
+                <h2 class="display-4 logo-font slogan">
+                    Welcome to the <br>Recipes and Deliveries Community!
+                </h2>
+                <p>This is your site. It is yours to create and share articles about food and recipes you have enjoyed.</p>
+                <p>As a guest, you are can enjoy all of the articles, however there are advantages to being a registered member!</p>
+                <p>Find out more:</p>
+                <p>
+                    <button class="info-button btn btn-amber mb-3" type="button" data-toggle="collapse" data-target="#guestCollapse" aria-expanded="false" aria-controls="guestCollapse"><strong>Guests</strong></button>
+                    <button class="info-button btn btn-amber mb-3 float-right" type="button" data-toggle="collapse" data-target="#memberCollapse" aria-expanded="false" aria-controls="memberCollapse"><strong>Members</strong></button>
+                </p>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse mb-3" id="guestCollapse">
+                            <div class="card collapse-card">
+                                <h4 class="card-header">The <strong>Guest</strong> Community</h4>
+                                <div class="card-body">
+                                    <h5 class="card-title">The Blog</h5>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the blog articles</p>
+                                    <a href="#" class="btn btn-green">Go to the Blog</a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">The Recipes</h5>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the recipes*</p>
+                                    <a href="#" class="btn btn-green">Go to the Recipes</a>
+                                    <br>
+                                    <br>
+                                    <p class="card-text small text-right">
+                                        *Registered members get full access to each recipe, including all the ingredient quantities and directions.
+                                        As a guest, we restrict access to some parts of a recipe card for commercial reasons.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse mb-3" id="memberCollapse">
+                            <div class="card collapse-card">
+                                <h4 class="card-header">The <strong>Members</strong> Community</h4>
+                                <div class="card-body">
+                                    <h5 class="card-title">The Blog</h5>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the blog articles</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Write you own food articles</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Comment and contribute to the community</p>
+                                    <a href="#" class="btn btn-green">Go to the Blog</a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">The Recipes</h5>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Add your own recipes</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Upvote and comment other community recipes</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Earn credits when your recipe is ordered as a recipe box*</p>
+                                    <a href="#" class="btn btn-green">Go to the Recipes</a>
+                                    <br>
+                                    <br>
+                                    <p class="card-text small text-right">
+                                        *Every month, the top upvoted community recipe is added as a recipe box, and can be ordered. 
+                                        If your recipe is then ordered, you are issued with a credit. 
+                                        That credit is applied when you order your next recipe boxes.
+                                        Earn enough credits, and you could eat for free!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-5">
+                    <h3>
+                        <a href="" class="shop-now-button btn mb-3"><strong>Blog Articles</strong></a>
+                        <a href="" class="shop-now-button btn mb-3 float-right"><strong>Recipes</strong></a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script>
+    // Photo by cottonbro from Pexels https://www.pexels.com/photo/selective-focus-photography-of-man-preparing-food-beside-smiling-women-and-kids-3171151/
+    $('body').css('background-image', 'url(/media/community-overlay.jpg)');
+    $('#guestCollapse').on('show.bs.collapse', function (e) {
+        $('#memberCollapse').collapse('hide');
+    })
+    $('#memberCollapse').on('show.bs.collapse', function (e) {
+        $('#guestCollapse').collapse('hide');
+    })
+</script>
+{% endblock %}
+

@@ -16,11 +16,11 @@
 {% block content %}
     <div class="container content mb-3">
         <div class="row">
-            <div class="col-12 col-md-6 my-auto">
+            <div class="col-12 col-md-6 my-auto text-white">
                 <h1 class="d-lg-none my-0 body-site-title"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
                 <br>
                 <h2 class="display-4 logo-font slogan">
-                    Your Recipes and Deliveries Guarantee
+                    Your <br>Recipes and Deliveries Guarantee
                 </h2>
                 <div class="my-5">
                     <h3 class="font-weight-bold"><i class="fas fa-tractor text-green"></i> Track and Trace</h3>
@@ -56,6 +56,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+<script>
+    // Photo by James Cheney from Pexels https://www.pexels.com/photo/yellow-farm-tractor-2575135/
+    $('body').css('background-image', 'url(/media/guarantee-overlay.jpg)');
+</script>
 {% endblock %}
 
 
