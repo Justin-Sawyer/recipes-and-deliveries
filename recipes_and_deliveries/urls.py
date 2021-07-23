@@ -13,6 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# Favicon code from https://simpleit.rocks/python/django/django-favicon-adding/
+
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -27,4 +31,8 @@ urlpatterns = [
     path('checkout/', include('checkout.urls')),
     path('profile/', include('profiles.urls')),
     path('blog/', include('blog.urls')),
+    path(
+        "favicon.ico",
+        RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
