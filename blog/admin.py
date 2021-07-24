@@ -20,6 +20,7 @@ class CategoryAdmin(admin.ModelAdmin):
         'sku',
     )
 
+
 class TagAdmin(admin.ModelAdmin):
     list_display = (
         'tagname',
