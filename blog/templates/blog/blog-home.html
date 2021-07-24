@@ -14,8 +14,7 @@
 {% endblock %}
 
 {% block content %}
-    <!--<div class="overlay-image"></div>-->
-    <div class="container content mb-3">
+    <div class="container content mb-2">
         <div class="row">
             <div class="col-12 col-md-6 my-auto">
                 <h1 class="d-lg-none my-0 body-site-title"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
@@ -38,7 +37,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">The Blog</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the blog articles</p>
-                                    <a href="#" class="btn btn-green">Go to the Blog</a>
+                                    <a href="{% url 'blog-articles' %}" class="btn btn-green">Go to the Blog</a>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">The Recipes</h5>
@@ -61,7 +60,7 @@
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the blog articles</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Write you own food articles</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Comment and contribute to the community</p>
-                                    <a href="#" class="btn btn-green">Go to the Blog</a>
+                                    <a href="{% url 'blog-articles' %}" class="btn btn-green">Go to the Blog</a>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">The Recipes</h5>
@@ -84,7 +83,7 @@
                 </div>
                 <div class="my-5">
                     <h3>
-                        <a href="" class="shop-now-button btn mb-3"><strong>Blog Articles</strong></a>
+                        <a href="{% url 'blog-articles' %}" class="shop-now-button btn mb-3"><strong>Blog Articles</strong></a>
                         <a href="" class="shop-now-button btn mb-3 float-right"><strong>Recipes</strong></a>
                     </h3>
                 </div>
@@ -96,7 +95,7 @@
 {% block postloadjs %}
 {{ block.super }}
 <script>
-    // Photo by cottonbro from Pexels https://www.pexels.com/photo/selective-focus-photography-of-man-preparing-food-beside-smiling-women-and-kids-3171151/
+    // Photo by Maksim Goncharenok from Pexels https://www.pexels.com/photo/food-vegetables-man-love-6163277/
     $('body').css('background-image', 'url(https://recipe-and-deliveries.s3.eu-west-3.amazonaws.com/media/community-overlay.jpg)');
     $('#guestCollapse').on('show.bs.collapse', function (e) {
         $('#memberCollapse').collapse('hide');
