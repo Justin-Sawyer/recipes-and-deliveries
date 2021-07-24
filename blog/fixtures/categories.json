@@ -3,7 +3,7 @@
       "pk": 1,
       "model": "blog.category",
       "fields": {
-        "sku": "a1",
+        "sku": "bga1",
         "name": "asian",
         "friendly_name": "Asian"
       }
@@ -12,7 +12,7 @@
       "pk": 2,
       "model": "blog.category",
       "fields": {
-        "sku": "a2",
+        "sku": "bga2",
         "name": "european",
         "friendly_name": "European"
       }
@@ -21,7 +21,7 @@
       "pk": 3,
       "model": "blog.category",
       "fields": {
-        "sku": "a3",
+        "sku": "bga3",
         "name": "maghreb_african",
         "friendly_name": "Maghreb & African"
       }
@@ -30,7 +30,7 @@
       "pk": 4,
       "model": "blog.category",
       "fields": {
-        "sku": "a4",
+        "sku": "bga4",
         "name": "north_american",
         "friendly_name": "North American"
       }
@@ -39,7 +39,7 @@
       "pk": 5,
       "model": "blog.category",
       "fields": {
-        "sku": "a5",
+        "sku": "bga5",
         "name": "south_american",
         "friendly_name": "South American"
       }
@@ -48,7 +48,7 @@
       "pk": 6,
       "model": "blog.category",
       "fields": {
-        "sku": "b1",
+        "sku": "bgb1",
         "name": "vegetarian",
         "friendly_name": "Vegetarian"
       }
@@ -57,7 +57,7 @@
       "pk": 7,
       "model": "blog.category",
       "fields": {
-        "sku": "b2",
+        "sku": "bgb2",
         "name": "vegan",
         "friendly_name": "Vegan"
       }
@@ -66,7 +66,7 @@
       "pk": 8,
       "model": "blog.category",
       "fields": {
-        "sku": "b3",
+        "sku": "bgb3",
         "name": "gluten_free",
         "friendly_name": "Gluten Free"
       }
@@ -75,7 +75,7 @@
       "pk": 9,
       "model": "blog.category",
       "fields": {
-        "sku": "b4",
+        "sku": "bgb4",
         "name": "unrestricted",
         "friendly_name": "Unrestricted"
       }
@@ -84,7 +84,7 @@
       "pk": 10,
       "model": "blog.category",
       "fields": {
-        "sku": "c1",
+        "sku": "bgc1",
         "name": "breakfast",
         "friendly_name": "Breakfast"
       }
@@ -93,7 +93,7 @@
       "pk": 11,
       "model": "blog.category",
       "fields": {
-        "sku": "c2",
+        "sku": "bgc2",
         "name": "lunch",
         "friendly_name": "Lunch"
       }
@@ -102,7 +102,7 @@
       "pk": 12,
       "model": "blog.category",
       "fields": {
-        "sku": "c3",
+        "sku": "bgc3",
         "name": "dinner",
         "friendly_name": "Dinner"
       }
