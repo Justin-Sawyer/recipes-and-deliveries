@@ -10,7 +10,7 @@ def blog_home(request):
 
 def all_blog_articles(request):
     """ A view to return all blog articles """
-    posts = Post.objects.all().order_by('-title')
+    posts = Post.objects.all()
 
     template = 'blog/blog-articles.html'
 
