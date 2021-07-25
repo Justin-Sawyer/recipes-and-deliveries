@@ -7,7 +7,7 @@ class PostAdmin(admin.ModelAdmin):
         'title',
         'author',
         'date_posted',
-        # 'date_edited',
+        'date_edited',
     )
 
     ordering = ('title',)
