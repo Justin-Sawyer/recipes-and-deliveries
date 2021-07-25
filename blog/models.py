@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-# from django.utils import timezone
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -45,8 +45,8 @@ class Post(models.Model):
     content = models.TextField()
     # date = models.DateTimeField(default=datetime.now, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    # date_posted = models.DateTimeField(null=True, blank=True, default=timezone.now)
-    # date_edited = models.DateTimeField(auto_now=True)
+    date_posted = models.DateTimeField(null=True, blank=True, default=timezone.now)
+    date_edited = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
