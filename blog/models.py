@@ -43,7 +43,7 @@ class Post(models.Model):
     image_credit = models.CharField(max_length=254, default="", blank=False)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
-    date_edited = models.DateTimeField(auto_now=True)
+    # date_edited = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
