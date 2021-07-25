@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Post, Category, Tag
 
@@ -18,3 +18,14 @@ def all_blog_articles(request):
         'posts': posts
     }
     return render(request, template, context)
+
+
+def article(request, post_id):
+    """ A view to show an individual blog article """
+    post = get_object_or_404(Post, pk=post_id)
+
+    context = {
+        'post': post
+    }
+
+    return render(request, 'blog/article.html', context)

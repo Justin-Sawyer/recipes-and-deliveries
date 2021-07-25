@@ -81,7 +81,7 @@
                                         <div class="col">
                                             <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
                                             {% if product.category %}
-                                                <p class="category-list small mt-1 mb-0"><i class="fas fa-tag text-muted mr-1"></i>
+                                                <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
                                                     {% for cat in product.category.all %}
                                                     <a class="text-muted text-green font-weight-bold" href="{% url 'products' %}?category={{ cat.name }}">
                                                         {{ cat.friendly_name }}
@@ -148,17 +148,13 @@
 {% block postloadjs %}
     {{ block.super }}
     {% include 'products/includes/number_of_stars_according_to_rating.html' %}
+    {% include 'products/includes/remove_last_pipe.html' %}
 
     <script>
         // Back to top button
         $('.btt-link').click(function(e) {
             window.scrollTo(0,0);
         })
-    </script>
-
-    <script>
-        // Remove last | from list of categories
-        $( ".category-list span:last-child" ).text('');
     </script>
 
     <script>

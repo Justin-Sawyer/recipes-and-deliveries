@@ -32,11 +32,11 @@
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                             <div class="card h-100 border-0">
                                 {% if post.image %}
-                                <a href="">
+                                <a href="{% url 'article' post.id %}">
                                     <img class="card-img-top img-fluid card-image" src="{{ post.image.url }}" alt="{{ post.title }}">
                                 </a>
                                 {% else %}
-                                <a href="">
+                                <a href="{% url 'article' post.id %}">
                                     <img class="card-img-top img-fluid card-image" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
                                 </a>
                                 {% endif %}
@@ -48,7 +48,7 @@
                                         <div class="col">
                                             <p class="mb-0 text-left text-black">{{ post.tagline }}</p>
                                             {% if post.category %}
-                                            <p class="category-list small mt-1 mb-0"><i class="fas fa-tag text-muted mr-1"></i>
+                                            <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
                                                 {% for cat in post.category.all %}
                                                 <a class="text-muted text-green font-weight-bold" href="">
                                                     {{ cat.friendly_name }}
@@ -57,9 +57,9 @@
                                             </p>
                                             {% endif %}
                                             {% if post.tag %}
-                                            <p class="category-list small mt-1 mb-0"><i class="fas fa-tag text-muted mr-1"></i>
+                                            <p class="category-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
                                                 {% for t in post.tag.all %}
-                                                <a class="text-muted text-green font-weight-bold" href="">
+                                                <a class="text-muted text-amber font-weight-bold" href="">
                                                     {{ t.tagname|title }}
                                                 </a><span class="category-link-divider">|</span>
                                                 {% endfor %}
@@ -67,7 +67,11 @@
                                             {% else %}
                                                 <p class="text-muted"><small>No tags</small></p>
                                             {% endif %}
-                                            <small>Posted by: {{ post.author }}</small>
+                                            {% if post.author.is_superuser%}
+                                                <small class="text-muted author" id="rating">Posted by: <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
+                                            {% else %}
+                                                <small class="text-muted author" id="rating">Posted by: {{ post.author }}</small>
+                                            {% endif %}
                                             {% if request.user.is_superuser %}
                                                 <small>
                                                     <a class="text-primary" href="">Edit</a> |
@@ -116,6 +120,7 @@
 {% block postloadjs %}
     {{ block.super }}
     {% include 'products/includes/number_of_stars_according_to_rating.html' %}
+    {% include 'blog/includes/remove_last_pipe.html' %}
 
     <script>
         // Back to top button

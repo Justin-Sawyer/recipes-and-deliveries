@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
+{% block extra_title %}
+ | {{ post.title|title }}
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    {% if post.image %}
+        <img class="img-fluid header-image-container" src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% else %}
+        <img class="img-fluid" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ post.title }}">
+    {% endif %}
+    <div class="container content mb-2">
+        <!-- Page title row -->
+        <div class="row mt-3">
+            <!-- Product col -->
+            <div class="col-12 col-md-8">
+                <h2 class="font-weight-bold">{{ post.title|title }}</h2>
+                <!--<p class="lead mb-0 text-left font-weight-bold">€{{ post.price }}</p>-->
+                {% if post.category %}
+                    <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                        {% for cat in post.category.all %}
+                        <a class="text-muted text-green font-weight-bold" href="{% url 'products' %}?category={{ cat.name }}">
+                            {{ cat.friendly_name }}
+                        </a><span class="category-link-divider">|</span>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+                {% if post.tag %}
+                    <p class="category-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                        {% for t in post.tag.all %}
+                        <a class="text-muted text-amber font-weight-bold" href="{% url 'products' %}?category={{ cat.name }}">
+                            {{ t.tagname|title }}
+                        </a><span class="category-link-divider">|</span>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+                <div class="mb-3">
+                {% if post.author.is_superuser%}
+                    <small class="text-muted author" id="rating">Posted by: <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
+                {% else %}
+                    <small class="text-muted author" id="rating">Posted by: {{ post.author }}</small>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                    <small class="ml-3">
+                        <a class="text-primary" href="{% url 'edit_product' post.id %}">Edit</a> |
+                        <a class="text-danger" href="{% url 'delete_product' post.id %}">Delete</a>
+                    </small>
+                {% endif %}</div>
+                {{ post.content |linebreaks}}
+                {% if post.image_credit %}
+                    <p class="text-muted image-credit"><small><i class="far fa-image mr-1"></i> Image: {{ post.image_credit }}</small></p>
+                {% endif %}
+            </div>
+            <div class="col-12 col-md-4">
+                <h2 class="font-weight-bold">Similar Articles</h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {% include 'products/includes/quantity_input_script.html' %}
+    {% include 'products/includes/number_of_stars_according_to_rating.html' %}
+    {% include 'blog/includes/remove_last_pipe.html' %}
+{% endblock %}
