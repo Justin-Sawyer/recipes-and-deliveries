@@ -56,7 +56,9 @@
                             {% if search_term or current_categories or current_sorting != 'None_None' %}
                                 <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}">Products Home</a> | </span>
                             {% endif %}
-                            {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                            {{ products|length }}{% if products|length == 1 %} Product {% else %} Products {% endif %}
+                            {% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                            {% if current_categories %} found for <strong class="category-name">"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong> category{% endif %}
                         </p>
                     </div>
                 </div>

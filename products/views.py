@@ -17,6 +17,7 @@ def all_products(request):
     sort = None
     direction = None
     if request.GET:
+        # Sort products via the dropdown menu
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
             sort = sortkey
@@ -32,11 +33,13 @@ def all_products(request):
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
 
+        # Sort products by category
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             products = products.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
 
+        # Searching by product name or description
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
