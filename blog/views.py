@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from .models import Post, Category, Tag
+from django.contrib.auth.models import User
 
 
 def blog_home(request):
@@ -14,11 +15,15 @@ def blog_home(request):
 def all_blog_articles(request):
     """ A view to return all blog articles """
     posts = Post.objects.all().order_by('-pk')
+    # print(posts)
+    # authors = User.objects.all().order_by('username')
+    # print(authors)
+    authors = None
     categories = None
     tags = None
     sort = None
     direction = None
-    search = None
+    blog_query = None
 
     if request.GET:
         # Sort products via the dropdown menu
@@ -28,8 +33,6 @@ def all_blog_articles(request):
             if sortkey == 'title':
                 sortkey = 'lower_title'
                 posts = posts.annotate(lower_title=Lower('title'))
-            if sortkey == 'category':
-                sortkey = 'category__name'
 
             if 'direction' in request.GET:
                 direction = request.GET['direction']
@@ -48,17 +51,22 @@ def all_blog_articles(request):
             tags = request.GET['tag'].split(',')
             posts = posts.filter(tag__tagname__in=tags)
             tags = Tag.objects.filter(tagname__in=tags)
+
+        if 'author' in request.GET:
+            authors = request.GET['author'].split(',')
+            posts = posts.filter(author_id__username__in=authors)
+            authors = User.objects.filter(username__in=authors)
         
         # Searching articles by name or description
         if 'q' in request.GET:
-            search = request.GET['q']
-            if not search:
+            blog_query = request.GET['q']
+            if not blog_query:
                 messages.error(request,
                                "You didn't enter any search criteria!")
                 return redirect(reverse('blog-articles'))
 
-            queries = Q(title__icontains=search) | Q(
-                content__icontains=search)
+            queries = Q(title__icontains=blog_query) | Q(
+                tagline__icontains=blog_query)
             posts = posts.filter(queries)
     
     current_sorting = f'{sort}_{direction}'
@@ -67,10 +75,11 @@ def all_blog_articles(request):
 
     context = {
         'posts': posts,
-        'search_term': search,
+        'search_term': blog_query,
         'current_categories': categories,
         'current_tags': tags,
         'current_sorting': current_sorting,
+        'current_authors': authors,
     }
     return render(request, template, context)
 

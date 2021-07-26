@@ -53,13 +53,17 @@
                     <p class="text-muted"><small>No tags</small></p>
                 {% endif %}
                 <div class="mb-3">
-                {% if post.author.is_superuser%}
-                    <small class="text-muted author" id="author">
-                        Posted by: <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> on {{ post.date_posted }}
+                {% if post.author.is_superuser %}
+                    <small class="text-muted author">Posted by: 
+                        <a class="text-muted text-green font-weight-bold" href="{% url 'blog-articles' %}?author={{ post.author }}">
+                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                        </a> on {{ post.date_posted }}
                     </small>
                 {% else %}
-                    <small class="text-muted author" id="author">
-                        Posted by: {{ post.author }} on {{ post.date_posted }}
+                    <small class="text-muted author">Posted by: 
+                        <a class="text-muted text-green font-weight-bold" href="{% url 'blog-articles' %}?author={{ post.author }}">
+                            {{ post.author }}
+                        </a> on {{ post.date_posted }}
                     </small>
                 {% endif %}
                 {% if request.user.is_superuser %}
