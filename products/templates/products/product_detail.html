@@ -22,7 +22,7 @@
     {% if product.image %}
         <img class="img-fluid header-image-container" src="{{ product.image.url }}" alt="{{ product.name }}">
     {% else %}
-        <img class="img-fluid" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+        <img class="img-fluid header-image-container" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
     {% endif %}
     <div class="container content mb-2">
         <!-- Page title row -->

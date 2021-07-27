@@ -24,7 +24,7 @@
     {% if post.image %}
         <img class="img-fluid header-image-container" src="{{ post.image.url }}" alt="{{ post.title }}">
     {% else %}
-        <img class="img-fluid" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ post.title }}">
+        <img class="img-fluid header-image-container" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ post.title }}">
     {% endif %}
 
     <!-- Main page content -->
