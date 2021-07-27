@@ -39,7 +39,7 @@ def all_products(request):
             products = products.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
 
-        # Searching by product name or description
+        """ Searching by product name or description
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -49,7 +49,7 @@ def all_products(request):
 
             queries = Q(name__icontains=query) | Q(
                 description__icontains=query)
-            products = products.filter(queries)
+            products = products.filter(queries)"""
 
     current_sorting = f'{sort}_{direction}'
 

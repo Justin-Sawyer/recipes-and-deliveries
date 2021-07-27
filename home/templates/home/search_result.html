@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block extra_title %}
+| Blog Articles
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container content mb-2">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <!-- Products Page title row -->
+            <div class="row">
+                <div class="col mt-3">
+                    {% if product_search_term %}
+                        <h2 class="font-weight-bold text-center text-md-left">"{{ product_search_term|title }}" Recipe Boxes</h2>
+                    {% else %}
+                        <h2 class="font-weight-bold text-center text-md-left">Recipe Boxes</h2>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Main page content -->
+            <div class="row">
+                <div class="product-container col-12 border-med-right">
+                    <div class="row mt-1 mb-2">
+                        <div class="col-12 order-md-first">
+                            <p class="mt-3 text-center text-md-left">
+                                {% if product_search_term != 'None_None' %}
+                                    <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}">Products Home</a> | </span>
+                                    {{ products|length }}{% if products|length == 1 %} Product {% else %} Products {% endif %}
+                                    {% if product_search_term %} found for <strong>"{{ product_search_term }}"</strong>{% endif %}
+                                {% else %}
+                                    <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}">Products Home</a> | </span>
+                                    {{ products|length }}{% if products|length == 1 %} Product {% else %} Products {% endif %}
+                                    {% if product_search_term %} found for <strong>"{{ product_search_term }}"</strong>{% endif %}                           
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% if products %}
+                            {% for product in products %}
+                                <div class="col-sm-12 col-lg-6">
+                                    <div class="card h-100 border-0">
+                                        {% if product.image %}
+                                        <a href="{% url 'product_detail' product.id %}">
+                                            <img class="card-img-top img-fluid card-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                        </a>
+                                        {% else %}
+                                        <a href="{% url 'product_detail' product.id %}">
+                                            <img class="card-img-top img-fluid card-image" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                                        </a>
+                                        {% endif %}
+                                        <div class="card-body pb-0">
+                                            <h3 class="mb-0 font-weight-bold product-name">{{ product.name }}</h3>
+                                        </div>
+                                        <div class="card-footer bg-white pt-0 border-0 text-left">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                                                    {% if product.category %}
+                                                        <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                                            {% for cat in product.category.all %}
+                                                            <a class="text-muted text-green font-weight-bold" href="{% url 'products' %}?category={{ cat.name }}">
+                                                                {{ cat.friendly_name }}
+                                                            </a><span class="category-link-divider">|</span>
+                                                            {% endfor %}
+                                                        </p>
+                                                    {% endif %}
+                                                    {% if product.rating %}
+                                                        <p class="text-muted small rating" id="rating_{{ product.id }}">
+                                                            {% for r in rating %}
+                                                                <!-- Star Rating here -->
+                                                            {% endfor %}
+                                                            {{ product.rating }} / 5
+                                                        </p>
+                                                    {% else %}
+                                                        <p class="text-muted"><small>No Rating</small></p>
+                                                    {% endif %}
+                                                    {% if request.user.is_superuser %}
+                                                        <small>
+                                                            <a class="text-primary" href="{% url 'edit_product' product.id %}">Edit</a> |
+                                                            <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                                                        </small>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                        
+                                {% if forloop.counter|divisibleby:2 %}
+                                    <div class="col-12 d-none d-sm-none d-md-none d-lg-block mb-5">
+                                        <hr>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                        <div class="col-12">
+                            <p>Cant't find the Recipe Box for you?</p>
+                            <p><a class="text-green" href = "mailto:recipesanddeliveries@gmail.com?subject = Recipe Box Idea&body = Message">Contact us</a> with your idea for the Recipe Box</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <!-- Blog Main Page Title row -->
+            <div class="row">
+                <!-- Page title -->
+                <div class="col mt-3">
+                    {% if post_search_term %}
+                        <h2 class="font-weight-bold text-center text-md-left title">"{{ post_search_term|title }}" Blog Articles</h2>
+                    {% else %}
+                        <h2 class="font-weight-bold text-center text-md-left title ">Blog Articles</h2>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Blog Main page content -->
+            <div class="row">
+                <div class="articles-container col-12 border-med-left">
+                    <div class="row mt-1 mb-2">
+                        <!-- Sorting by "" text-->
+                        <div class="col-12 order-md-first">
+                            <p class="mt-3 text-center text-md-left">
+                                {% if post_search_term  != 'None_None' %}
+                                    <span class="small font-weight-bold"><a class="text-green" href="{% url 'blog-articles' %}">Blog Home</a> | </span>
+                                    {{ posts|length }}{% if posts|length == 1 %} Article {% else %} Articles {% endif %}
+                                    {% if post_search_term %} found for <strong>"{{ post_search_term }}"</strong>{% endif %}  
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Posts -->
+                    <div class="row">
+                        {% if posts %}
+                            {% for post in posts %}
+                                <div class="col-sm-12 col-lg-6">
+                                    <div class="card h-100 border-0">
+                                        <!-- Image -->
+                                        {% if post.image %}
+                                            <a href="{% url 'article' post.id %}">
+                                                <img class="card-img-top img-fluid card-image" src="{{ post.image.url }}"
+                                                    alt="{{ post.title }}">
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'article' post.id %}">
+                                                <img class="card-img-top img-fluid card-image"
+                                                    src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                                            </a>
+                                        {% endif %}
+
+                                        <!-- Post Title -->
+                                        <div class="card-body pb-0">
+                                            <h3 class="mb-0 font-weight-bold title-name">{{ post.title|title }}</h3>
+                                        </div>
+                                        <div class="card-footer bg-white pt-0 border-0 text-left">
+                                            <div class="row">
+                                                <div class="col">
+
+                                                    <!-- Tagline -->
+                                                    <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
+
+                                                    <!-- Categories -->
+                                                    {% if post.category %}
+                                                        <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                                            {% for cat in post.category.all %}
+                                                            <a class="text-muted text-green font-weight-bold"
+                                                                href="{% url 'blog-articles' %}?category={{ cat.name }}">
+                                                                {{ cat.friendly_name }}
+                                                            </a><span class="category-link-divider">|</span>
+                                                            {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p class="text-muted"><small>No categories</small></p>
+                                                    {% endif %}
+
+                                                    <!-- Tags -->
+                                                    {% if post.tag %}
+                                                        <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                                                            {% for t in post.tag.all %}
+                                                            <a class="text-muted text-amber font-weight-bold"
+                                                                href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
+                                                                {{ t.tagname|title }}
+                                                            </a><span class="tag-link-divider">|</span>
+                                                            {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p class="text-muted"><small>No tags</small></p>
+                                                    {% endif %}
+
+                                                    <!-- Post author -->
+                                                    {% if post.author.is_superuser %}
+                                                        <small class="text-muted author">Posted by:
+                                                            <a class="text-muted text-green"
+                                                                href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                                                <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
+                                                        </a>
+                                                    {% else %}
+                                                        <small class="text-muted author">Posted by:
+                                                            <a class="text-muted text-green font-weight-bold"
+                                                                href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                                                {{ post.author }}
+                                                            </a>
+                                                        </small>
+                                                    {% endif %}
+
+                                                    <!-- Editing and deleting -->
+                                                    {% if request.user.is_superuser %}
+                                                        <div class="edit-delete">
+                                                            <small>
+                                                                <a class="text-primary" href="">Edit</a> |
+                                                                <a class="text-danger" href="">Delete</a>
+                                                            </small>
+                                                        </div>
+                                                    {% endif %}
+                                                    
+                                                    <!-- Date posted -->
+                                                    <div class="post-date">
+                                                        <small>{{ post.date_posted }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                  
+                                    {% if forloop.counter|divisibleby:2 %}
+                                        <div class="col-12 d-none d-sm-none d-md-none d-lg-block mb-5">
+                                            <hr>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                        <div class="col-12">
+                            <p>Can't find the article you want?</p>
+                            <p>Why not <a class="text-green" href="">write it</a> yourself?</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>
+<!-- Back to top button -->
+<div class="btt-button shadow-sm border border-green">
+    <a class="btt-link d-flex h-100">
+        <i class="fas fa-arrow-up text-green mx-auto my-auto"></i>
+    </a>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {% include 'home/includes/remove_last_pipe.html' %}
+    {% include 'home/includes/number_of_stars_according_to_rating.html'%}
+
+    <script>
+        // Back to top button
+        $('.btt-link').click(function (e) {
+            window.scrollTo(0, 0);
+        })
+    </script>
+
+    <script>
+        // Sorting by
+        $('#sort-selector').change(function () {
+            var selector = $(this);
+            var currentUrl = new URL(window.location);
+
+            var selectedVal = selector.val();
+            if (selectedVal != 'reset') {
+                var sort = selectedVal.split('_')[0];
+                var direction = selectedVal.split('_')[1];
+
+                currentUrl.searchParams.set('sort', sort);
+                currentUrl.searchParams.set('direction', direction);
+
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete('sort');
+                currentUrl.searchParams.delete('direction');
+
+                window.location.replace(currentUrl);
+            }
+        })
+    </script>
+{% endblock %}

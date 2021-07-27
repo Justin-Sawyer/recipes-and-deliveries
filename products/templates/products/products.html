@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
-{% endblock %}
+
 
 {% block extra_title %}
  | Products
@@ -92,13 +90,11 @@
                                                 </p>
                                             {% endif %}
                                             {% if product.rating %}
-                                                <p class="text-muted rating" id="rating_{{ product.id }}">
-                                                    <small>
-                                                        {% for r in rating %}
-                                                            <!-- Star Rating here -->
-                                                        {% endfor %}
-                                                        {{ product.rating }} / 5
-                                                    </small>
+                                                <p class="text-muted small rating" id="rating_{{ product.id }}">
+                                                    {% for r in rating %}
+                                                        <!-- Star Rating here -->
+                                                    {% endfor %}
+                                                    {{ product.rating }} / 5
                                                 </p>
                                             {% else %}
                                                 <p class="text-muted"><small>No Rating</small></p>

@@ -23,7 +23,7 @@ def all_blog_articles(request):
     tags = None
     sort = None
     direction = None
-    blog_query = None
+    query = None
 
     if request.GET:
         # Sort products via the dropdown menu
@@ -56,18 +56,6 @@ def all_blog_articles(request):
             authors = request.GET['author'].split(',')
             posts = posts.filter(author_id__username__in=authors)
             authors = User.objects.filter(username__in=authors)
-        
-        # Searching articles by name or description
-        if 'q' in request.GET:
-            blog_query = request.GET['q']
-            if not blog_query:
-                messages.error(request,
-                               "You didn't enter any search criteria!")
-                return redirect(reverse('blog-articles'))
-
-            queries = Q(title__icontains=blog_query) | Q(
-                tagline__icontains=blog_query)
-            posts = posts.filter(queries)
     
     current_sorting = f'{sort}_{direction}'
 
@@ -75,7 +63,7 @@ def all_blog_articles(request):
 
     context = {
         'posts': posts,
-        'search_term': blog_query,
+        'search_term': query,
         'current_categories': categories,
         'current_tags': tags,
         'current_sorting': current_sorting,

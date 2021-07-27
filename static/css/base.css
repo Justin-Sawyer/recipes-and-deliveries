@@ -48,6 +48,16 @@ body {
     width: fit-content;
 }
 
+.title-name,
+.product-name {
+    font-size: 1rem;
+}
+
+.similar-articles,
+.order {
+    font-size: 2rem
+}
+
 .shop-now-button {
     background: #4caf50;
     color: white;
@@ -491,6 +501,18 @@ input[name='q']::placeholder {
 
     .increment-qty, .decrement-qty {
         padding: .25rem .5rem !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .border-med-right {
+        border-right: 1px solid #ff6f00;
+    }
+
+    .border-med-left {
+        border-left: 1px solid #ff6f00;
+        margin-left: -1px;
+        padding-left: 16px;
     }
 }
 

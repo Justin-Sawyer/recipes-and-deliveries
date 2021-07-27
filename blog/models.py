@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from products.models import Category
 from datetime import datetime
 from django.utils import timezone
 
@@ -43,9 +44,10 @@ class Post(models.Model):
     image = models.ImageField(null=True, blank=True)
     image_credit = models.CharField(max_length=254, default="", blank=False)
     content = models.TextField()
-    # date = models.DateTimeField(default=datetime.now, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    date_posted = models.DateTimeField(null=True, blank=True, default=timezone.now)
+    date_posted = models.DateTimeField(null=True,
+                                       blank=True,
+                                       default=timezone.now)
     date_edited = models.DateTimeField(auto_now=True)
 
     def __str__(self):
