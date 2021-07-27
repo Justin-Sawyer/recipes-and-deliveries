@@ -5,5 +5,6 @@ from . import views
 urlpatterns = [
     path('', views.blog_home, name='blog-home'),
     path('articles/', views.all_blog_articles, name='blog-articles'),
-    path('<post_id>/', views.article, name='article'),
+    path('<int:post_id>/', views.article, name='article'),
+    path('add/', views.add_post, name='add_post'),
 ]

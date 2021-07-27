@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from .models import Post, Category, Tag
+from .forms import BlogPostForm
 from django.contrib.auth.models import User
 
 
@@ -81,3 +82,32 @@ def article(request, post_id):
     }
 
     return render(request, 'blog/article.html', context)
+
+
+def add_post(request):
+    """ Add a product to the store """
+    """if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only storeowners can do that!')
+        return redirect(reverse('home'))"""
+
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES)
+        add_more_posts = request.POST.getlist('add-more-posts')
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'Successfully added post!')
+            if add_more_posts:
+                return redirect(reverse('add_post'))
+            else:
+                return redirect(reverse('blog-articles'))
+        else:
+            messages.error(request, 'Failed to add product \
+                Please ensure the form is valid.')
+    else:
+        form = BlogPostForm
+    template = 'blog/add_post.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)

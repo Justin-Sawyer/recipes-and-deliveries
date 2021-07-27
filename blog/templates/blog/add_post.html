@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/add_post.css' %}">
+{% endblock %}
+
+{% block extra_title %}
+ | Add an Article
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container content mb-2">
+    <!-- Page title row -->
+    <div class="row">
+        <div class="col-12 col-md-6 mt-3">
+            <h2 class="font-weight-bold">Add A New Blog Article</h2>
+            <!--<h3 class="subtitle text-muted">Add a Product</h3>-->
+            <br>
+        </div>
+    </div>
+        
+    <!-- Main page content -->
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <form method="POST" action="{% url 'add_post' %}" class="form mb-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.name != 'image' %}
+                        {{ field | as_crispy_field }}
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
+                <label class="form-check-label" for="id-add-more-posts">Add another article?</label>
+                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-posts" name="add-more-posts">
+                <div class="text-right">
+                    <a class="btn btn-red" href="{% url 'blog-articles' %}">Cancel</a>
+                    <button class="btn btn-green" type="submit">Add Blog Article</button>
+                </div>
+            </form>
+        </div>
+    </div>       
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script>
+        $('.btn-file').children('input').addClass('new-image');
+        $('.new-image').change(function() {
+            let file = $('.new-image')[0].files[0];
+            $('#filename').text(`Image will be set to ${file.name}`);
+        })
+    </script>
+{% endblock %}
+
