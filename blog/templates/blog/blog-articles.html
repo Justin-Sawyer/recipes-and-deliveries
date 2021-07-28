@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load pagination_tags %}
 
 
 
@@ -8,225 +9,227 @@
 {% endblock %}
 
 {% block page_header %}
-<div class="container header-container">
-    <div class="row">
-        <div class="col"></div>
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block content %}
-<div class="overlay"></div>
-<div class="container content mb-2">
-    <!-- Main Page Title  row -->
-    <div class="row">
-        <!-- Page title -->
-        <div class="col mt-3">
-            {% if current_categories %}
-                {% for c in current_categories %}
-                    <h2 class="font-weight-bold text-center text-md-left title">{{ c.friendly_name|title }} Blog Articles</h2>
-                {% endfor %}
-            {% elif current_tags %}
-                {% for ct in current_tags %}
-                    <h2 class="font-weight-bold text-center text-md-left title">{{ ct.tagname|title }} Blog Articles</h2>
-                {% endfor %}
-            {% else %}
-                <h2 class="font-weight-bold text-center text-md-left title ">Blog Articles</h2>
-            {% endif %}
+    <div class="overlay"></div>
+    <div class="container content mb-2">
+        <!-- Main Page Title  row -->
+        <div class="row">
+            <!-- Page title -->
+            <div class="col mt-3">
+                {% if current_categories %}
+                    {% for c in current_categories %}
+                        <h2 class="font-weight-bold text-center text-md-left title">{{ c.friendly_name|title }} Blog Articles</h2>
+                    {% endfor %}
+                {% elif current_tags %}
+                    {% for ct in current_tags %}
+                        <h2 class="font-weight-bold text-center text-md-left title">{{ ct.tagname|title }} Blog Articles</h2>
+                    {% endfor %}
+                {% else %}
+                    <h2 class="font-weight-bold text-center text-md-left title ">Blog Articles</h2>
+                {% endif %}
+            </div>
         </div>
-    </div>
 
-    <!-- Main page content -->
-    <div class="row">
-        <div class="articles-container col-12">
-            <div class="row mt-1 mb-2">
+        <!-- Main page content -->
+        <div class="row">
+            <div class="articles-container col-12">
+                <div class="row mt-1 mb-2">
 
-                <!-- Dropdown sorting -->
-                <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
-                    <div class="sort-select-wrapper w-50">
-                        <select id="sort-selector"
-                            class="custom-select custom-select-sm text-black border border-green border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
-                            <option value="title_asc" {% if current_sorting == 'title_asc' %}selected{% endif %}>
-                                Article Title (A-Z)
-                            </option>
-                            <option value="title_desc" {% if current_sorting == 'title_desc' %}selected{% endif %}>
-                                Article Title (Z-A)
-                            </option>
-                            <!--<option value="author_asc" {% if current_sorting == 'author_asc' %}selected{% endif %}>Author (A-Z)</option>
-                                <option value="author_desc" {% if current_sorting == 'author_desc' %}selected{% endif %}>Author (Z-A)</option>-->
-                            <option value="id_desc" {% if current_sorting == 'id_desc' %}selected{% endif %}>
-                                Newest to Oldest
-                            </option>
-                            <option value="id_asc" {% if current_sorting == 'id_asc' %}selected{% endif %}>
-                                Oldest to Newest</option>
-                        </select>
+                    <!-- Dropdown sorting -->
+                    <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+                        <div class="sort-select-wrapper w-50">
+                            <select id="sort-selector"
+                                class="custom-select custom-select-sm text-black border border-green border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                                <option value="title_asc" {% if current_sorting == 'title_asc' %}selected{% endif %}>
+                                    Article Title (A-Z)
+                                </option>
+                                <option value="title_desc" {% if current_sorting == 'title_desc' %}selected{% endif %}>
+                                    Article Title (Z-A)
+                                </option>
+                                <!--<option value="author_asc" {% if current_sorting == 'author_asc' %}selected{% endif %}>Author (A-Z)</option>
+                                    <option value="author_desc" {% if current_sorting == 'author_desc' %}selected{% endif %}>Author (Z-A)</option>-->
+                                <option value="id_desc" {% if current_sorting == 'id_desc' %}selected{% endif %}>
+                                    Newest to Oldest
+                                </option>
+                                <option value="id_asc" {% if current_sorting == 'id_asc' %}selected{% endif %}>
+                                    Oldest to Newest</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Sorting by "" text-->
+                    <div class="col-12 col-md-6 order-md-first">
+                        <p class="mt-3 text-center text-md-left">
+                            {% if current_categories or current_tags or current_authors or current_sorting != 'None_None' %}
+                                <span class="small font-weight-bold">
+                                    <a class="text-green" href="{% url 'blog-articles' %}">
+                                        All Blog Articles
+                                    </a> | 
+                                </span>
+                            {% endif %}
+                            {{ posts|length }}{% if posts|length == 1 %} Article{% else %} Articles{% endif %}
+                            {% if current_tags %} found for <strong>"{% for t in current_tags %}{{ t.tagname|title }}{% endfor %}"</strong> tag{% endif %}
+                            {% if current_categories %} found for <strong>"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong> category{% endif %}
+                            {% if current_authors %} found for author {% for a in current_authors %} {% if a.is_superuser %} <strong>"Recipes</strong><i>and</i><strong>Deliveries"</strong>{% else %}<strong>"{{ a.username }}"</strong>{% endif %}{% endfor %}{% endif %}
+                            <p>{% if is_paginated %}Articles {{ page_obj.start_index }}—{{ page_obj.end_index }}{% endif %}</p>
+                        </p>
                     </div>
                 </div>
 
-                <!-- Sorting by "" text-->
-                <div class="col-12 col-md-6 order-md-first">
-                    <p class="mt-3 text-center text-md-left">
-                        {% if current_categories or current_tags or current_authors or current_sorting != 'None_None' %}
-                            <span class="small font-weight-bold">
-                                <a class="text-green" href="{% url 'blog-articles' %}">
-                                    All Blog Articles
-                                </a> | 
-                            </span>
-                        {% endif %}
-                        {{ posts|length }}
-                        {% if posts|length == 1 %}
-                             Article 
-                        {% else %} 
-                             Articles 
-                        {% endif %}
-                        {% if current_tags %} 
-                             found for 
-                                <strong>"{% for t in current_tags %}{{ t.tagname|title }}{% endfor %}"</strong>
-                             tag
-                        {% endif %}
-                        {% if current_categories %}
-                             found for
-                             <strong>"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong>
-                             category
-                        {% endif %}
-                        {% if current_authors %}
-                             found for author
-                            {% for a in current_authors %}
-                                {% if a.is_superuser %}
-                                    <strong>"Recipes</strong><i>and</i><strong>Deliveries"</strong>
-                                {% else %}
-                                    <strong>"{{ a.username }}"</strong>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
+                <!-- Posts -->
+                <div class="row">
+                    {% for post in page_obj %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="card h-100 border-0">
 
-            <!-- Posts -->
-            <div class="row">
-                {% for post in posts %}
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                    <div class="card h-100 border-0">
+                            <!-- Image -->
+                            {% if post.image %}
+                                <a href="{% url 'article' post.id %}">
+                                    <img class="card-img-top img-fluid card-image" src="{{ post.image.url }}"
+                                        alt="{{ post.title }}">
+                                </a>
+                            {% else %}
+                                <a href="{% url 'article' post.id %}">
+                                    <img class="card-img-top img-fluid card-image"
+                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                                </a>
+                            {% endif %}
 
-                        <!-- Image -->
-                        {% if post.image %}
-                            <a href="{% url 'article' post.id %}">
-                                <img class="card-img-top img-fluid card-image" src="{{ post.image.url }}"
-                                    alt="{{ post.title }}">
-                            </a>
-                        {% else %}
-                            <a href="{% url 'article' post.id %}">
-                                <img class="card-img-top img-fluid card-image"
-                                    src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
-                            </a>
-                        {% endif %}
+                            <!-- Post Title -->
+                            <div class="card-body pb-0">
+                                <h3 class="mb-0 font-weight-bold title-name">{{ post.title|title }}</h3>
+                            </div>
+                            <div class="card-footer bg-white pt-0 border-0 text-left">
+                                <div class="row">
+                                    <div class="col">
 
-                        <!-- Post Title -->
-                        <div class="card-body pb-0">
-                            <h3 class="mb-0 font-weight-bold title-name">{{ post.title|title }}</h3>
-                        </div>
-                        <div class="card-footer bg-white pt-0 border-0 text-left">
-                            <div class="row">
-                                <div class="col">
+                                        <!-- Tagline -->
+                                        <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
 
-                                    <!-- Tagline -->
-                                    <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
+                                        <!-- Categories -->
+                                        {% if post.category %}
+                                            <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                                {% for cat in post.category.all %}
+                                                <a class="text-muted text-green font-weight-bold"
+                                                    href="{% url 'blog-articles' %}?category={{ cat.name }}">
+                                                    {{ cat.friendly_name }}
+                                                </a><span class="category-link-divider">|</span>
+                                                {% endfor %}
+                                            </p>
+                                        {% else %}
+                                            <p class="text-muted"><small>No categories</small></p>
+                                        {% endif %}
 
-                                    <!-- Categories -->
-                                    {% if post.category %}
-                                        <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
-                                            {% for cat in post.category.all %}
-                                            <a class="text-muted text-green font-weight-bold"
-                                                href="{% url 'blog-articles' %}?category={{ cat.name }}">
-                                                {{ cat.friendly_name }}
-                                            </a><span class="category-link-divider">|</span>
-                                            {% endfor %}
-                                        </p>
-                                    {% else %}
-                                        <p class="text-muted"><small>No categories</small></p>
-                                    {% endif %}
+                                        <!-- Tags -->
+                                        {% if post.tag %}
+                                            <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                                                {% for t in post.tag.all %}
+                                                <a class="text-muted text-amber font-weight-bold"
+                                                    href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
+                                                    {{ t.tagname|title }}
+                                                </a><span class="tag-link-divider">|</span>
+                                                {% endfor %}
+                                            </p>
+                                        {% else %}
+                                            <p class="text-muted"><small>No tags</small></p>
+                                        {% endif %}
 
-                                    <!-- Tags -->
-                                    {% if post.tag %}
-                                        <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
-                                            {% for t in post.tag.all %}
-                                            <a class="text-muted text-amber font-weight-bold"
-                                                href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
-                                                {{ t.tagname|title }}
-                                            </a><span class="tag-link-divider">|</span>
-                                            {% endfor %}
-                                        </p>
-                                    {% else %}
-                                        <p class="text-muted"><small>No tags</small></p>
-                                    {% endif %}
-
-                                    <!-- Post author -->
-                                    {% if post.author.is_superuser %}
-                                        <small class="text-muted author">Posted by:
-                                            <a class="text-muted text-green"
-                                                href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                                <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
-                                        </a>
-                                    {% else %}
-                                        <small class="text-muted author">Posted by:
-                                            <a class="text-muted text-green font-weight-bold"
-                                                href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                                {{ post.author }}
+                                        <!-- Post author -->
+                                        {% if post.author.is_superuser %}
+                                            <small class="text-muted author">Posted by:
+                                                <a class="text-muted text-green"
+                                                    href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                                    <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
                                             </a>
-                                        </small>
-                                    {% endif %}
-
-                                    <!-- Editing and deleting -->
-                                    {% if request.user.is_superuser %}
-                                        <div class="edit-delete">
-                                            <small>
-                                                <a class="text-primary" href="">Edit</a> |
-                                                <a class="text-danger" href="">Delete</a>
+                                        {% else %}
+                                            <small class="text-muted author">Posted by:
+                                                <a class="text-muted text-green font-weight-bold"
+                                                    href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                                    {{ post.author }}
+                                                </a>
                                             </small>
+                                        {% endif %}
+
+                                        <!-- Editing and deleting -->
+                                        {% if request.user.is_superuser %}
+                                            <div class="edit-delete">
+                                                <small>
+                                                    <a class="text-primary" href="">Edit</a> |
+                                                    <a class="text-danger" href="">Delete</a>
+                                                </small>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        <!-- Date posted -->
+                                        <div class="post-date">
+                                            <small>{{ post.date_posted }}</small>
                                         </div>
-                                    {% endif %}
-                                    
-                                    <!-- Date posted -->
-                                    <div class="post-date">
-                                        <small>{{ post.date_posted }}</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% if forloop.counter|divisibleby:1 %}
+                    <div class="col-12 d-sm-none mb-5">
+                        <hr>
+                    </div>
+                    {% endif %}
+                    {% if forloop.counter|divisibleby:2 %}
+                    <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+                        <hr>
+                    </div>
+                    {% endif %}
+                    {% if forloop.counter|divisibleby:3 %}
+                    <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+                        <hr>
+                    </div>
+                    {% endif %}
+                    {% if forloop.counter|divisibleby:4 %}
+                    <div class="col-12 d-none d-xl-block mb-5">
+                        <hr>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% if forloop.counter|divisibleby:1 %}
-                <div class="col-12 d-sm-none mb-5">
-                    <hr>
+                <!-- Pagination -->
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Credit: https://www.caktusgroup.com/blog/2018/10/18/filtering-and-pagination-django/ -->
+                        {% if is_paginated %}
+                            {% if page_obj.has_previous %}
+                                <a class="btn btn-sm btn-green" href="?{% param_replace page=1 %}">First</a>
+                                {% if page_obj.previous_page_number != 1 %}
+                                <a class="btn btn-sm btn-amber" href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
+                                {% endif %}
+                            {% endif %}
+
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+                            {% if page_obj.has_next %}
+                                {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                                <a class="btn btn-sm btn-amber" href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
+                                {% endif %}
+                                <a class="btn btn-sm btn-green" href="?{% param_replace page=page_obj.paginator.num_pages %}">Last</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
-                {% endif %}
-                {% if forloop.counter|divisibleby:2 %}
-                <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                    <hr>
-                </div>
-                {% endif %}
-                {% if forloop.counter|divisibleby:3 %}
-                <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                    <hr>
-                </div>
-                {% endif %}
-                {% if forloop.counter|divisibleby:4 %}
-                <div class="col-12 d-none d-xl-block mb-5">
-                    <hr>
-                </div>
-                {% endif %}
-                {% endfor %}
             </div>
         </div>
     </div>
-</div>
-<!-- Back to top button -->
-<div class="btt-button shadow-sm border border-green">
-    <a class="btt-link d-flex h-100">
-        <i class="fas fa-arrow-up text-green mx-auto my-auto"></i>
-    </a>
-</div>
+    <!-- Back to top button -->
+    <div class="btt-button shadow-sm border border-green">
+        <a class="btt-link d-flex h-100">
+            <i class="fas fa-arrow-up text-green mx-auto my-auto"></i>
+        </a>
+    </div>
 {% endblock %}
 
 {% block postloadjs %}

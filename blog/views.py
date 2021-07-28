@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
@@ -62,6 +63,10 @@ def all_blog_articles(request):
 
     template = 'blog/blog-articles.html'
 
+    paginator = Paginator(posts, 12) # Show 12 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'posts': posts,
         'search_term': query,
@@ -69,6 +74,8 @@ def all_blog_articles(request):
         'current_tags': tags,
         'current_sorting': current_sorting,
         'current_authors': authors,
+        'page_obj': page_obj,
+        'is_paginated': True,
     }
     return render(request, template, context)
 

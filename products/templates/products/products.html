@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load pagination_tags %}
 
 
 
@@ -54,14 +55,16 @@
                             {% if search_term or current_categories or current_sorting != 'None_None' %}
                                 <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}">Products Home</a> | </span>
                             {% endif %}
-                            {{ products|length }}{% if products|length == 1 %} Product {% else %} Products {% endif %}
+                            {{ products|length }}{% if products|length == 1 %} Recipe Box {% else %} Recipe Boxes {% endif %}
                             {% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                             {% if current_categories %} found for <strong class="category-name">"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong> category{% endif %}
+                            <p>{% if is_paginated %}Recipe Boxes {{ page_obj.start_index }}—{{ page_obj.end_index }}{% endif %}</p>
                         </p>
                     </div>
                 </div>
+                
                 <div class="row">
-                    {% for product in products %}
+                    {% for product in page_obj %}
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                             <div class="card h-100 border-0">
                                 {% if product.image %}
@@ -131,6 +134,29 @@
                             </div>
                         {% endif %}
                     {% endfor %}
+                </div>
+                <!-- Pagination -->
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Credit: https://www.caktusgroup.com/blog/2018/10/18/filtering-and-pagination-django/ -->
+                        {% if is_paginated %}
+                            {% if page_obj.has_previous %}
+                                <a class="btn btn-sm btn-green" href="?{% param_replace page=1 %}">First</a>
+                                {% if page_obj.previous_page_number != 1 %}
+                                <a class="btn btn-sm btn-amber" href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
+                                {% endif %}
+                            {% endif %}
+
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+                            {% if page_obj.has_next %}
+                                {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                                <a class="btn btn-sm btn-amber" href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
+                                {% endif %}
+                                <a class="btn btn-sm btn-green" href="?{% param_replace page=page_obj.paginator.num_pages %}">Last</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

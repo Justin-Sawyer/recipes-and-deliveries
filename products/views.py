@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
@@ -16,6 +17,7 @@ def all_products(request):
     categories = None
     sort = None
     direction = None
+    
     if request.GET:
         # Sort products via the dropdown menu
         if 'sort' in request.GET:
@@ -53,11 +55,18 @@ def all_products(request):
 
     current_sorting = f'{sort}_{direction}'
 
+    paginator = Paginator(products, 12) # Show 12 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'products': products,
         'search_term': query,
         'current_categories': categories,
         'current_sorting': current_sorting,
+        'page_obj': page_obj,
+        'is_paginated': True,
+        # 'num_products': num_products,
     }
 
     return render(request, 'products/products.html', context)
