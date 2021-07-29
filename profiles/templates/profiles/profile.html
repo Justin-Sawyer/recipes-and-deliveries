@@ -82,10 +82,11 @@
                 <div class="col-12 col-lg-4 mt-2 mt-lg-0">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12"><p>My Articles</p>  
+                            
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque nemo tenetur, libero
-                                minima blanditiis saepe commodi omnis totam, quidem consectetur rerum ut adipisci sunt
-                                praesentium aspernatur voluptate! Eum, debitis quasi.
+                               {% for post in blog_posts %}
+                                    <p><a href="{% url 'article' post.id %}">{{ post.title }}</a></p>
+                               {% endfor %}
                             </p>
                             <br>
                         </div>
