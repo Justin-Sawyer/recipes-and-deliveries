@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'blog/css/add_post.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/add_product.css' %}">
 {% endblock %}
 
 {% block extra_title %}
- | Add an Article
+ | Edit {{ product.name }}
 {% endblock %}
 
 {% block page_header %}
@@ -23,16 +23,16 @@
     <!-- Page title row -->
     <div class="row">
         <div class="col-12 col-md-6 mt-3">
-            <h2 class="font-weight-bold">Add A New Blog Article</h2>
-            <!--<h3 class="subtitle text-muted">Add a Product</h3>-->
+            <h2 class="font-weight-bold">Product Management</h2>
+            <h3 class="subtitle text-primary">You are editing {{ product.name }}</h3>
             <br>
         </div>
     </div>
         
     <!-- Main page content -->
     <div class="row">
-        <div class="col-12">
-            <form method="POST" action="{% url 'add_post' %}" class="form mb-2" enctype="multipart/form-data">
+        <div class="col-12 col-md-6">
+            <form method="POST" action="{% url 'edit_product' product.id %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
                     {% if field.name != 'image' %}
@@ -41,11 +41,9 @@
                         {{ field }}
                     {% endif %}
                 {% endfor %}
-                <label class="form-check-label" for="id-add-more-posts">Add another article?</label>
-                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-posts" name="add-more-posts">
                 <div class="text-right">
-                    <a class="btn btn-red" href="{% url 'blog-articles' %}">Cancel</a>
-                    <button class="btn btn-green" type="submit">Add Blog Article</button>
+                    <a class="btn btn-red" href="{% url 'products' %}">Cancel</a>
+                    <button class="btn btn-info" type="submit">Update Product</button>
                 </div>
             </form>
         </div>
@@ -61,13 +59,6 @@
             let file = $('.new-image')[0].files[0];
             $('#filename').text(`Image will be set to ${file.name}`);
         })
-    </script>
-    <script>
-        let tagCount = $('select[name="tag"]').children().length;
-        let tagContainerHeight = (20 * `${tagCount}`) + 14;
-        $('#id_tag').css('height', `${tagContainerHeight}px`);
-        // $('select[name="tag"]').removeClass('border-green').addClass('border-0')
-        // $('select[name="tag"]').children().addClass('btn btn-amber mr-1')
     </script>
 {% endblock %}
 

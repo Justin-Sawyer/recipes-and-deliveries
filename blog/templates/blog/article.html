@@ -70,13 +70,13 @@
                         <small class="text-muted author">Posted by: 
                             <a class="text-muted text-green font-weight-bold" href="{% url 'blog-articles' %}?author={{ post.author }}">
                             <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
-                            </a> on {{ post.date_posted }}
+                            </a> on {{ post.date_posted|date:"jS F, Y" }}
                         </small>
                     {% else %}
                         <small class="text-muted author">Posted by: 
                             <a class="text-muted text-green font-weight-bold" href="{% url 'blog-articles' %}?author={{ post.author }}">
                                 {{ post.author }}
-                            </a> on {{ post.date_posted }}
+                            </a> on {{ post.date_posted|date:"jS F, Y" }}
                         </small>
                     {% endif %}
                     <!-- Editing and deleting -->
@@ -100,7 +100,7 @@
 
                 <!-- Last edited -->
                 {% if post.date_edited %}
-                    <p class="text-muted post-edited"><small> Edited: {{ post.date_edited }}</small></p>
+                    <p class="text-muted post-edited"><small> Edited: {{ post.date_edited|date:"jS F, Y @ g:i a" }}</small></p>
                 {% endif %}
             </div>
 

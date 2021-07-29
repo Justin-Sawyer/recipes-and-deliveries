@@ -29,14 +29,14 @@ class Tag(models.Model):
     tagname = models.CharField(max_length=254)
 
     def __str__(self):
-        return self.tagname
+        return self.tagname.capitalize()
 
     def get_friendly_name(self):
         return self.tagname
 
 
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     title = models.CharField(max_length=254)
     category = models.ManyToManyField('Category')
     tag = models.ManyToManyField('Tag')

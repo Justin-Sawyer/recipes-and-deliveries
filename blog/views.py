@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 
 from .models import Post, Category, Tag
 from .forms import BlogPostForm
+from profiles.models import UserProfile
 from django.contrib.auth.models import User
 
 
@@ -17,9 +19,6 @@ def blog_home(request):
 def all_blog_articles(request):
     """ A view to return all blog articles """
     posts = Post.objects.all().order_by('-pk')
-    # print(posts)
-    # authors = User.objects.all().order_by('username')
-    # print(authors)
     authors = None
     categories = None
     tags = None
@@ -47,7 +46,7 @@ def all_blog_articles(request):
             categories = request.GET['category'].split(',')
             posts = posts.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
-            
+
         # Sort blog articles by tag
         if 'tag' in request.GET:
             tags = request.GET['tag'].split(',')
@@ -58,12 +57,12 @@ def all_blog_articles(request):
             authors = request.GET['author'].split(',')
             posts = posts.filter(author_id__username__in=authors)
             authors = User.objects.filter(username__in=authors)
-    
+
     current_sorting = f'{sort}_{direction}'
 
     template = 'blog/blog-articles.html'
 
-    paginator = Paginator(posts, 12) # Show 12 contacts per page.
+    paginator = Paginator(posts, 12)  # Show 12 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -91,17 +90,25 @@ def article(request, post_id):
     return render(request, 'blog/article.html', context)
 
 
+@login_required
 def add_post(request):
     """ Add a product to the store """
     """if not request.user.is_superuser:
         messages.error(request, 'Sorry, only storeowners can do that!')
         return redirect(reverse('home'))"""
 
+    """ Gets username as author """
+    author = get_object_or_404(UserProfile, user=request.user)
+    print(author)
     if request.method == 'POST':
+        author = get_object_or_404(User, id=request.user.id)
         form = BlogPostForm(request.POST, request.FILES)
+        form_temp = form.save(commit=False)
+        form_temp.author = author
         add_more_posts = request.POST.getlist('add-more-posts')
         if form.is_valid():
             form.save()
+
             messages.info(request, 'Successfully added post!')
             if add_more_posts:
                 return redirect(reverse('add_post'))
@@ -115,6 +122,37 @@ def add_post(request):
     template = 'blog/add_post.html'
     context = {
         'form': form,
+        #'author_id': author_id,
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def edit_post(request, post_id):
+    """ Edit a product in the store """
+    """if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only storeowners can do that!')
+        return redirect(reverse('home'))"""
+
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'Successfully updated post!')
+            return redirect(reverse('article', args=[post.id]))
+        else:
+            messages.error(request, 'Failed to edit post \
+                Please ensure the form is valid.')
+    else:
+        form = BlogPostForm(instance=post)
+        messages.info(request, f'You are editing {post.title}')
+
+    template = 'blog/edit_post.html'
+    context = {
+        'form': form,
+        'post': post,
     }
 
     return render(request, template, context)

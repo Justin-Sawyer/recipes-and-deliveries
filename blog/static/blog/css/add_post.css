@@ -1,5 +1,12 @@
-select.form-control[multiple], select.form-control[size] {
+/*select.form-control[multiple],*/
+select.form-control[name="category"],
+select.form-control[size] {
     height: 254px;
+}
+
+select.form-control[name="tag"],
+select.form-control[size] {
+    height: auto;
 }
 
 .subtitle {
