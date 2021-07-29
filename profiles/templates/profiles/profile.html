@@ -44,10 +44,10 @@
                         <table class="table table-sm table-borderless">
                             <thead>
                                 <tr>
-                                    <th>Order Number</th>
+                                    <th>Order</small> </th>
                                     <th>Date</th>
                                     <th>Items</th>
-                                    <th>Order Total</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,6 +68,7 @@
                                                     <li class="small">
                                                         {{ item.product.name }} x{{ item.quantity }}
                                                     </li>
+                                                    <hr class="text-amber font-weight-bold">
                                                 {% endfor%}
                                             </ul>
                                         </td>
@@ -81,13 +82,28 @@
 
                 <div class="col-12 col-lg-4 mt-2 mt-lg-0">
                     <div class="row">
-                        <div class="col-12 col-md-6 col-lg-12"><p>My Articles</p>  
-                            
-                            <p>
-                               {% for post in blog_posts %}
-                                    <p><a href="{% url 'article' post.id %}">{{ post.title }}</a></p>
-                               {% endfor %}
-                            </p>
+                        <div class="col-12 col-md-6 col-lg-12"><p>My Articles</p>
+                            {% for post in blog_posts %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        {% if post.image %}
+                                            <a href="{% url 'article' post.id %}">
+                                                <img class="img-fluid w-100 mb-4" src="{{ post.image.url }}"
+                                                    alt="{{ post.title }}">
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'article' post.id %}">
+                                                <img class="img-fluid w-100 mb-4"
+                                                    src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="font-weight-bold mb-0">{{ post.title|title }}</p>
+                                        <p><small>{{ post.date_posted|date:"jS F, Y" }}</small></p>
+                                    </div>
+                                </div> 
+                            {% endfor %}
                             <br>
                         </div>
                     
