@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
 from .models import UserProfile
 from .forms import UserProfileForm
 
@@ -15,7 +15,8 @@ def profile(request):
     """ Display the user's profile """
 
     profile = get_object_or_404(UserProfile, user=request.user)
-    blog_posts = Post.objects.all()
+    user = get_object_or_404(User, id=request.user.id)
+    # posts = Post.objects.all()
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
@@ -29,13 +30,15 @@ def profile(request):
     # Populate the form with the user's profile info
     else:
         form = UserProfileForm(instance=profile)
-    orders = profile.orders.all()
+    orders = profile.orders.all().order_by('-pk')
+    user_posts = user.blog_posts.all().order_by('-pk')
     template = 'profiles/profile.html'
     context = {
         'form': form,
         'orders': orders,
         'on_profile_page': True,
-        'blog_posts': blog_posts,
+        # 'posts': posts,
+        'user_posts': user_posts,
     }
 
     return render(request, template, context)
