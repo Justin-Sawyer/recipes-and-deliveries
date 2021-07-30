@@ -46,6 +46,7 @@ def profile(request):
 
 def order_history(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
+    posts = Post.objects.all().order_by('-pk')
 
     messages.warning(request, (
         f'This is a past confirmation for order number {order_number}.'
@@ -54,6 +55,7 @@ def order_history(request, order_number):
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
+        'posts': posts,
         'from_profile': True,
     }
 

@@ -83,7 +83,7 @@
                     {% if request.user.is_superuser %}
                         <div class="edit-delete">
                             <small>
-                                <a class="text-primary" href="">Edit</a> |
+                                <a class="text-primary" href="{% url 'edit_post' post.id %}">Edit</a> |
                                 <a class="text-danger" href="">Delete</a>
                             </small>
                         </div>

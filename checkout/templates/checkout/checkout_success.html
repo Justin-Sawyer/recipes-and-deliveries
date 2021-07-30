@@ -19,33 +19,14 @@
 
 {% block content %}
     <div class="overlay"></div>
-    <!--<div class="container content mb-2">
-        <div class="row">
-            <div class="col">
-                <br>
-                <h2 class="font-weight-bold">Thank you!</h2>
-                <p>Your order information is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
-                <br>
-            </div>
-        </div>  
-
-        <div class="row">
-            <div class="col-12 col-lg-6">-->
-
     <div class="container content mb-2">
         <!-- Page title row -->
         <div class="row">
-            <div class="col mt-3">
+            <div class="col-12 col-md-6 col-lg-6 mt-3">
                 <h2 class="font-weight-bold mb-4">Thank You</h2>
-                <!--<br>-->
-                <p class="text-black">Your order information is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
-            </div>
-        </div>
-
-        <!-- Main page content -->
-        <div class="row">
-            <!-- Order details -->
-            <div class="col-12 col-md-8 col-lg-6">
+                <p class="text-black">Your order information is below.</p> 
+                <p>A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
+            
                 <div class="order-confirmation-wrapper p-2 border">
                     <!-- Order Info -->
                     <div class="row">
@@ -209,38 +190,174 @@
                             <p class="mb-0">€{{ order.grand_total }}</p>
                         </div>
                     </div>
-                </div>    
-            </div>
-
-            <div class="col-12 col-md-4 col-lg-6">
-                Articles and Recipes to check out
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 order-lg-last mb-5 text-right">
+                </div>
                 {% if from_profile %}
-                <a href="{% url 'profile' %}" class="btn btn-green my-2">
-                    <span class="icon mr-2">
-                        <i class="fas fa-angle-left"></i>
-                    </span>
-                    <span>Back to Profile</span>
-                </a>
-                <a href="{% url 'products' %}" class="btn btn-green my-2">
-                    <span class="icon mr-2">
-                        <i class="far fa-newspaper"></i>
-                    </span>
-                    <span>Or check out the latest blog posts and recipes!</span>
-                </a>
-                {% else %}
-                <a href="{% url 'products' %}" class="btn btn-green my-2">
-                    <span class="icon mr-2">
-                        <i class="far fa-newspaper"></i>
-                    </span>
-                    <span>Now check out the latest blog posts and recipes!</span>
-                </a>
-                {% endif %}
+                    <a href="{% url 'profile' %}" class="btn btn-block btn-amber my-2">
+                        <span class="icon mr-2">
+                            <i class="fas fa-angle-left"></i>
+                        </span>
+                        <span>Back to Profile</span>
+                    </a>
+                    <a href="{% url 'blog-home' %}" class="btn btn-block btn-green my-2">
+                        <span class="icon mr-2">
+                            <i class="far fa-newspaper"></i>
+                        </span>
+                        <span>Or check out the latest blog posts and recipes!</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'blog-home' %}" class="btn btn-block btn-green my-2">
+                        <span class="icon mr-2">
+                            <i class="far fa-newspaper"></i>
+                        </span>
+                        <span>Now check out the latest blog posts and recipes!</span>
+                    </a>
+                {% endif %}               
+            </div>
+        
+            <div class="col-12 col-md-6 col-lg-6 mt-3">
+                <h2 class="font-weight-bold mb-4">Articles & Recipes</h2>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <p>Articles</p>
+                        {% for post in posts|slice:"3" %}
+                            <!-- Title -->
+                            <a href="{% url 'article' post.id %}">
+                                <h3 class="mb-0 font-weight-bold title-name text-green">
+                                    {{ post.title|title }}
+                                </h3>
+                            </a>
+
+                            <!-- Tagline -->
+                            <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
+
+                            <!-- Categories -->
+                            {% if post.category %}
+                                <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                    {% for cat in post.category.all %}
+                                    <a class="text-muted text-green font-weight-bold"
+                                        href="{% url 'blog-articles' %}?category={{ cat.name }}">
+                                        {{ cat.friendly_name }}
+                                    </a><span class="category-link-divider">|</span>
+                                    {% endfor %}
+                                </p>
+                            {% else %}
+                                <p class="text-muted"><small>No categories</small></p>
+                            {% endif %}
+
+                            <!-- Tags -->
+                            {% if post.tag %}
+                                <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                                    {% for t in post.tag.all %}
+                                    <a class="text-muted text-amber font-weight-bold"
+                                        href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
+                                        {{ t.tagname|title }}
+                                    </a><span class="tag-link-divider">|</span>
+                                    {% endfor %}
+                                </p>
+                            {% else %}
+                                <p class="text-muted"><small>No tags</small></p>
+                            {% endif %}
+
+                            <!-- Post author -->
+                            {% if post.author.is_superuser %}
+                                <small class="text-muted author mb-2">Posted by:
+                                    <a class="text-muted text-green"
+                                        href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
+                                </a>
+                            {% else %}
+                                <small class="text-muted author mb-2">Posted by:
+                                    <a class="text-muted text-green font-weight-bold"
+                                        href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                        {{ post.author }}
+                                    </a>
+                                </small>
+                            {% endif %}
+
+                            <!-- Editing and deleting -->
+                            {% if request.user.is_superuser %}
+                                <div class="edit-delete mb-2">
+                                    <small>
+                                        <a class="text-primary" href="">Edit</a> |
+                                        <a class="text-danger" href="">Delete</a>
+                                    </small>
+                                </div>
+                            {% endif %}
+                            <hr> 
+                        {% endfor %}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <p>Recipes</p>
+                        {% for post in posts|slice:"3" %}
+                            <!-- Title -->
+                            <a href="{% url 'article' post.id %}">
+                                <h3 class="mb-0 font-weight-bold title-name text-green">
+                                    {{ post.title|title }}
+                                </h3>
+                            </a>
+
+                            <!-- Tagline -->
+                            <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
+
+                            <!-- Categories -->
+                            {% if post.category %}
+                                <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                    {% for cat in post.category.all %}
+                                    <a class="text-muted text-green font-weight-bold"
+                                        href="{% url 'blog-articles' %}?category={{ cat.name }}">
+                                        {{ cat.friendly_name }}
+                                    </a><span class="category-link-divider">|</span>
+                                    {% endfor %}
+                                </p>
+                            {% else %}
+                                <p class="text-muted"><small>No categories</small></p>
+                            {% endif %}
+
+                            <!-- Tags -->
+                            {% if post.tag %}
+                                <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                                    {% for t in post.tag.all %}
+                                    <a class="text-muted text-amber font-weight-bold"
+                                        href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
+                                        {{ t.tagname|title }}
+                                    </a><span class="tag-link-divider">|</span>
+                                    {% endfor %}
+                                </p>
+                            {% else %}
+                                <p class="text-muted"><small>No tags</small></p>
+                            {% endif %}
+
+                            <!-- Post author -->
+                            {% if post.author.is_superuser %}
+                                <small class="text-muted author mb-2">Posted by:
+                                    <a class="text-muted text-green"
+                                        href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
+                                </a>
+                            {% else %}
+                                <small class="text-muted author mb-2">Posted by:
+                                    <a class="text-muted text-green font-weight-bold"
+                                        href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                        {{ post.author }}
+                                    </a>
+                                </small>
+                            {% endif %}
+
+                            <!-- Editing and deleting -->
+                            {% if request.user.is_superuser %}
+                                <div class="edit-delete mb-2">
+                                    <small>
+                                        <a class="text-primary" href="">Edit</a> |
+                                        <a class="text-danger" href="">Delete</a>
+                                    </small>
+                                </div>
+                            {% endif %}
+                            <hr> 
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

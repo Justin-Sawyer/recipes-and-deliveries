@@ -10,6 +10,7 @@ from products.models import Product
 from bag.contexts import bag_contents
 from profiles.forms import UserProfileForm
 from profiles.models import UserProfile
+from blog.models import Post
 
 import stripe
 import json
@@ -148,6 +149,7 @@ def checkout_success(request, order_number):
     """
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
+    posts = Post.objects.all().order_by('-pk')
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
@@ -180,6 +182,7 @@ def checkout_success(request, order_number):
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
+        'posts': posts,
     }
 
     return render(request, template, context)

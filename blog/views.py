@@ -98,8 +98,7 @@ def add_post(request):
         return redirect(reverse('home'))"""
 
     """ Gets username as author """
-    author = get_object_or_404(UserProfile, user=request.user)
-    print(author)
+    #author = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
         author = get_object_or_404(User, id=request.user.id)
         form = BlogPostForm(request.POST, request.FILES)
@@ -122,7 +121,6 @@ def add_post(request):
     template = 'blog/add_post.html'
     context = {
         'form': form,
-        #'author_id': author_id,
     }
 
     return render(request, template, context)
@@ -142,6 +140,7 @@ def edit_post(request, post_id):
             form.save()
             messages.info(request, 'Successfully updated post!')
             return redirect(reverse('article', args=[post.id]))
+            # return redirect(reverse('home'))
         else:
             messages.error(request, 'Failed to edit post \
                 Please ensure the form is valid.')
