@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 from .models import Post, Category, Tag
 
 
+class NewTagsForm(forms.ModelForm):
+
+    class Meta():
+        model = Tag
+        fields = '__all__'
+
+
 class BlogPostForm(forms.ModelForm):
 
     # Replace image field
@@ -13,18 +20,12 @@ class BlogPostForm(forms.ModelForm):
 
     class Meta():
         model = Post
-        # fields = '__all__'
         exclude = ('author', 'date_posted',)
-        # fields = ('title', 'category', 'tag', 'tagline', 'image',
-        #          'image_credit', 'content',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         categories = Category.objects.all()
         friendly_name = [(c.id, c.get_friendly_name()) for c in categories]
-        tags = Tag.objects.all()
-        # tagname = [t.tagname for t in tags]
-        title = Post.objects.order_by('title').last()
 
         placeholders = {
             'title': 'Add Your Title',
@@ -48,6 +49,5 @@ class BlogPostForm(forms.ModelForm):
                 self.fields[field].widget.attrs['placeholder'] = placeholder
 
         self.fields['category'].choices = friendly_name
-        # self.fields['tagname'].choices = tagname
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-green'

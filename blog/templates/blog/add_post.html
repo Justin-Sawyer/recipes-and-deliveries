@@ -34,13 +34,31 @@
         <div class="col-12">
             <form method="POST" action="{% url 'add_post' %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
-                {% for field in form %}
-                    {% if field.name != 'image' %}
-                        {{ field | as_crispy_field }}
-                    {% else %}
-                        {{ field }}
-                    {% endif %}
-                {% endfor %}
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                        {{ form.title | as_crispy_field}}
+                    </div>
+                    <div class="col-12 col-md-9">
+                        {{ form.tagline | as_crispy_field}}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form.category | as_crispy_field }}
+                        {{ new_tag_form.tagname | as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form.tag | as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <p class="mb-2">Choose Image</p>
+                        {{ form.image }}
+                    </div>
+                    <div class="col-12 col-md-9">
+                        {{ form.image_credit | as_crispy_field }}
+                    </div>
+                    <div class="col-12">
+                        {{ form.content | as_crispy_field }}
+                    </div>
+                </div>
                 <label class="form-check-label" for="id-add-more-posts">Add another article?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-posts" name="add-more-posts">
                 <div class="text-right">
@@ -66,8 +84,6 @@
         let tagCount = $('select[name="tag"]').children().length;
         let tagContainerHeight = (20 * `${tagCount}`) + 14;
         $('#id_tag').css('height', `${tagContainerHeight}px`);
-        // $('select[name="tag"]').removeClass('border-green').addClass('border-0')
-        // $('select[name="tag"]').children().addClass('btn btn-amber mr-1')
     </script>
 {% endblock %}
 

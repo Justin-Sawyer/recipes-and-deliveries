@@ -25,6 +25,7 @@ class Tag(models.Model):
 
     class Meta:
         verbose_name_plural = 'Tags'
+        ordering = ('tagname',)
 
     tagname = models.CharField(max_length=254)
 
