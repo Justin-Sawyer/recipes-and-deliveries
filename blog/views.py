@@ -97,8 +97,8 @@ def add_post(request):
         messages.error(request, 'Sorry, only storeowners can do that!')
         return redirect(reverse('home'))"""
     # new_tag_form = None
-    """ Gets username as author """
     if request.method == 'POST':
+        """ Gets username as author """
         author = get_object_or_404(User, id=request.user.id)
         # new_tag_form = NewTagsForm(request.POST)
         posts_form = BlogPostForm(request.POST, request.FILES)
@@ -115,7 +115,7 @@ def add_post(request):
             if new_tags_form.data['tagname']:
                 new_tags_form.is_valid()
                 newtag = new_tags_form.save()
-                print(newtag.id)
+                # print(newtag.id)
                 new_post.tag.add(newtag)
                 # postsform.save()
                 # tagname = new_tags_form.data['tagname']
@@ -154,13 +154,13 @@ def add_post(request):
                 # saved_form = posts_form.save()
                 # new_tag_form.save()
                 # saved_form.tag.add(newtag)          
-            messages.info(request, 'Successfully added post!')
+            messages.success(request, 'Successfully added post!')
             if add_more_posts:
                 return redirect(reverse('add_post'))
             else:
                 return redirect(reverse('blog-articles'))
         else:
-            messages.error(request, 'Failed to add product \
+            messages.error(request, 'Failed to add your post \
                 Please ensure the form is valid.')
     else:
         new_tag_form = NewTagsForm
@@ -180,30 +180,46 @@ def edit_post(request, post_id):
     """if not request.user.is_superuser:
         messages.error(request, 'Sorry, only storeowners can do that!')
         return redirect(reverse('home'))"""
-
+    author = get_object_or_404(User, id=request.user.id)
+    print(author)
+    print(author.id)
+    user = request.user
+    print(user)
+    print(user.id)
+    posts_form = None
+    new_tag_form = None
+    post = None
+    #if request.user == author:
     post = get_object_or_404(Post, pk=post_id)
-    if request.method == 'POST':
-        new_tag_form = NewTagsForm(request.POST)
-        form = BlogPostForm(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            form_temp = form.save(commit=False)
-            new_tag = new_tag_form.save()
-            newtag = new_tag.id
-            saved_form = form.save()
-            saved_form.tag.add(newtag)
-            messages.success(request, 'Successfully updated post!')
-            return redirect(reverse('article', args=[post.id]))
+    if request.user == post.author or request.user.is_superuser:
+        print(post.author)
+        if request.method == 'POST':
+            new_tag_form = NewTagsForm(request.POST)
+            posts_form = BlogPostForm(request.POST, request.FILES, instance=post)
+            if posts_form.is_valid():
+                postsform = posts_form.save()
+                new_post = Post.objects.get(id=postsform.id)
+                new_tags_form = NewTagsForm(request.POST)
+                if new_tags_form.data['tagname']:
+                    new_tags_form.is_valid()
+                    newtag = new_tags_form.save()
+                    new_post.tag.add(newtag)
+                messages.success(request, 'Successfully updated post!')
+                return redirect(reverse('article', args=[post.id]))
+            else:
+                messages.error(request, 'Failed to edit post \
+                    Please ensure the form is valid.')
         else:
-            messages.error(request, 'Failed to edit post \
-                Please ensure the form is valid.')
+            new_tag_form = NewTagsForm
+            posts_form = BlogPostForm(instance=post)
+            messages.warning(request, f'You are editing {post.title}')
     else:
-        new_tag_form = NewTagsForm
-        form = BlogPostForm(instance=post)
-        messages.warning(request, f'You are editing {post.title}')
+        return redirect(reverse('home'))
+        messages.error(request, 'Sorry, only the post author can do that!')
 
     template = 'blog/edit_post.html'
     context = {
-        'form': form,
+        'posts_form': posts_form,
         'new_tag_form': new_tag_form,
         'post': post,
         'edit_article': True,

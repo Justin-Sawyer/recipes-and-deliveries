@@ -36,27 +36,27 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
-                        {{ form.title | as_crispy_field}}
+                        {{ posts_form.title | as_crispy_field}}
                     </div>
                     <div class="col-12 col-md-9">
-                        {{ form.tagline | as_crispy_field}}
+                        {{ posts_form.tagline | as_crispy_field}}
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ form.category | as_crispy_field}}
+                        {{ posts_form.category | as_crispy_field}}
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ form.tag | as_crispy_field }}
+                        {{ posts_form.tag | as_crispy_field }}
                         {{ new_tag_form.tagname | as_crispy_field }}
                     </div>
                     <div class="col-12 col-md-3">
                         <p class="mb-2">Choose Image</p>
-                        {{ form.image }}
+                        {{ posts_form.image }}
                     </div>
                     <div class="col-12 col-md-9">
-                        {{ form.image_credit | as_crispy_field }}
+                        {{ posts_form.image_credit | as_crispy_field }}
                     </div>
                     <div class="col-12">
-                        {{ form.content | as_crispy_field }}
+                        {{ posts_form.content | as_crispy_field }}
                     </div>
                 </div>
                 <div class="text-right">
