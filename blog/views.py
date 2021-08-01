@@ -181,15 +181,14 @@ def edit_post(request, post_id):
         messages.error(request, 'Sorry, only storeowners can do that!')
         return redirect(reverse('home'))"""
     author = get_object_or_404(User, id=request.user.id)
-    print(author)
-    print(author.id)
+    # print(author)
+    # print(author.id)
     user = request.user
-    print(user)
-    print(user.id)
-    posts_form = None
-    new_tag_form = None
-    post = None
-    #if request.user == author:
+    # print(user)
+    # print(user.id)
+    # posts_form = None
+    # new_tag_form = None
+    # post = None
     post = get_object_or_404(Post, pk=post_id)
     if request.user == post.author or request.user.is_superuser:
         print(post.author)
@@ -214,8 +213,8 @@ def edit_post(request, post_id):
             posts_form = BlogPostForm(instance=post)
             messages.warning(request, f'You are editing {post.title}')
     else:
-        return redirect(reverse('home'))
         messages.error(request, 'Sorry, only the post author can do that!')
+        return redirect(reverse('home'))
 
     template = 'blog/edit_post.html'
     context = {
@@ -226,3 +225,21 @@ def edit_post(request, post_id):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def delete_post(request, post_id):
+    """ Delete a products from the store """
+    """if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only storeowners can do that!')
+        return redirect(reverse('home'))"""
+    post = get_object_or_404(Post, pk=post_id)
+    # author = get_object_or_404(User, id=request.user.id)
+
+    if request.user == post.author or request.user.is_superuser:
+        post.delete()
+        messages.info(request, 'Post successfully deleted!')
+        return redirect(reverse('blog-articles'))
+    else:
+        messages.error(request, 'Sorry, only post authors can do that!')
+        return redirect(reverse('home'))
