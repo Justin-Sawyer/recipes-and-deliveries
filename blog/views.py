@@ -96,36 +96,64 @@ def add_post(request):
     """if not request.user.is_superuser:
         messages.error(request, 'Sorry, only storeowners can do that!')
         return redirect(reverse('home'))"""
-
+    # new_tag_form = None
     """ Gets username as author """
     if request.method == 'POST':
         author = get_object_or_404(User, id=request.user.id)
-        new_tag_form = NewTagsForm(request.POST)
-        form = BlogPostForm(request.POST, request.FILES)
-        form_temp = form.save(commit=False)
+        # new_tag_form = NewTagsForm(request.POST)
+        posts_form = BlogPostForm(request.POST, request.FILES)
+        form_temp = posts_form.save(commit=False)
         form_temp.author = author
         # Check button for adding further posts
         add_more_posts = request.POST.getlist('add-more-posts')
-        print(request.POST)
-        if form.is_valid() and new_tag_form.is_valid():
-            form_temp = form.save(commit=False)
-            new_tag = new_tag_form.save()
-            # tagname = Post.objects.create(new_tag)
-            # form_temp.tag.add(tagname)
-            #print(new_tag)
-            print(new_tag.id)
-            newtag = new_tag.id
-            print(newtag)
-            #new_tag_id = Tag.objects.get(id=new_tag.id)
-            #print(new_tag_id)
-            # form_temp.tag = new_tag_form
-            # new_tag = request.new_tag_form.get("tagname")
-            # new_tag = get_object_or_404(Tag, id=request.tagname)
-            # form_temp.tag.add(new_tag.id)
-            # print(form_temp.tag)
-            # form.tag.add(newtag)
-            saved_form = form.save()
-            saved_form.tag.add(newtag)
+        # print(request.POST)
+        if posts_form.is_valid():
+            # form_temp = posts_form.save(commit=False)
+            postsform = posts_form.save()
+            new_post = Post.objects.get(id=postsform.id)
+            new_tags_form = NewTagsForm(request.POST)
+            if new_tags_form.data['tagname']:
+                new_tags_form.is_valid()
+                newtag = new_tags_form.save()
+                print(newtag.id)
+                new_post.tag.add(newtag)
+                # postsform.save()
+                # tagname = new_tags_form.data['tagname']
+                #NewTagsForm.save()
+                # new_tags_form = 
+            # new_tag_form = NewTagsForm(request.POST)
+            # new_tag_form.GET.
+            # print(new_tag_form.tagname)
+            # NewTagsForm(request.POST)
+            # print(NewTagsForm)
+            # print(request.POST)
+            # if new_tag_form.is_valid():
+                # new_tag = new_tag_form.save(commit=False)
+                # tagname = Post.objects.create(new_tag)
+                # form_temp.tag.add(tagname)
+                # print(new_tag)
+                # print(new_tag.id)
+                # newtag = new_tag.id
+                # print(newtag)
+                #new_tag_id = Tag.objects.get(id=new_tag.id)
+                #print(new_tag_id)
+                # form_temp.tag = new_tag_form
+                # new_tag = request.new_tag_form.get("tagname")
+                # new_tag = get_object_or_404(Tag, id=request.tagname)
+                # form_temp.tag.add(new_tag.id)
+                # print(form_temp.tag)
+                # form.tag.add(newtag)
+                # saved_form = posts_form.save()
+                #if newtag is None:
+                # posts_form.save()
+                # new_tag_form.save()
+                # saved_form.tag.add(newtag)
+                # new_tag.delete
+            # else:
+                # posts_form.save()
+                # saved_form = posts_form.save()
+                # new_tag_form.save()
+                # saved_form.tag.add(newtag)          
             messages.info(request, 'Successfully added post!')
             if add_more_posts:
                 return redirect(reverse('add_post'))
@@ -136,10 +164,10 @@ def add_post(request):
                 Please ensure the form is valid.')
     else:
         new_tag_form = NewTagsForm
-        form = BlogPostForm
+        posts_form = BlogPostForm
     template = 'blog/add_post.html'
     context = {
-        'form': form,
+        'posts_form': posts_form,
         'new_tag_form': new_tag_form,
     }
 
@@ -155,22 +183,28 @@ def edit_post(request, post_id):
 
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
+        new_tag_form = NewTagsForm(request.POST)
         form = BlogPostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            form.save()
+            form_temp = form.save(commit=False)
+            new_tag = new_tag_form.save()
+            newtag = new_tag.id
+            saved_form = form.save()
+            saved_form.tag.add(newtag)
             messages.success(request, 'Successfully updated post!')
             return redirect(reverse('article', args=[post.id]))
-            # return redirect(reverse('home'))
         else:
             messages.error(request, 'Failed to edit post \
                 Please ensure the form is valid.')
     else:
+        new_tag_form = NewTagsForm
         form = BlogPostForm(instance=post)
         messages.warning(request, f'You are editing {post.title}')
 
     template = 'blog/edit_post.html'
     context = {
         'form': form,
+        'new_tag_form': new_tag_form,
         'post': post,
         'edit_article': True,
     }

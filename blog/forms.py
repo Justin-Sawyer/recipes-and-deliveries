@@ -6,9 +6,16 @@ from .models import Post, Category, Tag
 
 class NewTagsForm(forms.ModelForm):
 
+    tagname = forms.CharField(label='... or add your own tag', required=False)
+
     class Meta():
         model = Tag
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'border-green'
 
 
 class BlogPostForm(forms.ModelForm):
@@ -21,6 +28,10 @@ class BlogPostForm(forms.ModelForm):
     class Meta():
         model = Post
         exclude = ('author', 'date_posted',)
+        labels = {
+            'category': 'Choose categories from the list',
+            'tag': 'Choose some tags from the list',
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,7 +40,7 @@ class BlogPostForm(forms.ModelForm):
 
         placeholders = {
             'title': 'Add Your Title',
-            'tagline': 'Describe the article in a few short sentences',
+            'tagline': 'Describe your article',
             'image_credit': 'Who took the photo?',
             'content': 'Add your content here.'
         }

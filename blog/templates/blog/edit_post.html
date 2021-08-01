@@ -46,6 +46,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         {{ form.tag | as_crispy_field }}
+                        {{ new_tag_form.tagname | as_crispy_field }}
                     </div>
                     <div class="col-12 col-md-3">
                         <p class="mb-2">Choose Image</p>
@@ -80,9 +81,9 @@
             let file = $('.new-image')[0].files[0];
             $('#filename').text(`Image will be set to ${file.name}`);
         })
-        let tagCount = $('select[name="tag"]').children().length;
+        /*let tagCount = $('select[name="tag"]').children().length;
         let tagContainerHeight = (20 * `${tagCount}`) + 14;
-        $('#id_tag').css('height', `${tagContainerHeight}px`);
+        $('#id_tag').css('height', `${tagContainerHeight}px`);*/
     </script>
 {% endblock %}
 

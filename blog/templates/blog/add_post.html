@@ -22,7 +22,7 @@
 <div class="container content mb-2">
     <!-- Page title row -->
     <div class="row">
-        <div class="col-12 col-md-6 mt-3">
+        <div class="col-12 mt-3">
             <h2 class="font-weight-bold">Add A New Blog Article</h2>
             <!--<h3 class="subtitle text-muted">Add a Product</h3>-->
             <br>
@@ -36,27 +36,27 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
-                        {{ form.title | as_crispy_field}}
+                        {{ posts_form.title | as_crispy_field}}
                     </div>
                     <div class="col-12 col-md-9">
-                        {{ form.tagline | as_crispy_field}}
+                        {{ posts_form.tagline | as_crispy_field}}
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ form.category | as_crispy_field }}
+                        {{ posts_form.category | as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ posts_form.tag | as_crispy_field }}
                         {{ new_tag_form.tagname | as_crispy_field }}
-                    </div>
-                    <div class="col-12 col-md-6">
-                        {{ form.tag | as_crispy_field }}
                     </div>
                     <div class="col-12 col-md-3">
                         <p class="mb-2">Choose Image</p>
-                        {{ form.image }}
+                        {{ posts_form.image }}
                     </div>
                     <div class="col-12 col-md-9">
-                        {{ form.image_credit | as_crispy_field }}
+                        {{ posts_form.image_credit | as_crispy_field }}
                     </div>
                     <div class="col-12">
-                        {{ form.content | as_crispy_field }}
+                        {{ posts_form.content | as_crispy_field }}
                     </div>
                 </div>
                 <label class="form-check-label" for="id-add-more-posts">Add another article?</label>
@@ -81,9 +81,9 @@
         })
     </script>
     <script>
-        let tagCount = $('select[name="tag"]').children().length;
-        let tagContainerHeight = (20 * `${tagCount}`) + 14;
-        $('#id_tag').css('height', `${tagContainerHeight}px`);
+        //let tagCount = $('select[name="tag"]').children().length;
+        //let tagContainerHeight = (20 * `${tagCount}`) + 14;
+        //$('#id_tag').css('height', `168px`);
     </script>
 {% endblock %}
 
