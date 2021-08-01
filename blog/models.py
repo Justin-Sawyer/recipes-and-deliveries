@@ -43,7 +43,7 @@ class Post(models.Model):
     tag = models.ManyToManyField('Tag')
     tagline = models.CharField(max_length=254)
     image = models.ImageField(null=True, blank=True)
-    image_credit = models.CharField(max_length=254, default="", blank=False)
+    image_credit = models.CharField(max_length=254, null=True, blank=True)
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     date_posted = models.DateTimeField(null=True,

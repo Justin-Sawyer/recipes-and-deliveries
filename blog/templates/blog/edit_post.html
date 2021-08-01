@@ -77,6 +77,7 @@
         $('textarea').removeClass('border-green').addClass('border-amber');
         $('.btn-file').removeClass('btn-green').addClass('btn-amber');
         $('.btn-file').children('input').addClass('new-image');
+        $('#div_id_image_credit').css('display', 'none !important');
         $('.new-image').change(function() {
             let file = $('.new-image')[0].files[0];
             $('#filename').text(`Image will be set to ${file.name}`);
