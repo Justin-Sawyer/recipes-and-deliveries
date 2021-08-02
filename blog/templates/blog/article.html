@@ -38,7 +38,7 @@
                     <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
                         {% for cat in post.category.all %}
                         <a class="text-muted text-green font-weight-bold" href="{% url 'blog-articles' %}?category={{ cat.name }}">
-                            {{ cat.friendly_name }}
+                            {{ cat.friendly_name|title }}
                         </a><span class="category-link-divider">|</span>
                         {% endfor %}
                     </p>

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 
 from .models import Post, Category, Tag
-from .forms import BlogPostForm, NewTagsForm
+from .forms import BlogPostForm, NewTagsForm, NewCategoriesForm
 from profiles.models import UserProfile
 from django.contrib.auth.models import User
 
@@ -113,14 +113,33 @@ def add_post(request):
             new_post = Post.objects.get(id=postsform.id)
             new_tags_form = NewTagsForm(request.POST)
             if new_tags_form.data['tagname']:
-                new_tags_form.is_valid()
-                newtag = new_tags_form.save()
+                # x = new_tags_form.save(commit=False)
+                # print(x.id)
+                new_tagname = new_tags_form.data['tagname']
+                # print(new_tagname)
+                tagname_collection = Tag.objects.all()
+                # print(tagname_collection)
+                # existing_tagname = Tag.objects.get(tagname__in=new_tagname)
+                # print(existing_tagname)
+                existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                if existing_tagname:
+                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                    new_post.tag.add(existing_tagname_id)
+                # print(exisiting_tagname_id)
+                if not existing_tagname:
+                    # tagname_collection.insert_one(new_tagname)
+                    new_tags_form.is_valid()
+                    newtag = new_tags_form.save()
                 # print(newtag.id)
-                new_post.tag.add(newtag)
+                    new_post.tag.add(newtag)
+                # else:
+                    # new_post.tag.add(existing_tagname_id)
+                    # new_post.tag.add(exisiting_tagname_id)
+                    # new_post.tag.add(existing_tagname)
                 # postsform.save()
                 # tagname = new_tags_form.data['tagname']
-                #NewTagsForm.save()
-                # new_tags_form = 
+                # NewTagsForm.save()
+                # new_tags_form =
             # new_tag_form = NewTagsForm(request.POST)
             # new_tag_form.GET.
             # print(new_tag_form.tagname)
@@ -135,8 +154,8 @@ def add_post(request):
                 # print(new_tag.id)
                 # newtag = new_tag.id
                 # print(newtag)
-                #new_tag_id = Tag.objects.get(id=new_tag.id)
-                #print(new_tag_id)
+                # new_tag_id = Tag.objects.get(id=new_tag.id)
+                # print(new_tag_id)
                 # form_temp.tag = new_tag_form
                 # new_tag = request.new_tag_form.get("tagname")
                 # new_tag = get_object_or_404(Tag, id=request.tagname)
@@ -144,7 +163,7 @@ def add_post(request):
                 # print(form_temp.tag)
                 # form.tag.add(newtag)
                 # saved_form = posts_form.save()
-                #if newtag is None:
+                # if newtag is None:
                 # posts_form.save()
                 # new_tag_form.save()
                 # saved_form.tag.add(newtag)
@@ -153,7 +172,24 @@ def add_post(request):
                 # posts_form.save()
                 # saved_form = posts_form.save()
                 # new_tag_form.save()
-                # saved_form.tag.add(newtag)          
+                # saved_form.tag.add(newtag)
+            new_category_form = NewCategoriesForm(request.POST)
+            if new_category_form.data['friendly_name']:
+                """new_category_form.is_valid()
+                newcategory = new_category_form.save()
+                new_post.category.add(newcategory)"""
+                new_category_name = new_category_form.data['friendly_name']
+                category_collection = Category.objects.all()
+                existing_category_name = (
+                    Category.objects.filter(friendly_name=new_category_name))
+                if existing_category_name:
+                    existing_category_name_id = (
+                        category_collection.get(id__in=existing_category_name))
+                    new_post.category.add(existing_category_name_id)
+                if not existing_category_name:
+                    new_category_form.is_valid()
+                    newcategory = new_category_form.save()
+                    new_post.category.add(newcategory)
             messages.success(request, 'Successfully added post!')
             if add_more_posts:
                 return redirect(reverse('add_post'))
@@ -163,12 +199,14 @@ def add_post(request):
             messages.error(request, 'Failed to add your post \
                 Please ensure the form is valid.')
     else:
+        new_category_form = NewCategoriesForm
         new_tag_form = NewTagsForm
         posts_form = BlogPostForm
     template = 'blog/add_post.html'
     context = {
         'posts_form': posts_form,
         'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
     }
 
     return render(request, template, context)
@@ -194,21 +232,56 @@ def edit_post(request, post_id):
         print(post.author)
         if request.method == 'POST':
             new_tag_form = NewTagsForm(request.POST)
-            posts_form = BlogPostForm(request.POST, request.FILES, instance=post)
+            posts_form = BlogPostForm(request.POST,
+                                      request.FILES,
+                                      instance=post)
             if posts_form.is_valid():
                 postsform = posts_form.save()
                 new_post = Post.objects.get(id=postsform.id)
                 new_tags_form = NewTagsForm(request.POST)
                 if new_tags_form.data['tagname']:
-                    new_tags_form.is_valid()
+                    """new_tags_form.is_valid()
                     newtag = new_tags_form.save()
-                    new_post.tag.add(newtag)
+                    new_post.tag.add(newtag)"""
+                    new_tagname = new_tags_form.data['tagname']
+                    tagname_collection = Tag.objects.all()
+                    existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                    if existing_tagname:
+                        existing_tagname_id = (
+                            tagname_collection.get(id__in=existing_tagname))
+                        new_post.tag.add(existing_tagname_id)
+                    if not existing_tagname:
+                        new_tags_form.is_valid()
+                        newtag = new_tags_form.save()
+                        new_post.tag.add(newtag)
+                    # else:
+                        # new_post.tag.add(existing_tagname_id)
+                new_category_form = NewCategoriesForm(request.POST)
+                if new_category_form.data['friendly_name']:
+                    """new_category_form.is_valid()
+                    newcategory = new_category_form.save()
+                    new_post.category.add(newcategory)"""
+                    new_category_name = new_category_form.data['friendly_name']
+                    category_collection = Category.objects.all()
+                    existing_category_name = (
+                        Category.objects.filter(friendly_name=new_category_name))
+                    if existing_category_name:
+                        existing_category_name_id = (
+                            category_collection.get(id__in=existing_category_name))
+                        new_post.category.add(existing_category_name_id)
+                    if not existing_category_name:
+                        new_category_form.is_valid()
+                        newcategory = new_category_form.save()
+                        new_post.category.add(newcategory)
+                    # else:
+                        # new_post.category.add(existing_category_name_id)
                 messages.success(request, 'Successfully updated post!')
                 return redirect(reverse('article', args=[post.id]))
             else:
                 messages.error(request, 'Failed to edit post \
                     Please ensure the form is valid.')
         else:
+            new_category_form = NewCategoriesForm
             new_tag_form = NewTagsForm
             posts_form = BlogPostForm(instance=post)
             messages.warning(request, f'You are editing {post.title}')
@@ -220,6 +293,7 @@ def edit_post(request, post_id):
     context = {
         'posts_form': posts_form,
         'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
         'post': post,
         'edit_article': True,
     }

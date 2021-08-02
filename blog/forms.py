@@ -4,6 +4,22 @@ from django.contrib.auth.models import User
 from .models import Post, Category, Tag
 
 
+class NewCategoriesForm(forms.ModelForm):
+
+    friendly_name = forms.CharField(label='... or add your own categories',
+                                    required=False)
+
+    class Meta():
+        model = Category
+        fields = ('friendly_name',)
+        # ordering = ('sku',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'border-green'
+
+
 class NewTagsForm(forms.ModelForm):
 
     tagname = forms.CharField(label='... or add your own tag', required=False)
@@ -29,14 +45,17 @@ class BlogPostForm(forms.ModelForm):
         model = Post
         exclude = ('author', 'date_posted',)
         labels = {
-            'category': 'Choose categories from the list',
+            'tagline': 'Description',
+            'category': 'Choose some categories from the list',
             'tag': 'Choose some tags from the list',
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        categories = Category.objects.all()
+        categories = Category.objects.all().order_by('friendly_name')
         friendly_name = [(c.id, c.get_friendly_name()) for c in categories]
+        # categories = forms.MultipleChoiceField(widget=forms.SelectMultiple,
+                                             # choices=friendly_name)
 
         placeholders = {
             'title': 'Add Your Title',
@@ -44,6 +63,8 @@ class BlogPostForm(forms.ModelForm):
             'image_credit': 'Who took the photo?',
             'content': 'Add your content here.'
         }
+
+        self.fields['title'].widget.attrs['autofocus'] = True
 
         for field in self.fields:
             if field == 'title':

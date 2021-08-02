@@ -1,5 +1,5 @@
 /*select.form-control[multiple],*/
-select.form-control[name="category"],
+/*select.form-control[name="category"],
 select.form-control[size] {
     height: 180px;
 }
@@ -7,7 +7,7 @@ select.form-control[size] {
 select.form-control[name="tag"],
 select.form-control[size] {
     height: auto;
-}
+}*/
 
 .subtitle {
     font-size: 1.25rem;

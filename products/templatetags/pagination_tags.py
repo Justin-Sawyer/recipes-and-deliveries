@@ -3,15 +3,16 @@ from django import template
 register = template.Library()
 
 
-# Credit: https://www.caktusgroup.com/blog/2018/10/18/filtering-and-pagination-django/
+# Credit:
+# https://www.caktusgroup.com/blog/2018/10/18/filtering-and-pagination-django/
 @register.simple_tag(takes_context=True)
 def param_replace(context, **kwargs):
     """
     Return encoded URL parameters that are the same as the current
-    request's parameters, only with the specified GET parameters added or 
+    request's parameters, only with the specified GET parameters added or
     changed.
 
-    Also removes any empty parameters to keep things neat, so can remove 
+    Also removes any empty parameters to keep things neat, so can remove
     a parameter by setting it to ``""``.
 
     For example, if on page ``products/?sort=price&direction=asc&page=2``,

@@ -16,6 +16,7 @@ def guarantee(request):
     """ A view to return the R&D guarantee page """
     return render(request, 'home/guarantee.html')
 
+
 def search_result(request):
     """ A view to return the R&D guarantee page """
     posts = Post.objects.all().order_by('-pk')
@@ -33,7 +34,7 @@ def search_result(request):
             categories = request.GET['category'].split(',')
             posts = posts.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
-            
+    
         # Sort blog articles by tag
         if 'tag' in request.GET:
             tags = request.GET['tag'].split(',')

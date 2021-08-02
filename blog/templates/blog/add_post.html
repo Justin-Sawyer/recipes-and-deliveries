@@ -43,6 +43,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         {{ posts_form.category | as_crispy_field }}
+                        {{ new_category_form|crispy }}
                     </div>
                     <div class="col-12 col-md-6">
                         {{ posts_form.tag | as_crispy_field }}

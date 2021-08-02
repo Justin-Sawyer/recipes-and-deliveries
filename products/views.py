@@ -17,7 +17,7 @@ def all_products(request):
     categories = None
     sort = None
     direction = None
-    
+
     if request.GET:
         # Sort products via the dropdown menu
         if 'sort' in request.GET:
@@ -55,7 +55,7 @@ def all_products(request):
 
     current_sorting = f'{sort}_{direction}'
 
-    paginator = Paginator(products, 12) # Show 12 contacts per page.
+    paginator = Paginator(products, 12)  # Show 12 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

@@ -43,6 +43,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         {{ posts_form.category | as_crispy_field}}
+                        {{ new_category_form|crispy }}
                     </div>
                     <div class="col-12 col-md-6">
                         {{ posts_form.tag | as_crispy_field }}
@@ -82,6 +83,7 @@
             $('.new-image').change(function() {
                 let file = $('.new-image')[0].files[0];
                 $('#filename').text(`Image will be set to ${file.name}`);
+                $('input[name="image_credit"]').val('');
                 $('#div_id_image_credit').css('display', 'block');
                 $('label[for="id_image_credit"]').text('Image Credit*');
                 $('input[name="image_credit"]').prop('required', true);
@@ -94,11 +96,9 @@
                     $('input[name="image_credit"]').prop('required', false);
                 } else if (count % 2 != 0) {
                     $('input[name="image_credit"]').val(imageCreditValue);
-                    $('#div_id_image_credit').css('display', 'block');
                     $('input[name="image_credit"]').prop('required', true);
                 }
                 count += 1;
-                console.log("count")
             })
         })
     </script>
