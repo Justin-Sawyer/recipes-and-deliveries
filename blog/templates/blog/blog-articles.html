@@ -121,10 +121,10 @@
                                                     href="{% url 'blog-articles' %}?category={{ cat.name }}">
                                                     {{ cat.friendly_name|title }}
                                                 </a><span class="category-link-divider">|</span>
+                                                {% empty %}
+                                                <small class="text-muted">No categories</small>
                                                 {% endfor %}
                                             </p>
-                                        {% else %}
-                                            <p class="text-muted"><small>No categories</small></p>
                                         {% endif %}
 
                                         <!-- Tags -->
@@ -135,10 +135,10 @@
                                                     href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
                                                     {{ t.tagname|title }}
                                                 </a><span class="tag-link-divider">|</span>
+                                                {% empty %}
+                                                <small class="text-muted">No tags</small>
                                                 {% endfor %}
                                             </p>
-                                        {% else %}
-                                            <p class="text-muted"><small>No tags</small></p>
                                         {% endif %}
 
                                         <!-- Post author -->

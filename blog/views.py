@@ -93,10 +93,6 @@ def article(request, post_id):
 @login_required
 def add_post(request):
     """ Add a product to the store """
-    """if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only storeowners can do that!')
-        return redirect(reverse('home'))"""
-    # new_tag_form = None
     if request.method == 'POST':
         """ Gets username as author """
         author = get_object_or_404(User, id=request.user.id)
@@ -215,21 +211,11 @@ def add_post(request):
 @login_required
 def edit_post(request, post_id):
     """ Edit a product in the store """
-    """if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only storeowners can do that!')
-        return redirect(reverse('home'))"""
+
     author = get_object_or_404(User, id=request.user.id)
-    # print(author)
-    # print(author.id)
     user = request.user
-    # print(user)
-    # print(user.id)
-    # posts_form = None
-    # new_tag_form = None
-    # post = None
     post = get_object_or_404(Post, pk=post_id)
     if request.user == post.author or request.user.is_superuser:
-        print(post.author)
         if request.method == 'POST':
             new_tag_form = NewTagsForm(request.POST)
             posts_form = BlogPostForm(request.POST,
@@ -240,27 +226,53 @@ def edit_post(request, post_id):
                 new_post = Post.objects.get(id=postsform.id)
                 new_tags_form = NewTagsForm(request.POST)
                 if new_tags_form.data['tagname']:
-                    """new_tags_form.is_valid()
-                    newtag = new_tags_form.save()
-                    new_post.tag.add(newtag)"""
                     new_tagname = new_tags_form.data['tagname']
                     tagname_collection = Tag.objects.all()
                     existing_tagname = Tag.objects.filter(tagname=new_tagname)
                     if existing_tagname:
-                        existing_tagname_id = (
-                            tagname_collection.get(id__in=existing_tagname))
+                        existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
                         new_post.tag.add(existing_tagname_id)
                     if not existing_tagname:
                         new_tags_form.is_valid()
                         newtag = new_tags_form.save()
                         new_post.tag.add(newtag)
+                    """new_tags_form.is_valid()
+                    newtag = new_tags_form.save()
+                    new_post.tag.add(newtag)
+                    new_tagname = new_tags_form.data['tagname']
+                    # list = [new_tagname][0].split()
+                    # print(list)
+                    tagname_collection = Tag.objects.all()
+                    if existing_tagname:
+                        existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                        new_post.tag.add(existing_tagname_id)
+                    for word in list:
+                        # print(word)
+                        # existing_tagname = [Tag.objects.filter(tagname=word)]
+                        # print(existing_tagname)
+                        if existing_tagname:
+                            for tag in existing_tagname:
+                                print(tag)
+                                # tag_id = Tag.objects.get(id__in=tag)
+                                print(Tag.objects.filter(tagname=tag))
+                                # print(tag_id)
+                            #for word in list:
+                            # existing_tagname_id = [
+                                # tagname_collection.get(pk__in=existing_tagname)][0].slice()
+                            # print(existing_tagname_id)
+                                # new_post.tag.add(existing_tagname_id)
+                        if not existing_tagname:
+                            for word in list:
+                                new_tags_form.is_valid()
+                                newtag = new_tags_form.save()
+                                new_post.tag.add(newtag)
+                                new_tag_form = NewTagsForm({'tagname': word}, instance=Tag())
+                                newtag = new_tag_form.save()
+                                new_post.tag.add(newtag)
                     # else:
-                        # new_post.tag.add(existing_tagname_id)
+                        # new_post.tag.add(existing_tagname_id)"""
                 new_category_form = NewCategoriesForm(request.POST)
                 if new_category_form.data['friendly_name']:
-                    """new_category_form.is_valid()
-                    newcategory = new_category_form.save()
-                    new_post.category.add(newcategory)"""
                     new_category_name = new_category_form.data['friendly_name']
                     category_collection = Category.objects.all()
                     existing_category_name = (
@@ -273,8 +285,6 @@ def edit_post(request, post_id):
                         new_category_form.is_valid()
                         newcategory = new_category_form.save()
                         new_post.category.add(newcategory)
-                    # else:
-                        # new_post.category.add(existing_category_name_id)
                 messages.success(request, 'Successfully updated post!')
                 return redirect(reverse('article', args=[post.id]))
             else:
@@ -308,11 +318,10 @@ def delete_post(request, post_id):
         messages.error(request, 'Sorry, only storeowners can do that!')
         return redirect(reverse('home'))"""
     post = get_object_or_404(Post, pk=post_id)
-    # author = get_object_or_404(User, id=request.user.id)
 
     if request.user == post.author or request.user.is_superuser:
         post.delete()
-        messages.info(request, 'Post successfully deleted!')
+        messages.success(request, 'Post successfully deleted!')
         return redirect(reverse('blog-articles'))
     else:
         messages.error(request, 'Sorry, only post authors can do that!')
