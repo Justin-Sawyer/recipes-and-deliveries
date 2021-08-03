@@ -182,12 +182,12 @@
                                                             {% for cat in post.category.all %}
                                                             <a class="text-muted text-green font-weight-bold"
                                                                 href="{% url 'blog-articles' %}?category={{ cat.name }}">
-                                                                {{ cat.friendly_name }}
+                                                                {{ cat.friendly_name|title }}
                                                             </a><span class="category-link-divider">|</span>
+                                                            {% empty %}
+                                                                <small class="text-muted">No categories</small>
                                                             {% endfor %}
                                                         </p>
-                                                    {% else %}
-                                                        <p class="text-muted"><small>No categories</small></p>
                                                     {% endif %}
 
                                                     <!-- Tags -->
@@ -198,10 +198,10 @@
                                                                 href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
                                                                 {{ t.tagname|title }}
                                                             </a><span class="tag-link-divider">|</span>
+                                                            {% empty %}
+                                                                <small class="text-muted">No tag</small>
                                                             {% endfor %}
                                                         </p>
-                                                    {% else %}
-                                                        <p class="text-muted"><small>No tags</small></p>
                                                     {% endif %}
 
                                                     <!-- Post author -->
@@ -221,11 +221,14 @@
                                                     {% endif %}
 
                                                     <!-- Editing and deleting -->
-                                                    {% if request.user.is_superuser %}
+                                                    {% if request.user.is_superuser or request.user.id is post.author.id %}
                                                         <div class="edit-delete">
                                                             <small>
-                                                                <a class="text-primary" href="">Edit</a> |
-                                                                <a class="text-danger" href="">Delete</a>
+                                                                <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                                                Superuser created posts = author edit color,
+                                                                user created posts = primary color (matching color of product management) -->
+                                                                <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' post.id %}">Edit</a> |
+                                                                <a class="text-danger" href="{% url 'delete_post' post.id %}">Delete</a>
                                                             </small>
                                                         </div>
                                                     {% endif %}

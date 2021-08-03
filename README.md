@@ -460,22 +460,420 @@ This had the desired effect: all Recipe Box cards on the "All Recipe Boxes" page
 
 From here, the devloper could delete the original JavaScript code from the individual Recipe Box page, add the class `rating` to the rating section of the HTML, then create a separate script file in the `includes` folder and call the script from both the `products.html` template and the individual `product_detail.html` template.
 
+### Changing photos on  blog articles
+
+The developer feels that this is a community site, and as such, when a user adds an image to a blog article, the user should either be forced into crediting the image. The image can be either an image the user took, or an image downloaded from the internet or elsewhere. Whichever, a credit should be given. 
+
+The developer originally set the blog app's Post model to have an obligatory Image Credit CharField. However, doing so threw up a number of conundrums.
+
+For example, what if the user was not adding an image, but allowing the banner image to be the page background for the blog article? Why would the user need to credit this?
+
+Further, if later the user decided to edit the post and choose to remove an added image, the Image Credit field would still be needed. 
+
+Thus, the developer realised that the best way to avoid these issues was to change the Post model to allow Image Credit to be blank and null. He then wrote some JavaScript to force the user to add a credit when an image was added. This JavaScript was appended to the JavaScript used in the original Boutique Ado project, on which this project is based.
+
+The original script:
+
+```
+<script>
+    $('.btn-file').children('input').addClass('new-image');
+    $('.new-image').change(function() {
+        let file = $('.new-image')[0].files[0];
+        $('#filename').text(`Image will be set to ${file.name}`);
+    })
+</script>
+```
+
+The develpoer's amended version:
+
+```
+<script>
+    // Hide the Image Credit input box on the add post form
+    $('#div_id_image_credit').css('display', 'none');
+    // Original script
+    $('.btn-file').children('input').addClass('new-image');
+    $('.new-image').change(function() {
+        let file = $('.new-image')[0].files[0];
+        $('#filename').text(`Image will be set to ${file.name}`);
+        // If user adds image, show Image credit box
+        $('#div_id_image_credit').css('display', 'block');
+        // Add * to show user the credit must be added
+        $('label[for="id_image_credit"]').text('Image Credit*');
+        // Require input
+        $('input[name="image_credit"]').prop('required', true);
+    })
+</script>
+```
+
+This takes care of when a user adds an image.
+
+However, when the user edits the post, the above script was not sufficient, since it would not force the user to append the credit if the image was changed. Furthermore, it does not remove the Image Credit if an image is removed. Thus, a further script was appended on the `edit_post.html` template:
+
+
+```
+<script>
+    $(document).ready(function() {
+        // Change element boders to amber so user immediately knows (s-he is editing rather than adding a post, but ensure that global search is still green
+        $('input').not('input[name="q"]').removeClass('border-green').addClass('border-amber');
+        $('select').removeClass('border-green').addClass('border-amber');
+        $('textarea').removeClass('border-green').addClass('border-amber');
+        $('.btn-file').removeClass('btn-green').addClass('btn-amber');
+
+        // Code block from above
+        $('.btn-file').children('input').addClass('new-image');
+        $('#div_id_image_credit').css('display', 'none');
+        $('.new-image').change(function() {
+            let file = $('.new-image')[0].files[0];
+            $('#filename').text(`Image will be set to ${file.name}`);
+            $('input[name="image_credit"]').val('');
+            $('#div_id_image_credit').css('display', 'block');
+            $('label[for="id_image_credit"]').text('Image Credit*');
+            $('input[name="image_credit"]').prop('required', true);
+        })
+        // Handle clicks of "Remove" button
+        // Clicking once = remove image. Clicking twice overrides remove function, keeping the original image
+        let count = 0;
+        // Get Image Credit input value text
+        imageCreditValue = $('input[name="image_credit"]').val()
+        $('#image-clear_id').on('change', function() {
+            // if clicks divisible by 2 (keep image)
+            if (count % 2 === 0) {
+                // set Image Credit input to not be required, thus maintaining original credit
+                $('input[name="image_credit"]').val('');
+                $('input[name="image_credit"]').prop('required', false);
+            } 
+              // otherwise
+              else if (count % 2 != 0) {
+                // re-insert original Image Credit input value
+                $('input[name="image_credit"]').val(imageCreditValue);
+                $('input[name="image_credit"]').prop('required', true);
+            }
+            count += 1;
+        })
+    })
+</script>
+```
+
+The above script means that if a user changes an image to a post, the user is forced to add a credit. 
+
+Otherwise, if a user removes an image, the Image Credit is removed, and is set to a blank string. It also allows for users clicking the "Remove" button accidentally: instead of being forced to reinsert an Image Credit value manually, the code handles this automatically.
+
+The developer tested this code to destruction on the live site, and has verified that with each option, (add image, remove image, handle accidental clicks) the correct Image credit is shown on the blog post's page. If a user posts an image, the credit is displayed. If the image is removed, no credit is displayed (since the default site banner image is being used). 
+
+## Search
+
+Originally, the developer was going to have a search page for each section of the site. Thus, if a user is visiting the blog articles, searching would reveal the appropriate results. Likewise, if a user is visiting Recipe Boxes, searching would return only results from the "commercial" side of the site.
+
+However, it soon became apparent that this would be too complicated for users. Some users may not remember whether that are visiting the commercial side or the community side. Others, however, may be reading an article on the community side (the blog) and decide to look for Recipe Boxes that might be similar to the blog article. Thus, for example, the site contains a blog article about the dish "Adobo" and a Recipe Box for "Chicken Adobo". It would be frustrating for the user to search for the equivalent matching product (or article, depending where the user was starting from) but not be able to find it in the search.
+
+Thus the developer decided to make a dedicated search tempate, that would return all concerned seacrh results.
+
+The developer however thought it best that searching by tag or cateogory would take the user to the dedicated "side" of the website. Since tags are not featured on Recipe Boxes, but categories are, clicking a tag takes the user to the community side, for example.
+
+## Blog Tags and Categories
+
+Whereas the commercial side of the website is controlled by the site admin, the blog and recipe side is designed to be communal. Thus, admin decides upon categories for Recipe Boxes, and these are "set in stone", so to speak. They are categorised by region, by diet, and by meal.
+
+However, blogs are different to products in the way that they are grouped. Just as "Asian" might be ideal as a category, it does not necessarily work well as a tag. It would be better to allow a further tag, such as "rice", to describe the particular article. Doing so means that users can skip from categories to tags and from tags to categories.
+
+This clearly means that it should be the post author who decides upon tags to include. And it was here that the developer had the most difficulty with his code.
+
+Since this is the developer's first Django project, it is fair to say that the developer has found Django to be at times extremely complicated. At other times, it is a joy to use. It is fir this reason that the developer is not going to expand on every error or problem he encountered while writing the code for adding and editing tags and categories. However, he is going to document his many tries in the beneath code block:
+
+```
+@login_required
+def add_post(request):
+    """ Add a post to the blog """
+    if request.method == 'POST':
+        """ Gets username as author """
+        author = get_object_or_404(User, id=request.user.id)
+        # new_tag_form = NewTagsForm(request.POST)
+        posts_form = BlogPostForm(request.POST, request.FILES)
+        form_temp = posts_form.save(commit=False)
+        form_temp.author = author
+        # Check button for adding further posts
+        add_more_posts = request.POST.getlist('add-more-posts')
+        # print(request.POST)
+        if posts_form.is_valid():
+            # form_temp = posts_form.save(commit=False)
+            postsform = posts_form.save()
+            new_post = Post.objects.get(id=postsform.id)
+            new_tags_form = NewTagsForm(request.POST)
+            if new_tags_form.data['tagname']:
+                # x = new_tags_form.save(commit=False)
+                # print(x.id)
+                new_tagname = new_tags_form.data['tagname']
+                # print(new_tagname)
+                tagname_collection = Tag.objects.all()
+                # print(tagname_collection)
+                # existing_tagname = Tag.objects.get(tagname__in=new_tagname)
+                # print(existing_tagname)
+                existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                if existing_tagname:
+                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                    new_post.tag.add(existing_tagname_id)
+                # print(exisiting_tagname_id)
+                if not existing_tagname:
+                    # tagname_collection.insert_one(new_tagname)
+                    new_tags_form.is_valid()
+                    newtag = new_tags_form.save()
+                # print(newtag.id)
+                    new_post.tag.add(newtag)
+                # else:
+                    # new_post.tag.add(existing_tagname_id)
+                    # new_post.tag.add(exisiting_tagname_id)
+                    # new_post.tag.add(existing_tagname)
+                # postsform.save()
+                # tagname = new_tags_form.data['tagname']
+                # NewTagsForm.save()
+                # new_tags_form =
+            # new_tag_form = NewTagsForm(request.POST)
+            # new_tag_form.GET.
+            # print(new_tag_form.tagname)
+            # NewTagsForm(request.POST)
+            # print(NewTagsForm)
+            # print(request.POST)
+            # if new_tag_form.is_valid():
+                # new_tag = new_tag_form.save(commit=False)
+                # tagname = Post.objects.create(new_tag)
+                # form_temp.tag.add(tagname)
+                # print(new_tag)
+                # print(new_tag.id)
+                # newtag = new_tag.id
+                # print(newtag)
+                # new_tag_id = Tag.objects.get(id=new_tag.id)
+                # print(new_tag_id)
+                # form_temp.tag = new_tag_form
+                # new_tag = request.new_tag_form.get("tagname")
+                # new_tag = get_object_or_404(Tag, id=request.tagname)
+                # form_temp.tag.add(new_tag.id)
+                # print(form_temp.tag)
+                # form.tag.add(newtag)
+                # saved_form = posts_form.save()
+                # if newtag is None:
+                # posts_form.save()
+                # new_tag_form.save()
+                # saved_form.tag.add(newtag)
+                # new_tag.delete
+            # else:
+                # posts_form.save()
+                # saved_form = posts_form.save()
+                # new_tag_form.save()
+                # saved_form.tag.add(newtag)
+            new_category_form = NewCategoriesForm(request.POST)
+            if new_category_form.data['friendly_name']:
+                """new_category_form.is_valid()
+                newcategory = new_category_form.save()
+                new_post.category.add(newcategory)"""
+                new_category_name = new_category_form.data['friendly_name']
+                category_collection = Category.objects.all()
+                existing_category_name = (
+                    Category.objects.filter(friendly_name=new_category_name))
+                if existing_category_name:
+                    existing_category_name_id = (
+                        category_collection.get(id__in=existing_category_name))
+                    new_post.category.add(existing_category_name_id)
+                if not existing_category_name:
+                    new_category_form.is_valid()
+                    newcategory = new_category_form.save()
+                    new_post.category.add(newcategory)
+            messages.success(request, 'Successfully added post!')
+            if add_more_posts:
+                return redirect(reverse('add_post'))
+            else:
+                return redirect(reverse('blog-articles'))
+        else:
+            messages.error(request, 'Failed to add your post \
+                Please ensure the form is valid.')
+    else:
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
+        posts_form = BlogPostForm
+    template = 'blog/add_post.html'
+    context = {
+        'posts_form': posts_form,
+        'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
+    }
+
+    return render(request, template, context)
+```
+
+With each piece of commented out code in the above code block, the developer added blog articles and tested the functionality. 
+
+The final code block reads as such:
+
+```
+@login_required
+def add_post(request):
+    """ Add a post to the blog """
+
+    if request.method == 'POST':
+        """ Gets username as author """
+        author = get_object_or_404(User, id=request.user.id)
+
+        """ Retrieve form data """
+        posts_form = BlogPostForm(request.POST, request.FILES)
+        form_temp = posts_form.save(commit=False)
+
+        """ append user (post author) to form for submitting """
+        form_temp.author = author
+
+        """ Check button for adding further posts """
+        add_more_posts = request.POST.getlist('add-more-posts')
+
+        
+        if posts_form.is_valid():
+            postsform = posts_form.save()
+            new_post = Post.objects.get(id=postsform.id)
+
+            """ Handle new vs existing tags """
+            new_tags_form = NewTagsForm(request.POST)
+            if new_tags_form.data['tagname']:
+                new_tagname = new_tags_form.data['tagname']
+                tagname_collection = Tag.objects.all()
+                existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                if existing_tagname:
+                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                    new_post.tag.add(existing_tagname_id)
+                if not existing_tagname:
+                    new_tags_form.is_valid()
+                    newtag = new_tags_form.save()
+                    new_post.tag.add(newtag)
+                
+            """ Handle new vs exiting categories """
+            new_category_form = NewCategoriesForm(request.POST)
+            if new_category_form.data['friendly_name']:
+                new_category_name = new_category_form.data['friendly_name']
+                category_collection = Category.objects.all()
+                existing_category_name = (
+                    Category.objects.filter(friendly_name=new_category_name))
+                if existing_category_name:
+                    existing_category_name_id = (
+                        category_collection.get(id__in=existing_category_name))
+                    new_post.category.add(existing_category_name_id)
+                if not existing_category_name:
+                    new_category_form.is_valid()
+                    newcategory = new_category_form.save()
+                    new_post.category.add(newcategory)
+
+            messages.success(request, 'Successfully added post!')
+
+            """ Handle redirect according to whether Further Posts is checked or not """
+            if add_more_posts:
+                return redirect(reverse('add_post'))
+            else:
+                return redirect(reverse('blog-articles'))
+        else:
+            messages.error(request, 'Failed to add your post \
+                Please ensure the form is valid.')
+    else:
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
+        posts_form = BlogPostForm
+    
+    template = 'blog/add_post.html'
+    
+    context = {
+        'posts_form': posts_form,
+        'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
+    }
+
+    return render(request, template, context) 
+```
+
+The result of the above code is that a user can either choose from the list of categories or tags AND also add their own. The code recognises whether user entered tags/categories are on the pre-existing list. If they are, they are not duplicated. If they are not, they are added to the corresponding model (Tag or Category) and to the Post object itself.
+
+There is one still to be resolved situation regarding this code, however, and this will be resolved in the developer's future plans for the site. 
+
+The developer realises that any text entered as tags or categories is treated as a string, rather than as array entries. Thus, if a user creates a post about chocolate milkshakes and chooses tags as "chocolate milk milkshake" the resulting tag is just that, rather than ["chocolate", "milk", "milkshake"]. 
+
+The developer feels the solution to this might be the Django "taggable "add-on, but has decided this will be looked into at a further date.
+
+With the above code working fully, it was amended to suit the edit_post() view and tested fully there too.
+
+(As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue color is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
 
 
 ## Back End
-### Database Models
+### RECIPE BOXES Database Models
+#### Category
 
-#### Products
+| Key  | Type Field  | Relationship  | Blank  | Null  |
+|:----------|:----------|:----------|:----------|:----------|
+| name    | CharField    |  -     |  -     |  -     |
+| friendly_name    | CharField    |  -     | True    | True    |
+| sku    | CharField    |  -     | True    | True    |
 
-#### Categories
+#### Product
+| Key  | Type Field  | Relationship  | Max Digits  | Decimal Places  | Blank  | Null  |Default  |
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|
+| category    | ManyToManyField    | Categories    |  -     |  -     |  -     |  -     |  - |
+| sku    | CharField    |  -     |  -     |  -     | True    | True    | - |
+| name    | CharField    |  -     |  -     |  -     |  -     |  -     |  -  |
+| description    | TextField    |  -     |  -     |  -     |  -     |  -     |  - |
+| price    | DecimalField    |  -     | 6    | 2    |  -     |  -     |  -  |
+| rating    | DecimalField    |  -     | 6    | 2    | True    | True    |  -  |
+| image_url    | URLField    |  -     |  -     |  -     | True    | True    |  -  |
+| image_credit    | CharField    |  -     |  -    |  -     | True    | True    |  - |
+| image    | ImageField    |  -     |  -     |  -     | True    | True    |  -  |
+| has_gluten    | BooleanField    |  -     |    -   |  -     | True    | True    | False |
+| gluten_free_option    | BooleanField    |  -     |  -     |  -     | True    | True    | False|
+ 
+### USER Database Models
+| Key  | Type Field  | Relationship  | Max Digits  | Blank  | Null  | Default  |
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|
+| user    | OneToOneField    | User    | -    | -    | -    | -    |
+| default_full_name    | CharField    | -    | 50    | True    | -    | ""    |
+| default_phone_number    | CharField    | -    | 20    | True    | -    | ""    |
+| default_street_address1    | CharField    | -    | 80    | True    | -    | ""    |
+| default_street_address2    | CharField    | -    | 80    | True    | -    | ""    |
+| default_town_or_city    | CharField    | -    | 40    | True    | -    | ""    |
+| default_county    | CharField    | -    | 80    | True   | -    | ""    |
+| default_postcode    | CharField    | -    | 20    | True    | -    | ""    |
+| default_country    | CountryField    | -    | -    | True    | -    | ""    |
 
-#### User
 
-#### Blog
+### BLOG Database Models
+#### Category
 
-#### Recipes
+| Key  | Type Field  | Relationship  | Blank  | Null  |
+|:----------|:----------|:----------|:----------|:----------|
+| name    | CharField    |  -     |  -     |  -     |
+| friendly_name    | CharField    |  -     | True    | True    |
+| sku    | CharField    |  -     | True    | True    |
+
+#### Tag
+| Key  | Type Field  | Max Length  |
+|:----------|:----------|:----------|
+| tagname    | CharField    | 254    |
+
+#### Posts
+| Key  | Type Field  | Relationship  | Max Length  | auto_now  | auto_now_add  | Null  | Blank  | Default  | related_name  |
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:-----------|
+| author    | ForeignKey    | User    | -    | -    | -    | -    | -    | -    | blog_posts    |
+| title    | CharField    | -    | 254    | -    | -    | -    | -    | -    | -    |
+| category    | ManyToManyField    | Category    | -    | -    | -    | -    | True    | -    | -    |
+| tag    | ManyToManyField    | Tag    | -    | -    | -    | -    | True    | -    | -    |
+| tagline    | CharField    | -    | 254    | -    | -    | -    | -    | -    | -    |
+| image    | ImageField    | -    | -    | -    | -    | True    | True    | -    | -    |
+| image_credit    | CharField    | -    | 254    | -    | -    | -    | True    | ""    | -    |
+| content	| TextField	| - | - | - | - | - | - | - | - |
+| date    | DateTimeField    | -    | -    | -    | True    | -    | -    | -    | -    |
+| date_posted    | DateTimeField    | -    | -    | -    | -    | True    | True    | timezone.now    | -    |
+| date_edited    | DateTimeField    | -    | -    | True    | -    | -    | -    | -    | -    |
+
+### RECIPE Database Models
 
 # Deployment
+The deployment process listed below assumes that you have
+1. A GitHub Account
+2. A Heroku Account
+3. A Stripe Account
+4. An Amazon AWS Account 
+
+
 ## Deploying to Heroku
 ### Create the app at heroku.com 
 1. Create app and give it a name, then select your region.
@@ -894,6 +1292,7 @@ Since the styling and images are available within the app (thanks to the use of 
 	```
 	STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+	```
 
 ## Caching, Media Files & Admin
 
@@ -1018,14 +1417,38 @@ For users to create accounts and use the site, they will need to receive emails.
 
 5. Test by creating a new account and verifiying email reception. Click the verification link in the email to verify the account and then log in
 
-# Cloning
-The cloning process listed below assumes that you have
-1. A GitHub Account
-2. A Heroku Account
-3. A Stripe Account
-4. An Amazon AWS Account 
+## Clone this GitHub Repository 
 
- ## Clone this GitHub Repository
+This repository can be cloned by following these steps:
+
+1. Log in to GitHub and locate the repository.
+
+2. Click the "Code" button:
+
+
+Either click "Open with GitHub Desktop" and follow the prompts in the GitHub Desktop application, or alternatively follow the instructions from this link, depending on your Operating System.
+
+3. Install the dependencies using these commands:
+
+	```
+	# Project dependencies
+	pip3 install django
+	pip3 install django-allauth==0.41.0
+	pip3 install pillow
+	pip3 install django-crispy-forms
+	pip3 install django-countries
+	pip3 install stripe
+	
+	# Deployment
+	pip3 install boto3
+	pip3 install django-storages
+	pip3 install gunicorn
+	pip3 install dj_database_url
+	pip3 install psycopg2-binary
+
+	# Freeze dependencies to keep them available when publishing
+	pip3 freeze > requirements.txt
+	```
 
  
 

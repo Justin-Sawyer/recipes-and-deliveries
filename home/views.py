@@ -30,7 +30,7 @@ def search_result(request):
 
     if request.GET:
         # Sort blog articles by category
-        if 'category' in request.GET:
+        """if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             posts = posts.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
@@ -44,7 +44,7 @@ def search_result(request):
         if 'author' in request.GET:
             authors = request.GET['author'].split(',')
             posts = posts.filter(author_id__username__in=authors)
-            authors = User.objects.filter(username__in=authors)
+            authors = User.objects.filter(username__in=authors)"""
 
         if 'q' in request.GET:
             post_query = request.GET['q']

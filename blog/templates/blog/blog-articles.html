@@ -47,6 +47,7 @@
                         <div class="sort-select-wrapper w-50">
                             <select id="sort-selector"
                                 class="custom-select custom-select-sm text-black border border-green border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                                <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
                                 <option value="title_asc" {% if current_sorting == 'title_asc' %}selected{% endif %}>
                                     Article Title (A-Z)
                                 </option>
@@ -122,7 +123,7 @@
                                                     {{ cat.friendly_name|title }}
                                                 </a><span class="category-link-divider">|</span>
                                                 {% empty %}
-                                                <small class="text-muted">No categories</small>
+                                                    <small class="text-muted">No categories</small>
                                                 {% endfor %}
                                             </p>
                                         {% endif %}
@@ -136,7 +137,7 @@
                                                     {{ t.tagname|title }}
                                                 </a><span class="tag-link-divider">|</span>
                                                 {% empty %}
-                                                <small class="text-muted">No tags</small>
+                                                    <small class="text-muted">No tags</small>
                                                 {% endfor %}
                                             </p>
                                         {% endif %}
