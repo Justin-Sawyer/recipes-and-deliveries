@@ -236,12 +236,12 @@
                                     {% for cat in post.category.all %}
                                     <a class="text-muted text-green font-weight-bold"
                                         href="{% url 'blog-articles' %}?category={{ cat.name }}">
-                                        {{ cat.friendly_name }}
+                                        {{ cat.friendly_name|title }}
                                     </a><span class="category-link-divider">|</span>
+                                    {% empty %}
+                                        <small class="text-muted">No categories</small>
                                     {% endfor %}
                                 </p>
-                            {% else %}
-                                <p class="text-muted"><small>No categories</small></p>
                             {% endif %}
 
                             <!-- Tags -->
@@ -252,10 +252,10 @@
                                         href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
                                         {{ t.tagname|title }}
                                     </a><span class="tag-link-divider">|</span>
+                                    {% empty %}
+                                        <small class="text-muted">No tags</small>
                                     {% endfor %}
                                 </p>
-                            {% else %}
-                                <p class="text-muted"><small>No tags</small></p>
                             {% endif %}
 
                             <!-- Post author -->
@@ -263,8 +263,9 @@
                                 <small class="text-muted author mb-2">Posted by:
                                     <a class="text-muted text-green"
                                         href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
-                                </a>
+                                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                                    </a>
+                                </small>
                             {% else %}
                                 <small class="text-muted author mb-2">Posted by:
                                     <a class="text-muted text-green font-weight-bold"
@@ -305,12 +306,12 @@
                                     {% for cat in post.category.all %}
                                     <a class="text-muted text-green font-weight-bold"
                                         href="{% url 'blog-articles' %}?category={{ cat.name }}">
-                                        {{ cat.friendly_name }}
+                                        {{ cat.friendly_name|title }}
                                     </a><span class="category-link-divider">|</span>
+                                    {% empty %}
+                                        <small class="text-muted">No categories</small>
                                     {% endfor %}
                                 </p>
-                            {% else %}
-                                <p class="text-muted"><small>No categories</small></p>
                             {% endif %}
 
                             <!-- Tags -->
@@ -321,10 +322,10 @@
                                         href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
                                         {{ t.tagname|title }}
                                     </a><span class="tag-link-divider">|</span>
+                                    {% empty %}
+                                        <small class="text-muted">No tags</small>
                                     {% endfor %}
                                 </p>
-                            {% else %}
-                                <p class="text-muted"><small>No tags</small></p>
                             {% endif %}
 
                             <!-- Post author -->
@@ -332,8 +333,9 @@
                                 <small class="text-muted author mb-2">Posted by:
                                     <a class="text-muted text-green"
                                         href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
-                                </a>
+                                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                                    </a>
+                                </small>
                             {% else %}
                                 <small class="text-muted author mb-2">Posted by:
                                     <a class="text-muted text-green font-weight-bold"
@@ -358,6 +360,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
