@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_title %}
+ | Add a Recipe
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container content mb-2">
+    <!-- Page title row -->
+    <div class="row">
+        <div class="col-12 mt-3">
+            <h2 class="font-weight-bold">Add A New Recipe</h2>
+            <br>
+        </div>
+    </div>
+        
+    <!-- Main page content -->
+    <div class="row">
+        <div class="col-12">
+            <form method="POST" action="" class="form mb-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                        {{ form.title|as_crispy_field}}
+                    </div>
+                    <div class="col-12 col-md-9">
+                        {{ form.intro|as_crispy_field}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        {{ form.prep_time|as_crispy_field}}
+                    </div>
+                    <div class="col-4">
+                        {{ form.cook_time|as_crispy_field}}
+                    </div>
+                    <div class="col-4">
+                        {{ form.servings|as_crispy_field}}
+                    </div>
+                </div>
+                <h2>Ingredients</h2>
+                {{ formset.management_form }}
+                {% for form in formset %}
+                <div class="row">
+                    <div class="col-1">
+                        {{ form.quantity|as_crispy_field }}
+                    </div>
+                    <div class="col-1">
+                        {{ form.unit|as_crispy_field }}
+                    </div>
+                    <div class="col-6">
+                        {{ form.name|as_crispy_field }}
+                    </div>
+                    <div class="col-4">
+                        {{ form.preparation|as_crispy_field }}
+                    </div>
+                </div>
+                {% endfor %}
+                <label class="form-check-label" for="id-add-more-posts">Add another recipe?</label>
+                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
+                <div class="text-right">
+                    <a class="btn btn-red" href="{% url 'blog-articles' %}">Cancel</a>
+                    <button class="btn btn-green" type="submit">Add Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>       
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+    
+{% endblock %}
