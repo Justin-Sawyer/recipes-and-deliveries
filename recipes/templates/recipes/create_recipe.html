@@ -69,6 +69,11 @@
                     </div>
                 </div>
                 {% endfor %}
+                <div class="row">
+                    <div class="col-12">
+                        {{ form.directions|as_crispy_field}}
+                    </div>
+                </div>
                 <label class="form-check-label" for="id-add-more-posts">Add another recipe?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
                 <div class="text-right">
