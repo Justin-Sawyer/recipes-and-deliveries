@@ -41,31 +41,46 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6 col-md-3">
                         {{ form.prep_time|as_crispy_field}}
                     </div>
-                    <div class="col-4">
+                    <div class="col-6 col-md-3">
                         {{ form.cook_time|as_crispy_field}}
                     </div>
-                    <div class="col-4">
+                    <div class="col-6 col-md-3">
+                        {{ form.total_time|as_crispy_field}}
+                    </div>
+                    <div class="col-6 col-md-3">
                         {{ form.servings|as_crispy_field}}
                     </div>
+                    <div class="col-12 col-md-3">
+                        <p class="mb-2">Choose Image</p>
+                        {{ form.image }}
+                    </div>
+                    <div class="col-12 col-md-9">
+                        {{ form.image_credit | as_crispy_field }}
+                    </div>
                 </div>
-                <h2>Ingredients</h2>
+                <p>Ingredients</p>
                 {{ formset.management_form }}
                 {% for form in formset %}
                 <div class="row">
-                    <div class="col-1">
+                    <div class="col-2 col-md-2">
                         {{ form.quantity|as_crispy_field }}
                     </div>
-                    <div class="col-1">
+                    <div class="col-4 col-md-2">
                         {{ form.unit|as_crispy_field }}
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 col-md-4">
+                        {{ form.preparation|as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-4">
                         {{ form.name|as_crispy_field }}
                     </div>
-                    <div class="col-4">
-                        {{ form.preparation|as_crispy_field }}
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>{{ form.DELETE }} Delete</p>
                     </div>
                 </div>
                 {% endfor %}
@@ -87,5 +102,16 @@
 {% endblock %}
 
 {% block postloadjs %}
-    
+    {{ block.super }}
+    <script>
+        $('#div_id_image_credit').css('display', 'none');
+        $('.btn-file').children('input').addClass('new-image');
+        $('.new-image').change(function() {
+            let file = $('.new-image')[0].files[0];
+            $('#filename').text(`Image will be set to ${file.name}`);
+            $('#div_id_image_credit').css('display', 'block');
+            $('label[for="id_image_credit"]').text('Image Credit*');
+            $('input[name="image_credit"]').prop('required', true);
+        })
+    </script>
 {% endblock %}

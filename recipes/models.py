@@ -1,14 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils import timezone
 
 
 class Recipe(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
+                               related_name='recipe_posts', default="", blank=True, null=True)
     title = models.CharField(max_length=150)
     intro = models.CharField(max_length=254)
-    prep_time = models.DurationField()
-    cook_time = models.DurationField()
-    # total_time = models.DurationField(default="", blank=True)
+    prep_time = models.CharField(max_length=20)
+    cook_time = models.CharField(max_length=20, default="", blank=True)
+    total_time = models.CharField(max_length=20, null=True, blank=False)
     servings = models.IntegerField()
     directions = models.TextField(default="", blank=False)
     image = models.ImageField(null=True, blank=True)
