@@ -32,6 +32,7 @@
             {% if request.user.is_superuser %}
                 <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
             {% endif %}
+            <a href="{% url 'add_recipe' %}" class="dropdown-item">Add A Recipe</a>
             <a href="{% url 'add_post' %}" class="dropdown-item">Add A Blog Article</a>
             <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
             <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>

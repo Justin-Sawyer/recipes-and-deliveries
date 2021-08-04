@@ -33,9 +33,6 @@ class Tag(models.Model):
     def __str__(self):
         return self.tagname.capitalize()
 
-    def get_friendly_name(self):
-        return self.tagname
-
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,

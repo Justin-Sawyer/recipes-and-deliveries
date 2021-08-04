@@ -73,8 +73,19 @@ def all_recipes(request):
     return render(request, template, context)
 
 
+def recipe(request, recipe_id):
+    """ A view to show an individual recipe """
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+
+    context = {
+        'recipe': recipe,
+    }
+
+    return render(request, 'recipes/recipe.html', context)
+
+
 @login_required
-def create_recipe(request):
+def add_recipe(request):
     """ Gets username as author """
     author = get_object_or_404(User, id=request.user.id)
 

@@ -92,14 +92,14 @@
 
                             <!-- Image -->
                             {% if recipe.image %}
-                                <a href="">
+                                <a href="{% url 'recipe' recipe.id %}">
                                     <img class="card-img-top img-fluid card-image" src="{{ recipe.image.url }}"
                                         alt="{{ recipe.title }}">
                                 </a>
                             {% else %}
-                                <a href="">
+                                <a href="{% url 'recipe' recipe.id %}">
                                     <img class="card-img-top img-fluid card-image"
-                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
                                 </a>
                             {% endif %}
 

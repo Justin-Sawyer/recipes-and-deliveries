@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+ | {{ post.title|title }}
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+
+    <!-- Banner Image -->
+    {% if post.image %}
+        <img class="img-fluid header-image-container" src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% else %}
+        <img class="img-fluid header-image-container" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ post.title }}">
+    {% endif %}
+
+    <!-- Main page content -->
+    <div class="container content mb-2">
+        <!-- Main Page row -->
+        <div class="row mt-3">
+            <!-- Article col -->
+            <div class="col-12 col-md-8">
+
+                <!-- Post Title -->
+                <h2 class="font-weight-bold title">{{ post.title|title }}</h2>
+
+                <!-- Categories -->
+                {% if post.category %}
+                    <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                        {% for cat in post.category.all %}
+                        <a class="text-muted text-green font-weight-bold" href="">
+                            {{ cat.friendly_name|title }}
+                        </a><span class="category-link-divider">|</span>
+                        {% empty %}
+                            <small class="text-muted">No categories</small>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+
+                <!-- Tags -->
+                {% if post.tag %}
+                    <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                        {% for t in post.tag.all %}
+                        <a class="text-muted text-amber font-weight-bold" href="">
+                            {{ t.tagname|title }}
+                        </a><span class="tag-link-divider">|</span>
+                        {% empty %}
+                            <small class="text-muted">No tags</small>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+                
+                <!-- Author & editing -->
+                <div class="mb-3">
+                    <!-- Post Author -->
+                    {% if post.author.is_superuser %}
+                        <small class="text-muted author">Posted by: 
+                            <a class="text-muted text-green font-weight-bold" href="">
+                            <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                            </a> on {{ post.date_posted|date:"jS F, Y" }}
+                        </small>
+                    {% else %}
+                        <small class="text-muted author">Posted by: 
+                            <a class="text-muted text-green font-weight-bold" href="">
+                                {{ post.author }}
+                            </a> on {{ post.date_posted|date:"jS F, Y" }}
+                        </small>
+                    {% endif %}
+                    <!-- Editing and deleting -->
+                    {% if request.user.is_superuser or request.user.id is post.author.id %}
+                        <div class="edit-delete">
+                            <small>
+                                <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                Superuser created posts = author edit color,
+                                user created posts = primary color (matching color of product management) -->
+                                <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="">Edit</a> |
+                                <a class="text-danger" href="">Delete</a>
+                            </small>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Post content -->
+                {{ post.content |linebreaks}}
+
+                <!-- Image credit -->
+                {% if post.image_credit %}
+                    <p class="text-muted image-credit"><small><i class="far fa-image mr-1"></i> Image: {{ post.image_credit }}</small></p>
+                {% endif %}
+
+                <!-- Last edited -->
+                {% if post.date_edited %}
+                    <p class="text-muted post-edited"><small> Edited: {{ post.date_edited|date:"jS F, Y @ g:i a" }}</small></p>
+                {% endif %}
+            </div>
+
+            <!-- Similar articles -->
+            <div class="col-12 col-md-4">
+                <h3 class="font-weight-bold similar-articles">Similar Articles</h3>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {% include 'blog/includes/remove_last_pipe.html' %}
+{% endblock %}
