@@ -73,7 +73,7 @@
                                     </a> | 
                                 </span>
                             {% endif %}
-                            {{ recipes|length }}{% if recipes|length == 1 %}Recipe{% else %} Recipes{% endif %}
+                            {{ recipes|length }}{% if recipes|length == 1 %} Recipe{% else %} Recipes{% endif %}
                             {% if current_tags %} found for <strong>"{% for t in current_tags %}{{ t.tagname|title }}{% endfor %}"</strong> tag{% endif %}
                             {% if current_categories %} found for <strong>"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong> category{% endif %}
                             {% if current_authors %} found for author {% for a in current_authors %} {% if a.is_superuser %} <strong>"Recipes</strong><i>and</i><strong>Deliveries"</strong>{% else %}<strong>"{{ a.username }}"</strong>{% endif %}{% endfor %}{% endif %}

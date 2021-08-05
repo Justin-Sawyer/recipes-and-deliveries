@@ -176,6 +176,12 @@
     </script>
 
     <script>
+        // Remove last | from list of categories and tags
+        $( ".category-list span:last-child" ).text('');
+        $( ".tag-list span:last-child" ).text('');
+    </script>
+
+    <script>
         $("#copyright").text(new Date().getFullYear());
     </script>
     {% endblock %}

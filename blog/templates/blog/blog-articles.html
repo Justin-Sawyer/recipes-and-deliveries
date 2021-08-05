@@ -238,15 +238,12 @@
 
 {% block postloadjs %}
     {{ block.super }}
-    {% include 'blog/includes/remove_last_pipe.html' %}
-
     <script>
         // Back to top button
         $('.btt-link').click(function (e) {
             window.scrollTo(0, 0);
         })
     </script>
-
     <script>
         // Sorting by
         $('#sort-selector').change(function () {
