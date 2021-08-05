@@ -30,79 +30,87 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="" class="form mb-2" enctype="multipart/form-data">
+            <form id="pet_form" method="POST" action="" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
-                        {{ form.title|as_crispy_field}}
+                        {{ recipe_form.title|as_crispy_field}}
                     </div>
                     <div class="col-12 col-md-9">
-                        {{ form.intro|as_crispy_field}}
+                        {{ recipe_form.intro|as_crispy_field}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        {{ form.prep_time|as_crispy_field}}
+                        {{ recipe_form.prep_time|as_crispy_field}}
                     </div>
                     <div class="col-6 col-md-3">
-                        {{ form.cook_time|as_crispy_field}}
+                        {{ recipe_form.cook_time|as_crispy_field}}
                     </div>
                     <div class="col-6 col-md-3">
-                        {{ form.total_time|as_crispy_field}}
+                        {{ recipe_form.total_time|as_crispy_field}}
                     </div>
                     <div class="col-6 col-md-3">
-                        {{ form.servings|as_crispy_field}}
+                        {{ recipe_form.servings|as_crispy_field}}
                     </div>
                     <div class="col-12 col-md-3">
                         <p class="mb-2">Choose Image</p>
-                        {{ form.image }}
+                        {{ recipe_form.image }}
                     </div>
                     <div class="col-12 col-md-9">
-                        {{ form.image_credit | as_crispy_field }}
+                        {{ recipe_form.image_credit | as_crispy_field }}
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ form.category | as_crispy_field }}
+                        {{ recipe_form.category | as_crispy_field }}
                         {{ new_category_form|crispy }}
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ form.tag | as_crispy_field }}
+                        {{ recipe_form.tag | as_crispy_field }}
                         {{ new_tag_form.tagname | as_crispy_field }}
                     </div>
                 </div>
-                
+
                 <p>Ingredients</p>
                 {{ formset.management_form }}
-                {% for form in formset %}
-                <div class="row">
-                    <div class="col-3 col-md-2">
-                        {{ form.quantity|as_crispy_field }}
+                <div class="image-form">
+                    {% for form in formset %}
+                    <div class="row ingredients">
+                        <div class="col-3 col-md-2">
+                            {{ form.quantity|as_crispy_field }}
+                        </div>
+                        <div class="col-3 col-md-2">
+                            {{ form.unit|as_crispy_field }}
+                        </div>
+                        <div class="col-6 col-md-4">
+                            {{ form.preparation|as_crispy_field }}
+                        </div>
+                        <div class="col-12 col-md-4">
+                            {{ form.name|as_crispy_field }}
+                        </div>
                     </div>
-                    <div class="col-3 col-md-2">
-                        {{ form.unit|as_crispy_field }}
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ form.DELETE }} Delete</p>
+                        </div>
                     </div>
-                    <div class="col-6 col-md-4">
-                        {{ form.preparation|as_crispy_field }}
-                    </div>
-                    <div class="col-12 col-md-4">
-                        {{ form.name|as_crispy_field }}
-                    </div>
+                    {% endfor %}
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <p>{{ form.DELETE }} Delete</p>
-                    </div>
-                </div>
-                {% endfor %}
-                <div class="row">
+                
+                <div class="row more-ingredients-row">
                     <div class="col-12">
-                        {{ form.directions|as_crispy_field}}
+                        <button id="add-image-form" class="btn btn-green mb-3">Add more ingredients</button>
+                    </div>
+                </div>
+                <div class="row recipe-directions">
+                    <div class="col-12">
+                        {{ recipe_form.directions|as_crispy_field}}
                     </div>
                 </div>
                 <label class="form-check-label" for="id-add-more-recipes">Add another recipe?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
                 <div class="text-right">
                     <a class="btn btn-red" href="">Cancel</a>
-                    <button class="btn btn-green" type="submit">Add Recipe</button>
+                    <input class="btn btn-green" name="submit" type="submit" value="Add Recipe" />
                 </div>
             </form>
         </div>
@@ -122,5 +130,93 @@
             $('label[for="id_image_credit"]').text('Image Credit*');
             $('input[name="image_credit"]').prop('required', true);
         })
+    </script>
+    <script>
+        /*let addIngredientsFormBtn = document.querySelector('#add-ingredients-form');
+        let moreIngredientsRow = document.querySelector('.more-ingredients-row');
+        let ingredientForm = document.getElementsByClassName('ingredient-form');
+        let mainForm = document.querySelector('#main-form');
+
+        /*addIngredientsFormBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            // Make clone of ingredients form
+            let newIngredientsForm = ingredientForm[0].cloneNode(true);
+            mainForm.insertBefore(newIngredientsForm, moreIngredientsRow);
+        })
+
+        let totalForms = document.querySelector('#id_ingredients-TOTAL_FORMS');
+        console.log(totalForms)
+        let formCount = ingredientForm.length - 1;
+        console.log(formCount)
+
+        addIngredientsFormBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            let newIngredientsForm = ingredientForm[0].cloneNode(true);
+
+            let formRegex = RegExp(`item-(\\d){1}-`, 'g');
+            formCount++;
+            console.log(formCount)
+
+            newIngredientsForm.innerHTML = newIngredientsForm.innerHTML.replace(formRegex, `item-${formCount}-`);
+            mainForm.insertBefore(newIngredientsForm, moreIngredientsRow);
+            totalForms.setAttribute('value', `${formCount + 1}`);
+        });
+
+        /*addImageFormBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const newImageForm = imageForm[0].cloneNode(true);
+
+            const formRegex = RegExp(`form-(\\d){1}-`, 'g');
+            formCount++;
+
+            newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `form-${formCount}-`);
+            mainForm.insertBefore(newImageForm, submitFormBtn);
+            totalForms.setAttribute('value', `${formCount + 1}`);
+        });*/
+
+        const imageForm = document.getElementsByClassName("image-form");
+        const mainForm = document.querySelector("#pet_form");
+        const addImageFormBtn = document.querySelector("#add-image-form");
+        //const submitFormBtn = document.querySelector('[type="submit"]');
+        const submitFormBtn = document.querySelector('.more-ingredients-row');
+        const totalForms = document.querySelector("#id_ingredients-TOTAL_FORMS");
+        console.log(totalForms)
+
+        let formCount = imageForm.length - 1;
+        //console.log(formCount)
+
+        function updateForms() {
+            let count = 0;
+            for (let form of imageForm) {
+                const formRegex = RegExp(`form-(\\d){1}-`, 'g');
+                form.innerHTML = form.innerHTML.replace(formRegex, `form-${count++}-`)
+            }
+        }
+
+        addImageFormBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const newImageForm = imageForm[0].cloneNode(true);
+            const formRegex = RegExp(`form-(\\d){1}-`, 'g');
+
+            formCount++;
+            console.log(formCount)
+
+            newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `form-${formCount}-`);
+            mainForm.insertBefore(newImageForm, submitFormBtn);
+            totalForms.setAttribute('value', `${formCount + 1}`);
+        });
+
+        mainForm.addEventListener("click", function (event) {
+            if (event.target.classList.contains("delete-image-form")) {
+                event.preventDefault();
+                event.target.parentElement.remove();
+                formCount--;
+                updateForms();
+                totalForms.setAttribute('value', `${formCount + 1}`);
+            }
+        });
     </script>
 {% endblock %}

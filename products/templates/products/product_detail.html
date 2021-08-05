@@ -52,7 +52,7 @@
                         <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
                     </small>
                 {% endif %}</div>
-                {{ product.description |linebreaks}}
+                {{ product.description|linebreaks }}
                 {% if product.image_credit %}
                     <p class="text-muted image-credit"><small><i class="far fa-image mr-1"></i> Image: {{ product.image_credit }}</small></p>
                 {% endif %}

@@ -64,8 +64,9 @@ class IngredientForm(forms.ModelForm):
 
         self.fields['quantity'].widget.attrs['min'] = 0.01
 
+
 IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient,
-                                                form=IngredientForm)
+                                                form=IngredientForm, extra=15)
 
 
 class RecipeForm(forms.ModelForm):

@@ -93,13 +93,13 @@ def add_recipe(request):
     add_more_recipes = request.POST.getlist('add-more-recipes')
 
     if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES)
-        form_temp = form.save(commit=False)
+        recipe_form = RecipeForm(request.POST, request.FILES)
+        recipe_form_temp = recipe_form.save(commit=False)
 
         """ Append user (post author) to form for submitting """
-        form_temp.author = author
-        if form.is_valid():
-            recipe = form.save()
+        recipe_form_temp.author = author
+        if recipe_form.is_valid():
+            recipe = recipe_form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)
             if formset.is_valid():
                 formset.save()
@@ -146,7 +146,7 @@ def add_recipe(request):
             messages.error(request, 'Failed to add your post \
                 Please ensure the form is valid.')
     else:
-        form = RecipeForm
+        recipe_form = RecipeForm
         formset = IngredientFormSet
         new_category_form = NewCategoriesForm
         new_tag_form = NewTagsForm
@@ -154,7 +154,7 @@ def add_recipe(request):
     template = 'recipes/create_recipe.html'
 
     context = {
-        'form': form,
+        'recipe_form': recipe_form,
         'formset': formset,
         'new_tag_form': new_tag_form,
         'new_category_form': new_category_form,
