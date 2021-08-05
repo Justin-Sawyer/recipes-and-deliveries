@@ -4,7 +4,7 @@
 
 
 {% block extra_title %}
-| Blog Articles
+| Search Results
 {% endblock %}
 
 {% block page_header %}
@@ -414,7 +414,6 @@
 
 {% block postloadjs %}
     {{ block.super }}
-    {% include 'home/includes/remove_last_pipe.html' %}
     {% include 'home/includes/number_of_stars_according_to_rating.html'%}
 
     <script>
