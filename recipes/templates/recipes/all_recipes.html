@@ -25,11 +25,11 @@
             <div class="col mt-3">
                 {% if current_categories %}
                     {% for c in current_categories %}
-                        <h2 class="font-weight-bold text-center text-md-left title">{{ c.friendly_name|title }} Blog Articles</h2>
+                        <h2 class="font-weight-bold text-center text-md-left title">{{ c.friendly_name|title }} Recipes</h2>
                     {% endfor %}
                 {% elif current_tags %}
                     {% for ct in current_tags %}
-                        <h2 class="font-weight-bold text-center text-md-left title">{{ ct.tagname|title }} Blog Articles</h2>
+                        <h2 class="font-weight-bold text-center text-md-left title">{{ ct.tagname|title }} Recipes</h2>
                     {% endfor %}
                 {% else %}
                     <h2 class="font-weight-bold text-center text-md-left title ">Your Recipes</h2>
@@ -49,13 +49,11 @@
                                 class="custom-select custom-select-sm text-black border border-green border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
                                 <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
                                 <option value="title_asc" {% if current_sorting == 'title_asc' %}selected{% endif %}>
-                                    Article Title (A-Z)
+                                    Recipe Name (A-Z)
                                 </option>
                                 <option value="title_desc" {% if current_sorting == 'title_desc' %}selected{% endif %}>
-                                    Article Title (Z-A)
+                                    Recipe Name (Z-A)
                                 </option>
-                                <!--<option value="author_asc" {% if current_sorting == 'author_asc' %}selected{% endif %}>Author (A-Z)</option>
-                                    <option value="author_desc" {% if current_sorting == 'author_desc' %}selected{% endif %}>Author (Z-A)</option>-->
                                 <option value="id_desc" {% if current_sorting == 'id_desc' %}selected{% endif %}>
                                     Newest to Oldest
                                 </option>
@@ -70,12 +68,12 @@
                         <p class="mt-3 text-center text-md-left">
                             {% if current_categories or current_tags or current_authors or current_sorting != 'None_None' %}
                                 <span class="small font-weight-bold">
-                                    <a class="text-green" href="{% url 'blog-articles' %}">
+                                    <a class="text-green" href="{% url 'all_recipes' %}">
                                         All Recipes
                                     </a> | 
                                 </span>
                             {% endif %}
-                            {{ recipes|length }}{% if recipes|length == 1 %} Recipe{% else %} Recipes{% endif %}
+                            {{ recipes|length }}{% if recipes|length == 1 %}Recipe{% else %} Recipes{% endif %}
                             {% if current_tags %} found for <strong>"{% for t in current_tags %}{{ t.tagname|title }}{% endfor %}"</strong> tag{% endif %}
                             {% if current_categories %} found for <strong>"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong> category{% endif %}
                             {% if current_authors %} found for author {% for a in current_authors %} {% if a.is_superuser %} <strong>"Recipes</strong><i>and</i><strong>Deliveries"</strong>{% else %}<strong>"{{ a.username }}"</strong>{% endif %}{% endfor %}{% endif %}
@@ -119,7 +117,7 @@
                                             <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
                                                 {% for cat in recipe.category.all %}
                                                 <a class="text-muted text-green font-weight-bold"
-                                                    href="{% url 'blog-articles' %}?category={{ cat.name }}">
+                                                    href="{% url 'all_recipes' %}?category={{ cat.name }}">
                                                     {{ cat.friendly_name|title }}
                                                 </a><span class="category-link-divider">|</span>
                                                 {% empty %}
@@ -133,7 +131,7 @@
                                             <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
                                                 {% for t in recipe.tag.all %}
                                                 <a class="text-muted text-amber font-weight-bold"
-                                                    href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
+                                                    href="{% url 'all_recipes' %}?tag={{ t.tagname }}">
                                                     {{ t.tagname|title }}
                                                 </a><span class="tag-link-divider">|</span>
                                                 {% empty %}
@@ -146,13 +144,13 @@
                                         {% if recipe.author.is_superuser %}
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green"
-                                                    href="{% url 'blog-articles' %}?author={{ recipe.author }}">
+                                                    href="{% url 'all_recipes' %}?author={{ recipe.author }}">
                                                     <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
                                             </a>
                                         {% else %}
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green font-weight-bold"
-                                                    href="{% url 'blog-articles' %}?author={{ recipe.author }}">
+                                                    href="{% url 'all_recipes' %}?author={{ recipe.author }}">
                                                     {{ recipe.author }}
                                                 </a>
                                             </small>
@@ -165,7 +163,7 @@
                                                     <!-- Superuser sees instantly whether superuser created post or whether post was user created
                                                     Superuser created posts = author edit color,
                                                     user created posts = primary color (matching color of product management) -->
-                                                    <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' recipe.id %}">Edit</a> |
+                                                    <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="">Edit</a> |
                                                     <a class="text-danger" href="{% url 'delete_post' recipe.id %}">Delete</a>
                                                 </small>
                                             </div>

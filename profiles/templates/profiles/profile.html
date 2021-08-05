@@ -117,6 +117,17 @@
                                     <div class="col-6">
                                         <p class="font-weight-bold mb-0">{{ post.title|title }}</p>
                                         <p><small>{{ post.date_posted|date:"jS F, Y" }}</small></p>
+                                        {% if request.user.is_superuser or request.user.id is post.author.id %}
+                                            <div class="edit-delete">
+                                                <small>
+                                                    <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                                    Superuser created posts = author edit color,
+                                                    user created posts = primary color (matching color of product management) -->
+                                                    <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' post.id %}">Edit</a> |
+                                                    <a class="text-danger" href="{% url 'delete_post' post.id %}">Delete</a>
+                                                </small>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <hr style="background-color: rgb(76, 175, 80);">
@@ -133,11 +144,55 @@
                         </div>
                     
                         <div class="col-12 col-md-6 col-lg-12"><p>My Recipes</p> 
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque nemo tenetur, libero
-                                minima blanditiis saepe commodi omnis totam, quidem consectetur rerum ut adipisci sunt
-                                praesentium aspernatur voluptate! Eum, debitis quasi.
-                            </p>
+                            {% if user_recipes %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>Feeling inspired?</p>
+                                    <a class="btn btn-green mb-3" href="{% url 'add_recipe' %}">Write an new recipe</a>
+                                </div>
+                            </div>
+                            {% for post in user_recipes %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        {% if post.image %}
+                                            <a href="{% url 'recipe' post.id %}">
+                                                <img class="img-fluid w-100 mb-4" src="{{ post.image.url }}"
+                                                    alt="{{ post.title }}">
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'recipe' post.id %}">
+                                                <img class="img-fluid w-100 mb-4"
+                                                    src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ product.name }}">
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="font-weight-bold mb-0">{{ post.title|title }}</p>
+                                        <p><small>{{ post.date_posted|date:"jS F, Y" }}</small></p>
+                                        <!-- Editing and deleting -->
+                    {% if request.user.is_superuser or request.user.id is post.author.id %}
+                    <div class="edit-delete">
+                        <small>
+                            <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                            Superuser created posts = author edit color,
+                            user created posts = primary color (matching color of product management) -->
+                            <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="">Edit</a> |
+                            <a class="text-danger" href="">Delete</a>
+                        </small>
+                    </div>
+                {% endif %}
+                                    </div>
+                                </div>
+                                <hr style="background-color: rgb(76, 175, 80);">
+                            {% endfor %}
+                            {% else %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>No articles yet?</p>
+                                    <a class="btn btn-green" href="{% url 'add_post' %}">Write your first article</a>
+                                </div>
+                            </div>
+                            {% endif %}
                             <br>
                         </div>
                     </div>

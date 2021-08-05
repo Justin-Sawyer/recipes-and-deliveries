@@ -1,16 +1,142 @@
 [
-    {
-      "pk": 1,
-      "model": "blog.tag",
-      "fields": {
-        "tagname": "salad"
-      }
-    },
-    {
-      "pk": 2,
-      "model": "blog.tag",
-      "fields": {
-        "tagname": "niçoise"
-      }
+  {
+    "pk": 1,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "american"
     }
-  ]
+  },
+  {
+    "pk": 2,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "asian"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "australian"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "beef"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "caribbean"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "chicken"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "chinese"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "english"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "filipino"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "fish"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "indian"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "japanese"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "mediterannean"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "mexican"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "moroccan"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "niçoise"
+    }
+  },
+  {
+    "pk": 17,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "pork"
+    }
+  },
+  {
+    "pk": 18,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "salad"
+    }
+  },
+  {
+    "pk": 19,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "spinach"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "blog.tag",
+    "fields": {
+      "tagname": "tunisian"
+    }
+  }
+]

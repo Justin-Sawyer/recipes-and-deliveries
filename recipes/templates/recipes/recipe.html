@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_title %}
- | {{ post.title|title }}
+ | {{ recipe.title|title }}
 {% endblock %}
 
 {% block page_header %}
@@ -17,10 +17,10 @@
     <div class="overlay"></div>
 
     <!-- Banner Image -->
-    {% if post.image %}
-        <img class="img-fluid header-image-container" src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% if recipe.image %}
+        <img class="img-fluid header-image-container" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
     {% else %}
-        <img class="img-fluid header-image-container" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ post.title }}">
+        <img class="img-fluid header-image-container" src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
     {% endif %}
 
     <!-- Main page content -->

@@ -1,0 +1,142 @@
+[
+    {
+      "pk": 1,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "american"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "asian"
+      }
+    },
+    {
+      "pk": 3,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "australian"
+      }
+    },
+    {
+      "pk": 4,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "beef"
+      }
+    },
+    {
+      "pk": 5,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "caribbean"
+      }
+    },
+    {
+      "pk": 6,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "chicken"
+      }
+    },
+    {
+      "pk": 7,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "chinese"
+      }
+    },
+    {
+      "pk": 8,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "english"
+      }
+    },
+    {
+      "pk": 9,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "filipino"
+      }
+    },
+    {
+      "pk": 10,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "fish"
+      }
+    },
+    {
+      "pk": 11,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "indian"
+      }
+    },
+    {
+      "pk": 12,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "japanese"
+      }
+    },
+    {
+      "pk": 13,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "mediterannean"
+      }
+    },
+    {
+      "pk": 14,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "mexican"
+      }
+    },
+    {
+      "pk": 15,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "moroccan"
+      }
+    },
+    {
+      "pk": 16,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "niçoise"
+      }
+    },
+    {
+      "pk": 17,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "pork"
+      }
+    },
+    {
+      "pk": 18,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "salad"
+      }
+    },
+    {
+      "pk": 19,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "spinach"
+      }
+    },
+    {
+      "pk": 20,
+      "model": "recipes.tag",
+      "fields": {
+        "tagname": "tunisian"
+      }
+    }
+  ]

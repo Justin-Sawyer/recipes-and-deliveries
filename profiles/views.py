@@ -6,6 +6,7 @@ from .models import UserProfile
 from .forms import UserProfileForm
 
 from blog.models import Post
+from recipes.models import Recipe
 
 from checkout.models import Order
 
@@ -32,6 +33,7 @@ def profile(request):
         form = UserProfileForm(instance=profile)
     orders = profile.orders.all().order_by('-pk')
     user_posts = user.blog_posts.all().order_by('-pk')
+    user_recipes = user.recipe_posts.all().order_by('-pk')
     template = 'profiles/profile.html'
     context = {
         'form': form,
@@ -39,6 +41,7 @@ def profile(request):
         'on_profile_page': True,
         # 'posts': posts,
         'user_posts': user_posts,
+        'user_recipes': user_recipes,
     }
 
     return render(request, template, context)

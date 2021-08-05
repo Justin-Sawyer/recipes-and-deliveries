@@ -1,0 +1,30 @@
+[
+    {
+      "pk": 1,
+      "model": "blog.post",
+      "fields": {
+        "author": "1",
+        "title": "How to make the perfect salade niçoise",
+        "category": [2, 11, 12],
+        "tag": [1, 2],
+        "tagline": "Far from it being a recipe set in stone, even the choice of fish in a salade niçoise is up for debate. How do you make yours?",
+        "image": "salade-nicoise.jpg",
+        "image_credit": "justins",
+        "content": "What crimes have been committed in the name of this pure and fresh salad whose base is made of tomatoes"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "blog.post",
+      "fields": {
+        "author": "1",
+        "title": "Test",
+        "category": [2, 11, 12],
+        "tag": [1, 2],
+        "tagline": "testtest",
+        "image": "adobo.jpg",
+        "image_credit": "justinsawyer",
+        "content": "Testing"
+      }
+    }
+  ]

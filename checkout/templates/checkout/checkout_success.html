@@ -215,10 +215,17 @@
             </div>
         
             <div class="col-12 col-md-6 col-lg-6 mt-3">
-                <h2 class="font-weight-bold mb-4">Articles & Recipes</h2>
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <p>Articles</p>
+                        <h2 class="font-weight-bold mb-4">Articles</h2>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h2 class="font-weight-bold mb-4">Recipes</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <p>The lastest Articles</p>
                         {% for post in posts|slice:"3" %}
                             <!-- Title -->
                             <a href="{% url 'article' post.id %}">
@@ -276,11 +283,14 @@
                             {% endif %}
 
                             <!-- Editing and deleting -->
-                            {% if request.user.is_superuser %}
-                                <div class="edit-delete mb-2">
+                            {% if request.user.is_superuser or request.user.id is post.author.id %}
+                                <div class="edit-delete">
                                     <small>
-                                        <a class="text-primary" href="">Edit</a> |
-                                        <a class="text-danger" href="">Delete</a>
+                                        <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                        Superuser created posts = author edit color,
+                                        user created posts = primary color (matching color of product management) -->
+                                        <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' post.id %}">Edit</a> |
+                                        <a class="text-danger" href="{% url 'delete_post' post.id %}">Delete</a>
                                     </small>
                                 </div>
                             {% endif %}
@@ -288,24 +298,24 @@
                         {% endfor %}
                     </div>
                     <div class="col-12 col-md-6">
-                        <p>Recipes</p>
-                        {% for post in posts|slice:"3" %}
+                        <p>The latest Recipes</p>
+                        {% for recipe in recipes|slice:"3" %}
                             <!-- Title -->
-                            <a href="{% url 'article' post.id %}">
+                            <a href="{% url 'recipe' recipe.id %}">
                                 <h3 class="mb-0 font-weight-bold title-name text-green">
-                                    {{ post.title|title }}
+                                    {{ recipe.title|title }}
                                 </h3>
                             </a>
 
                             <!-- Tagline -->
-                            <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
+                            <p class="mb-0 text-left text-black tagline">{{ recipe.intro }}</p>
 
                             <!-- Categories -->
-                            {% if post.category %}
+                            {% if recipe.category %}
                                 <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
-                                    {% for cat in post.category.all %}
+                                    {% for cat in recipe.category.all %}
                                     <a class="text-muted text-green font-weight-bold"
-                                        href="{% url 'blog-articles' %}?category={{ cat.name }}">
+                                        href="{% url 'all_recipes' %}?category={{ cat.name }}">
                                         {{ cat.friendly_name|title }}
                                     </a><span class="category-link-divider">|</span>
                                     {% empty %}
@@ -315,12 +325,12 @@
                             {% endif %}
 
                             <!-- Tags -->
-                            {% if post.tag %}
+                            {% if recipe.tag %}
                                 <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
-                                    {% for t in post.tag.all %}
+                                    {% for r in recipe.tag.all %}
                                     <a class="text-muted text-amber font-weight-bold"
-                                        href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
-                                        {{ t.tagname|title }}
+                                        href="{% url 'all_recipes' %}?tag={{ r.tagname }}">
+                                        {{ r.tagname|title }}
                                     </a><span class="tag-link-divider">|</span>
                                     {% empty %}
                                         <small class="text-muted">No tags</small>
@@ -329,27 +339,30 @@
                             {% endif %}
 
                             <!-- Post author -->
-                            {% if post.author.is_superuser %}
+                            {% if recipe.author.is_superuser %}
                                 <small class="text-muted author mb-2">Posted by:
                                     <a class="text-muted text-green"
-                                        href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                        href="{% url 'all_recipes' %}?author={{ recipe.author }}">
                                         <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
                                     </a>
                                 </small>
                             {% else %}
                                 <small class="text-muted author mb-2">Posted by:
                                     <a class="text-muted text-green font-weight-bold"
-                                        href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                        {{ post.author }}
+                                        href="{% url 'all_recipes' %}?author={{ post.author }}">
+                                        {{ recipe.author }}
                                     </a>
                                 </small>
                             {% endif %}
 
                             <!-- Editing and deleting -->
-                            {% if request.user.is_superuser %}
-                                <div class="edit-delete mb-2">
+                            {% if request.user.is_superuser or request.user.id is recipe.author.id %}
+                                <div class="edit-delete">
                                     <small>
-                                        <a class="text-primary" href="">Edit</a> |
+                                        <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                        Superuser created posts = author edit color,
+                                        user created posts = primary color (matching color of product management) -->
+                                        <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="">Edit</a> |
                                         <a class="text-danger" href="">Delete</a>
                                     </small>
                                 </div>

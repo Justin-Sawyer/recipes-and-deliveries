@@ -60,15 +60,24 @@
                     <div class="col-12 col-md-9">
                         {{ form.image_credit | as_crispy_field }}
                     </div>
+                    <div class="col-12 col-md-6">
+                        {{ form.category | as_crispy_field }}
+                        {{ new_category_form|crispy }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form.tag | as_crispy_field }}
+                        {{ new_tag_form.tagname | as_crispy_field }}
+                    </div>
                 </div>
+                
                 <p>Ingredients</p>
                 {{ formset.management_form }}
                 {% for form in formset %}
                 <div class="row">
-                    <div class="col-2 col-md-2">
+                    <div class="col-3 col-md-2">
                         {{ form.quantity|as_crispy_field }}
                     </div>
-                    <div class="col-4 col-md-2">
+                    <div class="col-3 col-md-2">
                         {{ form.unit|as_crispy_field }}
                     </div>
                     <div class="col-6 col-md-4">
@@ -89,10 +98,10 @@
                         {{ form.directions|as_crispy_field}}
                     </div>
                 </div>
-                <label class="form-check-label" for="id-add-more-posts">Add another recipe?</label>
+                <label class="form-check-label" for="id-add-more-recipes">Add another recipe?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
                 <div class="text-right">
-                    <a class="btn btn-red" href="{% url 'blog-articles' %}">Cancel</a>
+                    <a class="btn btn-red" href="">Cancel</a>
                     <button class="btn btn-green" type="submit">Add Recipe</button>
                 </div>
             </form>

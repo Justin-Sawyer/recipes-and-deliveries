@@ -1,10 +1,23 @@
 from django.contrib import admin
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, Category, Tag
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        'friendly_name',
+        'name',
+        'sku',
+    )
+
+
+class TagAdmin(admin.ModelAdmin):
+    list_display = (
+        'tagname',
+    )
 
 
 class IngredientInline(admin.TabularInline):
     model = Ingredient
-
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -22,3 +35,5 @@ class RecipeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Tag, TagAdmin)

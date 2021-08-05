@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib import messages
 from django.core.paginator import Paginator
-# from django.db.models import Q
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 
-from .models import Recipe, Ingredient
-from .forms import RecipeForm, IngredientFormSet
+from .models import Recipe, Ingredient, Category, Tag
+from .forms import RecipeForm, IngredientFormSet, NewCategoriesForm, NewTagsForm
 from django.contrib.auth.models import User
 
 
@@ -89,6 +89,9 @@ def add_recipe(request):
     """ Gets username as author """
     author = get_object_or_404(User, id=request.user.id)
 
+    """ Check button for adding further recipes """
+    add_more_recipes = request.POST.getlist('add-more-recipes')
+
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
         form_temp = form.save(commit=False)
@@ -100,20 +103,61 @@ def add_recipe(request):
             formset = IngredientFormSet(request.POST, instance=recipe)
             if formset.is_valid():
                 formset.save()
+
+                """ Handle new vs existing tags """
+                new_tags_form = NewTagsForm(request.POST)
+                if new_tags_form.data['tagname']:
+                    new_tagname = new_tags_form.data['tagname']
+                    tagname_collection = Tag.objects.all()
+                    existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                    if existing_tagname:
+                        existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                        recipe.tag.add(existing_tagname_id)
+                    if not existing_tagname:
+                        new_tags_form.is_valid()
+                        newtag = new_tags_form.save()
+                        recipe.tag.add(newtag)
+
+                """ Handle new vs exiting categories """
+                new_category_form = NewCategoriesForm(request.POST)
+                if new_category_form.data['friendly_name']:
+                    new_category_name = new_category_form.data['friendly_name']
+                    category_collection = Category.objects.all()
+                    existing_category_name = (
+                        Category.objects.filter(friendly_name=new_category_name))
+                    if existing_category_name:
+                        existing_category_name_id = (
+                            category_collection.get(id__in=existing_category_name))
+                        recipe.category.add(existing_category_name_id)
+                    if not existing_category_name:
+                        new_category_form.is_valid()
+                        newcategory = new_category_form.save()
+                        recipe.category.add(newcategory)
+                        
                 messages.success(request, 'Successfully added recipe!')
-            return redirect('/')
+
+            """ Handle redirect according to whether
+            Further Recipes is checked or not """
+            if add_more_recipes:
+                return redirect(reverse('add_recipe'))
+            else:
+                return redirect(reverse('all_recipes'))
         else:
             messages.error(request, 'Failed to add your post \
                 Please ensure the form is valid.')
     else:
         form = RecipeForm
         formset = IngredientFormSet
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
     
     template = 'recipes/create_recipe.html'
 
     context = {
         'form': form,
         'formset': formset,
+        'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
     }
 
     return render(request, template, context)

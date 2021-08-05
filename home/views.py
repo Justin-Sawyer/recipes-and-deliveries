@@ -4,6 +4,7 @@ from django.db.models import Q
 
 from blog.models import Post, Category, Tag
 from products.models import Product
+from recipes.models import Recipe
 from django.contrib.auth.models import User
 
 
@@ -20,6 +21,7 @@ def guarantee(request):
 def search_result(request):
     """ A view to return the R&D guarantee page """
     posts = Post.objects.all().order_by('-pk')
+    recipes = Recipe.objects.all().order_by('-pk')
     blog_categories = Category.objects.all().order_by('-pk')
     tags = Tag.objects.all().order_by('-pk')
     users = User.objects.all().order_by('-pk')
@@ -27,6 +29,7 @@ def search_result(request):
 
     post_query = None
     product_query = None
+    recipe_query = None
 
     if request.GET:
         # Sort blog articles by category
@@ -49,7 +52,8 @@ def search_result(request):
         if 'q' in request.GET:
             post_query = request.GET['q']
             product_query = request.GET['q']
-            if not post_query and not product_query:
+            recipe_query = request.GET['q']
+            if not post_query and not product_query and not recipe_query:
                 messages.error(request,
                                "You didn't enter any search criteria!")
                 return redirect(reverse('home'))
@@ -63,13 +67,19 @@ def search_result(request):
                 description__icontains=product_query)
             products = products.filter(product_queries)
 
+            recipe_queries = Q(title__icontains=recipe_query) | Q(
+                intro__icontains=recipe_query)
+            recipes = recipes.filter(recipe_queries)
+
     context = {
         'posts': posts,
+        'recipes': recipes,
         'users': users,
         'blog_categories': blog_categories,
         'tags': tags,
         'products': products,
         'post_search_term': post_query,
         'product_search_term': product_query,
+        'recipe_search_term': recipe_query,
     }
     return render(request, 'home/search_result.html', context)

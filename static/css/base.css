@@ -509,9 +509,16 @@ input[name='q']::placeholder {
         border-right: 1px solid #ff6f00;
     }
 
+    .border-med-center {
+        border-left: 1px solid #ff6f00;
+        border-right: 1px solid #ff6f00;
+        margin-left: -1px;
+        padding-left: 16px;
+    }
+
     .border-med-left {
         border-left: 1px solid #ff6f00;
-        margin-left: -1px;
+        margin-left: -2px;
         padding-left: 16px;
     }
 }
