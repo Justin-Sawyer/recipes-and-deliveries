@@ -30,7 +30,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form id="pet_form" method="POST" action="" class="form mb-2" enctype="multipart/form-data">
+            <form id="main-form" method="POST" action="" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
@@ -72,7 +72,7 @@
 
                 <p>Ingredients</p>
                 {{ formset.management_form }}
-                <div class="image-form">
+                <div class="ingredient-form">
                     {% for form in formset %}
                     <div class="row ingredients">
                         <div class="col-3 col-md-2">
@@ -88,7 +88,7 @@
                             {{ form.name|as_crispy_field }}
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row delete-button">
                         <div class="col">
                             <p>{{ form.DELETE }} Delete</p>
                         </div>
@@ -98,7 +98,7 @@
                 
                 <div class="row more-ingredients-row">
                     <div class="col-12">
-                        <button id="add-image-form" class="btn btn-green mb-3">Add more ingredients</button>
+                        <button id="add-button" class="btn btn-green mb-3">Add more ingredients</button>
                     </div>
                 </div>
                 <div class="row recipe-directions">
@@ -110,7 +110,7 @@
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
                 <div class="text-right">
                     <a class="btn btn-red" href="">Cancel</a>
-                    <input class="btn btn-green" name="submit" type="submit" value="Add Recipe" />
+                    <button class="btn btn-green" type="submit">Add Recipe</button>
                 </div>
             </form>
         </div>
@@ -132,91 +132,33 @@
         })
     </script>
     <script>
-        /*let addIngredientsFormBtn = document.querySelector('#add-ingredients-form');
-        let moreIngredientsRow = document.querySelector('.more-ingredients-row');
-        let ingredientForm = document.getElementsByClassName('ingredient-form');
-        let mainForm = document.querySelector('#main-form');
-
-        /*addIngredientsFormBtn.addEventListener('click', function (event) {
+        let addButton = $('#add-button');
+        let ingredients = $('.ingredients');
+        let deleteButton = $('.delete-button')
+        let count = 0;
+        ingredients.slice(5).toggle();
+        deleteButton.slice(5).toggle();
+        addButton.on('click', function() {
             event.preventDefault();
-            // Make clone of ingredients form
-            let newIngredientsForm = ingredientForm[0].cloneNode(true);
-            mainForm.insertBefore(newIngredientsForm, moreIngredientsRow);
+
+            count++;
+            if (count == 1) {
+                ingredients.slice(5, 10).toggle();
+                deleteButton.slice(5, 10).toggle();
+            }
+            if (count == 2) {
+                ingredients.slice(10, 15).toggle();
+                deleteButton.slice(10, 15).toggle();
+            }
+            if (count == 3) {
+                ingredients.slice(15, 20).toggle();
+                deleteButton.slice(15, 20).toggle();
+            }
+            if (count == 4) {
+                ingredients.slice(20, 25).toggle();
+                deleteButton.slice(20, 25).toggle();
+                addButton.toggle();
+            }
         })
-
-        let totalForms = document.querySelector('#id_ingredients-TOTAL_FORMS');
-        console.log(totalForms)
-        let formCount = ingredientForm.length - 1;
-        console.log(formCount)
-
-        addIngredientsFormBtn.addEventListener('click', function (event) {
-            event.preventDefault();
-
-            let newIngredientsForm = ingredientForm[0].cloneNode(true);
-
-            let formRegex = RegExp(`item-(\\d){1}-`, 'g');
-            formCount++;
-            console.log(formCount)
-
-            newIngredientsForm.innerHTML = newIngredientsForm.innerHTML.replace(formRegex, `item-${formCount}-`);
-            mainForm.insertBefore(newIngredientsForm, moreIngredientsRow);
-            totalForms.setAttribute('value', `${formCount + 1}`);
-        });
-
-        /*addImageFormBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            const newImageForm = imageForm[0].cloneNode(true);
-
-            const formRegex = RegExp(`form-(\\d){1}-`, 'g');
-            formCount++;
-
-            newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `form-${formCount}-`);
-            mainForm.insertBefore(newImageForm, submitFormBtn);
-            totalForms.setAttribute('value', `${formCount + 1}`);
-        });*/
-
-        const imageForm = document.getElementsByClassName("image-form");
-        const mainForm = document.querySelector("#pet_form");
-        const addImageFormBtn = document.querySelector("#add-image-form");
-        //const submitFormBtn = document.querySelector('[type="submit"]');
-        const submitFormBtn = document.querySelector('.more-ingredients-row');
-        const totalForms = document.querySelector("#id_ingredients-TOTAL_FORMS");
-        console.log(totalForms)
-
-        let formCount = imageForm.length - 1;
-        //console.log(formCount)
-
-        function updateForms() {
-            let count = 0;
-            for (let form of imageForm) {
-                const formRegex = RegExp(`form-(\\d){1}-`, 'g');
-                form.innerHTML = form.innerHTML.replace(formRegex, `form-${count++}-`)
-            }
-        }
-
-        addImageFormBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            const newImageForm = imageForm[0].cloneNode(true);
-            const formRegex = RegExp(`form-(\\d){1}-`, 'g');
-
-            formCount++;
-            console.log(formCount)
-
-            newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `form-${formCount}-`);
-            mainForm.insertBefore(newImageForm, submitFormBtn);
-            totalForms.setAttribute('value', `${formCount + 1}`);
-        });
-
-        mainForm.addEventListener("click", function (event) {
-            if (event.target.classList.contains("delete-image-form")) {
-                event.preventDefault();
-                event.target.parentElement.remove();
-                formCount--;
-                updateForms();
-                totalForms.setAttribute('value', `${formCount + 1}`);
-            }
-        });
     </script>
 {% endblock %}

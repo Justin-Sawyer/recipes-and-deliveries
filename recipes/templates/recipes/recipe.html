@@ -33,8 +33,6 @@
                 <!-- Post Title -->
                 <h2 class="font-weight-bold title">{{ recipe.title|title }}</h2>
 
-                {{ recipe.intro }}
-
                 <!-- Categories -->
                 {% if recipe.category %}
                     <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
@@ -61,21 +59,7 @@
                     </p>
                 {% endif %}
 
-                <div class="mb-3">
-                    <h3>Ingredients</h3>
-                    {% if request.user.is_authenticated %}
-                        {% for i in recipe.ingredients.all %}
-                            <p class="mb-0">{{ i.quantity }} {{ i.unit }} {{i.preparation }} {{ i.name }}</p>
-                        {% endfor %}
-                    {% else %}
-                        <p>We'd love to show you this but you need to <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
-                    {% endif %}
-                </div>
-
-                <div class="mb-3">
-                    <h3>Directions</h3>
-                    {{ recipe.directions|linebreaks }}
-                </div>
+                
                 
                 <!-- Author & editing -->
                 <div class="mb-3">
@@ -106,6 +90,24 @@
                         </div>
                     {% endif %}
                 </div>
+                
+                {{ recipe.intro }}
+
+                <div class="mb-3">
+                    <h3>Ingredients</h3>
+                    {% if request.user.is_authenticated %}
+                        {% for i in recipe.ingredients.all %}
+                            <p class="ingredient mb-0"><span class="qty">{{ i.get_quantity }}</span> {{ i.unit }} {{i.preparation }} {{ i.name }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>We'd love to show you this but you need to <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <h3>Directions</h3>
+                    {{ recipe.directions|linebreaks }}
+                </div>
 
                 <!-- Post content -->
                 {{ recipe.content |linebreaks}}
@@ -127,4 +129,13 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script>
+        $('.ingredient').each(function() {
+            $( this ).text().replace( '0', 'x' );
+        });
+    </script>
 {% endblock %}

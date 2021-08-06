@@ -68,4 +68,11 @@ class Ingredient(models.Model):
 
     def __str(self):
         return self.name
+    
+    # If quantity is whole number, remove the decimal places
+    # Credit: https://stackoverflow.com/a/4566018/14773450
+    def get_quantity(self):
+        if self.quantity == int(self.quantity):
+            self.quantity = int(self.quantity)
+        return self.quantity
 
