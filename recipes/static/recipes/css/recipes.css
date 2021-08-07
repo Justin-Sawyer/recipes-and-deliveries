@@ -1,7 +1,7 @@
-#main-form .form-control {
+#main_form .form-control {
     color: #000;
 }
 
-#main-form input::placeholder {
+#main_form input::placeholder {
     color: #aab7c4;
 }

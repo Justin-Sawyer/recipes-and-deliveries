@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'recipes/css/recipes.css' %}">
 {% endblock %}
 
 {% block extra_title %}
@@ -30,7 +31,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form id="main-form" method="POST" action="{% url 'add_recipe' %}" class="form mb-2" enctype="multipart/form-data">
+            <form id="main_form" method="POST" action="{% url 'add_recipe' %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
@@ -98,7 +99,7 @@
                 
                 <div class="row more-ingredients-row">
                     <div class="col-12">
-                        <button id="add-button" class="btn btn-green mb-3">Add more ingredients</button>
+                        <button id="add-ingredient-form" class="btn btn-green mb-3">Add more ingredients</button>
                     </div>
                 </div>
                 <div class="row recipe-directions">
@@ -132,7 +133,45 @@
         })
     </script>
     <script>
-        let addButton = $('#add-button');
+        /*const imageForm = document.getElementsByClassName("image-form");
+        const mainForm = document.querySelector("#pet_form");
+        const addImageFormBtn = document.querySelector("#add-image-form");
+        const submitFormBtn = document.querySelector('[type="submit"]');
+        const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
+
+        let formCount = imageForm.length - 1;
+
+        function updateForms() {
+            let count = 0;
+            for (let form of imageForm) {
+                const formRegex = RegExp(`form-(\\d){1}-`, 'g');
+                form.innerHTML = form.innerHTML.replace(formRegex, `form-${count++}-`)
+            }
+        }
+
+        addImageFormBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const newImageForm = imageForm[0].cloneNode(true);
+            const formRegex = RegExp(`form-(\\d){1}-`, 'g');
+
+            formCount++;
+
+            newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `form-${formCount}-`);
+            mainForm.insertBefore(newImageForm, submitFormBtn);
+            totalForms.setAttribute('value', `${formCount + 1}`);
+        });
+
+        mainForm.addEventListener("click", function (event) {
+            if (event.target.classList.contains("delete-image-form")) {
+                event.preventDefault();
+                event.target.parentElement.remove();
+                formCount--;
+                updateForms();
+                totalForms.setAttribute('value', `${formCount + 1}`);
+            }
+        });
+        /*let addButton = $('#add-button');
         let ingredients = $('.ingredients');
         let deleteButton = $('.delete-button')
         let count = 0;
@@ -159,6 +198,47 @@
                 deleteButton.slice(20, 25).toggle();
                 addButton.toggle();
             }
-        })
+        })*/
+
+        // Dynamic form credit: https://engineertodeveloper.com/dynamic-formsets-with-django/
+        const ingredientForm = document.getElementsByClassName("ingredient-form");
+        const mainForm = document.querySelector("#main_form");
+        const addIngredientFormBtn = document.querySelector("#add-ingredient-form");
+        const recipeDirections = document.querySelector('.more-ingredients-row');
+        const totalForms = document.querySelector("#id_ingredients-TOTAL_FORMS");
+
+        let formCount = ingredientForm.length - 1;
+        console.log(formCount)
+
+        function updateForms() {
+            let count = 0;
+            for (let form of ingredientForm) {
+                const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
+                form.innerHTML = form.innerHTML.replace(formRegex, `ingredients-${count++}-`)
+            }
+        }
+
+        addIngredientFormBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const newIngredientForm = ingredientForm[0].cloneNode(true);
+            const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
+
+            formCount++;
+
+            newIngredientForm.innerHTML = newIngredientForm.innerHTML.replace(formRegex, `ingredients-${formCount}-`);
+            mainForm.insertBefore(newIngredientForm, recipeDirections);
+            totalForms.setAttribute('value', `${formCount + 1}`);
+        });
+
+        mainForm.addEventListener("click", function (event) {
+            if (event.target.classList.contains("delete-image-form")) {
+                event.preventDefault();
+                event.target.parentElement.remove();
+                formCount--;
+                updateForms();
+                totalForms.setAttribute('value', `${formCount + 1}`);
+            }
+        });
     </script>
 {% endblock %}

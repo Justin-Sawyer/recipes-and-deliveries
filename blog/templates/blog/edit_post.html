@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+
 {% block extra_title %}
  | Edit {{ post.title }}
 {% endblock %}
@@ -28,7 +32,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{% url 'edit_post' post.id %}" class="form mb-2" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'edit_post' post.id %}" id="post-form" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">

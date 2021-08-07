@@ -1,0 +1,7 @@
+#post-form .form-control {
+    color: #000;
+}
+
+#post-form input::placeholder {
+    color: #aab7c4;
+}
