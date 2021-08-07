@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'recipes/css/recipes.css' %}">
+{% endblock %}
+
+{% block extra_title %}
+ | Edit {{ recipe.title }}
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container content mb-2">
+    <!-- Page title row -->
+    <div class="row">
+        <div class="col-12 mt-3">
+            <h2 class="font-weight-bold">Edit your Recipe</h2>
+            <h3 class="subtitle text-amber">You are editing "{{ recipe.title }}"</h3>
+            <br>
+        </div>
+    </div>
+        
+    <!-- Main page content -->
+    <div class="row">
+        <div class="col-12">
+            <form id="main-form" method="POST" action="{% url 'edit_recipe' recipe.id%}" class="form mb-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                        {{ recipe_form.title|as_crispy_field}}
+                    </div>
+                    <div class="col-12 col-md-9">
+                        {{ recipe_form.intro|as_crispy_field}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        {{ recipe_form.prep_time|as_crispy_field}}
+                    </div>
+                    <div class="col-6 col-md-3">
+                        {{ recipe_form.cook_time|as_crispy_field}}
+                    </div>
+                    <div class="col-6 col-md-3">
+                        {{ recipe_form.total_time|as_crispy_field}}
+                    </div>
+                    <div class="col-6 col-md-3">
+                        {{ recipe_form.servings|as_crispy_field}}
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <p class="mb-2">Choose Image</p>
+                        {{ recipe_form.image }}
+                    </div>
+                    <div class="col-12 col-md-9">
+                        {{ recipe_form.image_credit | as_crispy_field }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ recipe_form.category | as_crispy_field }}
+                        {{ new_category_form|crispy }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ recipe_form.tag | as_crispy_field }}
+                        {{ new_tag_form.tagname | as_crispy_field }}
+                    </div>
+                </div>
+
+                <p>Ingredients</p>
+                {{ formset.management_form }}
+                <div class="ingredient-form">
+                    {% for form in formset %}
+                    <div class="row ingredients">
+                        <div class="col-3 col-md-2">
+                            {{ form.quantity|as_crispy_field }}
+                        </div>
+                        <div class="col-3 col-md-2">
+                            {{ form.unit|as_crispy_field }}
+                        </div>
+                        <div class="col-6 col-md-4">
+                            {{ form.preparation|as_crispy_field }}
+                        </div>
+                        <div class="col-12 col-md-4">
+                            {{ form.name|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row delete-button">
+                        <div class="col">
+                            <p>{{ form.DELETE }} Delete</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="row more-ingredients-row">
+                    <div class="col-12">
+                        <button id="add-button" class="btn btn-amber mb-3">Add more ingredients</button>
+                    </div>
+                </div>
+                <div class="row recipe-directions">
+                    <div class="col-12">
+                        {{ recipe_form.directions|as_crispy_field}}
+                    </div>
+                </div>
+                <label class="form-check-label" for="id-add-more-recipes">Add another recipe?</label>
+                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
+                <div class="text-right">
+                    <a class="btn btn-red" href="">Cancel</a>
+                    <button class="btn btn-amber" type="submit">Update Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>       
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script>
+        $('#div_id_image_credit').css('display', 'none');
+        $('.btn-file').children('input').addClass('new-image');
+        $('.new-image').change(function() {
+            let file = $('.new-image')[0].files[0];
+            $('#filename').text(`Image will be set to ${file.name}`);
+            $('#div_id_image_credit').css('display', 'block');
+            $('label[for="id_image_credit"]').text('Image Credit*');
+            $('input[name="image_credit"]').prop('required', true);
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('input').not('input[name="q"]').removeClass('border-green').addClass('border-amber');
+            $('select').removeClass('border-green').addClass('border-amber');
+            $('textarea').removeClass('border-green').addClass('border-amber');
+            $('.btn-file').removeClass('btn-green').addClass('btn-amber');
+            $('.btn-file').children('input').addClass('new-image');
+            $('#div_id_image_credit').css('display', 'none');
+            $('.new-image').change(function() {
+                let file = $('.new-image')[0].files[0];
+                $('#filename').text(`Image will be set to ${file.name}`);
+                $('input[name="image_credit"]').val('');
+                $('#div_id_image_credit').css('display', 'block');
+                $('label[for="id_image_credit"]').text('Image Credit*');
+                $('input[name="image_credit"]').prop('required', true);
+            })
+            let count = 0;
+            imageCreditValue = $('input[name="image_credit"]').val()
+            $('#image-clear_id').on('change', function() {
+                if (count % 2 === 0) {
+                    $('input[name="image_credit"]').val('');
+                    $('input[name="image_credit"]').prop('required', false);
+                } else if (count % 2 != 0) {
+                    $('input[name="image_credit"]').val(imageCreditValue);
+                    $('input[name="image_credit"]').prop('required', true);
+                }
+                count += 1;
+            })
+        })
+    </script>
+    <script>
+        /*let addButton = $('#add-button');
+        let ingredients = $('.ingredients');
+        console.log(ingredients)
+        let deleteButton = $('.delete-button')
+        let count = 0;
+        ingredients.slice(5).toggle();
+        deleteButton.slice(5).toggle();
+        addButton.on('click', function() {
+            event.preventDefault();
+
+            count++;
+            if (count == 1) {
+                ingredients.slice(5, 10).toggle();
+                deleteButton.slice(5, 10).toggle();
+            }
+            if (count == 2) {
+                ingredients.slice(10, 15).toggle();
+                deleteButton.slice(10, 15).toggle();
+            }
+            if (count == 3) {
+                ingredients.slice(15, 20).toggle();
+                deleteButton.slice(15, 20).toggle();
+            }
+            if (count == 4) {
+                ingredients.slice(20, 25).toggle();
+                deleteButton.slice(20, 25).toggle();
+                addButton.toggle();
+            }
+        })*/
+    </script>
+{% endblock %}

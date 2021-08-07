@@ -39,12 +39,7 @@
                             <p class="mt-3 text-center text-md-left">
                                 {% if product_search_term != 'None_None' %}
                                     <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}">Products Home</a> | </span>
-                                    {{ products|length }}{% if products|length == 1 %} Product {% else %} Products {% endif %}
-                                    {% if product_search_term %} found for <strong>"{{ product_search_term|title }}"</strong>{% endif %}
-                                {% else %}
-                                    <span class="small font-weight-bold"><a class="text-green" href="{% url 'products' %}">Products Home</a> | </span>
-                                    {{ products|length }}{% if products|length == 1 %} Product {% else %} Products {% endif %}
-                                    {% if product_search_term %} found for <strong>"{{ product_search_term|title }}"</strong>{% endif %}                           
+                                    {{ products|length }}{% if products|length == 1 %} Product {% else %} Products {% endif %} found                          
                                 {% endif %}
                             </p>
                         </div>
@@ -141,8 +136,7 @@
                             <p class="mt-3 text-center text-md-left">
                                 {% if post_search_term  != 'None_None' %}
                                     <span class="small font-weight-bold"><a class="text-green" href="{% url 'blog-articles' %}">Blog Home</a> | </span>
-                                    {{ posts|length }}{% if posts|length == 1 %} Article {% else %} Articles {% endif %}
-                                    {% if post_search_term|title %} found for <strong>"{{ post_search_term|title }}"</strong>{% endif %}  
+                                    {{ posts|length }}{% if posts|length == 1 %} Article {% else %} Articles {% endif %} found  
                                 {% endif %}
                             </p>
                         </div>
@@ -283,8 +277,7 @@
                             <p class="mt-3 text-center text-md-left">
                                 {% if recipe_search_term  != 'None_None' %}
                                     <span class="small font-weight-bold"><a class="text-green" href="{% url 'all_recipes' %}">Recipes Home</a> | </span>
-                                    {{ recipes|length }}{% if recipes|length == 1 %} Recipe {% else %} Recipes {% endif %}
-                                    {% if recipe_search_term|title %} found for <strong>"{{ recipe_search_term|title }}"</strong>{% endif %}  
+                                    {{ recipes|length }}{% if recipes|length == 1 %} Recipe {% else %} Recipes {% endif %} found 
                                 {% endif %}
                             </p>
                         </div>

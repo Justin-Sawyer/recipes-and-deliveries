@@ -41,10 +41,6 @@ class IngredientForm(forms.ModelForm):
             'quantity': 'Qty',
         }
 
-        placeholders = {
-            'preparation': 'eg. Chooped',
-        }
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -60,13 +56,13 @@ class IngredientForm(forms.ModelForm):
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+            field.widget.attrs['class'] = 'border-green profile-form-input'
 
         self.fields['quantity'].widget.attrs['min'] = 0.01
 
 
 IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient,
-                                                form=IngredientForm, extra=25)
+                                                form=IngredientForm)
 
 
 class RecipeForm(forms.ModelForm):

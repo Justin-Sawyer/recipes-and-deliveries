@@ -91,10 +91,10 @@
                     {% endif %}
                 </div>
                 
-                {{ recipe.intro }}
+                <p class="mb-3">{{ recipe.intro }}</p>
 
                 <div class="mb-3">
-                    <h3>Ingredients</h3>
+                    <h3 class=="subtitle">Ingredients</h3>
                     {% if request.user.is_authenticated %}
                         {% for i in recipe.ingredients.all %}
                             <p class="ingredient mb-0"><span class="qty">{{ i.get_quantity }}</span> {{ i.unit }} {{i.preparation }} {{ i.name }}</p>
@@ -105,12 +105,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <h3>Directions</h3>
+                    <h3 class=="subtitle">Directions</h3>
                     {{ recipe.directions|linebreaks }}
                 </div>
-
-                <!-- Post content -->
-                {{ recipe.content |linebreaks}}
 
                 <!-- Image credit -->
                 {% if recipe.image_credit %}
