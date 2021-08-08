@@ -167,97 +167,65 @@ def add_recipe(request):
 
 @login_required
 def edit_recipe(request, recipe_id):
-    # formset = None
 
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    if request.method == 'GET':
-        recipe_form = RecipeForm(instance=recipe)
-        # Gets the formset of Ingredients attached to the recipe
-        formset = IngredientFormSet(instance=recipe)
-        # print(formset)
-        print(recipe.ingredients.all())
-        new_category_form = NewCategoriesForm
-        new_tag_form = NewTagsForm
 
-    if request.method == 'POST':
-        recipe_form = RecipeForm(request.POST,
-                                 request.FILES,
-                                 instance=recipe)
-        # print("recipe_form received")
-        formset = IngredientFormSet(request.POST, instance=recipe)
-        # print(new_formset)
-        # if new_formset.is_valid():
-        #    print("formset")
-        # else:
-        #    print(new_formset.errors)
-        # print(recipe.ingredients.all())
-        # print("formset received")
+    if request.user == recipe.author or request.user.is_superuser:
+        if request.method == 'POST':
+            recipe_form = RecipeForm(request.POST,
+                                     request.FILES,
+                                     instance=recipe)
+            formset = IngredientFormSet(request.POST, instance=recipe)
 
-        if recipe_form.is_valid():
-            recipe = recipe_form.save()
-            
-            # formset = IngredientFormSet(request.POST, instance=recipe)
-            # formset_values = request.POST.get('unit')
-            # print(f'this is the {formset_values}')
-            # new_formset = IngredientFormSet(request.POST, instance=recipe)
-            if formset.is_valid():
-                print("new formset is valid")
-                # try:
-                formset.save()
-                # except Exception as e:
-                #    messages.error(request, 'Failed to edit the recipe ingredients \
-                #    Please ensure the form is valid.')"""
-                
+            if recipe_form.is_valid():
+                recipe = recipe_form.save()
+                if formset.is_valid():
+                    formset.save()
 
-            """ Handle new vs existing tags """
-            new_tags_form = NewTagsForm(request.POST)
-            if new_tags_form.data['tagname']:
-                new_tagname = new_tags_form.data['tagname']
-                tagname_collection = Tag.objects.all()
-                existing_tagname = Tag.objects.filter(tagname=new_tagname)
-                if existing_tagname:
-                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
-                    recipe.tag.add(existing_tagname_id)
-                if not existing_tagname:
-                    new_tags_form.is_valid()
-                    newtag = new_tags_form.save()
-                    recipe.tag.add(newtag)
+                """ Handle new vs existing tags """
+                new_tags_form = NewTagsForm(request.POST)
+                if new_tags_form.data['tagname']:
+                    new_tagname = new_tags_form.data['tagname']
+                    tagname_collection = Tag.objects.all()
+                    existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                    if existing_tagname:
+                        existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                        recipe.tag.add(existing_tagname_id)
+                    if not existing_tagname:
+                        new_tags_form.is_valid()
+                        newtag = new_tags_form.save()
+                        recipe.tag.add(newtag)
 
-            """ Handle new vs exiting categories """
-            new_category_form = NewCategoriesForm(request.POST)
-            if new_category_form.data['friendly_name']:
-                new_category_name = new_category_form.data['friendly_name']
-                category_collection = Category.objects.all()
-                existing_category_name = (
-                    Category.objects.filter(friendly_name=new_category_name))
-                if existing_category_name:
-                    existing_category_name_id = (
-                        category_collection.get(id__in=existing_category_name))
-                    recipe.category.add(existing_category_name_id)
-                if not existing_category_name:
-                    new_category_form.is_valid()
-                    newcategory = new_category_form.save()
-                    recipe.category.add(newcategory)
-                    
-            messages.success(request, 'Successfully added recipe!')
-            return redirect(reverse('recipe', args=[recipe.id]))
-
-            """ Handle redirect according to whether
-            Further Recipes is checked or not """
-            """if add_more_recipes:
-                return redirect(reverse('add_recipe'))
-            else:"""
-            # return redirect(reverse('recipe'))
+                """ Handle new vs exiting categories """
+                new_category_form = NewCategoriesForm(request.POST)
+                if new_category_form.data['friendly_name']:
+                    new_category_name = new_category_form.data['friendly_name']
+                    category_collection = Category.objects.all()
+                    existing_category_name = (
+                        Category.objects.filter(friendly_name=new_category_name))
+                    if existing_category_name:
+                        existing_category_name_id = (
+                            category_collection.get(id__in=existing_category_name))
+                        recipe.category.add(existing_category_name_id)
+                    if not existing_category_name:
+                        new_category_form.is_valid()
+                        newcategory = new_category_form.save()
+                        recipe.category.add(newcategory)
+                        
+                messages.success(request, 'Successfully updated recipe!')
+                return redirect(reverse('recipe', args=[recipe.id]))
+            else:
+                messages.error(request, 'Failed to edit your recipe \
+                    Please ensure the form is valid.')
         else:
-            messages.error(request, 'Failed to add your post \
-                Please ensure the form is valid.')
-    """else:
-        recipe_form = RecipeForm(instance=recipe)
-        # Gets the formset of Ingredients attached to the recipe
-        formset = IngredientFormSet(instance=recipe)
-        # print(formset)
-        new_category_form = NewCategoriesForm
-        new_tag_form = NewTagsForm"""
+            recipe_form = RecipeForm(instance=recipe)
+            formset = IngredientFormSet(instance=recipe)
+            new_category_form = NewCategoriesForm
+            new_tag_form = NewTagsForm
+            messages.warning(request, f'You are editing {recipe.title}')
+    else:
+        messages.error(request, 'Sorry, only the recipe author can do that!')
+        return redirect(reverse('home'))
     
     template = 'recipes/edit_recipe.html'
 
@@ -270,3 +238,17 @@ def edit_recipe(request, recipe_id):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def delete_recipe(request, recipe_id):
+    """ Delete a recipe """
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+
+    if request.user == recipe.author or request.user.is_superuser:
+        recipe.delete()
+        messages.success(request, 'Recipe successfully deleted!')
+        return redirect(reverse('all_recipes'))
+    else:
+        messages.error(request, 'Sorry, only the recipe author can do that!')
+        return redirect(reverse('home'))

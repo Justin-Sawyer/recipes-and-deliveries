@@ -164,7 +164,7 @@
                                                     Superuser created posts = author edit color,
                                                     user created posts = primary color (matching color of product management) -->
                                                     <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_recipe' recipe.id %}">Edit</a> |
-                                                    <a class="text-danger" href="{% url 'delete_post' recipe.id %}">Delete</a>
+                                                    <a class="text-danger" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
                                                 </small>
                                             </div>
                                         {% endif %}
