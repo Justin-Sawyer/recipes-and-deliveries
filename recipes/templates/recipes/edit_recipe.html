@@ -77,6 +77,7 @@
                 </div>
 
                 <p>Ingredients</p>
+                <p class="ingredient-count" hidden>{{ ingredient_count }}</p>
                 {{ formset.management_form }}
                 <div class="ingredient-form">
                     {% for form in formset %}
@@ -138,9 +139,6 @@
     </script>
     <script>
         $(document).ready(function() {
-            //$('input').not('input[name="q"]').removeClass('border-green').addClass('border-amber');
-            /*$('select').removeClass('border-green').addClass('border-amber');
-            $('textarea').removeClass('border-green').addClass('border-amber');*/
             $('input[type="checkbox"]').css('filter', 'hue-rotate(178deg)');
             let catHeight = $('#cat-height').height();
             let style = {
@@ -220,32 +218,66 @@
     <script>
         let addButton = $('#add-ingredient-form');
         let ingredients = $('.ingredients');
-        console.log(ingredients)
         let deleteButton = $('.delete-button')
+        let ingredientCount = $('.ingredient-count').text()
+        ingredientTotal = parseInt(ingredientCount)
+        let ingredientCountPlusFive = ingredientTotal + 5;
+        let ingredientCountPlusTen = ingredientTotal + 10;
+        let ingredientCountPlusFifteen = ingredientTotal + 15;
+        let ingredientCountPlusTwenty = ingredientTotal + 20;
+        let ingredientCountPlusTwentyFive = ingredientTotal + 25;
         let count = 0;
-        ingredients.slice(5).toggle();
-        deleteButton.slice(5).toggle();
+        ingredients.slice(ingredientTotal).toggle();
+        deleteButton.slice(ingredientTotal).toggle();
         addButton.on('click', function() {
             event.preventDefault();
 
             count++;
             if (count == 1) {
-                ingredients.slice(5, 10).toggle();
-                deleteButton.slice(5, 10).toggle();
+                ingredients.slice(ingredientTotal, ingredientCountPlusFive).toggle();
+                deleteButton.slice(ingredientTotal, ingredientCountPlusFive).toggle();
+                if (ingredientCountPlusFive >= 25) {
+                    ingredients.slice(25).hide();
+                    deleteButton.slice(25).hide();
+                    addButton.toggle();
+                }
             }
             if (count == 2) {
-                ingredients.slice(10, 15).toggle();
-                deleteButton.slice(10, 15).toggle();
+                ingredients.slice(ingredientCountPlusFive, ingredientCountPlusTen).toggle();
+                deleteButton.slice(ingredientCountPlusFive, ingredientCountPlusTen).toggle();
+                if (ingredientCountPlusTen >= 25) {
+                    ingredients.slice(25).hide();
+                    deleteButton.slice(25).hide();
+                    addButton.toggle();
+                }
             }
             if (count == 3) {
-                ingredients.slice(15, 20).toggle();
-                deleteButton.slice(15, 20).toggle();
+                ingredients.slice(ingredientCountPlusTen, ingredientCountPlusFifteen).toggle();
+                deleteButton.slice(ingredientCountPlusTen, ingredientCountPlusFifteen).toggle();
+                if (ingredientCountPlusFifteen >= 25) {
+                    ingredients.slice(25).hide();
+                    deleteButton.slice(25).hide();
+                    addButton.toggle();
+                }
             }
             if (count == 4) {
-                ingredients.slice(20, 25).toggle();
-                deleteButton.slice(20, 25).toggle();
-                addButton.toggle();
+                ingredients.slice(ingredientCountPlusFifteen, ingredientCountPlusTwenty).toggle();
+                deleteButton.slice(ingredientCountPlusFifteen, ingredientCountPlusTwenty).toggle();
+                if (ingredientCountPlusTwenty >= 25) {
+                    ingredients.slice(25).hide();
+                    deleteButton.slice(25).hide();
+                    addButton.toggle();
+                }
             }
+            if (count == 5) {
+                ingredients.slice(ingredientCountPlusTwenty, ingredientCountPlusTwentyFive).toggle();
+                deleteButton.slice(ingredientCountPlusTwenty, ingredientCountPlusTwentyFive).toggle();
+                if (ingredientCountPlusTwentyFive >= 25) {
+                    ingredients.slice(25).hide();
+                    deleteButton.slice(25).hide();
+                    addButton.toggle();
+                }
+            }    
         })
     </script>
 {% endblock %}

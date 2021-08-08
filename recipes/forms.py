@@ -19,8 +19,6 @@ class NewCategoriesForm(forms.ModelForm):
             'friendly_name': 'One single word only'
         }
 
-        # for field_name, field in self.fields.items():
-            # field.widget.attrs['class'] = 'border-green'
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
@@ -41,8 +39,6 @@ class NewTagsForm(forms.ModelForm):
             'tagname': 'One single word only'
         }
 
-        # for field_name, field in self.fields.items():
-            # field.widget.attrs['class'] = 'border-green'
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
@@ -70,8 +66,6 @@ class IngredientForm(forms.ModelForm):
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-        # for field_name, field in self.fields.items():
-            # field.widget.attrs['class'] = 'border-green'
 
         self.fields['quantity'].widget.attrs['min'] = 0.01
 
@@ -87,6 +81,9 @@ class RecipeForm(forms.ModelForm):
                              required=False,
                              widget=CustomClearableFileInput)
 
+    # Change rendering of form to user-friendly checkboxes
+    # Credit:
+    # https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
     category = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(),
         label='Choose some categories from the list',
@@ -94,7 +91,10 @@ class RecipeForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple
     )
 
-    tag =  forms.ModelMultipleChoiceField(
+    # Change rendering of form to user-friendly checkboxes
+    # Credit:
+    # https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
+    tag = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         label='Choose some tags from the list',
         required=False,
@@ -108,7 +108,7 @@ class RecipeForm(forms.ModelForm):
         labels = {
             'intro': 'Brief Description',
         }
-    
+
     def clean_servings(self):
         value = self.cleaned_data.get('servings')
         print(value)
@@ -116,7 +116,7 @@ class RecipeForm(forms.ModelForm):
             raise forms.ValidationError('The number of servings must be \
                 greater than zero')
         return value
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         categories = Category.objects.all().order_by('friendly_name')
@@ -139,7 +139,5 @@ class RecipeForm(forms.ModelForm):
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-        # for field_name, field in self.fields.items():
-            # field.widget.attrs['class'] = 'border-green'
         self.fields['category'].choices = friendly_name
         self.fields['title'].widget.attrs['autofocus'] = True

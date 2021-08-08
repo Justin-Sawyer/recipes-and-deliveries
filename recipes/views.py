@@ -169,6 +169,7 @@ def add_recipe(request):
 def edit_recipe(request, recipe_id):
 
     recipe = get_object_or_404(Recipe, pk=recipe_id)
+    ingredient_count = recipe.ingredients.all().count()
 
     if request.user == recipe.author or request.user.is_superuser:
         if request.method == 'POST':
@@ -235,6 +236,7 @@ def edit_recipe(request, recipe_id):
         'formset': formset,
         'new_tag_form': new_tag_form,
         'new_category_form': new_category_form,
+        'ingredient_count': ingredient_count,
     }
 
     return render(request, template, context)

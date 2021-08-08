@@ -94,11 +94,6 @@
                             {{ form.name|as_crispy_field }}
                         </div>
                     </div>
-                    <div class="row delete-button">
-                        <div class="col">
-                            <p>{{ form.DELETE }} Delete</p>
-                        </div>
-                    </div>
                     {% endfor %}
                 </div>
                 
@@ -127,14 +122,16 @@
 {% block postloadjs %}
     {{ block.super }}
     <script>
+        // Change color of checkbox. Works in Chrome and Safari desktop
         $('input[type="checkbox"]').css('filter', 'hue-rotate(300deg)');
         let catHeight = $('#cat-height').height();
-            let style = {
-                'height': `${catHeight}`,
-                'overflow': 'auto',
-                'margin-bottom': '16px'
-            }
-            $('#tag-height').css(style);
+        let style = {
+            'height': `${catHeight}`,
+            'overflow': 'auto',
+            'margin-bottom': '16px'
+        }
+        $('#tag-height').css(style);
+
         $('#div_id_image_credit').css('display', 'none');
         $('.btn-file').children('input').addClass('new-image');
         $('.new-image').change(function() {
@@ -146,69 +143,25 @@
         })
     </script>
     <script>
-        /*const imageForm = document.getElementsByClassName("image-form");
-        const mainForm = document.querySelector("#pet_form");
-        const addImageFormBtn = document.querySelector("#add-image-form");
-        const submitFormBtn = document.querySelector('[type="submit"]');
-        const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
-
-        let formCount = imageForm.length - 1;
-
-        function updateForms() {
-            let count = 0;
-            for (let form of imageForm) {
-                const formRegex = RegExp(`form-(\\d){1}-`, 'g');
-                form.innerHTML = form.innerHTML.replace(formRegex, `form-${count++}-`)
-            }
-        }
-
-        addImageFormBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            const newImageForm = imageForm[0].cloneNode(true);
-            const formRegex = RegExp(`form-(\\d){1}-`, 'g');
-
-            formCount++;
-
-            newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `form-${formCount}-`);
-            mainForm.insertBefore(newImageForm, submitFormBtn);
-            totalForms.setAttribute('value', `${formCount + 1}`);
-        });
-
-        mainForm.addEventListener("click", function (event) {
-            if (event.target.classList.contains("delete-image-form")) {
-                event.preventDefault();
-                event.target.parentElement.remove();
-                formCount--;
-                updateForms();
-                totalForms.setAttribute('value', `${formCount + 1}`);
-            }
-        });*/
         let addButton = $('#add-ingredient-form');
         let ingredients = $('.ingredients');
-        let deleteButton = $('.delete-button')
         let count = 0;
         ingredients.slice(5).toggle();
-        deleteButton.slice(5).toggle();
         addButton.on('click', function() {
             event.preventDefault();
 
             count++;
             if (count == 1) {
                 ingredients.slice(5, 10).toggle();
-                deleteButton.slice(5, 10).toggle();
             }
             if (count == 2) {
                 ingredients.slice(10, 15).toggle();
-                deleteButton.slice(10, 15).toggle();
             }
             if (count == 3) {
                 ingredients.slice(15, 20).toggle();
-                deleteButton.slice(15, 20).toggle();
             }
             if (count == 4) {
                 ingredients.slice(20, 25).toggle();
-                deleteButton.slice(20, 25).toggle();
                 addButton.toggle();
             }
         })

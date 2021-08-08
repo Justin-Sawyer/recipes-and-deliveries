@@ -1,6 +1,6 @@
 from django import forms
 from .widgets import CustomClearableFileInput
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from .models import Post, Category, Tag
 
 
@@ -20,8 +20,6 @@ class NewCategoriesForm(forms.ModelForm):
             'friendly_name': 'One single word only'
         }
 
-        # for field_name, field in self.fields.items():
-            # field.widget.attrs['class'] = 'border-green'
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
@@ -42,8 +40,6 @@ class NewTagsForm(forms.ModelForm):
             'tagname': 'One single word only'
         }
 
-        # for field_name, field in self.fields.items():
-            # field.widget.attrs['class'] = 'border-green'
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
@@ -56,6 +52,26 @@ class BlogPostForm(forms.ModelForm):
                              required=False,
                              widget=CustomClearableFileInput)
 
+    # Change rendering of form to user-friendly checkboxes
+    # Credit:
+    # https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        label='Choose some categories from the list',
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
+
+    # Change rendering of form to user-friendly checkboxes
+    # Credit:
+    # https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
+    tag =  forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        label='Choose some tags from the list',
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta():
         model = Post
         exclude = ('author', 'date_posted',)
@@ -64,51 +80,26 @@ class BlogPostForm(forms.ModelForm):
             'category': 'Choose some categories from the list',
             'tag': 'Choose some tags from the list',
         }
-    
-    category = forms.ModelMultipleChoiceField(
-        queryset=Category.objects.all(),
-        label='Choose some categories from the list',
-        required=False,
-        widget=forms.CheckboxSelectMultiple
-    )
-
-    tag =  forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(),
-        label='Choose some tags from the list',
-        required=False,
-        widget=forms.CheckboxSelectMultiple
-    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         categories = Category.objects.all().order_by('friendly_name')
         friendly_name = [(c.id, c.get_friendly_name()) for c in categories]
-        # categories = forms.MultipleChoiceField(widget=forms.SelectMultiple,
-                                             # choices=friendly_name)
 
         placeholders = {
             'title': 'Add Your Title',
             'tagline': 'Describe your article',
             'image_credit': 'Who took the photo?',
-            'content': 'Add your content here.'
+            'content': 'Add your content here.',
+            'category': '',
+            'tag': '',
+            'image': '',
         }
 
         self.fields['title'].widget.attrs['autofocus'] = True
 
         for field in self.fields:
-            if field == 'title':
-                placeholder = placeholders[field]
-                self.fields[field].widget.attrs['placeholder'] = placeholder
-            if field == 'tagline':
-                placeholder = placeholders[field]
-                self.fields[field].widget.attrs['placeholder'] = placeholder
-            if field == 'image_credit':
-                placeholder = placeholders[field]
-                self.fields[field].widget.attrs['placeholder'] = placeholder
-            if field == 'content':
-                placeholder = placeholders[field]
-                self.fields[field].widget.attrs['placeholder'] = placeholder
+            placeholder = placeholders[field]
+            self.fields[field].widget.attrs['placeholder'] = placeholder
 
         self.fields['category'].choices = friendly_name
-        # for field_name, field in self.fields.items():
-            # field.widget.attrs['class'] = 'border-green'
