@@ -73,8 +73,9 @@
 
                 <p>Ingredients</p>
                 {{ formset.management_form }}
-                <div class="ingredient-form">
+                <div>
                     {% for form in formset %}
+                    {{ form.id }}
                     <div class="row ingredients">
                         <div class="col-3 col-md-2">
                             {{ form.quantity|as_crispy_field }}
@@ -170,8 +171,8 @@
                 updateForms();
                 totalForms.setAttribute('value', `${formCount + 1}`);
             }
-        });
-        /*let addButton = $('#add-button');
+        });*/
+        let addButton = $('#add-ingredient-form');
         let ingredients = $('.ingredients');
         let deleteButton = $('.delete-button')
         let count = 0;
@@ -198,25 +199,28 @@
                 deleteButton.slice(20, 25).toggle();
                 addButton.toggle();
             }
-        })*/
+        })
 
         // Dynamic form credit: https://engineertodeveloper.com/dynamic-formsets-with-django/
-        const ingredientForm = document.getElementsByClassName("ingredient-form");
+        /*const ingredientForm = document.getElementsByClassName("ingredient-form");
         const mainForm = document.querySelector("#main_form");
         const addIngredientFormBtn = document.querySelector("#add-ingredient-form");
         const recipeDirections = document.querySelector('.more-ingredients-row');
         const totalForms = document.querySelector("#id_ingredients-TOTAL_FORMS");
 
-        let formCount = ingredientForm.length - 1;
-        console.log(formCount)
+        let formCount = ingredientForm.length + 1;
+        console.log(`first is ${formCount}`)
 
         function updateForms() {
-            let count = 0;
-            for (let form of ingredientForm) {
+            //let count = 0;
+            let count = 3;
+            console.log(count)
+            for (let form of extraIngredientForm) {
                 const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
                 form.innerHTML = form.innerHTML.replace(formRegex, `ingredients-${count++}-`)
             }
         }
+
 
         addIngredientFormBtn.addEventListener("click", function (event) {
             event.preventDefault();
@@ -225,6 +229,7 @@
             const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
 
             formCount++;
+            console.log(`second is ${formCount}`)
 
             newIngredientForm.innerHTML = newIngredientForm.innerHTML.replace(formRegex, `ingredients-${formCount}-`);
             mainForm.insertBefore(newIngredientForm, recipeDirections);
@@ -239,6 +244,6 @@
                 updateForms();
                 totalForms.setAttribute('value', `${formCount + 1}`);
             }
-        });
+        });*/
     </script>
 {% endblock %}

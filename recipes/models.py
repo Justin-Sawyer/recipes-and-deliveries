@@ -66,6 +66,13 @@ class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
                                related_name='ingredients')
 
+    """def save(self, *args, **kwargs):
+        ""
+        Override the original save method to set the lineitem total
+        and update the order total.
+        ""
+        super().save(*args, **kwargs)"""
+
     def __str(self):
         return self.name
     

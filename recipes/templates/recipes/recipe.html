@@ -84,7 +84,7 @@
                                 <!-- Superuser sees instantly whether superuser created post or whether post was user created
                                 Superuser created posts = author edit color,
                                 user created posts = primary color (matching color of product management) -->
-                                <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="">Edit</a> |
+                                <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_recipe' recipe.id %}">Edit</a> |
                                 <a class="text-danger" href="">Delete</a>
                             </small>
                         </div>

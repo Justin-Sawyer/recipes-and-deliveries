@@ -76,6 +76,7 @@
                 {{ formset.management_form }}
                 <div class="ingredient-form">
                     {% for form in formset %}
+                    {{ form.id }}
                     <div class="row ingredients">
                         <div class="col-3 col-md-2">
                             {{ form.quantity|as_crispy_field }}
@@ -108,8 +109,6 @@
                         {{ recipe_form.directions|as_crispy_field}}
                     </div>
                 </div>
-                <label class="form-check-label" for="id-add-more-recipes">Add another recipe?</label>
-                <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
                 <div class="text-right">
                     <a class="btn btn-red" href="">Cancel</a>
                     <button class="btn btn-amber" type="submit">Update Recipe</button>
@@ -163,14 +162,15 @@
             })
         })
     </script>
-    <script>// Dynamic form credit: https://engineertodeveloper.com/dynamic-formsets-with-django/
-        const ingredientForm = document.getElementsByClassName("ingredient-form");
+    <script>
+        // Dynamic form credit: https://engineertodeveloper.com/dynamic-formsets-with-django/
+        /*const ingredientForm = document.getElementsByClassName("ingredient-form");
         const mainForm = document.querySelector("#main_form");
         const addIngredientFormBtn = document.querySelector("#add-ingredient-form");
         const recipeDirections = document.querySelector('.more-ingredients-row');
         const totalForms = document.querySelector("#id_ingredients-TOTAL_FORMS");
 
-        let formCount = ingredientForm.length - 1;
+        let formCount = ingredientForm.length + 1 ;
         console.log(formCount)
 
         function updateForms() {
@@ -188,6 +188,7 @@
             const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
 
             formCount++;
+            console.log(formCount)
 
             newIngredientForm.innerHTML = newIngredientForm.innerHTML.replace(formRegex, `ingredients-${formCount}-`);
             mainForm.insertBefore(newIngredientForm, recipeDirections);
@@ -202,10 +203,10 @@
                 updateForms();
                 totalForms.setAttribute('value', `${formCount + 1}`);
             }
-        });
+        });*/
     </script>
     <script>
-        /*let addButton = $('#add-button');
+        let addButton = $('#add-ingredient-form');
         let ingredients = $('.ingredients');
         console.log(ingredients)
         let deleteButton = $('.delete-button')
@@ -233,6 +234,6 @@
                 deleteButton.slice(20, 25).toggle();
                 addButton.toggle();
             }
-        })*/
+        })
     </script>
 {% endblock %}

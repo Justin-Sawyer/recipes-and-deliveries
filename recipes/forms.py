@@ -68,7 +68,6 @@ class IngredientForm(forms.ModelForm):
         }
 
         for field in self.fields:
-            # if field != 'quantity':
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
         for field_name, field in self.fields.items():
@@ -78,7 +77,7 @@ class IngredientForm(forms.ModelForm):
 
 
 IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient,
-                                                form=IngredientForm, extra=1)
+                                                form=IngredientForm, extra=25)
 
 
 class RecipeForm(forms.ModelForm):
