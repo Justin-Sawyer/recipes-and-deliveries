@@ -106,37 +106,37 @@ def add_recipe(request):
             if formset.is_valid():
                 formset.save()
 
-                """ Handle new vs existing tags """
-                new_tags_form = NewTagsForm(request.POST)
-                if new_tags_form.data['tagname']:
-                    new_tagname = new_tags_form.data['tagname']
-                    tagname_collection = Tag.objects.all()
-                    existing_tagname = Tag.objects.filter(tagname=new_tagname)
-                    if existing_tagname:
-                        existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
-                        recipe.tag.add(existing_tagname_id)
-                    if not existing_tagname:
-                        new_tags_form.is_valid()
-                        newtag = new_tags_form.save()
-                        recipe.tag.add(newtag)
+            """ Handle new vs existing tags """
+            new_tags_form = NewTagsForm(request.POST)
+            if new_tags_form.data['tagname']:
+                new_tagname = new_tags_form.data['tagname']
+                tagname_collection = Tag.objects.all()
+                existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                if existing_tagname:
+                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                    recipe.tag.add(existing_tagname_id)
+                if not existing_tagname:
+                    new_tags_form.is_valid()
+                    newtag = new_tags_form.save()
+                    recipe.tag.add(newtag)
 
-                """ Handle new vs exiting categories """
-                new_category_form = NewCategoriesForm(request.POST)
-                if new_category_form.data['friendly_name']:
-                    new_category_name = new_category_form.data['friendly_name']
-                    category_collection = Category.objects.all()
-                    existing_category_name = (
-                        Category.objects.filter(friendly_name=new_category_name))
-                    if existing_category_name:
-                        existing_category_name_id = (
-                            category_collection.get(id__in=existing_category_name))
-                        recipe.category.add(existing_category_name_id)
-                    if not existing_category_name:
-                        new_category_form.is_valid()
-                        newcategory = new_category_form.save()
-                        recipe.category.add(newcategory)
-                        
-                messages.success(request, 'Successfully added recipe!')
+            """ Handle new vs exiting categories """
+            new_category_form = NewCategoriesForm(request.POST)
+            if new_category_form.data['friendly_name']:
+                new_category_name = new_category_form.data['friendly_name']
+                category_collection = Category.objects.all()
+                existing_category_name = (
+                    Category.objects.filter(friendly_name=new_category_name))
+                if existing_category_name:
+                    existing_category_name_id = (
+                        category_collection.get(id__in=existing_category_name))
+                    recipe.category.add(existing_category_name_id)
+                if not existing_category_name:
+                    new_category_form.is_valid()
+                    newcategory = new_category_form.save()
+                    recipe.category.add(newcategory)
+                    
+            messages.success(request, 'Successfully added recipe!')
 
             """ Handle redirect according to whether
             Further Recipes is checked or not """

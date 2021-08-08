@@ -6,7 +6,7 @@ from .models import Post, Category, Tag
 
 class NewCategoriesForm(forms.ModelForm):
 
-    friendly_name = forms.CharField(label='... or add your own categories',
+    friendly_name = forms.CharField(label='... or add your own category',
                                     required=False)
 
     class Meta():
@@ -15,8 +15,16 @@ class NewCategoriesForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+
+        placeholders = {
+            'friendly_name': 'One single word only'
+        }
+
+        # for field_name, field in self.fields.items():
+            # field.widget.attrs['class'] = 'border-green'
+        for field in self.fields:
+            placeholder = placeholders[field]
+            self.fields[field].widget.attrs['placeholder'] = placeholder
 
 
 class NewTagsForm(forms.ModelForm):
@@ -29,8 +37,16 @@ class NewTagsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+
+        placeholders = {
+            'tagname': 'One single word only'
+        }
+
+        # for field_name, field in self.fields.items():
+            # field.widget.attrs['class'] = 'border-green'
+        for field in self.fields:
+            placeholder = placeholders[field]
+            self.fields[field].widget.attrs['placeholder'] = placeholder
 
 
 class BlogPostForm(forms.ModelForm):
@@ -48,6 +64,20 @@ class BlogPostForm(forms.ModelForm):
             'category': 'Choose some categories from the list',
             'tag': 'Choose some tags from the list',
         }
+    
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        label='Choose some categories from the list',
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
+
+    tag =  forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        label='Choose some tags from the list',
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -80,5 +110,5 @@ class BlogPostForm(forms.ModelForm):
                 self.fields[field].widget.attrs['placeholder'] = placeholder
 
         self.fields['category'].choices = friendly_name
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+        # for field_name, field in self.fields.items():
+            # field.widget.attrs['class'] = 'border-green'

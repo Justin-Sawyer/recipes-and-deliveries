@@ -63,11 +63,15 @@
                         {{ recipe_form.image_credit | as_crispy_field }}
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ recipe_form.category | as_crispy_field }}
+                        <div id="cat-height">
+                            {{ recipe_form.category | as_crispy_field}}
+                        </div>
                         {{ new_category_form|crispy }}
                     </div>
                     <div class="col-12 col-md-6">
-                        {{ recipe_form.tag | as_crispy_field }}
+                        <div id="tag-height">
+                            {{ recipe_form.tag | as_crispy_field }}
+                        </div>
                         {{ new_tag_form.tagname | as_crispy_field }}
                     </div>
                 </div>
@@ -134,9 +138,17 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('input').not('input[name="q"]').removeClass('border-green').addClass('border-amber');
-            $('select').removeClass('border-green').addClass('border-amber');
-            $('textarea').removeClass('border-green').addClass('border-amber');
+            //$('input').not('input[name="q"]').removeClass('border-green').addClass('border-amber');
+            /*$('select').removeClass('border-green').addClass('border-amber');
+            $('textarea').removeClass('border-green').addClass('border-amber');*/
+            $('input[type="checkbox"]').css('filter', 'hue-rotate(178deg)');
+            let catHeight = $('#cat-height').height();
+            let style = {
+                'height': `${catHeight}`,
+                'overflow': 'auto',
+                'margin-bottom': '16px'
+            }
+            $('#tag-height').css(style);
             $('.btn-file').removeClass('btn-green').addClass('btn-amber');
             $('.btn-file').children('input').addClass('new-image');
             $('#div_id_image_credit').css('display', 'none');

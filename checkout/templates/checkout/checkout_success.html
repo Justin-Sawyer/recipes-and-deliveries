@@ -191,26 +191,32 @@
                         </div>
                     </div>
                 </div>
-                {% if from_profile %}
-                    <a href="{% url 'profile' %}" class="btn btn-block btn-amber my-2">
+                {% if from_profile or request.user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-amber my-2">
                         <span class="icon mr-2">
-                            <i class="fas fa-angle-left"></i>
+                            <i class="fas fa-user"></i>
                         </span>
-                        <span>Back to Profile</span>
+                        <span>Profile</span>
                     </a>
-                    <a href="{% url 'blog-home' %}" class="btn btn-block btn-green my-2">
-                        <span class="icon mr-2">
-                            <i class="far fa-newspaper"></i>
-                        </span>
-                        <span>Or check out the latest blog posts and recipes!</span>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'blog-home' %}" class="btn btn-block btn-green my-2">
+                    <a href="{% url 'blog-articles' %}" class="btn btn-green my-2">
                         <span class="icon mr-2">
                             <i class="far fa-newspaper"></i>
                         </span>
-                        <span>Now check out the latest blog posts and recipes!</span>
+                        <span>Blog Articles</span>
                     </a>
+                    <a href="{% url 'all_recipes' %}" class="btn btn-green my-2">
+                        <span class="icon mr-2">
+                            <i class="fas fa-clipboard-list"></i>
+                        </span>
+                        <span>Recipes</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'blog-home' %}" class="btn btn-green my-2">
+                        <span class="icon mr-2">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <span>Discover the community!</span>
+                    </a> 
                 {% endif %}               
             </div>
         

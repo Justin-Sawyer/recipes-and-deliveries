@@ -19,8 +19,8 @@ class NewCategoriesForm(forms.ModelForm):
             'friendly_name': 'One single word only'
         }
 
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+        # for field_name, field in self.fields.items():
+            # field.widget.attrs['class'] = 'border-green'
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
@@ -41,8 +41,8 @@ class NewTagsForm(forms.ModelForm):
             'tagname': 'One single word only'
         }
 
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+        # for field_name, field in self.fields.items():
+            # field.widget.attrs['class'] = 'border-green'
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
@@ -70,8 +70,8 @@ class IngredientForm(forms.ModelForm):
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green profile-form-input'
+        # for field_name, field in self.fields.items():
+            # field.widget.attrs['class'] = 'border-green'
 
         self.fields['quantity'].widget.attrs['min'] = 0.01
 
@@ -87,6 +87,19 @@ class RecipeForm(forms.ModelForm):
                              required=False,
                              widget=CustomClearableFileInput)
 
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        label='Choose some categories from the list',
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
+
+    tag =  forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        label='Choose some tags from the list',
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
 
     class Meta:
         model = Recipe
@@ -126,7 +139,7 @@ class RecipeForm(forms.ModelForm):
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-green'
+        # for field_name, field in self.fields.items():
+            # field.widget.attrs['class'] = 'border-green'
         self.fields['category'].choices = friendly_name
         self.fields['title'].widget.attrs['autofocus'] = True

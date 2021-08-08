@@ -100,7 +100,7 @@
                             <p class="ingredient mb-0"><span class="qty">{{ i.get_quantity }}</span> {{ i.unit }} {{i.preparation }} {{ i.name }}</p>
                         {% endfor %}
                     {% else %}
-                        <p>We'd love to show you this but you need to <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                        <p>We'd love to show you this but you need to <a class="text-green" href="{% url 'account_signup' %}">register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
                     {% endif %}
                 </div>
 
