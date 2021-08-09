@@ -58,20 +58,13 @@ class Recipe(models.Model):
 
 
 class Ingredient(models.Model):
-    quantity = models.FloatField()
-    unit = models.CharField(max_length=15)
-    name = models.CharField(max_length=150)
+    quantity = models.FloatField(default="", blank=True)
+    unit = models.CharField(max_length=15, default="", blank=True)
+    name = models.CharField(max_length=150, default="", blank=True)
     preparation = models.CharField(max_length=150, default="", blank=True)
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
                                related_name='ingredients')
-
-    """def save(self, *args, **kwargs):
-        ""
-        Override the original save method to set the lineitem total
-        and update the order total.
-        ""
-        super().save(*args, **kwargs)"""
 
     def __str(self):
         return self.name

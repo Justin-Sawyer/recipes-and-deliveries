@@ -53,6 +53,8 @@ class IngredientForm(forms.ModelForm):
             'quantity': 'Qty',
         }
 
+    # name = forms.CharField(required=True)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -66,12 +68,15 @@ class IngredientForm(forms.ModelForm):
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-
+        
         self.fields['quantity'].widget.attrs['min'] = 0.01
 
 
 IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient,
-                                                form=IngredientForm, extra=25)
+                                                form=IngredientForm,
+                                                extra=25,
+                                                min_num=1,
+                                                validate_min=True)
 
 
 class RecipeForm(forms.ModelForm):

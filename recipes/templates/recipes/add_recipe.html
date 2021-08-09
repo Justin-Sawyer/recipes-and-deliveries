@@ -124,6 +124,9 @@
     <script>
         // Change color of checkbox. Works in Chrome and Safari desktop
         $('input[type="checkbox"]').css('filter', 'hue-rotate(300deg)');
+        $('input[name="ingredients-0-quantity"]').prop('required', true);
+        $('input[name="ingredients-0-unit"]').prop('required', true);
+        $('input[name="ingredients-0-name"]').prop('required', true);
         let catHeight = $('#cat-height').height();
         let style = {
             'height': `${catHeight}`,
