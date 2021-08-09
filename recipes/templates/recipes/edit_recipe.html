@@ -173,49 +173,6 @@
         })
     </script>
     <script>
-        // Dynamic form credit: https://engineertodeveloper.com/dynamic-formsets-with-django/
-        /*const ingredientForm = document.getElementsByClassName("ingredient-form");
-        const mainForm = document.querySelector("#main_form");
-        const addIngredientFormBtn = document.querySelector("#add-ingredient-form");
-        const recipeDirections = document.querySelector('.more-ingredients-row');
-        const totalForms = document.querySelector("#id_ingredients-TOTAL_FORMS");
-
-        let formCount = ingredientForm.length + 1 ;
-        console.log(formCount)
-
-        function updateForms() {
-            let count = 0;
-            for (let form of ingredientForm) {
-                const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
-                form.innerHTML = form.innerHTML.replace(formRegex, `ingredients-${count++}-`)
-            }
-        }
-
-        addIngredientFormBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            const newIngredientForm = ingredientForm[0].cloneNode(true);
-            const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
-
-            formCount++;
-            console.log(formCount)
-
-            newIngredientForm.innerHTML = newIngredientForm.innerHTML.replace(formRegex, `ingredients-${formCount}-`);
-            mainForm.insertBefore(newIngredientForm, recipeDirections);
-            totalForms.setAttribute('value', `${formCount + 1}`);
-        });
-
-        mainForm.addEventListener("click", function (event) {
-            if (event.target.classList.contains("delete-image-form")) {
-                event.preventDefault();
-                event.target.parentElement.remove();
-                formCount--;
-                updateForms();
-                totalForms.setAttribute('value', `${formCount + 1}`);
-            }
-        });*/
-    </script>
-    <script>
         let addButton = $('#add-ingredient-form');
         let ingredients = $('.ingredients');
         let deleteButton = $('.delete-button')

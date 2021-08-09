@@ -152,7 +152,7 @@ def add_recipe(request):
         formset = IngredientFormSet
         new_category_form = NewCategoriesForm
         new_tag_form = NewTagsForm
-    
+
     template = 'recipes/add_recipe.html'
 
     context = {
@@ -190,7 +190,8 @@ def edit_recipe(request, recipe_id):
                     tagname_collection = Tag.objects.all()
                     existing_tagname = Tag.objects.filter(tagname=new_tagname)
                     if existing_tagname:
-                        existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                        existing_tagname_id = tagname_collection.get(
+                            id__in=existing_tagname)
                         recipe.tag.add(existing_tagname_id)
                     if not existing_tagname:
                         new_tags_form.is_valid()
@@ -203,10 +204,12 @@ def edit_recipe(request, recipe_id):
                     new_category_name = new_category_form.data['friendly_name']
                     category_collection = Category.objects.all()
                     existing_category_name = (
-                        Category.objects.filter(friendly_name=new_category_name))
+                        Category.objects.filter(
+                            friendly_name=new_category_name))
                     if existing_category_name:
                         existing_category_name_id = (
-                            category_collection.get(id__in=existing_category_name))
+                            category_collection.get(
+                                id__in=existing_category_name))
                         recipe.category.add(existing_category_name_id)
                     if not existing_category_name:
                         new_category_form.is_valid()

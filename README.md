@@ -795,6 +795,250 @@ With the above code working fully, it was amended to suit the edit_post() view a
 
 (As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue color is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
 
+## Formset and Inlines
+### Formset
+The Recipes models consist of 4 models: Tag, Category, Recipe and Ingredient. While Tag and Category are essentially the same as for the Blog, the developer has chosen not to relate these (between the Blog app and the Recipes app) for now. Depending on the evolution of the project, the developer may choose to relate them in further updates.
+
+The developer has chosen for the Recipe model to be related to the Ingredient model via a ForeignKey relationship. The developer has chosen to do this because recipes do not have a fixed number of ingredients. An omelette necessitates one ingredient (the egg), whereas spaghetti bolognese necessitates many more. 
+
+Rendering the Recipe model in admin shows the ingredients as inlines. The javascript allows for users to add a maximum of 25 ingredients to a particular recipe, while a minimum of one is also being set.
+
+Writing the add_recipe() view proved to be fairly straightfoward (even if the developer admits to reading a tutorial for this, and amending the code to suit his needs). The code for adding a recipe using the Recipe form and its associated inline formset is beneath:
+
+```
+if recipe_form.is_valid():
+	recipe = recipe_form.save()
+	formset = IngredientFormSet(request.POST, instance=recipe)
+	if formset.is_valid():
+		formset.save()
+```
+
+But the developer had issues when it came to editing recipes using this code. While editing the other attributes of the recipe was possible, nothing the developer tried would update the ingredients. In other words, if a recipe was editied, the ingredients would always remain as those added when the recipe was created.
+
+Eventually, after much searching, after having spoken to other developers, the developer found a way to log the error to the console. The editing was not retrieving the form.id from the forms, and thus could not update itself. 
+
+The developer found a way of inserting these form ids into the forms of the formset by adding 
+
+`{{ formset.id }}`
+
+to both the add_recipe template and the edit_recipe template, effectively creating an id for each form and retrieving it when editing.
+
+To his astonishment, this simple solution worked, and recipe ingredient updating functioned.
+
+While researching this project, the developer toyed with the idea of using dynamic formsets, but decided instead to set a maximum and minimum for the form.
+
+The reason for this became evident when editing a recipe. For the dynamic formset, as originally intended, the devloper had again followed an online tutorial and amended his code to suit his needs. The code is reproduced below, in order to document the problems the developer had, and how he solved the problem. The code does not feature in the finsihed project.
+
+```
+<script>
+    // Dynamic form credit: https://engineertodeveloper.com/dynamic-formsets-with-django/
+    const ingredientForm = document.getElementsByClassName("ingredient-form");
+    const mainForm = document.querySelector("#main_form");
+    const addIngredientFormBtn = document.querySelector("#add-ingredient-form");
+    const recipeDirections = document.querySelector('.more-ingredients-row');
+    const totalForms = document.querySelector("#id_ingredients-TOTAL_FORMS");
+
+    let formCount = ingredientForm.length + 1 ;
+    console.log(formCount)
+
+    function updateForms() {
+        let count = 0;
+        for (let form of ingredientForm) {
+            const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
+            form.innerHTML = form.innerHTML.replace(formRegex, `ingredients-${count++}-`)
+        }
+    }
+
+    addIngredientFormBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const newIngredientForm = ingredientForm[0].cloneNode(true);
+        const formRegex = RegExp(`ingredients-(\\d){1}-`, 'g');
+
+        formCount++;
+        console.log(formCount)
+
+        newIngredientForm.innerHTML = newIngredientForm.innerHTML.replace(formRegex, `ingredients-${formCount}-`);
+        mainForm.insertBefore(newIngredientForm, recipeDirections);
+        totalForms.setAttribute('value', `${formCount + 1}`);
+    });
+
+    mainForm.addEventListener("click", function (event) {
+        if (event.target.classList.contains("delete-image-form")) {
+            event.preventDefault();
+            event.target.parentElement.remove();
+            formCount--;
+            updateForms();
+            totalForms.setAttribute('value', `${formCount + 1}`);
+        }
+    });
+</script>
+
+```
+
+As can be seen from the above code, each time a user click the Add Ingredient button, an extra form row is created. Setting the `extra=`value to a certain number in the forms.py renders the number of original forms to be displayed. Thus, if `extra=`is set to one, one form will be displayed. Likewise, if set to 3, three extra forms will be displayed. This is of course a wonderful solution for *creating* recipes, but not so when editing them.
+
+Since a recipe is being saved before it can be edited, clicking the Add Ingredient button on the edit page would essntially clone the whole ingredients list and add the relevant extra rows. 
+
+Thus, if a saved recipe has 20 ingredients, the cloning would duplicate those ingredients and then add the relevant extra rows.
+
+The user would then have to manually delete each cloned ingredient.
+
+The developer thought about adding an extra hidden formset, so that clicking the Add Ingredient button would clone this empty form. While the idea works in principle, and while the developer was able to increment the ids of the clones (so that the first added new ingredient would have a correspondingly incremented id value), the first new form would always have a duplicate of index 0.
+
+To demonstrate:
+
+A recipe has 3 ingredients:
+
+Ingredient 1 (index 0)
+Ingredient 2 (index 1)
+Ingredient 3 (index 2)
+
+User clicks "Add Ingredient"
+New form (index 0)
+New form 1 (index 3)
+New form 2 (index 4)
+
+The developer was researching how to amend this when he noticed something else in the outputted html of dev tools.
+
+Since the hidden form was a duplicate of the original empty form, it would share the same id as the first form.
+
+This is of course bad practise, and the developer surmised that this issue would raise more problems than it would solve. The developer knew that if a user entered an ingredient into New Form (index 0), again nothing would be saved due to duplcation of the index. Solving this AND the issue of duplicated ids convinced the developer to find a different solution.
+
+It is for this reason that the developer chose to set `extra=`in the form and write some custom JavaScript to handle the form display.
+
+The JavaScript for the add_recipe template is beneath:
+
+```
+let addButton = $('#add-ingredient-form');
+let ingredients = $('.ingredients');
+let count = 0;
+ingredients.slice(5).toggle();
+addButton.on('click', function() {
+    event.preventDefault();
+
+    count++;
+    if (count == 1) {
+        ingredients.slice(5, 10).toggle();
+    }
+    if (count == 2) {
+        ingredients.slice(10, 15).toggle();
+    }
+    if (count == 3) {
+        ingredients.slice(15, 20).toggle();
+    }
+    if (count == 4) {
+        ingredients.slice(20, 25).toggle();
+        addButton.toggle();
+    }
+})
+```
+
+From the start we have 25 available forms, as `extra=25` is set in the form's py file.
+
+On page load, 5 of these are displayed. With each click of the "Add Ingredient" button, a further five are unhidden until arriving at a maximum of 25 forms. At this point, the "Add Ingredient" button is hidden and the user can add no more ingredients.
+
+For editing, a different script was written to handle displaying of already added ingredients and further ingredients.
+
+Firstly, the count of the exisiting ingredients is perfomed by adding 
+
+`<p class="ingredient-count" hidden>{{ ingredient_count }}</p>`
+
+to the HTML.
+
+```
+let addButton = $('#add-ingredient-form');
+let ingredients = $('.ingredients');
+let deleteButton = $('.delete-button')
+let ingredientCount = $('.ingredient-count').text()
+ingredientTotal = parseInt(ingredientCount)
+let ingredientCountPlusFive = ingredientTotal + 5;
+let ingredientCountPlusTen = ingredientTotal + 10;
+let ingredientCountPlusFifteen = ingredientTotal + 15;
+let ingredientCountPlusTwenty = ingredientTotal + 20;
+let ingredientCountPlusTwentyFive = ingredientTotal + 25;
+let count = 0;
+ingredients.slice(ingredientTotal).toggle();
+deleteButton.slice(ingredientTotal).toggle();
+addButton.on('click', function() {
+    event.preventDefault();
+
+    count++;
+    if (count == 1) {
+        ingredients.slice(ingredientTotal, ingredientCountPlusFive).toggle();
+        deleteButton.slice(ingredientTotal, ingredientCountPlusFive).toggle();
+        if (ingredientCountPlusFive >= 25) {
+            ingredients.slice(25).hide();
+            deleteButton.slice(25).hide();
+            addButton.toggle();
+        }
+    }
+    if (count == 2) {
+        ingredients.slice(ingredientCountPlusFive, ingredientCountPlusTen).toggle();
+        deleteButton.slice(ingredientCountPlusFive, ingredientCountPlusTen).toggle();
+        if (ingredientCountPlusTen >= 25) {
+            ingredients.slice(25).hide();
+            deleteButton.slice(25).hide();
+            addButton.toggle();
+        }
+    }
+    if (count == 3) {
+        ingredients.slice(ingredientCountPlusTen, ingredientCountPlusFifteen).toggle();
+        deleteButton.slice(ingredientCountPlusTen, ingredientCountPlusFifteen).toggle();
+        if (ingredientCountPlusFifteen >= 25) {
+            ingredients.slice(25).hide();
+            deleteButton.slice(25).hide();
+            addButton.toggle();
+        }
+    }
+    if (count == 4) {
+        ingredients.slice(ingredientCountPlusFifteen, ingredientCountPlusTwenty).toggle();
+        deleteButton.slice(ingredientCountPlusFifteen, ingredientCountPlusTwenty).toggle();
+        if (ingredientCountPlusTwenty >= 25) {
+            ingredients.slice(25).hide();
+            deleteButton.slice(25).hide();
+            addButton.toggle();
+        }
+    }
+    if (count == 5) {
+        ingredients.slice(ingredientCountPlusTwenty, ingredientCountPlusTwentyFive).toggle();
+        deleteButton.slice(ingredientCountPlusTwenty, ingredientCountPlusTwentyFive).toggle();
+        if (ingredientCountPlusTwentyFive >= 25) {
+            ingredients.slice(25).hide();
+            deleteButton.slice(25).hide();
+            addButton.toggle();
+        }
+    }    
+})
+```
+
+On rendering the page, all of the existing ingredients are displayed to the user. Then, with each click of the "Add Ingredient" button, 5 more forms are displayed. If the number of extra forms is greater than 25 upon each click of the button, the button is hidden, and the user can add no further ingredients.
+
+While both adding recipes and editing them function as they should, the developer freely admits that there is without doubt a better way to go about achieving this functionality. This is, however, his first Django project and he has found some of the functionality of Django (and further online resources such as StackOverflow) to be confusing to a novice.
+
+Thus, the developer is leaving the code as is, and will revisit and amend it when he has a better, fuller understanding of Django and all Django can offer.
+
+### Inlines
+Regarding the functionality of ensuring ingredients are listed for each recipe, the developer admits to also being confused. Unless he has misunderstood something, he believes that he has set ingredient quantities, units and names to be required. his is indeed what the HTML page renders. 
+
+Thus, the developer was surprised to find that he could indeed add a recipe without ingredients. The cause of this may originate from testing the above functionality: to get the above working the developer tried hundreds of different things. The developer may have missed "resetting" a line of code after trying and failing.
+
+Again, when the developer better understands Django, this will be revisited.
+
+For now, however, the devloper has added the following JavaScript in order to force a required state for the FIRST ingredient formset (since we do not want to force a user to have to add exactly 25 ingredients for each recipe):
+
+```
+$('input[name="ingredients-0-quantity"]').prop('required', true);
+$('input[name="ingredients-0-unit"]').prop('required', true);
+$('input[name="ingredients-0-name"]').prop('required', true);
+```
+
+## Known Bugs
+If a user creates multiple versions of the same item (whether that be a recipe, a blog post or a Recipe Box) and assigns each with different categories or tags, upon clicking categories or tags associated with the duplicated entries, the template rendering can become confused. 
+
+The develpoer realises that one solution for this is to add `unique=True` to the name or title of products, articles or recipes. However, while the site is still small and while the developer want to encourage users to participate in the community side of the site, the developer feels that adding `unique=True`may discourage users from participating. There are of course many different ways to make a spaghetti bolognese and stopping a user from creating such a recipe because the name is taken will discourage the user from further participation.
+
+Thus, the developer is choosing to leave this for now.
 
 ## Back End
 ### RECIPE BOXES Database Models

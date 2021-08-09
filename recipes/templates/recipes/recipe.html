@@ -37,7 +37,7 @@
                 {% if recipe.category %}
                     <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
                         {% for cat in recipe.category.all %}
-                        <a class="text-muted text-green font-weight-bold" href="">
+                        <a class="text-muted text-green font-weight-bold" href="{% url 'all_recipes' %}?category={{ cat.name }}">
                             {{ cat.friendly_name|title }}
                         </a><span class="category-link-divider">|</span>
                         {% empty %}
@@ -50,7 +50,7 @@
                 {% if recipe.tag %}
                     <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
                         {% for t in recipe.tag.all %}
-                        <a class="text-muted text-amber font-weight-bold" href="">
+                        <a class="text-muted text-amber font-weight-bold" href="{% url 'all_recipes' %}?tag={{ t.tagname }}">
                             {{ t.tagname|title }}
                         </a><span class="tag-link-divider">|</span>
                         {% empty %}
@@ -66,13 +66,15 @@
                     <!-- Post Author -->
                     {% if recipe.author.is_superuser %}
                         <small class="text-muted author">Posted by: 
-                            <a class="text-muted text-green font-weight-bold" href="">
+                            <a class="text-muted text-green font-weight-bold" 
+                                href="{% url 'all_recipes' %}?author={{ recipe.author }}">
                             <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
                             </a> on {{ recipe.date_posted|date:"jS F, Y" }}
                         </small>
                     {% else %}
                         <small class="text-muted author">Posted by: 
-                            <a class="text-muted text-green font-weight-bold" href="">
+                            <a class="text-muted text-green font-weight-bold" 
+                                href="{% url 'all_recipes' %}?author={{ recipe.author }}">
                                 {{ recipe.author }}
                             </a> on {{ recipe.date_posted|date:"jS F, Y" }}
                         </small>
