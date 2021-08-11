@@ -10,6 +10,8 @@ from .forms import BlogPostForm, NewTagsForm, NewCategoriesForm
 from profiles.models import UserProfile
 from django.contrib.auth.models import User
 
+from random import shuffle
+
 
 def blog_home(request):
     """ A view to return the blog home page """
@@ -80,9 +82,12 @@ def all_blog_articles(request):
 
 
 def article(request, post_id):
-    """ A view to show an individual blog article """
+    """ A view to show an individual blog article and random others in side bar """
     post = get_object_or_404(Post, pk=post_id)
-    other_posts = Post.objects.exclude(id=post.id)
+    # other_posts = Post.objects.exclude(id=post.id).order_by('-pk')
+    # other_posts = Post.objects.exclude(id=post.id)
+    other_posts = list(Post.objects.exclude(id=post.id))
+    shuffle(other_posts)
 
     context = {
         'post': post,

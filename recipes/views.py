@@ -11,6 +11,7 @@ from .forms import (
     NewTagsForm)
 from django.contrib.auth.models import User
 
+from random import shuffle
 
 def all_recipes(request):
     """ A view to return all recipes """
@@ -76,9 +77,11 @@ def all_recipes(request):
 
 
 def recipe(request, recipe_id):
-    """ A view to show an individual recipe """
+    """ A view to show an individual recipe and random others in side bar """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    other_recipes = Recipe.objects.exclude(id=recipe.id)
+    # other_recipes = Recipe.objects.exclude(id=recipe.id).order_by('-pk')
+    other_recipes = list(Recipe.objects.exclude(id=recipe.id))
+    shuffle(other_recipes)
 
     context = {
         'recipe': recipe,

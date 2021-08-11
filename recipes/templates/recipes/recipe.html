@@ -95,22 +95,44 @@
                 
                 <p class="mb-3">{{ recipe.intro }}</p>
 
-                <div class="mb-3">
-                    <h3 class=="subtitle">Ingredients</h3>
-                    {% if request.user.is_authenticated %}
+                {% if request.user.is_authenticated %}
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <p class="mb-0">Servings:</p>
+                            <p>{{ recipe.servings }}</p>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <p class="mb-0">Prep time:</p>
+                            <p>{{ recipe.prep_time }}</p>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <p class="mb-0">Cook time:</p>
+                                {% if recipe.cook_time %}
+                                    <p>{{ recipe.cook_time }}</p>
+                                {% else %}
+                                    <p>None req'd</p>
+                                {% endif %}
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <p class="mb-0">Total time:</p>
+                            <p>{{ recipe.total_time }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <h3 class=="subtitle">Ingredients</h3>
                         {% for i in recipe.ingredients.all %}
                             <p class="ingredient mb-0"><span class="qty">{{ i.get_quantity }}</span> {{ i.unit }} {{i.preparation }} {{ i.name }}</p>
                         {% endfor %}
-                    {% else %}
-                        <p>We'd love to show you this but you need to <a class="text-green" href="{% url 'account_signup' %}">register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
-                    {% endif %}
-                </div>
+                    </div>
 
-                <div class="mb-3">
-                    <h3 class=="subtitle">Directions</h3>
-                    {{ recipe.directions|linebreaks }}
-                </div>
-
+                    <div class="mb-3">
+                        <h3 class=="subtitle">Directions</h3>
+                        {{ recipe.directions|linebreaks }}
+                    </div>
+                {% else %}
+                    <p>We'd love to show you the whole recipe but you need to <a class="text-green" href="{% url 'account_signup' %}">register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                {% endif %}
                 <!-- Image credit -->
                 {% if recipe.image_credit %}
                     <p class="text-muted image-credit"><small><i class="far fa-image mr-1"></i> Image: {{ recipe.image_credit }}</small></p>
