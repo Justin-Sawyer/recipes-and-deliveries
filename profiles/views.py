@@ -17,7 +17,8 @@ def profile(request):
 
     profile = get_object_or_404(UserProfile, user=request.user)
     user = get_object_or_404(User, id=request.user.id)
-    # posts = Post.objects.all()
+    posts = Post.objects.all()
+    recipes = Recipe.objects.all()
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
@@ -39,7 +40,8 @@ def profile(request):
         'form': form,
         'orders': orders,
         'on_profile_page': True,
-        # 'posts': posts,
+        'posts': posts,
+        'recipes': recipes,
         'user_posts': user_posts,
         'user_recipes': user_recipes,
     }

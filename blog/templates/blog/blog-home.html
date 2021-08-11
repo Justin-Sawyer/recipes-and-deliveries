@@ -42,7 +42,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">The Recipes</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the recipes*</p>
-                                    <a href="#" class="btn btn-green">Go to the Recipes</a>
+                                    <a href="{% url 'all_recipes' %}" class="btn btn-green">Go to the Recipes</a>
                                     <br>
                                     <br>
                                     <p class="card-text small text-right">
@@ -67,7 +67,7 @@
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Add your own recipes</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Upvote and comment other community recipes</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Earn credits when your recipe is ordered as a recipe box*</p>
-                                    <a href="#" class="btn btn-green">Go to the Recipes</a>
+                                    <a href="{% url 'all_recipes' %}" class="btn btn-green">Go to the Recipes</a>
                                     <br>
                                     <br>
                                     <p class="card-text small text-right">
@@ -84,7 +84,7 @@
                 <div class="my-5">
                     <h3>
                         <a href="{% url 'blog-articles' %}" class="shop-now-button btn mb-3"><strong>Blog Articles</strong></a>
-                        <a href="" class="shop-now-button btn mb-3 float-right"><strong>Recipes</strong></a>
+                        <a href="{% url 'all_recipes' %}" class="shop-now-button btn mb-3 float-right"><strong>Recipes</strong></a>
                     </h3>
                 </div>
             </div>

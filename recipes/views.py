@@ -78,9 +78,11 @@ def all_recipes(request):
 def recipe(request, recipe_id):
     """ A view to show an individual recipe """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
+    other_recipes = Recipe.objects.exclude(id=recipe.id)
 
     context = {
         'recipe': recipe,
+        'other_recipes': other_recipes,
     }
 
     return render(request, 'recipes/recipe.html', context)

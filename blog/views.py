@@ -82,9 +82,11 @@ def all_blog_articles(request):
 def article(request, post_id):
     """ A view to show an individual blog article """
     post = get_object_or_404(Post, pk=post_id)
+    other_posts = Post.objects.exclude(id=post.id)
 
     context = {
-        'post': post
+        'post': post,
+        'other_posts': other_posts,
     }
 
     return render(request, 'blog/article.html', context)
