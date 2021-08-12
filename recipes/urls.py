@@ -10,4 +10,5 @@ urlpatterns = [
     path('delete/<int:recipe_id>/',
          views.delete_recipe,
          name='delete_recipe'),
+    path('vote/<int:pk>/', views.vote, name='vote'),
 ]

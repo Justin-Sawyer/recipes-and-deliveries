@@ -25,10 +25,11 @@ class RecipeAdmin(admin.ModelAdmin):
 
     list_display = (
         'title',
-        'intro',
+        'author',
         'prep_time',
         'cook_time',
         'servings',
+        'vote_count'
     )
 
     ordering = ('title',)

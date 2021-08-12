@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.http import HttpResponseRedirect
 
 from .models import Recipe, Ingredient, Category, Tag
 from .forms import (
@@ -83,12 +84,21 @@ def recipe(request, recipe_id):
     other_recipes = list(Recipe.objects.exclude(id=recipe.id))
     shuffle(other_recipes)
 
+    votes = get_object_or_404(Recipe, id=recipe.id)
+    total_votes = votes.total_votes()
     context = {
         'recipe': recipe,
         'other_recipes': other_recipes,
+        'total_votes': total_votes,
     }
 
     return render(request, 'recipes/recipe.html', context)
+
+
+def vote(request, pk):
+    recipe = get_object_or_404(Recipe, id=request.POST.get('recipe_id'))
+    recipe.votes.add(request.user)
+    return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))
 
 
 @login_required

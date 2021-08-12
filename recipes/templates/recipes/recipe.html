@@ -142,6 +142,19 @@
                 {% if recipe.date_edited %}
                     <p class="text-muted post-edited"><small> Edited: {{ recipe.date_edited|date:"jS F, Y @ g:i a" }}</small></p>
                 {% endif %}
+
+                <p>Think this recipe should be a Recipe Box?</p>
+                <form action="{% url 'vote' recipe.pk %}" method="POST">
+                    {% csrf_token %}
+                        <button type="submit" name="recipe_id" value="{{ recipe.id }}" class="btn btn-green mb-3">
+                            Vote for this recipe
+                        </button>
+                </form>
+                {% if total_votes > 0 %}
+                    <p>Total votes: {{ total_votes }}</p>
+                {% else %}
+                    <p>Be the first to vote for this recipe!</p>
+                {% endif %}
             </div>
 
             <!-- Similar articles -->

@@ -52,6 +52,11 @@ class Recipe(models.Model):
                                        blank=True,
                                        default=timezone.now)
     date_edited = models.DateTimeField(auto_now=True)
+    vote_count = models.IntegerField(default=0)
+    votes = models.ManyToManyField(User, related_name='recipe_post_votes')
+
+    def total_votes(self):
+        return self.votes.count()
 
     def __str__(self):
         return self.title
