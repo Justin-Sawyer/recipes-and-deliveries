@@ -89,8 +89,13 @@
                     {% endif %}
                 </div>
 
-                <!-- Post content -->
-                {{ post.content |linebreaks}}
+                <div class="row">
+                    <div class="col-12 post-content">
+                        <!-- Post content -->
+                        {{ post.content|safe}}
+                    </div>
+                </div>
+                
 
                 <!-- Image credit -->
                 {% if post.image_credit %}
@@ -209,4 +214,12 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script>
+        $('.post-content').find('img').css({ 'height' : '', 'width' : '100%' });
+        $('.post-content').find('a').addClass('text-green').attr("target","_blank");
+    </script>
 {% endblock %}

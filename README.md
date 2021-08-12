@@ -1682,6 +1682,7 @@ Either click "Open with GitHub Desktop" and follow the prompts in the GitHub Des
 	pip3 install django-crispy-forms
 	pip3 install django-countries
 	pip3 install stripe
+    pip3 install django-ckeditor
 	
 	# Deployment
 	pip3 install boto3
