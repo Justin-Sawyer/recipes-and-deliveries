@@ -49,9 +49,9 @@
                 <!-- Tags -->
                 {% if post.tag %}
                     <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
-                        {% for t in post.tag.all %}
-                        <a class="text-muted text-amber font-weight-bold" href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
-                            {{ t.tagname|title }}
+                        {% for tag in post.tag.all %}
+                        <a class="text-muted text-amber font-weight-bold" href="{% url 'blog-articles' %}?tag={{ tag.tagname }}">
+                            {{ tag.tagname|title }}
                         </a><span class="tag-link-divider">|</span>
                         {% empty %}
                             <small class="text-muted">No tags</small>
@@ -107,38 +107,38 @@
             <div class="col-12 col-md-4">
                 <h3 class="font-weight-bold similar-articles">More Articles</h3>
                 <div class="row mb-3">
-                    {% for post in other_posts|slice:"3" %}
+                    {% for other_post in other_posts|slice:"3" %}
                     <div class="col-12">
                         <div class="card h-100 border-0">
 
                             <!-- Image -->
-                            {% if post.image %}
-                                <a href="{% url 'article' post.id %}">
-                                    <img class="card-img-top img-fluid card-image" src="{{ post.image.url }}"
-                                        alt="{{ post.title }}">
+                            {% if other_post.image %}
+                                <a href="{% url 'article' other_post.id %}">
+                                    <img class="card-img-top img-fluid card-image" src="{{ other_post.image.url }}"
+                                        alt="{{ other_post.title }}">
                                 </a>
                             {% else %}
-                                <a href="{% url 'article' post.id %}">
+                                <a href="{% url 'article' other_post.id %}">
                                     <img class="card-img-top img-fluid card-image"
-                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ post.title }}">
+                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ other_post.title }}">
                                 </a>
                             {% endif %}
 
                             <!-- Post Title -->
                             <div class="card-body pb-0">
-                                <h3 class="mb-0 font-weight-bold title-name">{{ post.title|title }}</h3>
+                                <h3 class="mb-0 font-weight-bold title-name">{{ other_post.title|title }}</h3>
                             </div>
                             <div class="card-footer bg-white pt-0 border-0 text-left">
                                 <div class="row">
                                     <div class="col">
 
                                         <!-- Tagline -->
-                                        <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
+                                        <p class="mb-0 text-left text-black tagline">{{ other_post.tagline }}</p>
 
                                         <!-- Categories -->
-                                        {% if post.category %}
+                                        {% if other_post.category %}
                                             <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
-                                                {% for cat in post.category.all %}
+                                                {% for cat in other_post.category.all %}
                                                 <a class="text-muted text-green font-weight-bold"
                                                     href="{% url 'blog-articles' %}?category={{ cat.name }}">
                                                     {{ cat.friendly_name|title }}
@@ -150,9 +150,9 @@
                                         {% endif %}
 
                                         <!-- Tags -->
-                                        {% if post.tag %}
+                                        {% if other_post.tag %}
                                             <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
-                                                {% for t in post.tag.all %}
+                                                {% for t in other_post.tag.all %}
                                                 <a class="text-muted text-amber font-weight-bold"
                                                     href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
                                                     {{ t.tagname|title }}
@@ -164,63 +164,46 @@
                                         {% endif %}
 
                                         <!-- Post author -->
-                                        {% if post.author.is_superuser %}
+                                        {% if other_post.author.is_superuser %}
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green"
-                                                    href="{% url 'blog-articles' %}?author={{ post.author }}">
+                                                    href="{% url 'blog-articles' %}?author={{ other_post.author }}">
                                                     <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
                                             </a>
                                         {% else %}
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green font-weight-bold"
-                                                    href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                                    {{ post.author }}
+                                                    href="{% url 'blog-articles' %}?author={{ other_post.author }}">
+                                                    {{ other_post.author }}
                                                 </a>
                                             </small>
                                         {% endif %}
 
                                         <!-- Editing and deleting -->
-                                        {% if request.user.is_superuser or request.user.id is post.author.id %}
+                                        {% if request.user.is_superuser or request.user.id is other_post.author.id %}
                                             <div class="edit-delete">
                                                 <small>
                                                     <!-- Superuser sees instantly whether superuser created post or whether post was user created
                                                     Superuser created posts = author edit color,
                                                     user created posts = primary color (matching color of product management) -->
-                                                    <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' post.id %}">Edit</a> |
-                                                    <a class="text-danger" href="{% url 'delete_post' post.id %}">Delete</a>
+                                                    <a {% if request.user.id is other_post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' other_post.id %}">Edit</a> |
+                                                    <a class="text-danger" href="{% url 'delete_post' other_post.id %}">Delete</a>
                                                 </small>
                                             </div>
                                         {% endif %}
                                         
                                         <!-- Date posted -->
                                         <div class="post-date">
-                                            <small>{{ post.date_posted|date:"jS F, Y" }}</small>
+                                            <small>{{ other_post.date_posted|date:"jS F, Y" }}</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% if forloop.counter|divisibleby:1 %}
-                    <div class="col-12 d-sm-none mb-5">
+                    <div class="col-12 mb-3">
                         <hr>
                     </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:2 %}
-                    <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:3 %}
-                    <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:4 %}
-                    <div class="col-12 d-none d-xl-block mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
                     {% endfor %}
                 </div>
             </div>

@@ -8,6 +8,8 @@ from django.db.models.functions import Lower
 from .models import Product, Category
 from .forms import ProductForm
 
+from random import shuffle
+
 
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
@@ -76,9 +78,12 @@ def product_detail(request, product_id):
     """ A view to show all individual product details """
 
     product = get_object_or_404(Product, pk=product_id)
+    other_products = list(Product.objects.exclude(id=product.id))
+    shuffle(other_products)
 
     context = {
         'product': product,
+        'other_products': other_products,
     }
 
     return render(request, 'products/product_detail.html', context)
