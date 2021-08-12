@@ -86,18 +86,31 @@ def recipe(request, recipe_id):
 
     votes = get_object_or_404(Recipe, id=recipe.id)
     total_votes = votes.total_votes()
+
+    liked = False
+    if votes.votes.filter(id=request.user.id).exists():
+        liked = True
+
     context = {
         'recipe': recipe,
         'other_recipes': other_recipes,
         'total_votes': total_votes,
+        'liked': liked,
     }
 
     return render(request, 'recipes/recipe.html', context)
 
 
+@login_required
 def vote(request, pk):
     recipe = get_object_or_404(Recipe, id=request.POST.get('recipe_id'))
-    recipe.votes.add(request.user)
+    voted = False
+    if recipe.votes.filter(id=request.user.id).exists():
+        recipe.votes.remove(request.user)
+        voted = False
+    else:
+        recipe.votes.add(request.user)
+        voted = True
     return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))
 
 

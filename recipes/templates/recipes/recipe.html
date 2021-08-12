@@ -144,12 +144,23 @@
                 {% endif %}
 
                 <p>Think this recipe should be a Recipe Box?</p>
-                <form action="{% url 'vote' recipe.pk %}" method="POST">
-                    {% csrf_token %}
+                {% if request.user.is_authenticated %}
+                    <form action="{% url 'vote' recipe.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if liked %}
+                            <button type="submit" name="recipe_id" value="{{ recipe.id }}" class="btn btn-amber mb-3">
+                                Change your vote
+                            </button>
+                        {% else %}
                         <button type="submit" name="recipe_id" value="{{ recipe.id }}" class="btn btn-green mb-3">
                             Vote for this recipe
                         </button>
-                </form>
+                        {% endif %}
+                    </form>
+                    
+                {% else %}
+                    <p><a href="{% url 'account_signup' %}" class="text-green mb-3">Register</a> or <a href="{% url 'account_login' %}" class="text-green mb-3">log in</a> to vote for it</p>
+                {% endif %}
                 {% if total_votes > 0 %}
                     <p>Total votes: {{ total_votes }}</p>
                 {% else %}
