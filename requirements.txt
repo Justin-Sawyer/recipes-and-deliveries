@@ -4,8 +4,10 @@ botocore==1.21.6
 dj-database-url==0.5.0
 Django==3.2.5
 django-allauth==0.41.0
+django-ckeditor==6.1.0
 django-countries==7.2.1
 django-crispy-forms==1.12.0
+django-js-asset==1.2.2
 django-storages==1.11.1
 django-taggit==1.5.1
 gunicorn==20.1.0
