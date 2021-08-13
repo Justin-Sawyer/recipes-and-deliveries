@@ -137,16 +137,8 @@
                 {% else %}
                     <p>We'd love to show you the whole recipe but you need to <a class="text-green" href="{% url 'account_signup' %}">register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
                 {% endif %}
-                <!-- Image credit -->
-                {% if recipe.image_credit %}
-                    <p class="text-muted image-credit"><small><i class="far fa-image mr-1"></i> Image: {{ recipe.image_credit }}</small></p>
-                {% endif %}
-
-                <!-- Last edited -->
-                {% if recipe.date_edited %}
-                    <p class="text-muted post-edited"><small> Edited: {{ recipe.date_edited|date:"jS F, Y @ g:i a" }}</small></p>
-                {% endif %}
-
+                
+                <!-- Vote for recipe-->
                 <p>Think this recipe should be a Recipe Box?</p>
                 {% if request.user.is_authenticated %}
                     <form action="{% url 'vote' recipe.pk %}" method="POST">
@@ -160,8 +152,7 @@
                             Vote for this recipe
                         </button>
                         {% endif %}
-                    </form>
-                    
+                    </form>   
                 {% else %}
                     <p><a href="{% url 'account_signup' %}" class="text-green mb-3">Register</a> or <a href="{% url 'account_login' %}" class="text-green mb-3">log in</a> to vote for it</p>
                 {% endif %}
@@ -169,6 +160,16 @@
                     <p>Total votes: {{ total_votes }}</p>
                 {% else %}
                     <p>Be the first to vote for this recipe!</p>
+                {% endif %}
+                
+                <!-- Image credit -->
+                {% if recipe.image_credit %}
+                    <p class="text-muted image-credit"><small>Image: {{ recipe.image_credit }}</small></p>
+                {% endif %}
+
+                <!-- Last edited -->
+                {% if recipe.date_edited %}
+                    <p class="text-muted post-edited"><small>Edited: {{ recipe.date_edited|date:"jS F, Y @ g:i a" }}</small></p>
                 {% endif %}
             </div>
 

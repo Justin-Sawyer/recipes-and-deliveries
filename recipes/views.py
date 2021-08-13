@@ -108,9 +108,11 @@ def vote(request, pk):
     if recipe.votes.filter(id=request.user.id).exists():
         recipe.votes.remove(request.user)
         voted = False
+        messages.success(request, 'Your vote has been removed!')
     else:
         recipe.votes.add(request.user)
         voted = True
+        messages.success(request, 'Your vote has been registered!')
     return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))
 
 

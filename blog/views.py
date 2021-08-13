@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib import messages
-from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from django.http import HttpResponseRedirect
 
 from .models import Post, Category, Tag
 from .forms import BlogPostForm, NewTagsForm, NewCategoriesForm, CommentForm
-from profiles.models import UserProfile
 from django.contrib.auth.models import User
 
 from random import shuffle
@@ -83,13 +81,14 @@ def all_blog_articles(request):
 
 
 def article(request, post_id):
-    """ A view to show an individual blog article and random others in side bar """
+    """ A view to show an individual blog article, allow commenting
+    and random other articles in side bar """
     comment_form = CommentForm
     post = get_object_or_404(Post, pk=post_id)
-    name = get_object_or_404(User, id=request.user.id)
-    
+
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
+        name = get_object_or_404(User, id=request.user.id)
         comment_form_temp = comment_form.save(commit=False)
         comment_form_temp.post = post
         comment_form_temp.name = name
@@ -194,9 +193,6 @@ def add_post(request):
 @login_required
 def edit_post(request, post_id):
     """ Edit a blog post """
-
-    # author = get_object_or_404(User, id=request.user.id)
-    # user = request.user
     post = get_object_or_404(Post, pk=post_id)
     if request.user == post.author or request.user.is_superuser:
         if request.method == 'POST':
