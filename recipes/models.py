@@ -37,7 +37,10 @@ class Tag(models.Model):
 
 class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               related_name='recipe_posts', default="", blank=True, null=True)
+                               related_name='recipe_posts',
+                               default="",
+                               blank=True,
+                               null=True)
     title = models.CharField(max_length=150)
     intro = models.CharField(max_length=254)
     prep_time = models.CharField(max_length=20)
@@ -56,7 +59,9 @@ class Recipe(models.Model):
                                        default=timezone.now)
     date_edited = models.DateTimeField(auto_now=True)
     vote_count = models.IntegerField(default=0)
-    votes = models.ManyToManyField(User, related_name='recipe_post_votes')
+    votes = models.ManyToManyField(User,
+                                   related_name='recipe_post_votes',
+                                   blank=True)
 
     def total_votes(self):
         return self.votes.count()

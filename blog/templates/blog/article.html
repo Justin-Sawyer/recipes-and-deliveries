@@ -89,17 +89,29 @@
                     {% endif %}
                 </div>
 
+                <!-- Post content -->
                 <div class="row">
-                    <div class="col-12 post-content">
-                        <!-- Post content -->
+                    <div class="col-12 post-content"> 
                         {{ post.content|safe}}
                     </div>
                 </div>
                 
-
+                <!-- Comments -->
+                <h3 class="subtitle">Comments:</h3>
+                {% if post.comments.all %}
+                    {% for comment in post.comments.all %}
+                        <p class="font-weight-bold small mb-0">{{ comment.name }} - {{ comment.date_added }}</p>
+                        {{ comment.body|linebreaks }}
+                        <hr>
+                    {% endfor%}
+                    <button class="btn btn-green mb-2">Add a comment</button>
+                {% else %}
+                    <button class="btn btn-green mb-2">Be the first to comment</button>
+                {% endif %}
+                
                 <!-- Image credit -->
                 {% if post.image_credit %}
-                    <p class="text-muted image-credit"><small><i class="far fa-image mr-1"></i> Image: {{ post.image_credit }}</small></p>
+                    <p class="text-muted image-credit mt-3"><small>Image: {{ post.image_credit }}</small></p>
                 {% endif %}
 
                 <!-- Last edited -->

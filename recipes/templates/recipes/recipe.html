@@ -120,14 +120,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <h3 class=="subtitle">Ingredients</h3>
+                        <h3 class="subtitle">Ingredients</h3>
                         {% for i in recipe.ingredients.all %}
                             <p class="ingredient mb-0"><span class="qty">{{ i.get_quantity }}</span> {{ i.unit }} {{i.preparation }} {{ i.name }}</p>
                         {% endfor %}
                     </div>
 
                     <div class="mb-3">
-                        <h3 class=="subtitle">Directions</h3>
+                        <h3 class="subtitle">Directions</h3>
                         <div class="row">
                             <div class="col-12 recipe-directions">
                                 {{ recipe.directions|safe }}

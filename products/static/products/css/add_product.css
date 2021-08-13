@@ -1,7 +1,3 @@
 select.form-control[multiple], select.form-control[size] {
     height: 254px;
 }
-
-.subtitle {
-    font-size: 1.25rem;
-}
