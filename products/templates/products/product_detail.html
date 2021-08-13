@@ -41,18 +41,23 @@
                     </p>
                 {% endif %}
                 <div class="mb-3">
-                {% if product.rating %}
-                    <small class="text-muted rating" id="rating">{{ product.rating }} / 5</small>
-                {% else %}
-                    <small class="text-muted mb-3">No Rating</small>
-                {% endif %}
-                {% if request.user.is_superuser %}
-                    <small class="ml-3">
-                        <a class="text-primary" href="{% url 'edit_product' product.id %}">Edit</a> |
-                        <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
-                    </small>
-                {% endif %}</div>
-                <p>{{ product.description|linebreaks }}</p>
+                    {% if product.rating %}
+                        <small class="text-muted rating" id="rating">{{ product.rating }} / 5</small>
+                    {% else %}
+                        <small class="text-muted mb-3">No Rating</small>
+                    {% endif %}
+                    {% if request.user.is_superuser %}
+                        <small class="ml-3">
+                            <a class="text-primary" href="{% url 'edit_product' product.id %}">Edit</a> |
+                            <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-12 product-description mb-3">
+                        {{ product.description|safe }}
+                    </div>
+                </div>
                 <h3>What's in the box?</h3>
                 <ul class="list-group">
                     <li class="list-group-item border-0 p-0"><i class="far fa-check-square text-green"></i> All the ingrediets to make this recipe*</li>
@@ -200,4 +205,8 @@
     {{ block.super }}
     {% include 'products/includes/quantity_input_script.html' %}
     {% include 'products/includes/number_of_stars_according_to_rating.html' %}
+    <script>
+        $('.product-description').find('img').css({ 'height' : '', 'width' : '100%' });
+        $('.product-description').find('a').addClass('text-green').attr("target","_blank");
+    </script>
 {% endblock %}

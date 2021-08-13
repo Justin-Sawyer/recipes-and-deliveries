@@ -128,7 +128,11 @@
 
                     <div class="mb-3">
                         <h3 class=="subtitle">Directions</h3>
-                        {{ recipe.directions|linebreaks }}
+                        <div class="row">
+                            <div class="col-12 recipe-directions">
+                                {{ recipe.directions|safe }}
+                            </div>
+                        </div>
                     </div>
                 {% else %}
                     <p>We'd love to show you the whole recipe but you need to <a class="text-green" href="{% url 'account_signup' %}">register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
@@ -282,5 +286,9 @@
         $('.ingredient').each(function() {
             $( this ).text().replace( '0', 'x' );
         });
+    </script>
+    <script>
+        $('.recipe-directions').find('img').css({ 'height' : '', 'width' : '100%' });
+        $('.recipe-directions').find('a').addClass('text-green').attr("target","_blank");
     </script>
 {% endblock %}

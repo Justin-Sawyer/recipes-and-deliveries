@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils import timezone
 
+from ckeditor.fields import RichTextField
+
 
 class Category(models.Model):
 
@@ -44,7 +46,8 @@ class Recipe(models.Model):
     servings = models.IntegerField()
     category = models.ManyToManyField('Category', blank=True)
     tag = models.ManyToManyField('Tag', blank=True)
-    directions = models.TextField(default="", blank=False)
+    # directions = models.TextField(default="", blank=False)
+    directions = RichTextField(blank=True, null=True)
     image = models.ImageField(null=True, blank=True)
     image_credit = models.CharField(max_length=254, default="", blank=True)
     date = models.DateTimeField(auto_now_add=True)

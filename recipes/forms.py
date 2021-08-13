@@ -108,7 +108,7 @@ class RecipeForm(forms.ModelForm):
 
     class Meta:
         model = Recipe
-        exclude = ('author', 'date', 'date_posted', 'date_edited')
+        exclude = ('author', 'date', 'date_posted', 'date_edited', 'vote_count', 'votes')
 
         labels = {
             'intro': 'Brief Description',

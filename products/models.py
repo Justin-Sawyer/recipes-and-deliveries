@@ -1,5 +1,7 @@
 from django.db import models
 
+from ckeditor.fields import RichTextField
+
 
 class Category(models.Model):
 
@@ -21,7 +23,8 @@ class Product(models.Model):
     category = models.ManyToManyField('Category')
     sku = models.CharField(max_length=254, null=False, blank=False)
     name = models.CharField(max_length=254)
-    description = models.TextField()
+    # description = models.TextField()
+    description = RichTextField(blank=True, null=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     rating = models.DecimalField(max_digits=6, decimal_places=2, null=True,
                                  blank=True)

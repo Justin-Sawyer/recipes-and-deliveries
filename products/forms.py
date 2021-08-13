@@ -40,5 +40,3 @@ class ProductForm(forms.ModelForm):
                 self.fields[field].widget.attrs['placeholder'] = placeholder
 
         self.fields['category'].choices = friendly_name
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-primary'
