@@ -1,7 +1,7 @@
 from django import forms
 from .widgets import CustomClearableFileInput
 # from django.contrib.auth.models import User
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Comment
 
 
 class NewCategoriesForm(forms.ModelForm):
@@ -103,3 +103,14 @@ class BlogPostForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
 
         self.fields['category'].choices = friendly_name
+
+class CommentForm(forms.ModelForm):
+
+    class Meta():
+        labels = {
+            # 'name': 'Name*',
+            'body': 'Add your comment',
+        }
+
+        model = Comment
+        fields = ('body', )

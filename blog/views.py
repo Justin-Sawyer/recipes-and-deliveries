@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.http import HttpResponseRedirect
 
 from .models import Post, Category, Tag
-from .forms import BlogPostForm, NewTagsForm, NewCategoriesForm
+from .forms import BlogPostForm, NewTagsForm, NewCategoriesForm, CommentForm
 from profiles.models import UserProfile
 from django.contrib.auth.models import User
 
@@ -83,15 +84,29 @@ def all_blog_articles(request):
 
 def article(request, post_id):
     """ A view to show an individual blog article and random others in side bar """
+    comment_form = CommentForm
     post = get_object_or_404(Post, pk=post_id)
-    # other_posts = Post.objects.exclude(id=post.id).order_by('-pk')
-    # other_posts = Post.objects.exclude(id=post.id)
+    name = get_object_or_404(User, id=request.user.id)
+    
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        comment_form_temp = comment_form.save(commit=False)
+        comment_form_temp.post = post
+        comment_form_temp.name = name
+        if comment_form.is_valid():
+            comment_form.post = post
+            comment_form.name = name
+            comment_form.save()
+            messages.success(request, 'Successfully added comment!')
+            return HttpResponseRedirect(reverse('article', args=[str(post_id)]))
+
     other_posts = list(Post.objects.exclude(id=post.id))
     shuffle(other_posts)
 
     context = {
         'post': post,
         'other_posts': other_posts,
+        'comment_form': comment_form,
     }
 
     return render(request, 'blog/article.html', context)

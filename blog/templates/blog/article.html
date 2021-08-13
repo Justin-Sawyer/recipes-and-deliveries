@@ -98,16 +98,35 @@
                 
                 <!-- Comments -->
                 <h3 class="subtitle">Comments:</h3>
-                {% if post.comments.all %}
-                    {% for comment in post.comments.all %}
-                        <p class="font-weight-bold small mb-0">{{ comment.name }} - {{ comment.date_added }}</p>
-                        {{ comment.body|linebreaks }}
-                        <hr>
-                    {% endfor%}
-                    <button class="btn btn-green mb-2">Add a comment</button>
-                {% else %}
-                    <button class="btn btn-green mb-2">Be the first to comment</button>
-                {% endif %}
+                    {% if post.comments.all %}
+                        {% for comment in post.comments.all %}
+                            <p class="font-weight-bold small mb-0">{{ comment.name }} - {{ comment.date_added }}</p>
+                            {{ comment.body|linebreaks }}
+                            <hr>
+                        {% endfor%}
+                        {% if request.user.is_authenticated %}
+                            <button class="comment-button btn btn-green mb-2">Add a comment</button>
+                        {% else %}
+                            <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                        {% endif %}
+                    {% else %}
+                        {% if request.user.is_authenticated %}
+                            <button class="comment-button btn btn-green mb-2">Be the first to comment</button>
+                        {% else %}
+                            <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="comment-block" style="display:none">
+                        <form method="POST" action="" id="comment-form" class="form mb-2">
+                            {% csrf_token %}
+                            {{ comment_form|crispy}}
+                            <div class="text-right">
+                                <a class="btn btn-red" href="">Cancel</a>
+                                <button class="btn btn-green" type="submit">Add</button>
+                            </div>
+                        </form>
+                    </div>
                 
                 <!-- Image credit -->
                 {% if post.image_credit %}
@@ -231,7 +250,15 @@
 {% block postloadjs %}
     {{ block.super }}
     <script>
-        $('.post-content').find('img').css({ 'height' : '', 'width' : '100%' });
+        $('.post-content').find('img').css({ 'height': '', 'width': '100%' });
         $('.post-content').find('a').addClass('text-green').attr("target","_blank");
+    </script>
+    <script>
+        $('.comment-button').on('click', function (event) {
+            event.preventDefault();
+            // $('input[name="name"]').prop('required', true);
+            $('input[name="body"]').prop('required', true);
+            $('.comment-block').toggle();
+        })
     </script>
 {% endblock %}
