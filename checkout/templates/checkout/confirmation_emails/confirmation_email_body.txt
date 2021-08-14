@@ -9,15 +9,14 @@ Order Total: €{{ order.order_total }}
 Delivery: €{{ order.delivery_cost }}
 Grand Total: €{{ order.grand_total }}
 
-{% for item in order.lineitems.all %}
-Qty: {{ item.quantity }}
+Order Summary:
+{% for item in order.lineitems.all %}Qty: {{ item.quantity }}
 Item: {{ item.product.name }}
-{% if item.product.has_gluten %}
-Option: {{ item.diet_option|upper }}
-{% endif %}
-{% endfor%}
+{% if item.product.has_gluten %}Dietary Option: {{ item.diet_option|upper }}{% endif %}{% endfor%}
 
-Your order will be shipped to {{ order.street_address1 }} in {{ order.town_or_city }}, {{ order.country }}.
+Your order will be shipped to 
+{{ order.street_address1 }},
+{{ order.town_or_city }}, {{ order.country }}.
 
 We've got your phone number on file as {{ order.phone_number }}.
 
