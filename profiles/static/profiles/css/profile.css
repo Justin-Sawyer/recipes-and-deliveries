@@ -18,17 +18,17 @@
 }
 
 .details {
-    background-color: lightgray;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 767px) {
     .recipes {
-        background-color: lightgray;
+        background-color: rgba(0, 0, 0, 0.1);
     }
 }
 
 @media (min-width: 768px) {
     .articles {
-        background-color: lightgray;
+        background-color: rgba(0, 0, 0, 0.1);
     }
 }
