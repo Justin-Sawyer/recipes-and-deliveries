@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.contrib.auth.models import User
 from .models import UserProfile
 from .forms import UserProfileForm
@@ -35,6 +36,10 @@ def profile(request):
     orders = profile.orders.all().order_by('-pk')
     user_posts = user.blog_posts.all().order_by('-pk')
     user_recipes = user.recipe_posts.all().order_by('-pk')
+
+    # Get number of votes for the user's published recipes
+    all_votes = user_recipes.aggregate(num_votes=Sum('vote_count')).get('num_votes')
+    print(all_votes)
     template = 'profiles/profile.html'
     context = {
         'form': form,
@@ -44,6 +49,7 @@ def profile(request):
         'recipes': recipes,
         'user_posts': user_posts,
         'user_recipes': user_recipes,
+        'all_votes': all_votes,
     }
 
     return render(request, template, context)

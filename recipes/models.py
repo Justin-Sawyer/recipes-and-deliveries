@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils import timezone
@@ -71,6 +72,10 @@ class Recipe(models.Model):
 
     def total_votes(self):
         return self.votes.count()
+    
+    # def all_votes(self):
+        # return Recipe.objects.filter(pk=self.id).aggregate(Sum('votes'))
+        # return self.votes.count().aggregate()
 
     def __str__(self):
         return self.title

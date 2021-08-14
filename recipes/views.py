@@ -80,23 +80,22 @@ def all_recipes(request):
 def recipe(request, recipe_id):
     """ A view to show an individual recipe and random others in side bar """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    # print(recipe.recipe_box)
-    # other_recipes = Recipe.objects.exclude(id=recipe.id).order_by('-pk')
+
     other_recipes = list(Recipe.objects.exclude(id=recipe.id))
     shuffle(other_recipes)
 
     votes = get_object_or_404(Recipe, id=recipe.id)
     total_votes = votes.total_votes()
 
-    liked = False
+    voted = False
     if votes.votes.filter(id=request.user.id).exists():
-        liked = True
+        voted = True
 
     context = {
         'recipe': recipe,
         'other_recipes': other_recipes,
         'total_votes': total_votes,
-        'liked': liked,
+        'voted': voted,
     }
 
     return render(request, 'recipes/recipe.html', context)
@@ -108,10 +107,14 @@ def vote(request, pk):
     voted = False
     if recipe.votes.filter(id=request.user.id).exists():
         recipe.votes.remove(request.user)
+        recipe.vote_count -= 1
+        recipe.save()
         voted = False
         messages.success(request, 'Your vote has been removed!')
     else:
         recipe.votes.add(request.user)
+        recipe.vote_count += 1
+        recipe.save()
         voted = True
         messages.success(request, 'Your vote has been registered!')
     return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))

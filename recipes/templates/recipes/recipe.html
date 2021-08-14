@@ -144,7 +144,7 @@
                     {% if request.user.is_authenticated %}
                         <form action="{% url 'vote' recipe.pk %}" method="POST">
                             {% csrf_token %}
-                            {% if liked %}
+                            {% if voted %}
                                 <button type="submit" name="recipe_id" value="{{ recipe.id }}" class="btn btn-amber mb-3">
                                     Change your vote
                                 </button>
@@ -165,7 +165,6 @@
                 {% else %}
                         <a class="btn btn-green mb-3" href="{% url 'product_detail' recipe.recipe_box.id %}">Order this Recipe Box</a>
                 {% endif %}
-                
                 <!-- Image credit -->
                 {% if recipe.image_credit %}
                     <p class="text-muted image-credit"><small>Image: {{ recipe.image_credit }}</small></p>
