@@ -60,13 +60,27 @@
                                         <td>
                                             <ul class="list-unstyled">
                                                 {% for item in order.lineitems.all %}
-                                                    <li class="small font-weight-bold text-green">
+                                                    <!--<li class="small font-weight-bold text-green">
                                                         {% if item.product.has_gluten %}
                                                             {{ item.diet_option|upper }}
                                                         {% endif %}
                                                     </li>
                                                     <li class="small">
                                                         {{ item.product.name }} x{{ item.quantity }}
+                                                    </li>-->
+                                                    <li class="small">
+                                                        Qty: {{ item.quantity }}
+                                                    </li>
+                                                    <li class="small">
+                                                        Item: {{ item.product.name }}
+                                                    </li>
+                                                    <li class="small">
+                                                        {% if item.product.has_gluten %}
+                                                            Option: <span class="font-weight-bold text-green">{{ item.diet_option|upper }}</span>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li>
+                                                        <br>
                                                     </li>
                                                 {% endfor%}
                                             </ul>
