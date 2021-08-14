@@ -143,7 +143,7 @@
                             <br>
                         </div>
                     
-                        <div class="col-12 col-md-6 col-lg-12"><p>My Recipes</p> 
+                        <div class="col-12 col-md-6 col-lg-12"><p>My Recipes</p>
                             {% if user_recipes %}
                             <div class="row">
                                 <div class="col-12">
@@ -168,6 +168,9 @@
                                     </div>
                                     <div class="col-6">
                                         <p class="font-weight-bold mb-0">{{ recipe.title|title }}</p>
+                                        {% if recipe.total_votes %}
+                                            <p class="vote-count mb-0">Total votes: {{recipe.total_votes }}</p>
+                                        {% endif %}
                                         <p><small>{{ recipe.date_posted|date:"jS F, Y" }}</small></p>
                                         <!-- Editing and deleting -->
                                         {% if request.user.is_superuser or request.user.id is recipe.author.id %}

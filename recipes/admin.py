@@ -26,9 +26,7 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display = (
         'title',
         'author',
-        'prep_time',
-        'cook_time',
-        'servings',
+        'recipe_box',
         'vote_count'
     )
 

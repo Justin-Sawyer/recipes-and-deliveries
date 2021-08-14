@@ -80,6 +80,7 @@ def all_recipes(request):
 def recipe(request, recipe_id):
     """ A view to show an individual recipe and random others in side bar """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
+    # print(recipe.recipe_box)
     # other_recipes = Recipe.objects.exclude(id=recipe.id).order_by('-pk')
     other_recipes = list(Recipe.objects.exclude(id=recipe.id))
     shuffle(other_recipes)

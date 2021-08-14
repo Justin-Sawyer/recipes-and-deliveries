@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils import timezone
 
+from products.models import Product
+
 from ckeditor.fields import RichTextField
 
 
@@ -58,6 +60,10 @@ class Recipe(models.Model):
                                        blank=True,
                                        default=timezone.now)
     date_edited = models.DateTimeField(auto_now=True)
+    recipe_box = models.OneToOneField(Product, related_name='box',
+                                      on_delete=models.SET_NULL,
+                                      null=True,
+                                      blank=True)
     vote_count = models.IntegerField(default=0)
     votes = models.ManyToManyField(User,
                                    related_name='recipe_post_votes',
