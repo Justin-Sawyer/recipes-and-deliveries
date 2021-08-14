@@ -24,10 +24,9 @@
         <div class="col mt-3">
             <h2 class="font-weight-bold">{{ user.username }}'s Profile</h2>
             <br>
-            {{ all_votes }}
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-4 mb-md-2">
-                    <p>My Profile Details</p>
+                <div class="details col-12 col-md-6 mb-md-2 pt-2 pb-2">
+                    <h3 class="subtitle">My Profile Details</h3>
                     <p class="mb-0">Username: <span class="font-weight-bold">{{user.username}}</span></p>
                     <p>Email: <span class="font-weight-bold">{{user.email}}</span></p>
                     <p>My Default Delivery Information</p>    
@@ -38,8 +37,8 @@
                     </form>
                 </div>
 
-                <div class="col-12 col-md-6 col-lg-4 mt-2 mt-lg-0 mb-md-2">
-                    <p>My Order History</p>
+                <div class="col-12 col-md-6 mt-2 mt-lg-0 mb-md-2 pt-2 pb-2">
+                    <h3 class="subtitle">My Order History</h3>
                     {% if orders %}
                     <div class="order-history table-responsive">
                         <table class="table table-sm table-borderless">
@@ -89,105 +88,111 @@
                     {% endif %}
                 </div>
 
-                <div class="col-12 col-lg-4 mt-2 mt-lg-0">
+
+                    <div class="col-12">
+                        <h3 class="subtitle">Votes</h3>
+                        <p>Currently, your recipes have received {{ all_votes }} votes.</p>
+                    </div>
+
+                <div class="col-12 mt-2 mt-lg-0">
                     <div class="row">
-                        <div class="col-12 col-md-6 col-lg-12"><p>My Articles</p>
-                            {% if user_posts %}
-                            <div class="row">
-                                <div class="col-12">
-                                    <p>Feeling inspired?</p>
-                                    <a class="btn btn-green mb-3" href="{% url 'add_post' %}">Write an new article</a>
-                                </div>
-                            </div>
-                            {% for post in user_posts %}
-                                <div class="row">
-                                    <div class="col-6">
-                                        {% if post.image %}
-                                            <a href="{% url 'article' post.id %}">
-                                                <img class="img-fluid w-100 mb-4" src="{{ post.image.url }}"
-                                                    alt="{{ post.title }}">
-                                            </a>
-                                        {% else %}
-                                            <a href="{% url 'article' post.id %}">
-                                                <img class="img-fluid w-100 mb-4"
-                                                    src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-6">
-                                        <p class="font-weight-bold mb-0">{{ post.title|title }}</p>
-                                        <p><small>{{ post.date_posted|date:"jS F, Y" }}</small></p>
-                                        {% if request.user.is_superuser or request.user.id is post.author.id %}
-                                            <div class="edit-delete">
-                                                <small>
-                                                    <!-- Superuser sees instantly whether superuser created post or whether post was user created
-                                                    Superuser created posts = author edit color,
-                                                    user created posts = primary color (matching color of product management) -->
-                                                    <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' post.id %}">Edit</a> |
-                                                    <a class="text-danger" href="{% url 'delete_post' post.id %}">Delete</a>
-                                                </small>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <hr style="background-color: rgb(76, 175, 80);">
-                            {% endfor %}
-                            {% else %}
-                            <div class="row">
-                                <div class="col-12">
-                                    <p>No articles yet?</p>
-                                    <a class="btn btn-green" href="{% url 'add_post' %}">Write your first article</a>
-                                </div>
-                            </div>
-                            {% endif %}
-                            <br>
-                        </div>
-                    
-                        <div class="col-12 col-md-6 col-lg-12"><p>My Recipes</p>
+                        <div class="recipes col-12 col-md-6 pt-2 pb-2">
+                            <h3 class="subtitle">My Recipes</h3>
                             {% if user_recipes %}
                             <div class="row">
+                                {% for recipe in user_recipes|slice:"6" %}
+                                    <div class="col-12 col-lg-6">
+                                        <div class="card h-100 border-0">
+                                            {% if recipe.image %}
+                                                <a href="{% url 'recipe' recipe.id %}">
+                                                    <img class="img-fluid w-100 mb-4" src="{{ recipe.image.url }}"
+                                                        alt="{{ recipe.title }}">
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'recipe' recipe.id %}">
+                                                    <img class="img-fluid w-100 mb-4"
+                                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
+                                                </a>
+                                            {% endif %}
+                                            <div class="card-body pb-0">
+                                                <h3 class="mb-0 font-weight-bold title-name">{{ recipe.title|title }}</h3>
+                                            </div>
+                                            <div class="card-footer bg-white pt-0 border-0 text-left">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <!-- Tagline -->
+                                                        <p class="mb-0 text-left text-black tagline">{{ recipe.intro }}</p>
+                                                        <!-- Categories -->
+                                                        {% if recipe.category %}
+                                                            <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                                                {% for cat in recipe.category.all %}
+                                                                <a class="text-muted text-green font-weight-bold"
+                                                                    href="{% url 'all_recipes' %}?category={{ cat.name }}">
+                                                                    {{ cat.friendly_name|title }}
+                                                                </a><span class="category-link-divider">|</span>
+                                                                {% empty %}
+                                                                    <small class="text-muted">No categories</small>
+                                                                {% endfor %}
+                                                            </p>
+                                                        {% endif %}
+                                                        <!-- Tags -->
+                                                        {% if recipe.tag %}
+                                                            <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                                                                {% for t in recipe.tag.all %}
+                                                                <a class="text-muted text-amber font-weight-bold"
+                                                                    href="{% url 'all_recipes' %}?tag={{ t.tagname }}">
+                                                                    {{ t.tagname|title }}
+                                                                </a><span class="tag-link-divider">|</span>
+                                                                {% empty %}
+                                                                    <small class="text-muted">No tags</small>
+                                                                {% endfor %}
+                                                            </p>
+                                                        {% endif %}
+                                                        <!-- Editing and deleting -->
+                                                        {% if request.user.is_superuser or request.user.id is recipe.author.id %}
+                                                            <div class="edit-delete">
+                                                                <small>
+                                                                    <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                                                    Superuser created posts = author edit color,
+                                                                    user created posts = primary color (matching color of product management) -->
+                                                                    <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_recipe' recipe.id %}">Edit</a> |
+                                                                    <a class="text-danger" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+                                                                </small>
+                                                            </div>
+                                                        {% endif %}
+                                                        <!-- Date posted -->
+                                                        <div class="post-date">
+                                                            <small>{{ recipe.date_posted|date:"jS F, Y" }}</small>
+                                                        </div>
+                                                        <!-- Votes -->
+                                                        {% if recipe.total_votes %}
+                                                            <div class="votes">
+                                                                <p class="vote-count font-weight-bold mb-0">Total votes: {{recipe.total_votes }}</p>
+                                                            </div>
+                                                        {% endif %}   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if forloop.counter|divisibleby:1 %}
+                                    <div class="col-12 d-lg-none mb-5">
+                                        <hr>
+                                    </div>
+                                    {% endif %}
+                                    {% if forloop.counter|divisibleby:2 %}
+                                    <div class="col-12 d-none d-lg-block mb-5">
+                                        <hr>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}  
+                            </div>
+                            <div class="row">
                                 <div class="col-12">
-                                    <p>Feeling inspired?</p>
                                     <a class="btn btn-green mb-3" href="{% url 'add_recipe' %}">Write a new recipe</a>
+                                    <a class="btn btn-green mb-3" href="{% url 'all_recipes' %}?author={{ user.username }}">All My Recipes</a>
                                 </div>
                             </div>
-                            {% for recipe in user_recipes %}
-                                <div class="row">
-                                    <div class="col-6">
-                                        {% if recipe.image %}
-                                            <a href="{% url 'recipe' recipe.id %}">
-                                                <img class="img-fluid w-100 mb-4" src="{{ recipe.image.url }}"
-                                                    alt="{{ recipe.title }}">
-                                            </a>
-                                        {% else %}
-                                            <a href="{% url 'recipe' recipe.id %}">
-                                                <img class="img-fluid w-100 mb-4"
-                                                    src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-6">
-                                        <p class="font-weight-bold mb-0">{{ recipe.title|title }}</p>
-                                        {% if recipe.total_votes %}
-                                            <p class="vote-count mb-0">Total votes: {{recipe.total_votes }}</p>
-                                        {% endif %}
-                                        <p><small>{{ recipe.date_posted|date:"jS F, Y" }}</small></p>
-                                        <!-- Editing and deleting -->
-                                        {% if request.user.is_superuser or request.user.id is recipe.author.id %}
-                                            <div class="edit-delete">
-                                                <small>
-                                                    <!-- Superuser sees instantly whether superuser created post or whether post was user created
-                                                    Superuser created posts = author edit color,
-                                                    user created posts = primary color (matching color of product management) -->
-                                                    <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_recipe' recipe.id %}">Edit</a> |
-                                                    <a class="text-danger" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
-                                                </small>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <hr style="background-color: rgb(76, 175, 80);">
-                            {% endfor %}
                             {% else %}
                             <div class="row">
                                 <div class="col-12">
@@ -198,6 +203,105 @@
                             {% endif %}
                             <br>
                         </div>
+                        <div class="articles col-12 col-md-6 pt-2 pb-2">
+                            <h3 class="subtitle">My Articles</h3>
+                            {% if user_posts %}
+                                <div class="row">
+                                {% for post in user_posts|slice:"6" %}
+                                    <div class="col-12 col-lg-6">
+                                        <div class="card h-100 border-0">
+                                            {% if post.image %}
+                                                <a href="{% url 'article' post.id %}">
+                                                    <img class="img-fluid w-100 mb-4" src="{{ post.image.url }}"
+                                                        alt="{{ post.title }}">
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'article' post.id %}">
+                                                    <img class="img-fluid w-100 mb-4"
+                                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
+                                                </a>
+                                            {% endif %}
+                                            <div class="card-body pb-0">
+                                                <h3 class="mb-0 font-weight-bold title-name">{{ post.title|title }}</h3>
+                                            </div>
+                                            <div class="card-footer bg-white pt-0 border-0 text-left">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <!-- Tagline -->
+                                                        <p class="mb-0 text-left text-black tagline">{{ post.tagline }}</p>
+                                                        <!-- Categories -->
+                                                        {% if post.category %}
+                                                            <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                                                {% for cat in post.category.all %}
+                                                                <a class="text-muted text-green font-weight-bold"
+                                                                    href="{% url 'blog-articles' %}?category={{ cat.name }}">
+                                                                    {{ cat.friendly_name|title }}
+                                                                </a><span class="category-link-divider">|</span>
+                                                                {% empty %}
+                                                                    <small class="text-muted">No categories</small>
+                                                                {% endfor %}
+                                                            </p>
+                                                        {% endif %}
+                                                        <!-- Tags -->
+                                                        {% if post.tag %}
+                                                            <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                                                                {% for t in post.tag.all %}
+                                                                <a class="text-muted text-amber font-weight-bold"
+                                                                    href="{% url 'blog-articles' %}?tag={{ t.tagname }}">
+                                                                    {{ t.tagname|title }}
+                                                                </a><span class="tag-link-divider">|</span>
+                                                                {% empty %}
+                                                                    <small class="text-muted">No tags</small>
+                                                                {% endfor %}
+                                                            </p>
+                                                        {% endif %}
+                                                        <!-- Editing and deleting -->
+                                                        {% if request.user.is_superuser or request.user.id is post.author.id %}
+                                                            <div class="edit-delete">
+                                                                <small>
+                                                                    <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                                                    Superuser created posts = author edit color,
+                                                                    user created posts = primary color (matching color of product management) -->
+                                                                    <a {% if request.user.id is post.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_post' post.id %}">Edit</a> |
+                                                                    <a class="text-danger" href="{% url 'delete_post' post.id %}">Delete</a>
+                                                                </small>
+                                                            </div>
+                                                        {% endif %}
+                                                        <p><small>{{ post.date_posted|date:"jS F, Y" }}</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if forloop.counter|divisibleby:1 %}
+                                    <div class="col-12 d-lg-none mb-5">
+                                        <hr>
+                                    </div>
+                                    {% endif %}
+                                    {% if forloop.counter|divisibleby:2 %}
+                                    <div class="col-12 d-none d-lg-block mb-5">
+                                        <hr>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <a class="btn btn-green mb-3" href="{% url 'add_post' %}">Write a new article</a>
+                                    <a class="btn btn-green mb-3" href="{% url 'blog-articles' %}?author={{ user.username }}">All My Articles</a>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>No articles yet?</p>
+                                    <a class="btn btn-green" href="{% url 'add_post' %}">Write your first article</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    
+                        
                     </div>
                 </div>
             </div>

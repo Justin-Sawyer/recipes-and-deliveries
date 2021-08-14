@@ -16,3 +16,19 @@
 #id_default_country option:not(:first-child) {
     color: #000;
 }
+
+.details {
+    background-color: lightgray;
+}
+
+@media (max-width: 767px) {
+    .recipes {
+        background-color: lightgray;
+    }
+}
+
+@media (min-width: 768px) {
+    .articles {
+        background-color: lightgray;
+    }
+}
