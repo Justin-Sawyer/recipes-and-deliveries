@@ -1,0 +1,1 @@
+Admin: {{ recipe.id }} has received 1000 votes & needs to be added as Box

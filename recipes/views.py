@@ -15,7 +15,7 @@ from .forms import (
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from random import shuffle
+from random import shuffle, randrange
 
 def all_recipes(request):
     """ A view to return all recipes """
@@ -91,7 +91,6 @@ def recipe(request, recipe_id):
 
     votes = get_object_or_404(Recipe, id=recipe.id)
     total_votes = votes.total_votes()
-    
     voted = False
     if votes.votes.filter(id=request.user.id).exists():
         voted = True
@@ -129,12 +128,27 @@ def vote(request, pk):
 
         if total_votes == 2:
             if mail_sent is False:
+                # Generate discount code
+                discount_code = randrange(100000, 1000000, 6)
+                # Save discount code to recipe
+                recipe.discount_code = discount_code
+                recipe.save()
+
                 cust_email = recipe.author.email
                 subject = render_to_string(
                     'recipes/congratulation_emails/congrats_email_subject.txt',
                     {'recipe': recipe})
                 body = render_to_string(
                     'recipes/congratulation_emails/congrats_email_body.txt',
+                    {'recipe': recipe,
+                     'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+                admin_subject = render_to_string(
+                    'recipes/congratulation_emails/admin_add_recipe_subject.txt',
+                    {'recipe': recipe})
+                
+                admin_body = render_to_string(
+                    'recipes/congratulation_emails/admin_add_recipe_body.txt',
                     {'recipe': recipe,
                      'contact_email': settings.DEFAULT_FROM_EMAIL})
 
@@ -150,8 +164,8 @@ def vote(request, pk):
                 recipe.save()
 
                 mail_admins(
-                    subject,
-                    body,
+                    admin_subject,
+                    admin_body,
                     )
 
     return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))

@@ -8,6 +8,8 @@ What does this mean?
 
 Firstly, as a thanks you, Recipes and Delieveries would like to offer you a 10% reduction on your next order.
 
+When you checkout, use this code for the reduction: {{ recipe.discount_code }}
+
 Secondly, as your recipe has proved so popular, we will be adding it as a Recipe Box!
 
 Sincerely,

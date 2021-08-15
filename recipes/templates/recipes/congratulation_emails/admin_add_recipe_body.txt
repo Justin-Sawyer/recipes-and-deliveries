@@ -1,0 +1,7 @@
+Hello Admin
+
+Congratulations on behalf of Recipes and Delievries!
+
+"{{ recipe.title }}" has reached the threshold of 1000 votes.
+
+It needs to be added as a Recipe Box.
