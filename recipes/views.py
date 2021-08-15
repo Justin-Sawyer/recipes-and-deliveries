@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail
+from django.core.mail import send_mail, mail_admins
 from django.template.loader import render_to_string
 
 from .models import Recipe, Ingredient, Category, Tag
@@ -148,6 +148,11 @@ def vote(request, pk):
                 # Ensure mail is sent only once
                 recipe.mail_sent = True
                 recipe.save()
+
+                mail_admins(
+                    subject,
+                    body,
+                    )
 
     return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))
 

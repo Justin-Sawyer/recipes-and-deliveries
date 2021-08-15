@@ -158,11 +158,19 @@
                         {% else %}
                             <p><a href="{% url 'account_signup' %}" class="text-green mb-3">Register</a> or <a href="{% url 'account_login' %}" class="text-green mb-3">log in</a> to vote for it</p>
                         {% endif %}
-                    {% endif %}
-                    {% if total_votes > 0 %}
-                        <p>Total votes: {{ total_votes }}</p>
+                        {% if total_votes > 0 %}
+                            <p>Total votes: {{ total_votes }}</p>
+                        {% else %}
+                            {% if request.user.is_authenticated %}
+                                <p>Be the first to vote for this recipe!</p>
+                            {% endif %}
+                        {% endif %}
                     {% else %}
-                        <p>Be the first to vote for this recipe!</p>
+                        {% if total_votes > 0 %}
+                            <p>Total votes: {{ total_votes }}</p>
+                        {% else %}
+                            <p>No votes yet for your recipe</p>
+                        {% endif %}
                     {% endif %}
                 {% else %}
                         <a class="btn btn-green mb-3" href="{% url 'product_detail' recipe.recipe_box.id %}">Order this Recipe Box</a>
