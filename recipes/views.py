@@ -150,8 +150,8 @@ def vote(request, pk):
                 recipe.save()
 
                 mail_admins(
-                    subject,
-                    body,
+                    'test',
+                    'test',
                     )
 
     return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))
