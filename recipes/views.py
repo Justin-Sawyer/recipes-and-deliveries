@@ -5,12 +5,15 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 from .models import Recipe, Ingredient, Category, Tag
 from .forms import (
     RecipeForm, IngredientFormSet, NewCategoriesForm,
     NewTagsForm)
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from random import shuffle
 
@@ -80,13 +83,15 @@ def all_recipes(request):
 def recipe(request, recipe_id):
     """ A view to show an individual recipe and random others in side bar """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
+    # print(recipe.mail_sent)
+    # mail_sent = recipe.mail_sent
 
     other_recipes = list(Recipe.objects.exclude(id=recipe.id))
     shuffle(other_recipes)
 
     votes = get_object_or_404(Recipe, id=recipe.id)
     total_votes = votes.total_votes()
-
+    
     voted = False
     if votes.votes.filter(id=request.user.id).exists():
         voted = True
@@ -117,6 +122,33 @@ def vote(request, pk):
         recipe.save()
         voted = True
         messages.success(request, 'Your vote has been registered!')
+
+        """ Send mail at threshold of votes """
+        mail_sent = recipe.mail_sent
+        total_votes = recipe.total_votes()
+
+        if total_votes == 2:
+            if mail_sent is False:
+                cust_email = recipe.author.email
+                subject = render_to_string(
+                    'recipes/congratulation_emails/congrats_email_subject.txt',
+                    {'recipe': recipe})
+                body = render_to_string(
+                    'recipes/congratulation_emails/congrats_email_body.txt',
+                    {'recipe': recipe,
+                     'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+                send_mail(
+                    subject,
+                    body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [cust_email],
+                    fail_silently=True,
+                )
+                # Ensure mail is sent only once
+                recipe.mail_sent = True
+                recipe.save()
+
     return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))
 
 

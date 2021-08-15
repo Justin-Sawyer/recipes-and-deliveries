@@ -69,6 +69,7 @@ class Recipe(models.Model):
     votes = models.ManyToManyField(User,
                                    related_name='recipe_post_votes',
                                    blank=True)
+    mail_sent = models.BooleanField(default=False, null=True, blank=True)
 
     def total_votes(self):
         return self.votes.count()

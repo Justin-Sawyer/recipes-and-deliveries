@@ -1,0 +1,15 @@
+Hello {{ recipe.author }}
+
+Congratulations on behalf of Recipes and Delievries!
+
+Your recipe "{{ recipe.title }}" has received 1000 votes!
+
+What does this mean?
+
+Firstly, as a thanks you, Recipes and Delieveries would like to offer you a 10% reduction on your next order.
+
+Secondly, as your recipe has proved so popular, we will be adding it as a Recipe Box!
+
+Sincerely,
+
+Recipes and Deliveries

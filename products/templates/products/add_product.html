@@ -31,17 +31,21 @@
         
     <!-- Main page content -->
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12">
             <form method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.media}}
-                {% for field in form %}
-                    {% if field.name != 'image' %}
-                        {{ field | as_crispy_field }}
-                    {% else %}
-                        {{ field }}
-                    {% endif %}
-                {% endfor %}
+                <div class="row">
+                    {% csrf_token %}
+                    {{ form.media}}
+                    {% for field in form %}
+                    <div class="col-12 col-md-6">
+                        {% if field.name != 'image' %}
+                            {{ field | as_crispy_field }}
+                        {% else %}                   
+                            {{ field }}   
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
                 <label class="form-check-label" for="id-add-more-products">Add more products?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-products" name="add-more-products" checked>
                 <div class="text-right">

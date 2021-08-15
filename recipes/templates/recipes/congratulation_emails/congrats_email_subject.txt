@@ -1,0 +1,1 @@
+Congratulations from Recipes and Deliveries! {{ recipe.title }} has received 1000 votes!
