@@ -60,14 +60,6 @@
                                         <td>
                                             <ul class="list-unstyled">
                                                 {% for item in order.lineitems.all %}
-                                                    <!--<li class="small font-weight-bold text-green">
-                                                        {% if item.product.has_gluten %}
-                                                            {{ item.diet_option|upper }}
-                                                        {% endif %}
-                                                    </li>
-                                                    <li class="small">
-                                                        {{ item.product.name }} x{{ item.quantity }}
-                                                    </li>-->
                                                     <li class="small">
                                                         Qty: {{ item.quantity }}
                                                     </li>
@@ -102,11 +94,12 @@
                     {% endif %}
                 </div>
 
-
+                {% if user_recipes %}
                     <div class="col-12">
                         <h3 class="subtitle">Votes</h3>
-                        <p>Currently, your recipes have received {{ all_votes }} votes.</p>
+                        <p>Currently, your recipes have received {% if all_votes %}{{ all_votes }}{% else %}no{% endif %} votes.</p>
                     </div>
+                {% endif %}
 
                 <div class="col-12 mt-2 mt-lg-0">
                     <div class="row">

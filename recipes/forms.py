@@ -53,8 +53,6 @@ class IngredientForm(forms.ModelForm):
             'quantity': 'Qty',
         }
 
-    # name = forms.CharField(required=True)
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -110,7 +108,8 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         exclude = ('author', 'date',
                    'date_posted', 'date_edited',
-                   'vote_count', 'votes', 'recipe_box',)
+                   'vote_count', 'votes', 'recipe_box',
+                   'mail_sent', 'discount_code',)
 
         labels = {
             'intro': 'Brief Description',

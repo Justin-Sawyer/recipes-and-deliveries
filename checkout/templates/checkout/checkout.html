@@ -27,7 +27,6 @@
                 <h2 class="font-weight-bold mb-4">Checkout</h2>
             </div>
         </div>
-
         <!-- Main page content -->
         <div class="row">
             <div class="col-12 col-md-6 order-md-last mb-5">
@@ -53,7 +52,6 @@
                         </div>
                         <div class="col-7">
                             <p class="my-0"><strong>{{ item.product.name }}</strong></p>
-                            <!--<p class="my-0 small">Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>-->
                             {% if item.product.has_gluten %}
                                 <p class="my-0">Dietary Requirement:
                                     <strong class="text-green">{{ item.gf_option|upper }}</strong>
@@ -71,11 +69,25 @@
                     <div class="col-7 offset-2">
                         <p class="my-0">Order Total:</p>
                         <p class="my-0 text-muted">Delivery:</p>
+                        {% if user_recipes %}
+                            {% for recipe in user_recipes %}
+                                {% if recipe.discount_code %}
+                                <p class="my-0">Vote threshold discount:</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                         <p class="my-0 font-weight-bold">Grand Total:</p>
                     </div>
                     <div class="col-3">
                         <p class="my-0">€{{ total | floatformat:2 }}</p>
                         <p class="my-0 text-muted">€{{ delivery | floatformat:2 }}</p>
+                        {% if user_recipes %}
+                            {% for recipe in user_recipes %}
+                                {% if recipe.discount_code %}
+                                <p class="my-0 text-muted">{{ recipe.discount_code|slice:1 }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                         <p class="my-0 font-weight-bold">€{{ grand_total | floatformat:2 }}</p>
                     </div>
                 </div>

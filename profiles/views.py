@@ -39,7 +39,8 @@ def profile(request):
     user_recipes = user.recipe_posts.all().order_by('-vote_count', '-pk')
 
     # Get number of votes for the user's published recipes
-    all_votes = user_recipes.aggregate(num_votes=Sum('vote_count')).get('num_votes')
+    all_votes = user_recipes.aggregate(num_votes=Sum(
+                                       'vote_count')).get('num_votes')
     print(all_votes)
     template = 'profiles/profile.html'
     context = {

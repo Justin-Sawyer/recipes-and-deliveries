@@ -52,7 +52,6 @@ class Recipe(models.Model):
     servings = models.IntegerField()
     category = models.ManyToManyField('Category', blank=True)
     tag = models.ManyToManyField('Tag', blank=True)
-    # directions = models.TextField(default="", blank=False)
     directions = RichTextField(blank=True, null=True)
     image = models.ImageField(null=True, blank=True)
     image_credit = models.CharField(max_length=254, default="", blank=True)
@@ -74,10 +73,6 @@ class Recipe(models.Model):
 
     def total_votes(self):
         return self.votes.count()
-    
-    # def all_votes(self):
-        # return Recipe.objects.filter(pk=self.id).aggregate(Sum('votes'))
-        # return self.votes.count().aggregate()
 
     def __str__(self):
         return self.title

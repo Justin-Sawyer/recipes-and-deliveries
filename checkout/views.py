@@ -12,6 +12,7 @@ from profiles.forms import UserProfileForm
 from profiles.models import UserProfile
 from blog.models import Post
 from recipes.models import Recipe
+from django.contrib.auth.models import User
 
 import stripe
 import json
@@ -35,6 +36,13 @@ def cache_checkout_data(request):
 
 
 def checkout(request):
+    useruser = get_object_or_404(User, id=request.user.id)
+    print(useruser)
+    user_recipes = useruser.recipe_posts.all()
+    print(user_recipes)
+    for recipe in user_recipes:
+        if recipe.discount_code:
+            print(recipe.discount_code)
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
     if request.method == 'POST':
@@ -139,6 +147,7 @@ def checkout(request):
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+        'user_recipes': user_recipes
     }
 
     return render(request, template, context)

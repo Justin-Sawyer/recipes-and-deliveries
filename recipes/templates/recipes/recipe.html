@@ -141,11 +141,14 @@
                 <!-- Vote for recipe-->
                 {% if not recipe.recipe_box %}
                     {% if not request.user.id is recipe.author.id %}
-                        <p>Think this recipe should be a Recipe Box?</p>
+                        {% if not voted %}
+                            <p>Think this recipe should be a Recipe Box?</p>
+                        {% endif %}
                         {% if request.user.is_authenticated %}
                             <form action="{% url 'vote' recipe.pk %}" method="POST">
                                 {% csrf_token %}
                                 {% if voted %}
+                                    <p>You have already voted for this recipe but you can change your vote:</p>
                                     <button type="submit" name="recipe_id" value="{{ recipe.id }}" class="btn btn-amber mb-3">
                                         Change your vote
                                     </button>

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from django.http import HttpResponseRedirect
@@ -16,6 +15,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from random import shuffle, randrange
+
 
 def all_recipes(request):
     """ A view to return all recipes """
@@ -63,7 +63,7 @@ def all_recipes(request):
 
     template = 'recipes/all_recipes.html'
 
-    paginator = Paginator(recipes, 12)  # Show 12 contacts per page.
+    paginator = Paginator(recipes, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -83,8 +83,6 @@ def all_recipes(request):
 def recipe(request, recipe_id):
     """ A view to show an individual recipe and random others in side bar """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    # print(recipe.mail_sent)
-    # mail_sent = recipe.mail_sent
 
     other_recipes = list(Recipe.objects.exclude(id=recipe.id))
     shuffle(other_recipes)
