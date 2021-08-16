@@ -1695,8 +1695,6 @@ Either click "Open with GitHub Desktop" and follow the prompts in the GitHub Des
 	pip3 freeze > requirements.txt
 	```
 
-    ffghfhgfghfgh
-
  
 
 
