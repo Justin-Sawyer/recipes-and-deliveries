@@ -79,8 +79,6 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     other_products = list(Product.objects.exclude(id=product.id))
     shuffle(other_products)
-    print(product.box)
-    print(product.name)
 
     context = {
         'product': product,

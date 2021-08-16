@@ -117,7 +117,6 @@ class RecipeForm(forms.ModelForm):
 
     def clean_servings(self):
         value = self.cleaned_data.get('servings')
-        print(value)
         if value < 1:
             raise forms.ValidationError('The number of servings must be \
                 greater than zero')

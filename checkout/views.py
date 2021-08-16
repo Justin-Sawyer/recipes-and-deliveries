@@ -36,13 +36,12 @@ def cache_checkout_data(request):
 
 
 def checkout(request):
-    useruser = get_object_or_404(User, id=request.user.id)
-    print(useruser)
-    user_recipes = useruser.recipe_posts.all()
-    print(user_recipes)
-    for recipe in user_recipes:
-        if recipe.discount_code:
-            print(recipe.discount_code)
+    user_recipes = None
+    first_discount_code = None
+    checkout_user = None
+    recipe_with_discount_code = None
+    vote_threshold_precentage = None
+
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
     if request.method == 'POST':
@@ -133,6 +132,21 @@ def checkout(request):
                     'street_address2': profile.default_street_address2,
                     'county': profile.default_county,
                 })
+
+                checkout_user = get_object_or_404(User, id=request.user.id)
+                user_recipes = checkout_user.recipe_posts.all()
+                vote_threshold_precentage = settings.VOTE_THRESHOLD_PERCENTAGE
+                code_list = []
+                if user_recipes:
+                    for recipe in user_recipes:
+                        if recipe.discount_code != "":
+                            code = recipe.discount_code
+                            code_list.append(code)
+                            first_discount_code = code_list[0]
+                    # recipe_with_discount_code = Recipe.objects.get(discount_code=first_discount_code)
+                    # recipe_with_discount_code.discount_code = ""
+                    # recipe_with_discount_code.save()
+
             except UserProfile.DoesNotExist:
                 order_form = OrderForm()
         else:
@@ -147,7 +161,11 @@ def checkout(request):
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
-        'user_recipes': user_recipes
+        'user_recipes': user_recipes,
+        'vote_threshold_precentage': vote_threshold_precentage,
+        'first_discount_code': first_discount_code,
+        'checkout_user': checkout_user,
+        'recipe_with_discount_code': recipe_with_discount_code,
     }
 
     return render(request, template, context)
@@ -167,6 +185,31 @@ def checkout_success(request, order_number):
         # Attach the user's profile to the order
         order.user_profile = profile
         order.save()
+        checkout_user = get_object_or_404(User, id=request.user.id)
+        user_recipes = checkout_user.recipe_posts.all()
+        vote_threshold_precentage = settings.VOTE_THRESHOLD_PERCENTAGE
+        code_list = []
+        recipe_list = []
+        if user_recipes:
+            for recipe in user_recipes:
+                if recipe.discount_code != "":
+                    code = recipe.discount_code
+                    code_list.append(code)
+                    print(code_list)
+                    recipe_list.append(recipe)
+                    print(recipe_list)
+                    first_discount_code = code_list[0]
+                    print((first_discount_code))
+                    first_recipe = recipe_list[0]
+                    print(first_recipe)
+                    print(first_recipe.discount_code)
+                    first_recipe.discount_code = ""
+                    print(first_recipe.discount_code)
+                    first_recipe.save()
+
+                    # recipe_with_discount_code = Recipe.objects.get(discount_code=first_discount_code)
+                    # recipe_with_discount_code.discount_code = ""
+                    # recipe_with_discount_code.save()
 
     if save_info:
         profile_data = {

@@ -69,7 +69,7 @@ class Recipe(models.Model):
                                    related_name='recipe_post_votes',
                                    blank=True)
     mail_sent = models.BooleanField(default=False, null=True, blank=True)
-    discount_code = models.IntegerField(null=True, blank=True)
+    discount_code = models.CharField(max_length=6, blank=True, default="")
 
     def total_votes(self):
         return self.votes.count()

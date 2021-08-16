@@ -1,5 +1,10 @@
 <h6>Bag Total: €{{ total|floatformat:2 }}</h6>
 <h6 class="text-muted">Delivery: €{{ delivery|floatformat:2 }}</h6>
+{% if user_recipes %}
+{% if discount %}
+<h6>Recipe vote discount {{ vote_threshold_precentage }}%: €{{ discount|floatformat:2 }}</h6>
+{% endif %}
+{% endif %}
 <h4 class="mt-4 font-weight-bold">Grand Total: €{{ grand_total|floatformat:2 }}</h4>
 {% if free_delivery_delta > 0 %}
     <p class="mb-1 text-amber">

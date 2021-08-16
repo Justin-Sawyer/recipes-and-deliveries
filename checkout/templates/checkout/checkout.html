@@ -70,11 +70,9 @@
                         <p class="my-0">Order Total:</p>
                         <p class="my-0 text-muted">Delivery:</p>
                         {% if user_recipes %}
-                            {% for recipe in user_recipes %}
-                                {% if recipe.discount_code %}
-                                <p class="my-0">Vote threshold discount:</p>
+                                {% if first_discount_code %}
+                                <p class="my-0">Recipe vote discount {{ vote_threshold_precentage }}%</p>
                                 {% endif %}
-                            {% endfor %}
                         {% endif %}
                         <p class="my-0 font-weight-bold">Grand Total:</p>
                     </div>
@@ -82,11 +80,7 @@
                         <p class="my-0">€{{ total | floatformat:2 }}</p>
                         <p class="my-0 text-muted">€{{ delivery | floatformat:2 }}</p>
                         {% if user_recipes %}
-                            {% for recipe in user_recipes %}
-                                {% if recipe.discount_code %}
-                                <p class="my-0 text-muted">{{ recipe.discount_code|slice:1 }}</p>
-                                {% endif %}
-                            {% endfor %}
+                            {% if first_discount_code %}<p class="my-0">{{ discount | floatformat:2}}</p>{% endif %}
                         {% endif %}
                         <p class="my-0 font-weight-bold">€{{ grand_total | floatformat:2 }}</p>
                     </div>

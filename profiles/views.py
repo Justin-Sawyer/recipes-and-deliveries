@@ -41,7 +41,6 @@ def profile(request):
     # Get number of votes for the user's published recipes
     all_votes = user_recipes.aggregate(num_votes=Sum(
                                        'vote_count')).get('num_votes')
-    print(all_votes)
     template = 'profiles/profile.html'
     context = {
         'form': form,
