@@ -58,9 +58,7 @@ def bag_contents(request):
                     discount = total * Decimal(settings.VOTE_THRESHOLD_PERCENTAGE / 100) or 0
                     grand_total = total + delivery - discount 
                 else:
-                    grand_total = total + delivery
-    else:
-        grand_total = total + delivery         
+                    grand_total = total + delivery        
 
     context = {
         'bag_items': bag_items,
