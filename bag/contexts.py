@@ -56,9 +56,9 @@ def bag_contents(request):
             for recipe in user_recipes:
                 if recipe.discount_code != "":
                     discount = total * Decimal(settings.VOTE_THRESHOLD_PERCENTAGE / 100) or 0
-            grand_total = total + delivery - discount 
+            grand_total = total + delivery - discount
         else:
-            grand_total = total + delivery     
+            grand_total = total + delivery
 
     context = {
         'bag_items': bag_items,

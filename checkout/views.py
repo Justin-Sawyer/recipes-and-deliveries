@@ -41,6 +41,7 @@ def checkout(request):
     checkout_user = None
     recipe_with_discount_code = None
     vote_threshold_precentage = None
+    # discount = 0
 
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -64,6 +65,13 @@ def checkout(request):
             # Get client secret
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
+            # discount = request.POST.get('discount')
+            # print(discount)
+            current_bag = bag_contents(request)
+            discount = current_bag['discount']
+            total = current_bag['grand_total']
+            order.vote_discount_applied = discount
+            order.grand_total = total
             order.original_bag = json.dumps(bag)
             order.save()
             for item_id, item_data in bag.items():
@@ -109,6 +117,11 @@ def checkout(request):
 
         current_bag = bag_contents(request)
         total = current_bag['grand_total']
+        # print(total)
+        # discount = current_bag['discount']
+        # print(discount)
+        # the_discount = request.POST.get('discount')
+        # print(the_discount)
         stripe_total = round(total * 100)
         stripe.api_key = stripe_secret_key
         intent = stripe.PaymentIntent.create(
@@ -148,6 +161,20 @@ def checkout(request):
                     # first_recipe = recipe_list[0]
                     if recipe_list:
                         first_recipe = recipe_list[0]
+                        # the_discount = request.POST.get('discount')
+                        # print(the_discount)
+                        #order.vote_discount_applied = discount or 0
+                        # discount = current_bag['discount']
+                        # print(discount)
+                        """grand_total = current_bag['grand_total']
+                        total = grand_total - discount
+                        stripe_total = round(total * 100)
+                        stripe.api_key = stripe_secret_key
+                        intent = stripe.PaymentIntent.create(
+                            amount=stripe_total,
+                            currency=settings.STRIPE_CURRENCY,
+                        )"""
+                        # print(total)
                     # should be in checkout_success, the next 2 lines
                     #first_recipe.discount_code = ""
                     #first_recipe.save()
@@ -200,10 +227,9 @@ def checkout_success(request, order_number):
         order.user_profile = profile
         order.save()
 
-        # Get code for discount from recipe wuth votes
+        # Get code for discount from recipe with votes
         checkout_user = get_object_or_404(User, id=request.user.id)
         user_recipes = checkout_user.recipe_posts.all()
-        vote_threshold_precentage = settings.VOTE_THRESHOLD_PERCENTAGE
         code_list = []
         recipe_list = []
         if user_recipes:
@@ -243,7 +269,7 @@ def checkout_success(request, order_number):
     context = {
         'order': order,
         'posts': posts,
-        'recipes': recipes
+        'recipes': recipes,
     }
 
     return render(request, template, context)

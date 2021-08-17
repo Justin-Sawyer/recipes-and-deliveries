@@ -31,6 +31,9 @@ class Order(models.Model):
                                         null=False, default=0)
     order_total = models.DecimalField(max_digits=10, decimal_places=2,
                                       null=False, default=0)
+    vote_discount_applied = models.DecimalField(max_digits=10,
+                                                decimal_places=2,
+                                                null=False, default=0)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2,
                                       null=False, default=0)
     original_bag = models.TextField(null=False, blank=False, default='')
@@ -56,6 +59,12 @@ class Order(models.Model):
         else:
             self.delivery_cost = 0
         self.grand_total = self.order_total + self.delivery_cost
+
+        """if self.vote_discount_applied:
+            discount = settings.VOTE_THRESHOLD_PERCENTAGE / 100
+            self.vote_discount_applied = self.order_total * discount / 100
+            self.grand_total = (self.order_total + self.delivery_cost - self.vote_discount_applied)"""
+
         self.save()
 
     def save(self, *args, **kwargs):
