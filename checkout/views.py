@@ -137,12 +137,24 @@ def checkout(request):
                 user_recipes = checkout_user.recipe_posts.all()
                 vote_threshold_precentage = settings.VOTE_THRESHOLD_PERCENTAGE
                 code_list = []
+                recipe_list = []
                 if user_recipes:
                     for recipe in user_recipes:
                         if recipe.discount_code != "":
                             code = recipe.discount_code
                             code_list.append(code)
-                            first_discount_code = code_list[0]
+                            recipe_list.append(recipe)
+                    first_discount_code = code_list[0]
+                    first_recipe = recipe_list[0]
+                    # should be in checkout_success, the next 2 lines
+                    #first_recipe.discount_code = ""
+                    #first_recipe.save()
+                """if user_recipes:
+                    for recipe in user_recipes:
+                        if recipe.discount_code != "":
+                            code = recipe.discount_code
+                            code_list.append(code)
+                            first_discount_code = code_list[0]"""
                     # recipe_with_discount_code = Recipe.objects.get(discount_code=first_discount_code)
                     # recipe_with_discount_code.discount_code = ""
                     # recipe_with_discount_code.save()
@@ -196,10 +208,10 @@ def checkout_success(request, order_number):
                     code = recipe.discount_code
                     code_list.append(code)
                     recipe_list.append(recipe)
-                    first_discount_code = code_list[0]
-                    first_recipe = recipe_list[0]
-                    first_recipe.discount_code = ""
-                    first_recipe.save()
+            first_discount_code = code_list[0]
+            first_recipe = recipe_list[0]
+            first_recipe.discount_code = ""
+            first_recipe.save()
 
                     # recipe_with_discount_code = Recipe.objects.get(discount_code=first_discount_code)
                     # recipe_with_discount_code.discount_code = ""
