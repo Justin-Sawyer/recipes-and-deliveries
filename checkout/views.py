@@ -144,8 +144,10 @@ def checkout(request):
                             code = recipe.discount_code
                             code_list.append(code)
                             recipe_list.append(recipe)
-                    first_discount_code = code_list[0]
-                    first_recipe = recipe_list[0]
+                    # first_discount_code = code_list[0]
+                    # first_recipe = recipe_list[0]
+                    if recipe_list:
+                        first_recipe = recipe_list[0]
                     # should be in checkout_success, the next 2 lines
                     #first_recipe.discount_code = ""
                     #first_recipe.save()
@@ -208,10 +210,12 @@ def checkout_success(request, order_number):
                     code = recipe.discount_code
                     code_list.append(code)
                     recipe_list.append(recipe)
-            first_discount_code = code_list[0]
-            first_recipe = recipe_list[0]
-            first_recipe.discount_code = ""
-            first_recipe.save()
+            # first_discount_code = code_list[0]
+            if recipe_list:
+                first_recipe = recipe_list[0]
+            # first_recipe = recipe_list[0]
+                first_recipe.discount_code = ""
+                first_recipe.save()
 
                     # recipe_with_discount_code = Recipe.objects.get(discount_code=first_discount_code)
                     # recipe_with_discount_code.discount_code = ""
