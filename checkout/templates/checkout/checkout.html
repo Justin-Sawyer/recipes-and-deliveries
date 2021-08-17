@@ -80,7 +80,7 @@
                         <p class="my-0">€{{ total | floatformat:2 }}</p>
                         <p class="my-0 text-muted">€{{ delivery | floatformat:2 }}</p>
                         {% if user_recipes %}
-                            {% if first_discount_code %}<p class="my-0">{{ discount | floatformat:2}}</p>{% endif %}
+                            {% if first_discount_code %}<p class="my-0">€{{ discount | floatformat:2}}</p>{% endif %}
                         {% endif %}
                         <p class="my-0 font-weight-bold">€{{ grand_total | floatformat:2 }}</p>
                     </div>

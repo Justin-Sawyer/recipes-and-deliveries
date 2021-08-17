@@ -195,16 +195,10 @@ def checkout_success(request, order_number):
                 if recipe.discount_code != "":
                     code = recipe.discount_code
                     code_list.append(code)
-                    print(code_list)
                     recipe_list.append(recipe)
-                    print(recipe_list)
                     first_discount_code = code_list[0]
-                    print((first_discount_code))
                     first_recipe = recipe_list[0]
-                    print(first_recipe)
-                    print(first_recipe.discount_code)
                     first_recipe.discount_code = ""
-                    print(first_recipe.discount_code)
                     first_recipe.save()
 
                     # recipe_with_discount_code = Recipe.objects.get(discount_code=first_discount_code)

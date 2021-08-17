@@ -14,6 +14,7 @@ def bag_contents(request):
     total = 0
     product_count = 0
     discount = 0
+    # grand_total = 0
     user_recipes = 0
     bag = request.session.get('bag', {})
 
@@ -58,6 +59,8 @@ def bag_contents(request):
                     grand_total = total + delivery - discount 
                 else:
                     grand_total = total + delivery
+    else:
+        grand_total = total + delivery         
 
     context = {
         'bag_items': bag_items,
