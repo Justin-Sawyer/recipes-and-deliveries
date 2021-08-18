@@ -21,6 +21,7 @@ class Order(models.Model):
     email = models.EmailField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=False, blank=False)
     street_address1 = models.CharField(max_length=80, null=False, blank=False)
+    # Setting null="" as django recommends causes failure in stripe
     street_address2 = models.CharField(max_length=80, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=False, blank=False)
     county = models.CharField(max_length=80, null=True, blank=True)
@@ -59,12 +60,6 @@ class Order(models.Model):
         else:
             self.delivery_cost = 0
         self.grand_total = self.order_total + self.delivery_cost
-
-        """if self.vote_discount_applied > 0:
-            discount = settings.VOTE_THRESHOLD_PERCENTAGE / 100
-            self.vote_discount_applied = self.order_total * discount / 100
-            self.grand_total = self.order_total + self.delivery_cost - self.vote_discount_applied"""
-
         self.save()
 
     def save(self, *args, **kwargs):
