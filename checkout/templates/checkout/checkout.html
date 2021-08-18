@@ -168,4 +168,8 @@
     {{ stripe_public_key|json_script:"id_stripe_public_key"}}
     {{ client_secret|json_script:"id_client_secret"}}
     <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+    <script>
+        // Checkbox color
+        $('input[type="checkbox"]').css('filter', 'hue-rotate(300deg)');
+    </script>
 {% endblock %}

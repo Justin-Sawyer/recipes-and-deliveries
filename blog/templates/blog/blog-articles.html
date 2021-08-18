@@ -39,7 +39,7 @@
         <div class="row">
             <div class="articles-container col-12">
                 <div class="row mt-1 mb-2">
-
+                    
                     <!-- Dropdown sorting -->
                     <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
                         <div class="sort-select-wrapper w-50">
@@ -51,10 +51,7 @@
                                 </option>
                                 <option value="title_desc" {% if current_sorting == 'title_desc' %}selected{% endif %}>
                                     Article Title (Z-A)
-                                </option>
-                                <!--<option value="author_asc" {% if current_sorting == 'author_asc' %}selected{% endif %}>Author (A-Z)</option>
-                                    <option value="author_desc" {% if current_sorting == 'author_desc' %}selected{% endif %}>Author (Z-A)</option>-->
-                                <option value="id_desc" {% if current_sorting == 'id_desc' %}selected{% endif %}>
+                                </option><option value="id_desc" {% if current_sorting == 'id_desc' %}selected{% endif %}>
                                     Newest to Oldest
                                 </option>
                                 <option value="id_asc" {% if current_sorting == 'id_asc' %}selected{% endif %}>
@@ -200,6 +197,7 @@
                     {% endif %}
                     {% endfor %}
                 </div>
+
                 <!-- Pagination -->
                 <div class="row">
                     <div class="col-12">

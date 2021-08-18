@@ -78,10 +78,9 @@
     {{ block.super }}
     <script>
         $(document).ready(function() {
-            /*$('input').not('input[name="q"]').removeClass('border-green').addClass('border-amber');
-            $('select').removeClass('border-green').addClass('border-amber');
-            $('textarea').removeClass('border-green').addClass('border-amber');*/
+            // Color checkbox
             $('input[type="checkbox"]').css('filter', 'hue-rotate(178deg)');
+            // Ensure category and tag selectors are same height
             let catHeight = $('#cat-height').height();
             let style = {
                 'height': `${catHeight}`,
@@ -89,7 +88,9 @@
                 'margin-bottom': '16px'
             }
             $('#tag-height').css(style);
+
             $('.btn-file').removeClass('btn-green').addClass('btn-amber');
+            // Control of new images
             $('.btn-file').children('input').addClass('new-image');
             $('#div_id_image_credit').css('display', 'none');
             $('.new-image').change(function() {

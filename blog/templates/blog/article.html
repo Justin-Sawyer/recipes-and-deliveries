@@ -15,7 +15,6 @@
 
 {% block content %}
     <div class="overlay"></div>
-
     <!-- Banner Image -->
     {% if post.image %}
         <img class="img-fluid header-image-container" src="{{ post.image.url }}" alt="{{ post.title }}">
@@ -27,7 +26,8 @@
     <div class="container content mb-2">
         <!-- Main Page row -->
         <div class="row mt-3">
-            <!-- Article col -->
+
+            <!-- Main Article -->
             <div class="col-12 col-md-8">
 
                 <!-- Post Title -->
@@ -58,9 +58,10 @@
                         {% endfor %}
                     </p>
                 {% endif %}
-                
+
                 <!-- Author & editing -->
                 <div class="mb-3">
+
                     <!-- Post Author -->
                     {% if post.author.is_superuser %}
                         <small class="text-muted author">Posted by: 
@@ -75,6 +76,7 @@
                             </a> on {{ post.date_posted|date:"jS F, Y" }}
                         </small>
                     {% endif %}
+
                     <!-- Editing and deleting -->
                     {% if request.user.is_superuser or request.user.id is post.author.id %}
                         <div class="edit-delete">
@@ -95,7 +97,7 @@
                         {{ post.content|safe}}
                     </div>
                 </div>
-                
+
                 <!-- Comments -->
                 <h3 class="subtitle">Comments:</h3>
                 {% if post.comments.all %}
@@ -117,6 +119,7 @@
                     {% endif %}
                 {% endif %}
 
+                <!-- Comment form -->
                 <div class="comment-block" style="display:none">
                     <form method="POST" action="" id="comment-form" class="form mb-2">
                         {% csrf_token %}
@@ -127,7 +130,7 @@
                         </div>
                     </form>
                 </div>
-                
+
                 <!-- Image credit -->
                 {% if post.image_credit %}
                     <p class="text-muted image-credit mt-3"><small>Image: {{ post.image_credit }}</small></p>
@@ -139,7 +142,7 @@
                 {% endif %}
             </div>
 
-            <!-- Similar articles -->
+            <!-- Other articles -->
             <div class="col-12 col-md-4">
                 <h3 class="font-weight-bold similar-articles">More Articles</h3>
                 <div class="row mb-3">
@@ -256,7 +259,6 @@
     <script>
         $('.comment-button').on('click', function (event) {
             event.preventDefault();
-            // $('input[name="name"]').prop('required', true);
             $('input[name="body"]').prop('required', true);
             $('.comment-block').toggle();
         })

@@ -41,7 +41,6 @@ def checkout(request):
     checkout_user = None
     recipe_with_discount_code = None
     vote_threshold_precentage = None
-    # discount = 0
 
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -65,14 +64,10 @@ def checkout(request):
             # Get client secret
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
-            # discount = request.POST.get('discount')
-            # print(discount)
+            order.original_bag = json.dumps(bag)
             current_bag = bag_contents(request)
             discount = current_bag['discount']
-            total = current_bag['grand_total']
             order.vote_discount_applied = discount
-            order.grand_total = total
-            order.original_bag = json.dumps(bag)
             order.save()
             for item_id, item_data in bag.items():
                 try:
