@@ -52,9 +52,6 @@ class StripeWH_Handler:
         bag = intent.metadata.bag
         save_info = intent.metadata.save_info
 
-        discount = intent.metadata.discount
-        # print(discount)
-
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
         grand_total = round(intent.charges.data[0].amount/100, 2)
@@ -101,7 +98,6 @@ class StripeWH_Handler:
                     grand_total=grand_total,
                     original_bag=bag,
                     stripe_pid=pid,
-                    vote_discount_applied=discount,
                 )
                 order_exists = True
                 break
@@ -129,10 +125,8 @@ class StripeWH_Handler:
                     county=shipping_details.address.state,
                     postcode=shipping_details.address.postal_code,
                     country=shipping_details.address.country,
-                    grand_total=grand_total,
                     original_bag=bag,
                     stripe_pid=pid,
-                    vote_discount_applied=discount,
                 )
                 for item_id, item_data in json.loads(bag).items():
                     product = Product.objects.get(id=item_id)
