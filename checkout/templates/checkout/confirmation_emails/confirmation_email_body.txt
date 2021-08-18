@@ -6,8 +6,8 @@ Order Number: {{ order.order_number }}
 Order Date: {{ order.date }}
 
 Order Total: €{{ order.order_total | floatformat:2 }}
-Discount: €{{ order.vote_discount_applied | floatformat:2 }}
 Delivery: €{{ order.delivery_cost | floatformat:2 }}
+{% if order.vote_discount_applied > 0 %}Discount: €{{ order.vote_discount_applied | floatformat:2 }}{% endif %}
 Grand Total: €{{ order.grand_total | floatformat:2 }}
 
 Order Summary:{% for item in order.lineitems.all %}
