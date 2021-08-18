@@ -8,7 +8,9 @@ What does this mean?
 
 Firstly, as a thanks you, Recipes and Delieveries would like to offer you a 10% reduction on your next order.
 
-When you checkout, use this code for the reduction: {{ recipe.discount_code }}
+The discount will be applied automatically when you next checkout. 
+
+If you have more that one recipe that has reached the 1000 vote threshold, each discount will be applied separately.
 
 Secondly, as your recipe has proved so popular, we will be adding it as a Recipe Box!
 

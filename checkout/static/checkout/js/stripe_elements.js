@@ -49,10 +49,14 @@ form.addEventListener('submit', function(ev) {
     $('#loading-overlay').fadeToggle(100);
     var saveInfo = Boolean($('#id_save_info').attr('checked'));
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+
+    var discount = parseFloat($('input[name="discount"]').val());
+
     var postData = {
         'csrfmiddlewaretoken': csrfToken,
         'client_secret': clientSecret,
         'save_info': saveInfo,
+        'discount': discount,
     };
     var url = '/checkout/cache_checkout_data/';
     $.post(url, postData).done(function() {
@@ -100,7 +104,7 @@ form.addEventListener('submit', function(ev) {
         } else {
             // The payment has been processed
             if (result.paymentIntent.status === 'succeeded') {
-                form.submit();
+                //form.submit();
             }
         }
     });  

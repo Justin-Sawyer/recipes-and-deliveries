@@ -59,16 +59,20 @@ class Order(models.Model):
             self.delivery_cost = self.order_total * delivery / 100
         else:
             self.delivery_cost = 0
-        self.grand_total = self.order_total + self.delivery_cost
+        
+        if self.vote_discount_applied:
+            self.grand_total = self.order_total + self.delivery_cost - self.vote_discount_applied
+        else:
+            self.grand_total = self.order_total + self.delivery_cost
         self.save()
 
     def save(self, *args, **kwargs):
         """
         Override the original save method to set the order number
-        if it hasn't been set already and apply any discount.
+        if it hasn't been set already.
         """
-        if self.vote_discount_applied:
-            self.grand_total = self.order_total + self.delivery_cost - self.vote_discount_applied
+        """if self.vote_discount_applied:
+            self.grand_total = self.order_total + self.delivery_cost - self.vote_discount_applied"""
 
         if not self.order_number:
             self.order_number = self._generate_order_number()
