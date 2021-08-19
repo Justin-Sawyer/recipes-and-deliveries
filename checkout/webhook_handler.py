@@ -3,6 +3,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 
+from decimal import Decimal
+
 from .models import Order, OrderLineItem
 from products.models import Product
 from profiles.models import UserProfile
@@ -51,6 +53,11 @@ class StripeWH_Handler:
         pid = intent.id
         bag = intent.metadata.bag
         save_info = intent.metadata.save_info
+
+        stripe_discount = intent.metadata.discount
+        stripe_discount_float = float(stripe_discount)
+        discount_rounded = round(stripe_discount_float, 2)
+        discount = Decimal(discount_rounded).quantize(Decimal('.01'))
 
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
@@ -127,6 +134,7 @@ class StripeWH_Handler:
                     country=shipping_details.address.country,
                     original_bag=bag,
                     stripe_pid=pid,
+                    vote_discount_applied=discount,
                 )
                 for item_id, item_data in json.loads(bag).items():
                     product = Product.objects.get(id=item_id)

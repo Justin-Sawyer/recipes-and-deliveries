@@ -6,7 +6,6 @@ var elements = stripe.elements();
 var style = {
     base: {
         color: '#000',
-        /*fontFamily: '"Helvetica Neue", Helvetica, sans-serif',*/
         fontFamily: 'Raleway, sans-serif',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
@@ -50,7 +49,10 @@ form.addEventListener('submit', function(ev) {
     var saveInfo = Boolean($('#id_save_info').attr('checked'));
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
 
-    var discount = parseFloat($('input[name="discount"]').val());
+    //var discount = parseFloat($('input[name="discount"]').val());
+    var discountString = $('input[name="discount"]').val()
+    var discountFloat = parseFloat(discountString).toFixed(2)
+    var discount = Number(discountFloat)
 
     var postData = {
         'csrfmiddlewaretoken': csrfToken,

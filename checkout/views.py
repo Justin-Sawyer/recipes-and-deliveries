@@ -14,6 +14,8 @@ from blog.models import Post
 from recipes.models import Recipe
 from django.contrib.auth.models import User
 
+from bs4 import BeautifulSoup
+
 import stripe
 import json
 
@@ -21,13 +23,15 @@ import json
 @require_POST
 def cache_checkout_data(request):
     try:
+        current_bag = bag_contents(request)
+        discount = current_bag['discount']
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
-            'discount': request.POST.get('discount'),
+            'discount': discount,
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -113,17 +117,14 @@ def checkout(request):
 
         current_bag = bag_contents(request)
         total = current_bag['grand_total']
-        # print(total)
-        # discount = current_bag['discount']
-        # print(discount)
-        # the_discount = request.POST.get('discount')
-        # print(the_discount)
+
         stripe_total = round(total * 100)
         stripe.api_key = stripe_secret_key
         intent = stripe.PaymentIntent.create(
             amount=stripe_total,
             currency=settings.STRIPE_CURRENCY,
         )
+        print(intent)
         # Attempt to prefill the form with any info the
         # user maintains in their profile
         if request.user.is_authenticated:

@@ -82,7 +82,7 @@
                         {% if user_recipes %}
                             {% if discount %}<p class="my-0">€{{ discount | floatformat:2}}</p>{% endif %}
                         {% endif %}
-                        <input type="hidden" value="{{ discount }}" name="discount">
+                        <input type="hidden" id="discount-id" value="{{ discount }}" name="discount">
                         
                         <p class="my-0 font-weight-bold">€{{ grand_total | floatformat:2 }}</p>
                     </div>
