@@ -60,7 +60,7 @@ class StripeWH_Handler:
         discount_rounded = round(stripe_discount_float, 2)
         discount = Decimal(discount_rounded).quantize(Decimal('.01'))
 
-        first_recipe = intent.metadata.first_recipe
+        first_recipe = intent.metadata.first_recipe or None
 
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
@@ -139,9 +139,10 @@ class StripeWH_Handler:
                     stripe_pid=pid,
                     vote_discount_applied=discount,
                 )
-                recipe = Recipe.objects.filter(id=first_recipe)[0]
-                recipe.discount_code = ""
-                recipe.save()
+                if first_recipe != "no_recipe":
+                    recipe = Recipe.objects.filter(id=first_recipe)[0]
+                    recipe.discount_code = ""
+                    recipe.save()
 
                 for item_id, item_data in json.loads(bag).items():
                     product = Product.objects.get(id=item_id)
