@@ -25,6 +25,7 @@ def cache_checkout_data(request):
     try:
         current_bag = bag_contents(request)
         discount = current_bag['discount']
+        # first_recipe = current_bag['first_recipe'] or None
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
@@ -32,6 +33,7 @@ def cache_checkout_data(request):
             'save_info': request.POST.get('save_info'),
             'username': request.user,
             'discount': discount,
+            'first_recipe': request.POST.get('first_recipe'),
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -46,6 +48,7 @@ def checkout(request):
     checkout_user = None
     recipe_with_discount_code = None
     vote_threshold_precentage = None
+    first_recipe = None
 
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -173,8 +176,8 @@ def checkout(request):
                         )"""
                         # print(total)
                     # should be in checkout_success, the next 2 lines
-                    #first_recipe.discount_code = ""
-                    #first_recipe.save()
+                    # first_recipe.discount_code = ""
+                    # first_recipe.save()
                 """if user_recipes:
                     for recipe in user_recipes:
                         if recipe.discount_code != "":
@@ -200,10 +203,11 @@ def checkout(request):
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
         'user_recipes': user_recipes,
-        'vote_threshold_precentage': vote_threshold_precentage,
+        # 'vote_threshold_precentage': vote_threshold_precentage,
         'first_discount_code': first_discount_code,
         'checkout_user': checkout_user,
         'recipe_with_discount_code': recipe_with_discount_code,
+        'first_recipe': first_recipe,
     }
 
     return render(request, template, context)

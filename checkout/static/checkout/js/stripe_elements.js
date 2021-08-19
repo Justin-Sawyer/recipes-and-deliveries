@@ -53,12 +53,14 @@ form.addEventListener('submit', function(ev) {
     var discountString = $('input[name="discount"]').val()
     var discountFloat = parseFloat(discountString).toFixed(2)
     var discount = Number(discountFloat)
+    var firstRecipe = $('input[name="first_recipe"]').val()
 
     var postData = {
         'csrfmiddlewaretoken': csrfToken,
         'client_secret': clientSecret,
         'save_info': saveInfo,
         'discount': discount,
+        'first_recipe': firstRecipe,
     };
     var url = '/checkout/cache_checkout_data/';
     $.post(url, postData).done(function() {
@@ -106,7 +108,7 @@ form.addEventListener('submit', function(ev) {
         } else {
             // The payment has been processed
             if (result.paymentIntent.status === 'succeeded') {
-                form.submit();
+                //form.submit();
             }
         }
     });  
