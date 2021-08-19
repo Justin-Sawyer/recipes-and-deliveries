@@ -14,8 +14,6 @@ from blog.models import Post
 from recipes.models import Recipe
 from django.contrib.auth.models import User
 
-from bs4 import BeautifulSoup
-
 import stripe
 import json
 
