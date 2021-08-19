@@ -31,7 +31,7 @@ def cache_checkout_data(request):
             'save_info': request.POST.get('save_info'),
             'username': request.user,
             'discount': discount,
-            'first_recipe': request.POST.get('first_recipe'),
+            'first_recipe': request.POST.get('first_recipe') or "no_recipe",
         })
         return HttpResponse(status=200)
     except Exception as e:

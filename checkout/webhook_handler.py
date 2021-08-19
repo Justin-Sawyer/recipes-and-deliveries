@@ -60,7 +60,7 @@ class StripeWH_Handler:
         discount_rounded = round(stripe_discount_float, 2)
         discount = Decimal(discount_rounded).quantize(Decimal('.01'))
 
-        first_recipe = intent.metadata.first_recipe or None
+        first_recipe = intent.metadata.first_recipe
 
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
