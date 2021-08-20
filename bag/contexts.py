@@ -3,18 +3,15 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 
 from products.models import Product
-from recipes.models import Recipe
 from django.contrib.auth.models import User
 
 
-
 def bag_contents(request):
-
+    """ A view to handle bag contents """
     bag_items = []
     total = 0
     product_count = 0
     discount = 0
-    # grand_total = 0
     user_recipes = 0
     bag = request.session.get('bag', {})
 
@@ -49,13 +46,15 @@ def bag_contents(request):
         free_delivery_delta = 0
     grand_total = total + delivery
 
+    # Dealing with discount code for votes for recipes
     if request.user.is_authenticated:
         user = get_object_or_404(User, id=request.user.id)
         user_recipes = user.recipe_posts.all()
         if user_recipes:
             for recipe in user_recipes:
                 if recipe.discount_code != "":
-                    discount = total * Decimal(settings.VOTE_THRESHOLD_PERCENTAGE / 100) or 0
+                    threshold = settings.VOTE_THRESHOLD_PERCENTAGE
+                    discount = total * Decimal(threshold / 100) or 0
             grand_total = total + delivery - discount
         else:
             grand_total = total + delivery
