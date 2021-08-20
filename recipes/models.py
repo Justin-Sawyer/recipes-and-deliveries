@@ -1,7 +1,6 @@
 from django.db import models
-from django.db.models import Sum
 from django.contrib.auth.models import User
-from datetime import datetime
+# from datetime import datetime
 from django.utils import timezone
 
 from products.models import Product
@@ -23,7 +22,7 @@ class Category(models.Model):
         return self.name
 
     def get_friendly_name(self):
-        return self.friendly_name.title()
+        return self.friendly_name
 
 
 class Tag(models.Model):
@@ -35,7 +34,7 @@ class Tag(models.Model):
     tagname = models.CharField(max_length=254)
 
     def __str__(self):
-        return self.tagname.capitalize()
+        return self.tagname
 
 
 class Recipe(models.Model):
@@ -48,7 +47,7 @@ class Recipe(models.Model):
     intro = models.CharField(max_length=254)
     prep_time = models.CharField(max_length=20)
     cook_time = models.CharField(max_length=20, default="", blank=True)
-    total_time = models.CharField(max_length=20, null=True, blank=False)
+    total_time = models.CharField(max_length=20, default="", blank=False)
     servings = models.IntegerField()
     category = models.ManyToManyField('Category', blank=True)
     tag = models.ManyToManyField('Tag', blank=True)
@@ -72,7 +71,7 @@ class Recipe(models.Model):
     discount_code = models.CharField(max_length=6, blank=True, default="")
 
     def total_votes(self):
-        return self.votes.count()
+        return self.votes
 
     def __str__(self):
         return self.title
@@ -87,13 +86,12 @@ class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
                                related_name='ingredients')
 
-    def __str(self):
+    def __str__(self):
         return self.name
-    
+
     # If quantity is whole number, remove the decimal places
     # Credit: https://stackoverflow.com/a/4566018/14773450
     def get_quantity(self):
         if self.quantity == int(self.quantity):
             self.quantity = int(self.quantity)
         return self.quantity
-

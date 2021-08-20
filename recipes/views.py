@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.core.mail import send_mail, mail_admins
 from django.template.loader import render_to_string
 
-from .models import Recipe, Ingredient, Category, Tag
+from .models import Recipe, Category, Tag
 from .forms import (
     RecipeForm, IngredientFormSet, NewCategoriesForm,
     NewTagsForm)
@@ -28,7 +28,7 @@ def all_recipes(request):
     query = None
 
     if request.GET:
-        # Sort products via the dropdown menu
+        # Sort recipes via the dropdown menu
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
             sort = sortkey
@@ -42,18 +42,19 @@ def all_recipes(request):
                     sortkey = f'-{sortkey}'
             recipes = recipes.order_by(sortkey)
 
-        # Sort blog articles by category
+        # Sort recipes by category
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             recipes = recipes.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
 
-        # Sort blog articles by tag
+        # Sort recipes by tag
         if 'tag' in request.GET:
             tags = request.GET['tag'].split(',')
             recipes = recipes.filter(tag__tagname__in=tags)
             tags = Tag.objects.filter(tagname__in=tags)
 
+        # Sort recipes by author
         if 'author' in request.GET:
             authors = request.GET['author'].split(',')
             recipes = recipes.filter(author_id__username__in=authors)
@@ -105,6 +106,7 @@ def recipe(request, recipe_id):
 
 @login_required
 def vote(request, pk):
+    """ A view to handle the voting for recipes functionality """
     recipe = get_object_or_404(Recipe, id=request.POST.get('recipe_id'))
     voted = False
     if recipe.votes.filter(id=request.user.id).exists():
@@ -120,7 +122,7 @@ def vote(request, pk):
         voted = True
         messages.success(request, 'Your vote has been registered!')
 
-        """ Send mail at threshold of votes """
+        # Send mail at threshold of votes
         mail_sent = recipe.mail_sent
         total_votes = recipe.total_votes()
 
@@ -131,7 +133,7 @@ def vote(request, pk):
                 # Save discount code to recipe
                 recipe.discount_code = discount_code
                 recipe.save()
-
+                # Send mail to author
                 cust_email = recipe.author.email
                 subject = render_to_string(
                     'recipes/congratulation_emails/congrats_email_subject.txt',
@@ -140,13 +142,12 @@ def vote(request, pk):
                     'recipes/congratulation_emails/congrats_email_body.txt',
                     {'recipe': recipe,
                      'contact_email': settings.DEFAULT_FROM_EMAIL})
-
+                # Send mail to admin
                 admin_subject = render_to_string(
-                    'recipes/congratulation_emails/admin_add_recipe_subject.txt',
+                    'recipes/congratulation_emails/add_recipe_subject.txt',
                     {'recipe': recipe})
-                
                 admin_body = render_to_string(
-                    'recipes/congratulation_emails/admin_add_recipe_body.txt',
+                    'recipes/congratulation_emails/add_recipe_body.txt',
                     {'recipe': recipe,
                      'contact_email': settings.DEFAULT_FROM_EMAIL})
 
@@ -171,17 +172,18 @@ def vote(request, pk):
 
 @login_required
 def add_recipe(request):
-    """ Gets username as author """
+    """ A view to handled adding recipes """
+    # Gets username as author
     author = get_object_or_404(User, id=request.user.id)
 
-    """ Check button for adding further recipes """
+    # Check button for adding further recipes
     add_more_recipes = request.POST.getlist('add-more-recipes')
 
     if request.method == 'POST':
         recipe_form = RecipeForm(request.POST, request.FILES)
         recipe_form_temp = recipe_form.save(commit=False)
 
-        """ Append user (post author) to form for submitting """
+        # Append user (post author) to form for submitting
         recipe_form_temp.author = author
         if recipe_form.is_valid():
             recipe = recipe_form.save()
@@ -189,21 +191,22 @@ def add_recipe(request):
             if formset.is_valid():
                 formset.save()
 
-            """ Handle new vs existing tags """
+            # Handle new vs existing tags
             new_tags_form = NewTagsForm(request.POST)
             if new_tags_form.data['tagname']:
                 new_tagname = new_tags_form.data['tagname']
                 tagname_collection = Tag.objects.all()
                 existing_tagname = Tag.objects.filter(tagname=new_tagname)
                 if existing_tagname:
-                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                    existing_tagname_id = (
+                        tagname_collection.get(id__in=existing_tagname))
                     recipe.tag.add(existing_tagname_id)
                 if not existing_tagname:
                     new_tags_form.is_valid()
                     newtag = new_tags_form.save()
                     recipe.tag.add(newtag)
 
-            """ Handle new vs exiting categories """
+            # Handle new vs exiting categories
             new_category_form = NewCategoriesForm(request.POST)
             if new_category_form.data['friendly_name']:
                 new_category_name = new_category_form.data['friendly_name']
@@ -218,11 +221,11 @@ def add_recipe(request):
                     new_category_form.is_valid()
                     newcategory = new_category_form.save()
                     recipe.category.add(newcategory)
-                    
+
             messages.success(request, 'Successfully added recipe!')
 
-            """ Handle redirect according to whether
-            Further Recipes is checked or not """
+            # Handle redirect according to whether
+            # Further Recipes is checked or not
             if add_more_recipes:
                 return redirect(reverse('add_recipe'))
             else:
@@ -250,7 +253,7 @@ def add_recipe(request):
 
 @login_required
 def edit_recipe(request, recipe_id):
-
+    """ A view to handle editing recipes """
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     ingredient_count = recipe.ingredients.all().count()
 
@@ -266,7 +269,7 @@ def edit_recipe(request, recipe_id):
                 if formset.is_valid():
                     formset.save()
 
-                """ Handle new vs existing tags """
+                # Handle new vs existing tags
                 new_tags_form = NewTagsForm(request.POST)
                 if new_tags_form.data['tagname']:
                     new_tagname = new_tags_form.data['tagname']
@@ -281,7 +284,7 @@ def edit_recipe(request, recipe_id):
                         newtag = new_tags_form.save()
                         recipe.tag.add(newtag)
 
-                """ Handle new vs exiting categories """
+                # Handle new vs exiting categories
                 new_category_form = NewCategoriesForm(request.POST)
                 if new_category_form.data['friendly_name']:
                     new_category_name = new_category_form.data['friendly_name']
@@ -298,7 +301,7 @@ def edit_recipe(request, recipe_id):
                         new_category_form.is_valid()
                         newcategory = new_category_form.save()
                         recipe.category.add(newcategory)
-                        
+
                 messages.success(request, 'Successfully updated recipe!')
                 return redirect(reverse('recipe', args=[recipe.id]))
             else:
@@ -313,7 +316,7 @@ def edit_recipe(request, recipe_id):
     else:
         messages.error(request, 'Sorry, only the recipe author can do that!')
         return redirect(reverse('home'))
-    
+
     template = 'recipes/edit_recipe.html'
 
     context = {
