@@ -54,6 +54,7 @@ def all_blog_articles(request):
             posts = posts.filter(tag__tagname__in=tags)
             tags = Tag.objects.filter(tagname__in=tags)
 
+        # Sort blog articles by author
         if 'author' in request.GET:
             authors = request.GET['author'].split(',')
             posts = posts.filter(author_id__username__in=authors)
@@ -117,24 +118,24 @@ def add_post(request):
     """ Add a post to the blog """
     if request.method == 'POST':
 
-        """ Gets username as author """
+        # Gets username as author
         author = get_object_or_404(User, id=request.user.id)
 
-        """ Retrieve form data """
+        # Retrieve form data
         posts_form = BlogPostForm(request.POST, request.FILES)
         form_temp = posts_form.save(commit=False)
 
-        """ Append user (post author) to form for submitting """
+        # Append user (post author) to form for submitting
         form_temp.author = author
 
-        """ Check button for adding further posts """
+        # Check button for adding further posts
         add_more_posts = request.POST.getlist('add-more-posts')
 
         if posts_form.is_valid():
             postsform = posts_form.save()
             new_post = Post.objects.get(id=postsform.id)
 
-            """ Handle new vs existing tags """
+            # Handle new vs existing tags
             new_tags_form = NewTagsForm(request.POST)
             if new_tags_form.data['tagname']:
                 new_tagname = new_tags_form.data['tagname']
@@ -149,7 +150,7 @@ def add_post(request):
                     newtag = new_tags_form.save()
                     new_post.tag.add(newtag)
 
-            """ Handle new vs exiting categories """
+            # Handle new vs exiting categories
             new_category_form = NewCategoriesForm(request.POST)
             if new_category_form.data['friendly_name']:
                 new_category_name = new_category_form.data['friendly_name']
@@ -167,8 +168,8 @@ def add_post(request):
 
             messages.success(request, 'Successfully added post!')
 
-            """ Handle redirect according to whether
-            Further Posts is checked or not """
+            # Handle redirect according to whether
+            # Further Posts is checked or not
             if add_more_posts:
                 return redirect(reverse('add_post'))
             else:
@@ -218,43 +219,6 @@ def edit_post(request, post_id):
                         new_tags_form.is_valid()
                         newtag = new_tags_form.save()
                         new_post.tag.add(newtag)
-                    """new_tags_form.is_valid()
-                    newtag = new_tags_form.save()
-                    new_post.tag.add(newtag)
-                    new_tagname = new_tags_form.data['tagname']
-                    # list = [new_tagname][0].split()
-                    # print(list)
-                    tagname_collection = Tag.objects.all()
-                    if existing_tagname:
-                        existing_tagname_id = tagname_collection.get(
-                            id__in=existing_tagname)
-                        new_post.tag.add(existing_tagname_id)
-                    for word in list:
-                        # print(word)
-                        # existing_tagname = [Tag.objects.filter(tagname=word)]
-                        # print(existing_tagname)
-                        if existing_tagname:
-                            for tag in existing_tagname:
-                                print(tag)
-                                # tag_id = Tag.objects.get(id__in=tag)
-                                print(Tag.objects.filter(tagname=tag))
-                                # print(tag_id)
-                            #for word in list:
-                            # existing_tagname_id = [
-                                # tagname_collection.get(pk__in=existing_tagname)][0].slice()
-                            # print(existing_tagname_id)
-                                # new_post.tag.add(existing_tagname_id)
-                        if not existing_tagname:
-                            for word in list:
-                                new_tags_form.is_valid()
-                                newtag = new_tags_form.save()
-                                new_post.tag.add(newtag)
-                                new_tag_form = NewTagsForm({'tagname': word},
-                                                            instance=Tag())
-                                newtag = new_tag_form.save()
-                                new_post.tag.add(newtag)
-                    # else:
-                        # new_post.tag.add(existing_tagname_id)"""
                 new_category_form = NewCategoriesForm(request.POST)
                 if new_category_form.data['friendly_name']:
                     new_category_name = new_category_form.data['friendly_name']

@@ -59,9 +59,12 @@ class Order(models.Model):
             self.delivery_cost = self.order_total * delivery / 100
         else:
             self.delivery_cost = 0
-        
+
         if self.vote_discount_applied:
-            self.grand_total = self.order_total + self.delivery_cost - self.vote_discount_applied
+            o_total = self.order_total
+            d_cost = self.delivery_cost
+            vote_discount = self.vote_discount_applied
+            self.grand_total = o_total + d_cost - vote_discount
         else:
             self.grand_total = self.order_total + self.delivery_cost
         self.save()
@@ -71,9 +74,6 @@ class Order(models.Model):
         Override the original save method to set the order number
         if it hasn't been set already.
         """
-        """if self.vote_discount_applied:
-            self.grand_total = self.order_total + self.delivery_cost - self.vote_discount_applied"""
-
         if not self.order_number:
             self.order_number = self._generate_order_number()
         super().save(*args, **kwargs)

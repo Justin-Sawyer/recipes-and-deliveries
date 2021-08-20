@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.db.models import Q
 
@@ -14,12 +14,12 @@ def index(request):
 
 
 def guarantee(request):
-    """ A view to return the R&D guarantee page """
+    """ A view to return the guarantee page """
     return render(request, 'home/guarantee.html')
 
 
 def search_result(request):
-    """ A view to return the R&D guarantee page """
+    """ A view to return the search page """
     posts = Post.objects.all().order_by('-pk')
     recipes = Recipe.objects.all().order_by('-pk')
     blog_categories = Category.objects.all().order_by('-pk')
@@ -32,23 +32,7 @@ def search_result(request):
     recipe_query = None
 
     if request.GET:
-        # Sort blog articles by category
-        """if 'category' in request.GET:
-            categories = request.GET['category'].split(',')
-            posts = posts.filter(category__name__in=categories)
-            categories = Category.objects.filter(name__in=categories)
-    
-        # Sort blog articles by tag
-        if 'tag' in request.GET:
-            tags = request.GET['tag'].split(',')
-            posts = posts.filter(tag__tagname__in=tags)
-            tags = Tag.objects.filter(tagname__in=tags)
-
-        if 'author' in request.GET:
-            authors = request.GET['author'].split(',')
-            posts = posts.filter(author_id__username__in=authors)
-            authors = User.objects.filter(username__in=authors)"""
-
+        # Search
         if 'q' in request.GET:
             post_query = request.GET['q']
             product_query = request.GET['q']

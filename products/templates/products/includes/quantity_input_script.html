@@ -19,7 +19,7 @@
     $('.qty_input').change(function() {
         let itemId = $(this).data('item_id');
         handleEnableDisable(itemId);
-    })
+    });
 
     // Increment quantity
     $('.increment-qty').click(function(e) {
@@ -29,7 +29,7 @@
         $(closestInput).val(currentValue + 1);
         let itemId = $(this).data('item_id');
         handleEnableDisable(itemId);
-    })
+    });
 
     // Decrement quantity
     $('.decrement-qty').click(function(e) {
@@ -39,5 +39,5 @@
         $(closestInput).val(currentValue - 1);
         let itemId = $(this).data('item_id');
         handleEnableDisable(itemId);
-    })
+    });
 </script>

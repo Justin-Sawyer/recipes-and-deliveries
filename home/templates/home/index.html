@@ -94,6 +94,7 @@
 {% block postloadjs %}
 {{ block.super }}
 <script>
+    // Bootstrap collapse
     $('#recipesCollapse').on('show.bs.collapse', function (e) {
         $('#deliveriesCollapse').collapse('hide');
     })

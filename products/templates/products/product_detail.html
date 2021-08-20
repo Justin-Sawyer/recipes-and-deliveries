@@ -194,8 +194,5 @@
     {{ block.super }}
     {% include 'products/includes/quantity_input_script.html' %}
     {% include 'products/includes/number_of_stars_according_to_rating.html' %}
-    <script>
-        $('.product-description').find('img').css({ 'height' : '', 'width' : '100%' });
-        $('.product-description').find('a').addClass('text-green').attr("target","_blank");
-    </script>
+    {% include 'products/includes/product_detail_handling.html' %}
 {% endblock %}

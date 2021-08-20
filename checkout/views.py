@@ -45,7 +45,6 @@ def checkout(request):
     first_discount_code = None
     checkout_user = None
     recipe_with_discount_code = None
-    vote_threshold_precentage = None
     first_recipe = None
 
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
@@ -125,7 +124,7 @@ def checkout(request):
             amount=stripe_total,
             currency=settings.STRIPE_CURRENCY,
         )
-        print(intent)
+        
         # Attempt to prefill the form with any info the
         # user maintains in their profile
         if request.user.is_authenticated:
@@ -146,7 +145,6 @@ def checkout(request):
 
                 checkout_user = get_object_or_404(User, id=request.user.id)
                 user_recipes = checkout_user.recipe_posts.all()
-                vote_threshold_precentage = settings.VOTE_THRESHOLD_PERCENTAGE
                 code_list = []
                 recipe_list = []
                 if user_recipes:
@@ -161,7 +159,7 @@ def checkout(request):
                         first_recipe = recipe_list[0]
                         # the_discount = request.POST.get('discount')
                         # print(the_discount)
-                        #order.vote_discount_applied = discount or 0
+                        # order.vote_discount_applied = discount or 0
                         # discount = current_bag['discount']
                         # print(discount)
                         """grand_total = current_bag['grand_total']

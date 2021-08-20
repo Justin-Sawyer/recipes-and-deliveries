@@ -9,7 +9,7 @@ class ProductForm(forms.ModelForm):
     image = forms.ImageField(label='Image',
                              required=False,
                              widget=CustomClearableFileInput)
-    
+
     # Change rendering of form to user-friendly checkboxes
     # Credit:
     # https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
