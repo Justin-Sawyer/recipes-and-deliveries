@@ -14,10 +14,11 @@ def add_to_bag(request, item_id):
     """ Add a quantity of the specified product to the shopping bag """
 
     product = get_object_or_404(Product, pk=item_id)
-
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
+
     gf_option = None
+
     if 'gluten_free_option' in request.POST:
         gf_option = request.POST['gluten_free_option']
     bag = request.session.get('bag', {})
@@ -52,9 +53,9 @@ def add_to_bag(request, item_id):
 
 
 def adjust_bag(request, item_id):
-    """
-    Adjust the quantity of the specified product to the specified amount
-    """
+    """ Adjust the quantity of the specified product
+    to the specified amount """
+
     product = get_object_or_404(Product, pk=item_id)
 
     quantity = int(request.POST.get('quantity'))
