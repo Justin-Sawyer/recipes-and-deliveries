@@ -97,7 +97,8 @@ def article(request, post_id):
             comment_form.name = name
             comment_form.save()
             messages.success(request, 'Successfully added comment!')
-            return HttpResponseRedirect(reverse('article', args=[str(post_id)]))
+            return HttpResponseRedirect(reverse(
+                'article', args=[str(post_id)]))
 
     other_posts = list(Post.objects.exclude(id=post.id))
     shuffle(other_posts)
@@ -140,7 +141,8 @@ def add_post(request):
                 tagname_collection = Tag.objects.all()
                 existing_tagname = Tag.objects.filter(tagname=new_tagname)
                 if existing_tagname:
-                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                    existing_tagname_id = tagname_collection.get(
+                        id__in=existing_tagname)
                     new_post.tag.add(existing_tagname_id)
                 if not existing_tagname:
                     new_tags_form.is_valid()
@@ -224,7 +226,8 @@ def edit_post(request, post_id):
                     # print(list)
                     tagname_collection = Tag.objects.all()
                     if existing_tagname:
-                        existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                        existing_tagname_id = tagname_collection.get(
+                            id__in=existing_tagname)
                         new_post.tag.add(existing_tagname_id)
                     for word in list:
                         # print(word)
@@ -246,7 +249,8 @@ def edit_post(request, post_id):
                                 new_tags_form.is_valid()
                                 newtag = new_tags_form.save()
                                 new_post.tag.add(newtag)
-                                new_tag_form = NewTagsForm({'tagname': word}, instance=Tag())
+                                new_tag_form = NewTagsForm({'tagname': word},
+                                                            instance=Tag())
                                 newtag = new_tag_form.save()
                                 new_post.tag.add(newtag)
                     # else:

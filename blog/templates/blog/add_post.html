@@ -78,25 +78,11 @@
 
 {% block postloadjs %}
     {{ block.super }}
+    {% include 'blog/includes/checkbox_height.html' %}
+    {% include 'blog/includes/image_credit_add.html' %}
     <script>
+        // Color checkbox
         $('input[type="checkbox"]').css('filter', 'hue-rotate(300deg)');
-        let catHeight = $('#cat-height').height();
-        let style = {
-            'height': `${catHeight}`,
-            'overflow': 'auto',
-            'margin-bottom': '16px'
-        }
-        $('#tag-height').css(style);
-
-        $('#div_id_image_credit').css('display', 'none');
-        $('.btn-file').children('input').addClass('new-image');
-        $('.new-image').change(function() {
-            let file = $('.new-image')[0].files[0];
-            $('#filename').text(`Image will be set to ${file.name}`);
-            $('#div_id_image_credit').css('display', 'block');
-            $('label[for="id_image_credit"]').text('Image Credit*');
-            $('input[name="image_credit"]').prop('required', true);
-        })
     </script>
 {% endblock %}
 

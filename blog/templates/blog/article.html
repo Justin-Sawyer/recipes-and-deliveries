@@ -252,15 +252,5 @@
 
 {% block postloadjs %}
     {{ block.super }}
-    <script>
-        $('.post-content').find('img').css({ 'height': '', 'width': '100%' });
-        $('.post-content').find('a').addClass('text-green').attr("target","_blank");
-    </script>
-    <script>
-        $('.comment-button').on('click', function (event) {
-            event.preventDefault();
-            $('input[name="body"]').prop('required', true);
-            $('.comment-block').toggle();
-        })
-    </script>
+    {% include 'blog/includes/blog_and_comment.html' %}
 {% endblock %}

@@ -65,7 +65,7 @@ class BlogPostForm(forms.ModelForm):
     # Change rendering of form to user-friendly checkboxes
     # Credit:
     # https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
-    tag =  forms.ModelMultipleChoiceField(
+    tag = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         label='Choose some tags from the list',
         required=False,
@@ -103,6 +103,7 @@ class BlogPostForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
 
         self.fields['category'].choices = friendly_name
+
 
 class CommentForm(forms.ModelForm):
 

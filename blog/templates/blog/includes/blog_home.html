@@ -1,0 +1,12 @@
+<script>
+    // Background image
+    // Photo by Maksim Goncharenok from Pexels https://www.pexels.com/photo/food-vegetables-man-love-6163277/
+    $('body').css('background-image', 'url(https://recipe-and-deliveries.s3.eu-west-3.amazonaws.com/media/community-overlay.jpg)');
+    // Bootstrap collapse
+    $('#guestCollapse').on('show.bs.collapse', function (e) {
+        $('#memberCollapse').collapse('hide');
+    });
+    $('#memberCollapse').on('show.bs.collapse', function (e) {
+        $('#guestCollapse').collapse('hide');
+    });
+</script>

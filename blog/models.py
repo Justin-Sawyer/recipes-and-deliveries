@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from products.models import Category
-from datetime import datetime
 from django.utils import timezone
 
 from ckeditor.fields import RichTextField
@@ -21,7 +19,7 @@ class Category(models.Model):
         return self.name
 
     def get_friendly_name(self):
-        return self.friendly_name.title()
+        return self.friendly_name
 
 
 class Tag(models.Model):
@@ -33,7 +31,7 @@ class Tag(models.Model):
     tagname = models.CharField(max_length=254)
 
     def __str__(self):
-        return self.tagname.capitalize()
+        return self.tagname
 
 
 class Post(models.Model):
@@ -58,7 +56,8 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='comments',
+                             on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default="")
     body = models.TextField(default="")
     date_added = models.DateTimeField(auto_now_add=True)

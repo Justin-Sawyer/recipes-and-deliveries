@@ -1,0 +1,12 @@
+<script>
+    // Set image size for blog articles
+    $('.post-content').find('img').css({ 'height': '', 'width': '100%' });
+    // Set link clour
+    $('.post-content').find('a').addClass('text-green').attr("target","_blank");
+    // Prevent form from submitting unless comment body filled in, then show comment
+    $('.comment-button').on('click', function (event) {
+        event.preventDefault();
+        $('input[name="body"]').prop('required', true);
+        $('.comment-block').toggle();
+    });
+</script>
