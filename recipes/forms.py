@@ -66,7 +66,7 @@ class IngredientForm(forms.ModelForm):
         for field in self.fields:
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-        
+
         self.fields['quantity'].widget.attrs['min'] = 0.01
 
 

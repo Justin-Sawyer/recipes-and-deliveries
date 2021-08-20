@@ -35,6 +35,7 @@ def profile(request):
         form = UserProfileForm(instance=profile)
     orders = profile.orders.all().order_by('-pk')
     user_posts = user.blog_posts.all().order_by('-pk')
+
     # See all my recipes by vote count first, then newest to oldest
     user_recipes = user.recipe_posts.all().order_by('-vote_count', '-pk')
 

@@ -1,0 +1,25 @@
+<script>
+    // Adding new ingredients
+    let addButton = $('#add-ingredient-form');
+    let ingredients = $('.ingredients');
+    let count = 0;
+    ingredients.slice(5).toggle();
+    addButton.on('click', function() {
+        event.preventDefault();
+
+        count++;
+        if (count == 1) {
+            ingredients.slice(5, 10).toggle();
+        }
+        if (count == 2) {
+            ingredients.slice(10, 15).toggle();
+        }
+        if (count == 3) {
+            ingredients.slice(15, 20).toggle();
+        }
+        if (count == 4) {
+            ingredients.slice(20, 25).toggle();
+            addButton.toggle();
+        }
+    });
+</script>

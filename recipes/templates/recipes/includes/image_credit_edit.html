@@ -1,0 +1,25 @@
+<script>
+    // Control of new images when editing blog articles
+    $('.btn-file').children('input').addClass('new-image');
+    $('#div_id_image_credit').css('display', 'none');
+    $('.new-image').change(function() {
+        let file = $('.new-image')[0].files[0];
+        $('#filename').text(`Image will be set to ${file.name}`);
+        $('input[name="image_credit"]').val('');
+        $('#div_id_image_credit').css('display', 'block');
+        $('label[for="id_image_credit"]').text('Image Credit*');
+        $('input[name="image_credit"]').prop('required', true);
+    });
+    let count = 0;
+    let imageCreditValue = $('input[name="image_credit"]').val();
+    $('#image-clear_id').on('change', function() {
+        if (count % 2 === 0) {
+            $('input[name="image_credit"]').val('');
+            $('input[name="image_credit"]').prop('required', false);
+        } else if (count % 2 != 0) {
+            $('input[name="image_credit"]').val(imageCreditValue);
+            $('input[name="image_credit"]').prop('required', true);
+        }
+        count += 1;
+    });
+</script>

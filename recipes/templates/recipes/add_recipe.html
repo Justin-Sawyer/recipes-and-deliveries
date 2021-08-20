@@ -122,52 +122,17 @@
 
 {% block postloadjs %}
     {{ block.super }}
+    {% include 'recipes/includes/checkbox_height.html' %}
+    {% include 'recipes/includes/image_credit_add.html' %}
+    {% include 'recipes/includes/new_ingredients_add.html' %}
     <script>
         // Change color of checkbox. Works in Chrome and Safari desktop
         $('input[type="checkbox"]').css('filter', 'hue-rotate(300deg)');
+    </script>
+    <script>
+        // Ensure ingredient fields are required
         $('input[name="ingredients-0-quantity"]').prop('required', true);
         $('input[name="ingredients-0-unit"]').prop('required', true);
         $('input[name="ingredients-0-name"]').prop('required', true);
-        let catHeight = $('#cat-height').height();
-        let style = {
-            'height': `${catHeight}`,
-            'overflow': 'auto',
-            'margin-bottom': '16px'
-        }
-        $('#tag-height').css(style);
-
-        $('#div_id_image_credit').css('display', 'none');
-        $('.btn-file').children('input').addClass('new-image');
-        $('.new-image').change(function() {
-            let file = $('.new-image')[0].files[0];
-            $('#filename').text(`Image will be set to ${file.name}`);
-            $('#div_id_image_credit').css('display', 'block');
-            $('label[for="id_image_credit"]').text('Image Credit*');
-            $('input[name="image_credit"]').prop('required', true);
-        })
-    </script>
-    <script>
-        let addButton = $('#add-ingredient-form');
-        let ingredients = $('.ingredients');
-        let count = 0;
-        ingredients.slice(5).toggle();
-        addButton.on('click', function() {
-            event.preventDefault();
-
-            count++;
-            if (count == 1) {
-                ingredients.slice(5, 10).toggle();
-            }
-            if (count == 2) {
-                ingredients.slice(10, 15).toggle();
-            }
-            if (count == 3) {
-                ingredients.slice(15, 20).toggle();
-            }
-            if (count == 4) {
-                ingredients.slice(20, 25).toggle();
-                addButton.toggle();
-            }
-        })
     </script>
 {% endblock %}

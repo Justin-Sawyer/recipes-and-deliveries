@@ -299,13 +299,5 @@
 
 {% block postloadjs %}
     {{ block.super }}
-    <script>
-        $('.ingredient').each(function() {
-            $( this ).text().replace( '0', 'x' );
-        });
-    </script>
-    <script>
-        $('.recipe-directions').find('img').css({ 'height' : '', 'width' : '100%' });
-        $('.recipe-directions').find('a').addClass('text-green').attr("target","_blank");
-    </script>
+    {% include 'recipes/includes/recipe_detail_handling.html' %}
 {% endblock %}
