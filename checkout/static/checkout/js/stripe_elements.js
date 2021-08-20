@@ -30,7 +30,7 @@ card.addEventListener('change', function(event) {
             <span class="icon" role="alert">
                 <i class="fas fa-times"></i>
             </span>
-            <span>${event.error.message}</span>`
+            <span>${event.error.message}</span>`;
         $(errorDiv).html(html);
     } else {
         errorDiv.textContent = '';
@@ -50,10 +50,10 @@ form.addEventListener('submit', function(ev) {
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
 
     //var discount = parseFloat($('input[name="discount"]').val());
-    var discountString = $('input[name="discount"]').val()
-    var discountFloat = parseFloat(discountString).toFixed(2)
-    var discount = Number(discountFloat)
-    var firstRecipe = $('input[name="first_recipe"]').val() || "no_recipe"
+    var discountString = $('input[name="discount"]').val();
+    var discountFloat = parseFloat(discountString).toFixed(2);
+    var discount = Number(discountFloat);
+    var firstRecipe = $('input[name="first_recipe"]').val();
 
     var postData = {
         'csrfmiddlewaretoken': csrfToken,
@@ -114,5 +114,5 @@ form.addEventListener('submit', function(ev) {
     });  
     }).fail(function() {
         location.reload();
-    })  
+    });
 });
