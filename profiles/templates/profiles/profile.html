@@ -172,9 +172,9 @@
                                                             <small>{{ recipe.date_posted|date:"jS F, Y" }}</small>
                                                         </div>
                                                         <!-- Votes -->
-                                                        {% if recipe.total_votes %}
+                                                        {% if recipe.vote_count %}
                                                             <div class="votes">
-                                                                <p class="vote-count font-weight-bold mb-0">Total votes: {{recipe.total_votes }}</p>
+                                                                <p class="vote-count font-weight-bold mb-0">Total votes: {{recipe.vote_count }}</p>
                                                             </div>
                                                         {% endif %}   
                                                     </div>
@@ -183,12 +183,12 @@
                                         </div>
                                     </div>
                                     {% if forloop.counter|divisibleby:1 %}
-                                    <div class="col-12 d-lg-none mb-5">
+                                    <div class="col-12 d-lg-none">
                                         <hr>
                                     </div>
                                     {% endif %}
                                     {% if forloop.counter|divisibleby:2 %}
-                                    <div class="col-12 d-none d-lg-block mb-5">
+                                    <div class="col-12 d-none d-lg-block">
                                         <hr>
                                     </div>
                                     {% endif %}
@@ -281,12 +281,12 @@
                                         </div>
                                     </div>
                                     {% if forloop.counter|divisibleby:1 %}
-                                    <div class="col-12 d-lg-none mb-5">
+                                    <div class="col-12 d-lg-none">
                                         <hr>
                                     </div>
                                     {% endif %}
                                     {% if forloop.counter|divisibleby:2 %}
-                                    <div class="col-12 d-none d-lg-block mb-5">
+                                    <div class="col-12 d-none d-lg-block">
                                         <hr>
                                     </div>
                                     {% endif %}

@@ -23,7 +23,7 @@
     {% endif %}
 
     <!-- Main page content -->
-    <div class="container content mb-0 mb-md-3">
+    <div class="container content mb-0 mb-md-0">
         <!-- Main Page row -->
         <div class="row mt-3">
 
@@ -102,7 +102,7 @@
                 <h3 class="subtitle">Comments:</h3>
                 {% if post.comments.all %}
                     {% for comment in post.comments.all %}
-                        <p class="font-weight-bold small mb-0">{{ comment.name }} - {{ comment.date_added }}</p>
+                        <p class="small mb-0">{{ comment.name|safe }} - {{ comment.date_added }}</p>
                         {{ comment.body|linebreaks }}
                         <hr>
                     {% endfor%}

@@ -3,9 +3,11 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.http import HttpResponseRedirect
 
 from .models import Product, Category
-from .forms import ProductForm
+from .forms import ProductForm, CommentForm
+from django.contrib.auth.models import User
 
 from random import shuffle
 
@@ -64,12 +66,30 @@ def product_detail(request, product_id):
     """ A view to show all individual product details """
 
     product = get_object_or_404(Product, pk=product_id)
+    comment_form = CommentForm
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        name = get_object_or_404(User, id=request.user.id)
+        if name.is_superuser:
+            name = "<strong>Recipes</strong><i>and</i><strong>Deliveries</strong>"
+        comment_form_temp = comment_form.save(commit=False)
+        comment_form_temp.product = product
+        comment_form_temp.name = name
+        if comment_form.is_valid():
+            comment_form.product = product
+            comment_form.name = name
+            comment_form.save()
+            messages.success(request, 'Successfully added comment!')
+            return HttpResponseRedirect(reverse(
+                'product_detail', args=[str(product_id)]))
+
     other_products = list(Product.objects.exclude(id=product.id))
     shuffle(other_products)
 
     context = {
         'product': product,
         'other_products': other_products,
+        'comment_form': comment_form,
     }
 
     return render(request, 'products/product_detail.html', context)

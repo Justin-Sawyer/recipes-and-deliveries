@@ -1,6 +1,6 @@
 from django import forms
 from .widgets import CustomClearableFileInput
-from .models import Product, Category
+from .models import Product, Category, Comment
 
 
 class ProductForm(forms.ModelForm):
@@ -40,3 +40,15 @@ class ProductForm(forms.ModelForm):
                 self.fields[field].widget.attrs['placeholder'] = placeholder
 
         self.fields['category'].choices = friendly_name
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta():
+        labels = {
+            # 'name': 'Name*',
+            'body': 'Add your comment',
+        }
+
+        model = Comment
+        fields = ('body', )

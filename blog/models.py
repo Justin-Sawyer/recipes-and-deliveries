@@ -43,7 +43,6 @@ class Post(models.Model):
     tagline = models.CharField(max_length=254)
     image = models.ImageField(null=True, blank=True)
     image_credit = models.CharField(max_length=254, default="", blank=True)
-    # content = models.TextField()
     content = RichTextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     date_posted = models.DateTimeField(null=True,

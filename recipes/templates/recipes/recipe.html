@@ -24,7 +24,7 @@
     {% endif %}
 
     <!-- Main page content -->
-    <div class="container content mb-0 mb-md-3">
+    <div class="container content mb-0 mb-md-0">
         <!-- Main Page row -->
         <div class="row mt-3">
             <!-- Article col -->
@@ -161,16 +161,16 @@
                         {% else %}
                             <p><a href="{% url 'account_signup' %}" class="text-green mb-3">Register</a> or <a href="{% url 'account_login' %}" class="text-green mb-3">log in</a> to vote for it</p>
                         {% endif %}
-                        {% if total_votes > 0 %}
-                            <p>Total votes: {{ total_votes }}</p>
+                        {% if recipe.vote_count > 0 %}
+                            <p>Total votes: {{ recipe.vote_count }}</p>
                         {% else %}
                             {% if request.user.is_authenticated %}
                                 <p>Be the first to vote for this recipe!</p>
                             {% endif %}
                         {% endif %}
                     {% else %}
-                        {% if total_votes > 0 %}
-                            <p>Total votes: {{ total_votes }}</p>
+                        {% if recipe.vote_count > 0 %}
+                            <p>Total votes: {{ recipe.vote_count }}</p>
                         {% else %}
                             <p>No votes yet for your recipe</p>
                         {% endif %}

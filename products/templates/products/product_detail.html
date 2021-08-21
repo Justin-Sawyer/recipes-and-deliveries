@@ -117,6 +117,39 @@
                         {% endwith %}
                     </div>
                 </form>
+
+                <!-- Comments -->
+                <h3 class="subtitle">Recipe Box Reviews:</h3>
+                {% if product.comments.all %}
+                    {% for comment in product.comments.all %}
+                        <p class="small mb-0">{{ comment.name|safe }} - {{ comment.date_added }}</p>
+                        {{ comment.body|linebreaks }}
+                        <hr class="comment-horizontal-row">
+                    {% endfor%}
+                    {% if request.user.is_authenticated %}
+                        <button class="comment-button btn btn-green mb-2">Add a comment</button>
+                    {% else %}
+                        <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                    {% endif %}
+                {% else %}
+                    {% if request.user.is_authenticated %}
+                        <button class="comment-button btn btn-green mb-2">Be the first to comment</button>
+                    {% else %}
+                        <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                    {% endif %}
+                {% endif %}
+
+                <!-- Comment form -->
+            <div class="comment-block" style="display:none">
+                <form method="POST" action="" id="comment-form" class="form mb-2">
+                    {% csrf_token %}
+                    {{ comment_form|crispy}}
+                    <div class="text-right">
+                        <a class="btn btn-red" href="">Cancel</a>
+                        <button class="btn btn-green" type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
                 
                 {% if product.image_credit %}
                     <p class="text-muted image-credit"><small> Image: {{ product.image_credit }}</small></p>
@@ -124,7 +157,7 @@
             </div>
 
             <!-- Similar articles -->
-            <div class="col-12 col-md-4 more-products mb-md-3">
+            <div class="col-12 col-md-4 more-products">
                 <h3 class="font-weight-bold similar-articles mt-5 mt-md-0">More Boxes</h3>
                 <div class="row">
                     {% for box in other_products|slice:"3" %}
