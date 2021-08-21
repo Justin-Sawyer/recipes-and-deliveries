@@ -90,8 +90,6 @@ def article(request, post_id):
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         name = get_object_or_404(User, id=request.user.id)
-        if name.is_superuser:
-            name = "<strong>Recipes</strong><i>and</i><strong>Deliveries</strong>"
         comment_form_temp = comment_form.save(commit=False)
         comment_form_temp.post = post
         comment_form_temp.name = name
@@ -100,6 +98,10 @@ def article(request, post_id):
             comment_form.name = name
             comment_form.save()
             messages.success(request, 'Successfully added comment!')
+            return HttpResponseRedirect(reverse(
+                'article', args=[str(post_id)]))
+        else:
+            messages.error(request, 'It seems that your comment cannot be posted. Sorry!')
             return HttpResponseRedirect(reverse(
                 'article', args=[str(post_id)]))
 

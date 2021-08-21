@@ -122,7 +122,7 @@
                 <h3 class="subtitle">Recipe Box Reviews:</h3>
                 {% if product.comments.all %}
                     {% for comment in product.comments.all %}
-                        <p class="small mb-0">{{ comment.name|safe }} - {{ comment.date_added }}</p>
+                        <p class="small font-weight-bold mb-0"><span class="commenters-name">{{ comment.name|safe }}</span> - {{ comment.date_added }}</p>
                         {{ comment.body|linebreaks }}
                         <hr class="comment-horizontal-row">
                     {% endfor%}
@@ -224,4 +224,12 @@
     {% include 'products/includes/quantity_input_script.html' %}
     {% include 'products/includes/number_of_stars_according_to_rating.html' %}
     {% include 'products/includes/product_detail_handling.html' %}
+    <script>
+        $('.commenters-name').each(function() {
+            if (($(this).text() == 'recipesanddeliveries') || ($(this).text() == 'justins')) {
+            //$(this).addClass( "text-amber" );
+                $(this).text('').html('Recipes<i class="font-weight-normal">and</i>Deliveries')
+            }
+        });
+    </script>
 {% endblock %}
