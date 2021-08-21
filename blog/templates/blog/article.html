@@ -23,7 +23,7 @@
     {% endif %}
 
     <!-- Main page content -->
-    <div class="container content mb-2">
+    <div class="container content mb-0 mb-md-3">
         <!-- Main Page row -->
         <div class="row mt-3">
 
@@ -143,8 +143,8 @@
             </div>
 
             <!-- Other articles -->
-            <div class="col-12 col-md-4">
-                <h3 class="font-weight-bold similar-articles">More Articles</h3>
+            <div class="col-12 col-md-4 more-articles">
+                <h3 class="font-weight-bold similar-articles mt-5 mt-md-0">More Articles</h3>
                 <div class="row mb-3">
                     {% for other_post in other_posts|slice:"3" %}
                     <div class="col-12">
@@ -240,8 +240,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 mb-3">
-                        <hr>
+                    <div class="col-12">
+                        <br>
                     </div>
                     {% endfor %}
                 </div>

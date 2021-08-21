@@ -27,8 +27,12 @@
                 <p>Find out more:</p>
                 
                 <p>
-                    <button class="info-button btn btn-amber mb-3" type="button" data-toggle="collapse" data-target="#recipesCollapse" aria-expanded="false" aria-controls="recipesCollapse"><strong>Recipes</strong></button>
-                    <button class="info-button btn btn-amber mb-3 float-right" type="button" data-toggle="collapse" data-target="#deliveriesCollapse" aria-expanded="false" aria-controls="deliveriesCollapse"><strong>Deliveries</strong></button>
+                    <button class="info-button btn btn-amber mb-3" type="button" data-toggle="collapse" data-target="#recipesCollapse" 
+                        aria-expanded="false" aria-controls="recipesCollapse"><strong>Recipes</strong>
+                    </button>
+                    <button class="info-button btn btn-amber mb-3 float-right" type="button" data-toggle="collapse" 
+                        data-target="#deliveriesCollapse" aria-expanded="false" aria-controls="deliveriesCollapse"><strong>Deliveries</strong>
+                    </button>
                 </p>
                 <div class="row">
                     <div class="col">
@@ -45,14 +49,15 @@
                                     <h5 class="card-title">The Recipes</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Add your own recipes</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Upvote recipes</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Get a discount when your recipe is added as a recipe box*</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Get a discount when your recipe is 
+                                        added as a recipe box*</p>
                                     <a href="{% url 'all_recipes' %}" class="btn btn-green">Go to the Recipes</a>
                                     <br>
                                     <br>
                                     <p class="card-text small text-right">
-                                        *When your recipe achieves 1000 votes, it is added as a Recipe Box that can be ordered by the community.
-                                        As a thank you, <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> will offer you a nice 
-                                        discount on your next purchase!
+                                        *When your recipe achieves 1000 votes, it is added as a Recipe Box that can be ordered by the 
+                                        community. As a thank you, <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> will offer 
+                                        you a nice discount on your next purchase!
                                     </p>
                                 </div>
                             </div>
@@ -62,16 +67,20 @@
                                 <h4 class="card-header">The <strong>Deliveries</strong> Service</h4>
                                 <div class="card-body">
                                     <h5 class="card-title">Recipe Boxes</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Order from a growing collection of recipe boxes</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Choose simply how many people you need to feed, we take care of the rest</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Free delivery when you reach the threshold</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Order from a growing collection 
+                                        of recipe boxes</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Choose simply how many people you 
+                                        need to feed, we take care of the rest</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Free delivery when you reach the 
+                                        threshold</p>
                                     <a href="{% url 'products' %}" class="btn btn-green">Go to the Recipe Box selection</a>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">The <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> Guarantee</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> 100% recycled packaging</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Cold chain guaranteed</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Deliveries guaranteed within 24 hrs on your order</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Deliveries guaranteed within 24 hrs 
+                                        of your order</p>
                                     <p class="card-text text-right"> ... or your money back! <i class="fas fa-coins text-green"></i></p>
                                     <a href="{% url 'guarantee'%}" class="btn btn-green">Find out more</a>
                                 </div>

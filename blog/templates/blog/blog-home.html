@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container content mb-2">
+    <div class="container content mb-3">
         <div class="row">
             <div class="col-12 col-md-6 my-auto">
                 <h1 class="d-lg-none my-0 body-site-title"><strong>Recipes</strong><i>and</i><strong>Deliveries</strong></h1>
@@ -26,8 +26,12 @@
                 <p>As a guest, you are can enjoy all of the articles, however there are advantages to being a registered member!</p>
                 <p>Find out more:</p>
                 <p>
-                    <button class="info-button btn btn-amber mb-3" type="button" data-toggle="collapse" data-target="#guestCollapse" aria-expanded="false" aria-controls="guestCollapse"><strong>Guests</strong></button>
-                    <button class="info-button btn btn-amber mb-3 float-right" type="button" data-toggle="collapse" data-target="#memberCollapse" aria-expanded="false" aria-controls="memberCollapse"><strong>Members</strong></button>
+                    <button class="info-button btn btn-amber mb-3" type="button" data-toggle="collapse" data-target="#guestCollapse" 
+                        aria-expanded="false" aria-controls="guestCollapse"><strong>Guests</strong>
+                    </button>
+                    <button class="info-button btn btn-amber mb-3 float-right" type="button" data-toggle="collapse" 
+                        data-target="#memberCollapse" aria-expanded="false" aria-controls="memberCollapse"><strong>Members</strong>
+                    </button>
                 </p>
                 <div class="row">
                     <div class="col">
@@ -36,17 +40,20 @@
                                 <h4 class="card-header">The <strong>Guest</strong> Community</h4>
                                 <div class="card-body">
                                     <h5 class="card-title">The Blog</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the blog articles</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the 
+                                        blog articles</p>
                                     <a href="{% url 'blog-articles' %}" class="btn btn-green">Go to the Blog</a>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">The Recipes</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the recipes*</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the 
+                                        recipes*</p>
                                     <a href="{% url 'all_recipes' %}" class="btn btn-green">Go to the Recipes</a>
                                     <br>
                                     <br>
                                     <p class="card-text small text-right">
-                                        *Registered members get full access to each recipe, including all the ingredient quantities and directions.
+                                        *Registered members get full access to each recipe, including all the ingredient quantities and 
+                                        directions.
                                         As a guest, we restrict access to some parts of a recipe card for commercial reasons.
                                     </p>
                                 </div>
@@ -57,23 +64,27 @@
                                 <h4 class="card-header">The <strong>Members</strong> Community</h4>
                                 <div class="card-body">
                                     <h5 class="card-title">The Blog</h5>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the blog articles</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Read and be inspired by all the 
+                                        blog articles</p>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Write you own food articles</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Comment and contribute to the community</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Comment and contribute to the 
+                                        community</p>
                                     <a href="{% url 'blog-articles' %}" class="btn btn-green">Go to the Blog</a>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">The Recipes</h5>
                                     <p class="card-text"><i class="far fa-check-square text-green"></i> Add your own recipes</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Upvote and comment other community recipes</p>
-                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Get a discount when your recipe is added as a recipe box*</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Upvote and comment other community 
+                                        recipes</p>
+                                    <p class="card-text"><i class="far fa-check-square text-green"></i> Get a discount when your recipe 
+                                        is added as a recipe box*</p>
                                     <a href="{% url 'all_recipes' %}" class="btn btn-green">Go to the Recipes</a>
                                     <br>
                                     <br>
                                     <p class="card-text small text-right">
-                                        *When your recipe achieves 1000 votes, it is added as a Recipe Box that can be ordered by the community.
-                                        As a thank you, <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> will offer you a nice 
-                                        discount on your next purchase!
+                                        *When your recipe achieves 1000 votes, it is added as a Recipe Box that can be ordered by the 
+                                        community. As a thank you, <strong>Recipes</strong><i>and</i><strong>Deliveries</strong> will 
+                                        offer you a nice discount on your next purchase!
                                     </p>
                                 </div>
                             </div>
