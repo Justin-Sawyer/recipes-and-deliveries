@@ -74,8 +74,7 @@
                             {% if current_tags %} found for <strong>"{% for t in current_tags %}{{ t.tagname|title }}{% endfor %}"</strong> tag{% endif %}
                             {% if current_categories %} found for <strong>"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong> category{% endif %}
                             {% if current_authors %} found for author {% for a in current_authors %} {% if a.is_superuser %} <strong>"Recipes</strong><i>and</i><strong>Deliveries"</strong>{% else %}<strong>"{{ a.username }}"</strong>{% endif %}{% endfor %}{% endif %}
-                            <p>{% if is_paginated %}Articles {{ page_obj.start_index }}—{{ page_obj.end_index }}{% endif %}</p>
-                        </p>
+                            <br>{% if is_paginated %}Articles {{ page_obj.start_index }}—{{ page_obj.end_index }}{% endif %}</p>
                     </div>
                 </div>
 
@@ -142,8 +141,9 @@
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green"
                                                     href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                                    <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
-                                            </a>
+                                                    <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                                                </a>
+                                            </small>
                                         {% else %}
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green font-weight-bold"
