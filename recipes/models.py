@@ -34,6 +34,7 @@ class Tag(models.Model):
     tagname = models.CharField(max_length=254)
 
     def __str__(self):
+        self.tagname = self.tagname.capitalize()
         return self.tagname
 
 
