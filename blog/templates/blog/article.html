@@ -121,7 +121,7 @@
 
                 <!-- Comment form -->
                 <div class="comment-block" style="display:none">
-                    <form method="POST" action="" id="comment-form" class="form mb-2">
+                    <form method="POST" action="{% url 'article' post.id %}" id="comment-form" class="form mb-2">
                         {% csrf_token %}
                         {{ comment_form|crispy}}
                         <div class="text-right">
@@ -207,8 +207,9 @@
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green"
                                                     href="{% url 'blog-articles' %}?author={{ other_post.author }}">
-                                                    <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
-                                            </a>
+                                                    <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                                                </a>
+                                            </small>
                                         {% else %}
                                             <small class="text-muted author">Posted by:
                                                 <a class="text-muted text-green font-weight-bold"
