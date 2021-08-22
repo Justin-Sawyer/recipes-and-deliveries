@@ -127,15 +127,16 @@
                         <hr class="comment-horizontal-row">
                     {% endfor%}
                     {% if request.user.is_authenticated %}
-                        <button class="comment-button btn btn-green mb-2">Add a comment</button>
+                        <button class="comment-button btn btn-green mb-2">Add a review</button>
                     {% else %}
                         <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
                     {% endif %}
                 {% else %}
+                    <p>No reviews yet for this Recipe Box.</p>
                     {% if request.user.is_authenticated %}
-                        <button class="comment-button btn btn-green mb-2">Be the first to comment</button>
+                        <button class="comment-button btn btn-green mb-2">Be the first to write a review</button>
                     {% else %}
-                        <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                        <p>Want to add a review? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
                     {% endif %}
                 {% endif %}
 
