@@ -64,7 +64,7 @@ def all_products(request):
 
 def product_detail(request, product_id):
     """ A view to show all individual product details """
-    
+
     product = get_object_or_404(Product, pk=product_id)
     comment_form = CommentForm
     if request.method == 'POST':
@@ -83,7 +83,8 @@ def product_detail(request, product_id):
             return HttpResponseRedirect(reverse(
                 'product_detail', args=[str(product_id)]))
         else:
-            messages.error(request, 'It seems that your comment cannot be posted. Sorry!')
+            messages.error(request, 'It seems that your comment cannot be \
+                posted. Sorry!')
             return HttpResponseRedirect(reverse(
                 'product_detail', args=[str(product_id)]))
 

@@ -29,10 +29,8 @@
         <div class="row mt-3">
             <!-- Article col -->
             <div class="col-12 col-md-8">
-
                 <!-- Post Title -->
                 <h2 class="font-weight-bold title">{{ recipe.title|title }}</h2>
-
                 <!-- Categories -->
                 {% if recipe.category %}
                     <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
@@ -45,7 +43,6 @@
                         {% endfor %}
                     </p>
                 {% endif %}
-
                 <!-- Tags -->
                 {% if recipe.tag %}
                     <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
@@ -58,9 +55,6 @@
                         {% endfor %}
                     </p>
                 {% endif %}
-
-                
-                
                 <!-- Author & editing -->
                 <div class="mb-3">
                     <!-- Post Author -->
@@ -107,11 +101,11 @@
                         </div>
                         <div class="col-6 col-md-3">
                             <p class="mb-0">Cook time:</p>
-                                {% if recipe.cook_time %}
-                                    <p>{{ recipe.cook_time }}</p>
-                                {% else %}
-                                    <p>None req'd</p>
-                                {% endif %}
+                            {% if recipe.cook_time %}
+                                <p>{{ recipe.cook_time }}</p>
+                            {% else %}
+                                <p>None req'd</p>
+                            {% endif %}
                         </div>
                         <div class="col-6 col-md-3">
                             <p class="mb-0">Total time:</p>
@@ -196,7 +190,6 @@
                     {% for other_recipe in other_recipes|slice:"3" %}
                     <div class="col-12">
                         <div class="card h-100 border-0">
-
                             <!-- Image -->
                             {% if other_recipe.image %}
                                 <a href="{% url 'recipe' other_recipe.id %}">
@@ -209,7 +202,6 @@
                                         src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ other_recipe.title }}">
                                 </a>
                             {% endif %}
-
                             <!-- Post Title -->
                             <div class="card-body pb-0">
                                 <h3 class="mb-0 font-weight-bold title-name">{{ other_recipe.title|title }}</h3>
@@ -217,10 +209,8 @@
                             <div class="card-footer bg-white pt-0 border-0 text-left">
                                 <div class="row">
                                     <div class="col">
-
                                         <!-- Tagline -->
                                         <p class="mb-0 text-left text-black tagline">{{ other_recipe.intro }}</p>
-
                                         <!-- Categories -->
                                         {% if other_recipe.category %}
                                             <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
@@ -234,7 +224,6 @@
                                                 {% endfor %}
                                             </p>
                                         {% endif %}
-
                                         <!-- Tags -->
                                         {% if recipe.tag %}
                                             <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
@@ -248,7 +237,6 @@
                                                 {% endfor %}
                                             </p>
                                         {% endif %}
-
                                         <!-- Post author -->
                                         {% if other_recipe.author.is_superuser %}
                                             <small class="text-muted author">Posted by:
@@ -264,7 +252,6 @@
                                                 </a>
                                             </small>
                                         {% endif %}
-
                                         <!-- Editing and deleting -->
                                         {% if request.user.is_superuser or request.user.id is other_recipe.author.id %}
                                             <div class="edit-delete">
@@ -277,7 +264,6 @@
                                                 </small>
                                             </div>
                                         {% endif %}
-                                        
                                         <!-- Date posted -->
                                         <div class="post-date">
                                             <small>{{ other_recipe.date_posted|date:"jS F, Y" }}</small>

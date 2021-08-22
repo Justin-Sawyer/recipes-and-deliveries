@@ -126,7 +126,7 @@ def vote(request, pk):
         mail_sent = recipe.mail_sent
         total_votes = recipe.total_votes()
 
-        if total_votes == 2:
+        if total_votes == 1000:
             if mail_sent is False:
                 # Generate discount code
                 discount_code = randrange(100000, 1000000, 6)

@@ -10,12 +10,12 @@ from django.contrib.auth.models import User
 
 def index(request):
     """ A view to return the index page """
-    return render(request, 'home/index.html')
+    return render(request, 'home/index.html', {'index': True})
 
 
 def guarantee(request):
     """ A view to return the guarantee page """
-    return render(request, 'home/guarantee.html')
+    return render(request, 'home/guarantee.html', {'guarantee': True})
 
 
 def search_result(request):

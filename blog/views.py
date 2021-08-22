@@ -14,7 +14,7 @@ from random import shuffle
 
 def blog_home(request):
     """ A view to return the blog home page """
-    return render(request, 'blog/blog-home.html')
+    return render(request, 'blog/blog-home.html', {'community': True})
 
 
 def all_blog_articles(request):
@@ -103,7 +103,8 @@ def article(request, post_id):
             return HttpResponseRedirect(reverse(
                 'article', args=[str(post_id)]))
         else:
-            messages.error(request, 'It seems that your comment cannot be posted. Sorry!')
+            messages.error(request, 'It seems that your comment cannot \
+                be posted. Sorry!')
             return HttpResponseRedirect(reverse(
                 'article', args=[str(post_id)]))
 
