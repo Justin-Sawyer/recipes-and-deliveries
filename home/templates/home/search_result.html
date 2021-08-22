@@ -222,8 +222,10 @@
                                                         <small class="text-muted author">Posted by:
                                                             <a class="text-muted text-green"
                                                                 href="{% url 'blog-articles' %}?author={{ post.author }}">
-                                                                <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
-                                                        </a>
+                                                                <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                                                            </a>
+                                                        </small>
+                                                        
                                                     {% else %}
                                                         <small class="text-muted author">Posted by:
                                                             <a class="text-muted text-green font-weight-bold"
@@ -372,8 +374,9 @@
                                                         <small class="text-muted author">Posted by:
                                                             <a class="text-muted text-green"
                                                                 href="{% url 'all_recipes' %}?author={{ recipe.author }}">
-                                                                <strong>Recipes</strong><i>and</i><strong>Deliveries</strong></small>
-                                                        </a>
+                                                                <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                                                            </a>
+                                                        </small>
                                                     {% else %}
                                                         <small class="text-muted author">Posted by:
                                                             <a class="text-muted text-green font-weight-bold"
