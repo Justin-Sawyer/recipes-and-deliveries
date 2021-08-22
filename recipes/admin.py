@@ -28,7 +28,6 @@ class RecipeAdmin(admin.ModelAdmin):
         'author',
         'recipe_box',
         'total_votes',
-        # 'vote_count',
     )
 
     ordering = ('title',)

@@ -64,12 +64,14 @@ def all_products(request):
 
 def product_detail(request, product_id):
     """ A view to show all individual product details """
-
+    
     product = get_object_or_404(Product, pk=product_id)
     comment_form = CommentForm
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         name = get_object_or_404(User, id=request.user.id)
+        if name.is_superuser:
+            name = "recipesanddeliveries"
         comment_form_temp = comment_form.save(commit=False)
         comment_form_temp.product = product
         comment_form_temp.name = name

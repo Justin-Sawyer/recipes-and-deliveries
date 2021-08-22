@@ -72,7 +72,8 @@ class Recipe(models.Model):
     discount_code = models.CharField(max_length=6, blank=True, default="")
 
     def total_votes(self):
-        return self.votes
+        # return self.votes
+        return self.vote_count
 
     def __str__(self):
         return self.title

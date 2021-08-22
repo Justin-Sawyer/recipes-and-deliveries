@@ -226,8 +226,7 @@
     {% include 'products/includes/product_detail_handling.html' %}
     <script>
         $('.commenters-name').each(function() {
-            if (($(this).text() == 'recipesanddeliveries') || ($(this).text() == 'justins')) {
-            //$(this).addClass( "text-amber" );
+            if ($(this).text() == 'recipesanddeliveries') {
                 $(this).text('').html('Recipes<i class="font-weight-normal">and</i>Deliveries')
             }
         });
