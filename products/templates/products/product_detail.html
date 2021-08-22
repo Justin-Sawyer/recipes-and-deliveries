@@ -142,7 +142,7 @@
 
                 <!-- Comment form -->
             <div class="comment-block" style="display:none">
-                <form method="POST" action="" id="comment-form" class="form mb-2">
+                <form method="POST" action="{% url 'product_detail' product.id %}" id="comment-form" class="form mb-2">
                     {% csrf_token %}
                     {{ comment_form|crispy}}
                     <div class="text-right">

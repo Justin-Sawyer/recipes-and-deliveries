@@ -56,7 +56,7 @@
                             {{ products|length }}{% if products|length == 1 %} Recipe Box {% else %} Recipe Boxes {% endif %}
                             {% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                             {% if current_categories %} found for <strong class="category-name">"{% for c in current_categories %}{{ c.friendly_name }}{% endfor %}"</strong> category{% endif %}
-                            <p>{% if is_paginated %}Recipe Boxes {{ page_obj.start_index }}—{{ page_obj.end_index }}{% endif %}</p>
+                            <br>{% if is_paginated %}Recipe Boxes {{ page_obj.start_index }}—{{ page_obj.end_index }}{% endif %}
                         </p>
                     </div>
                 </div>
