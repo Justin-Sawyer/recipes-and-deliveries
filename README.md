@@ -229,21 +229,21 @@ This website is fully responsive and interactive.
 This website was tested using the following tools:
 
 1. [W3C HTML](https://validator.w3.org/) was used to verify the HTML code:
-	* [Results]()
+	* [Results](https://github.com/Justin-Sawyer/recipes_and_deliveries/tree/master/documentation/screenshots/html)
 
 2. [W3C CSS](https://jigsaw.w3.org/css-validator/) was used to ensure there were no CSS code errors in this project:
-	* [Results]()
+	* [Results](https://github.com/Justin-Sawyer/recipes_and_deliveries/tree/master/documentation/screenshots/css)
 
 3. [JSHint](https://jshint.com/) was used for the verification of the JavaScript:
-	* [Results]()
+	* [Results](https://github.com/Justin-Sawyer/recipes_and_deliveries/tree/master/documentation/screenshots/js)
 
 4. [Python Validator](http://pep8online.com/) was used for verification of all Python code:
-	* [Results]()
+	* [Results (.txt files)](https://github.com/Justin-Sawyer/recipes_and_deliveries/tree/master/documentation/screenshots/python)
 
 5. Google Chrome's Dev Tool was used extensively while writing this website.
 
 6. The [Lighthouse plugin for Google Chrome](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl) was used for speed checking and "tweaking" settings for maximal optimisation for web deployment.
-	* [Results (pdf files)]()
+	* [Results (.pdf files)](https://github.com/Justin-Sawyer/recipes_and_deliveries/tree/master/documentation/screenshots/lighthouse)
 
 ### Testing User Stories
 
