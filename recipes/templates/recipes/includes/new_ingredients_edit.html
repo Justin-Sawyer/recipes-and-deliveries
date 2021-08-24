@@ -11,14 +11,14 @@
     let ingredientCountPlusFifteen = ingredientTotal + 15;
     let ingredientCountPlusTwenty = ingredientTotal + 20;
     let ingredientCountPlusTwentyFive = ingredientTotal + 25;
-    let count = 0;
+    let counter = 0;
     ingredients.slice(ingredientTotal).toggle();
     deleteButton.slice(ingredientTotal).toggle();
     addButton.on('click', function() {
         event.preventDefault();
 
-        count++;
-        if (count == 1) {
+        counter++;
+        if (counter == 1) {
             ingredients.slice(ingredientTotal, ingredientCountPlusFive).toggle();
             deleteButton.slice(ingredientTotal, ingredientCountPlusFive).toggle();
             if (ingredientCountPlusFive >= 25) {
@@ -27,7 +27,7 @@
                 addButton.toggle();
             }
         }
-        if (count == 2) {
+        if (counter == 2) {
             ingredients.slice(ingredientCountPlusFive, ingredientCountPlusTen).toggle();
             deleteButton.slice(ingredientCountPlusFive, ingredientCountPlusTen).toggle();
             if (ingredientCountPlusTen >= 25) {
@@ -36,7 +36,7 @@
                 addButton.toggle();
             }
         }
-        if (count == 3) {
+        if (counter == 3) {
             ingredients.slice(ingredientCountPlusTen, ingredientCountPlusFifteen).toggle();
             deleteButton.slice(ingredientCountPlusTen, ingredientCountPlusFifteen).toggle();
             if (ingredientCountPlusFifteen >= 25) {
@@ -45,7 +45,7 @@
                 addButton.toggle();
             }
         }
-        if (count == 4) {
+        if (counter == 4) {
             ingredients.slice(ingredientCountPlusFifteen, ingredientCountPlusTwenty).toggle();
             deleteButton.slice(ingredientCountPlusFifteen, ingredientCountPlusTwenty).toggle();
             if (ingredientCountPlusTwenty >= 25) {
@@ -54,7 +54,7 @@
                 addButton.toggle();
             }
         }
-        if (count == 5) {
+        if (counter == 5) {
             ingredients.slice(ingredientCountPlusTwenty, ingredientCountPlusTwentyFive).toggle();
             deleteButton.slice(ingredientCountPlusTwenty, ingredientCountPlusTwentyFive).toggle();
             if (ingredientCountPlusTwentyFive >= 25) {

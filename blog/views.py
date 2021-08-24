@@ -143,6 +143,7 @@ def add_post(request):
             new_post = Post.objects.get(id=postsform.id)
 
             # Handle new vs existing tags
+            no_space_tags = True
             new_tags_form = NewTagsForm(request.POST)
             if new_tags_form.data['tagname']:
                 new_tagname = new_tags_form.data['tagname']
@@ -153,11 +154,16 @@ def add_post(request):
                         id__in=existing_tagname)
                     new_post.tag.add(existing_tagname_id)
                 if not existing_tagname:
-                    new_tags_form.is_valid()
-                    newtag = new_tags_form.save()
-                    new_post.tag.add(newtag)
+                    if ' ' not in new_tagname:
+                        new_tags_form.is_valid()
+                        newtag = new_tags_form.save()
+                        new_post.tag.add(newtag)
+                        no_space_tags = True
+                    else:
+                        no_space_tags = False
 
             # Handle new vs exiting categories
+            no_space_cats = True
             new_category_form = NewCategoriesForm(request.POST)
             if new_category_form.data['friendly_name']:
                 new_category_name = new_category_form.data['friendly_name']
@@ -169,11 +175,21 @@ def add_post(request):
                         category_collection.get(id__in=existing_category_name))
                     new_post.category.add(existing_category_name_id)
                 if not existing_category_name:
-                    new_category_form.is_valid()
-                    newcategory = new_category_form.save()
-                    new_post.category.add(newcategory)
+                    if ' ' not in new_category_name:
+                        new_category_form.is_valid()
+                        newcategory = new_category_form.save()
+                        new_post.category.add(newcategory)
+                        no_space_cats = True
+                    else:
+                        no_space_cats = False
 
-            messages.success(request, 'Successfully added post!')
+            if no_space_tags and no_space_cats:
+                messages.success(request, 'Successfully added post!')
+            else:
+                messages.warning(request, 'Your post was added, but we were not able \
+                    to add your tags and/or categories. Please add these one \
+                    word at a time!')
+                return redirect(reverse('edit_post', args=[postsform.id]))
 
             # Handle redirect according to whether
             # Further Posts is checked or not
@@ -213,6 +229,8 @@ def edit_post(request, post_id):
             if posts_form.is_valid():
                 postsform = posts_form.save()
                 new_post = Post.objects.get(id=postsform.id)
+
+                no_space_tags = True
                 new_tags_form = NewTagsForm(request.POST)
                 if new_tags_form.data['tagname']:
                     new_tagname = new_tags_form.data['tagname']
@@ -223,9 +241,15 @@ def edit_post(request, post_id):
                             tagname_collection.get(id__in=existing_tagname))
                         new_post.tag.add(existing_tagname_id)
                     if not existing_tagname:
-                        new_tags_form.is_valid()
-                        newtag = new_tags_form.save()
-                        new_post.tag.add(newtag)
+                        if ' ' not in new_tagname:
+                            new_tags_form.is_valid()
+                            newtag = new_tags_form.save()
+                            new_post.tag.add(newtag)
+                            no_space_tags = True
+                        else:
+                            no_space_tags = False
+
+                no_space_cats = True
                 new_category_form = NewCategoriesForm(request.POST)
                 if new_category_form.data['friendly_name']:
                     new_category_name = new_category_form.data['friendly_name']
@@ -239,9 +263,23 @@ def edit_post(request, post_id):
                                 id__in=existing_category_name))
                         new_post.category.add(existing_category_name_id)
                     if not existing_category_name:
-                        new_category_form.is_valid()
-                        newcategory = new_category_form.save()
-                        new_post.category.add(newcategory)
+                        if ' ' not in new_category_name:
+                            new_category_form.is_valid()
+                            newcategory = new_category_form.save()
+                            new_post.category.add(newcategory)
+                            no_space_cats = True
+                        else:
+                            no_space_cats = False
+
+                if no_space_tags and no_space_cats:
+                    messages.success(request, 'Successfully added post!')
+                else:
+                    messages.warning(request, f'''Your post was added, but we were not able \
+                        to add your tags and/or categories.
+
+                        Please add these one word at a time!''')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+
                 messages.success(request, 'Successfully updated post!')
                 return redirect(reverse('article', args=[post.id]))
             else:

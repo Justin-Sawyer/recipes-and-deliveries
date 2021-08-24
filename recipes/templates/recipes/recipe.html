@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <p>We'd love to show you the whole recipe but you need to <a class="text-green" href="{% url 'account_signup' %}">register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                    <p>We'd love to show you the whole recipe but you need to <a class="text-green" href="{% url 'account_signup' %}">register</a> or <a class="text-green" href="{% url 'account_login' %}?next={{request.path}}">log in</a> first.</p>
                 {% endif %}
                 
                 <!-- Vote for recipe-->

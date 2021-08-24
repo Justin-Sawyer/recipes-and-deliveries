@@ -93,7 +93,7 @@ def recipe(request, recipe_id):
     voted = False
     if votes.votes.filter(id=request.user.id).exists():
         voted = True
-
+    
     context = {
         'recipe': recipe,
         'other_recipes': other_recipes,
@@ -192,6 +192,7 @@ def add_recipe(request):
                 formset.save()
 
             # Handle new vs existing tags
+            no_space_tags = True
             new_tags_form = NewTagsForm(request.POST)
             if new_tags_form.data['tagname']:
                 new_tagname = new_tags_form.data['tagname']
@@ -202,11 +203,19 @@ def add_recipe(request):
                         tagname_collection.get(id__in=existing_tagname))
                     recipe.tag.add(existing_tagname_id)
                 if not existing_tagname:
-                    new_tags_form.is_valid()
+                    """new_tags_form.is_valid()
                     newtag = new_tags_form.save()
-                    recipe.tag.add(newtag)
+                    recipe.tag.add(newtag)"""
+                    if ' ' not in new_tagname:
+                        new_tags_form.is_valid()
+                        newtag = new_tags_form.save()
+                        recipe.tag.add(newtag)
+                        no_space_tags = True
+                    else:
+                        no_space_tags = False
 
             # Handle new vs exiting categories
+            no_space_cats = True
             new_category_form = NewCategoriesForm(request.POST)
             if new_category_form.data['friendly_name']:
                 new_category_name = new_category_form.data['friendly_name']
@@ -218,11 +227,26 @@ def add_recipe(request):
                         category_collection.get(id__in=existing_category_name))
                     recipe.category.add(existing_category_name_id)
                 if not existing_category_name:
-                    new_category_form.is_valid()
+                    """new_category_form.is_valid()
                     newcategory = new_category_form.save()
-                    recipe.category.add(newcategory)
+                    recipe.category.add(newcategory)"""
+                    if ' ' not in new_category_name:
+                        new_category_form.is_valid()
+                        newcategory = new_category_form.save()
+                        recipe.category.add(newcategory)
+                        no_space_cats = True
+                    else:
+                        no_space_cats = False
+            
+            if no_space_tags and no_space_cats:
+                messages.success(request, 'Successfully added recipe!')
+            else:
+                messages.warning(request, 'Your recipe was added, but we were not able \
+                    to add your tags and/or categories. Please add these one \
+                    word at a time!')
+                return redirect(reverse('edit_recipe', args=[recipe.id]))
 
-            messages.success(request, 'Successfully added recipe!')
+            # messages.success(request, 'Successfully added recipe!')
 
             # Handle redirect according to whether
             # Further Recipes is checked or not
@@ -270,6 +294,7 @@ def edit_recipe(request, recipe_id):
                     formset.save()
 
                 # Handle new vs existing tags
+                no_space_tags = True
                 new_tags_form = NewTagsForm(request.POST)
                 if new_tags_form.data['tagname']:
                     new_tagname = new_tags_form.data['tagname']
@@ -280,11 +305,19 @@ def edit_recipe(request, recipe_id):
                             id__in=existing_tagname)
                         recipe.tag.add(existing_tagname_id)
                     if not existing_tagname:
-                        new_tags_form.is_valid()
+                        """new_tags_form.is_valid()
                         newtag = new_tags_form.save()
-                        recipe.tag.add(newtag)
+                        recipe.tag.add(newtag)"""
+                        if ' ' not in new_tagname:
+                            new_tags_form.is_valid()
+                            newtag = new_tags_form.save()
+                            recipe.tag.add(newtag)
+                            no_space_tags = True
+                        else:
+                            no_space_tags = False
 
                 # Handle new vs exiting categories
+                no_space_cats = True
                 new_category_form = NewCategoriesForm(request.POST)
                 if new_category_form.data['friendly_name']:
                     new_category_name = new_category_form.data['friendly_name']
@@ -298,9 +331,25 @@ def edit_recipe(request, recipe_id):
                                 id__in=existing_category_name))
                         recipe.category.add(existing_category_name_id)
                     if not existing_category_name:
-                        new_category_form.is_valid()
+                        """new_category_form.is_valid()
                         newcategory = new_category_form.save()
-                        recipe.category.add(newcategory)
+                        recipe.category.add(newcategory)"""
+                        if ' ' not in new_category_name:
+                            new_category_form.is_valid()
+                            newcategory = new_category_form.save()
+                            recipe.category.add(newcategory)
+                            no_space_cats = True
+                        else:
+                            no_space_cats = False
+                    
+                    if no_space_tags and no_space_cats:
+                        messages.success(request, 'Successfully added recipe!')
+                    else:
+                        messages.warning(request, f'''Your recipe was added, but we were not able \
+                            to add your tags and/or categories.
+
+                            Please add these one word at a time!''')
+                        return redirect(reverse('edit_recipe', args=[recipe.id]))
 
                 messages.success(request, 'Successfully updated recipe!')
                 return redirect(reverse('recipe', args=[recipe.id]))

@@ -109,13 +109,13 @@
                     {% if request.user.is_authenticated %}
                         <button class="comment-button btn btn-green mb-2">Add a comment</button>
                     {% else %}
-                        <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                        <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}?next={{request.path}}">log in</a> first.</p>
                     {% endif %}
                 {% else %}
                     {% if request.user.is_authenticated %}
                         <button class="comment-button btn btn-green mb-2">Be the first to comment</button>
                     {% else %}
-                        <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}">log in</a> first.</p>
+                        <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}?next={{request.path}}">log in</a> first.</p>
                     {% endif %}
                 {% endif %}
 
