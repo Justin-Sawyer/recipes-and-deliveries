@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-
-
 from ckeditor.fields import RichTextField
 
 
@@ -23,6 +21,12 @@ class Category(models.Model):
     def get_friendly_name(self):
         self.friendly_name = self.friendly_name.capitalize()
         return self.friendly_name
+
+    def save(self):
+        # Credit: https://stackoverflow.com/a/31094863/14773450
+        # set name to be friendly name
+        self.name = self.friendly_name
+        super().save(self)
 
 
 class Tag(models.Model):

@@ -25,6 +25,12 @@ class Category(models.Model):
         self.friendly_name = self.friendly_name.capitalize()
         return self.friendly_name
 
+    def save(self):
+        # Credit: https://stackoverflow.com/a/31094863/14773450
+        # set name to be friendly name
+        self.name = self.friendly_name
+        super().save(self)
+
 
 class Tag(models.Model):
 
