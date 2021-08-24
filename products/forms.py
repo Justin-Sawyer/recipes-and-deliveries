@@ -46,9 +46,20 @@ class CommentForm(forms.ModelForm):
 
     class Meta():
         labels = {
-            # 'name': 'Name*',
-            'body': 'Add your comment',
+            'body': 'Add your review',
         }
 
         model = Comment
         fields = ('body', )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        placeholders = {
+            'body': 'Add review. Your username will be added automatically.'
+        }
+
+        for field in self.fields:
+            if field == 'body':
+                placeholder = placeholders[field]
+                self.fields[field].widget.attrs['placeholder'] = placeholder
