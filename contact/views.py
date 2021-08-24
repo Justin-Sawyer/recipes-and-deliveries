@@ -27,10 +27,10 @@ def contact(request):
                     'contact_email': settings.DEFAULT_FROM_EMAIL})
             # Send mail to admin
             admin_subject = render_to_string(
-                'contact/confirmation_emails/mail_recd_subject.txt',
+                'contact/confirmation_emails/admin_mail_recd_subject.txt',
                 {'mail_recd': mail_recd})
             admin_body = render_to_string(
-                'contact/confirmation_emails/mail_recd_body.txt',
+                'contact/confirmation_emails/admin_mail_recd_body.txt',
                 {'mail_recd': mail_recd,
                     'contact_email': settings.DEFAULT_FROM_EMAIL})
 
@@ -53,11 +53,11 @@ def contact(request):
                 make sure the form is valid')
             return redirect(reverse('contact', args=[contact_form.id]))
 
-    form = ContactForm() 
+    else:
+        form = ContactForm()
     context = {
         'form': form,
     }
-
     return render(request, 'contact/contact.html', context)
 
 

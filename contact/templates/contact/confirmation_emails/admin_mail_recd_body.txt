@@ -1,0 +1,9 @@
+Recipes and Deliveries have received an email from {{ mail_recd.name }}
+
+Below is a transcript of the message:
+
+"{{ mail_recd.message }}"
+
+To reply:
+
+{{ mail_recd.email }}

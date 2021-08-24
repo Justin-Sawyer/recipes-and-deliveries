@@ -1,0 +1,1 @@
+Message received from {{ mail_recd.name }}, {{ mail_recd.email }}
