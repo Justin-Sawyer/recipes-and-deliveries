@@ -6,6 +6,7 @@ class ContactAdmin(admin.ModelAdmin):
         'email',
         'name',
         'subject',
+        'date',
     )
 
 
