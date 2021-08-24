@@ -1,0 +1,14 @@
+Hi {{ mail_recd.name }}
+
+This is just a courtesy reply to your message.
+
+Below is a transcript of the message:
+
+"{{ mail_recd.message }}"
+
+Someone from the Recipes and Devliveries team will reply to you shortly.
+
+Sincerely,
+
+Recipes and Deliveries
+{{ contact_email }}

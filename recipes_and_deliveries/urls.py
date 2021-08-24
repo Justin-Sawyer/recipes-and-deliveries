@@ -32,6 +32,7 @@ urlpatterns = [
     path('profile/', include('profiles.urls')),
     path('blog/', include('blog.urls')),
     path('recipes/', include('recipes.urls')),
+    path('contact/', include('contact.urls')),
     path(
         "favicon.ico",
         RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
