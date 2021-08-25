@@ -245,6 +245,18 @@ This website was tested using the following tools:
 6. The [Lighthouse plugin for Google Chrome](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl) was used for speed checking and "tweaking" settings for maximal optimisation for web deployment.
 	* [Results (.pdf files)](https://github.com/Justin-Sawyer/recipes_and_deliveries/tree/master/documentation/screenshots/lighthouse)
 
+    Note about Lighthouse results:
+
+	There are certain results that yield very poor Lighthouse results. The developer has looked into the reasons for these bad results, and is convinced that they are not a result of any code he has written. Instead, some of these bad results come from an outside dependency: ckeditor. This is the Rich Text Editor found on `/add` and `/edit` pages. Included below is an example screenshot showing this:
+
+	<img src="documentation/screenshots/testing/blog:add.png">
+
+	A further poor results can be seen on the checkout success page. Again, this result is caused by external factors, namely Stripe's js:
+
+	<img src="documentation/screenshots/testing/checkout_success.png">
+
+    While these results might just be simple anomalies, the developer has added researching particularly ckeditor to his list of future plans. See future plans, below.
+
 ### Testing User Stories
 
 
