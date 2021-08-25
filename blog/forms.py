@@ -1,6 +1,5 @@
 from django import forms
 from .widgets import CustomClearableFileInput
-# from django.contrib.auth.models import User
 from .models import Post, Category, Tag, Comment
 
 

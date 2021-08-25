@@ -93,7 +93,7 @@ def recipe(request, recipe_id):
     voted = False
     if votes.votes.filter(id=request.user.id).exists():
         voted = True
-    
+
     context = {
         'recipe': recipe,
         'other_recipes': other_recipes,
@@ -179,7 +179,6 @@ def add_recipe(request):
         new_category_form = NewCategoriesForm(request.POST)
         formset = IngredientFormSet(request.POST)
         if recipe_form.is_valid():
-            # Gets username as author
             author = get_object_or_404(User, id=request.user.id)
 
             # Check button for adding further recipes
@@ -187,9 +186,7 @@ def add_recipe(request):
 
             recipe_form_temp = recipe_form.save(commit=False)
 
-            # Append user (post author) to form for submitting
             recipe_form_temp.author = author
-            # if recipe_form.is_valid():
             recipe = recipe_form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)
             if formset.is_valid():
@@ -207,9 +204,6 @@ def add_recipe(request):
                         tagname_collection.get(id__in=existing_tagname))
                     recipe.tag.add(existing_tagname_id)
                 if not existing_tagname:
-                    """new_tags_form.is_valid()
-                    newtag = new_tags_form.save()
-                    recipe.tag.add(newtag)"""
                     if ' ' not in new_tagname:
                         new_tags_form.is_valid()
                         newtag = new_tags_form.save()
@@ -231,9 +225,6 @@ def add_recipe(request):
                         category_collection.get(id__in=existing_category_name))
                     recipe.category.add(existing_category_name_id)
                 if not existing_category_name:
-                    """new_category_form.is_valid()
-                    newcategory = new_category_form.save()
-                    recipe.category.add(newcategory)"""
                     if ' ' not in new_category_name:
                         new_category_form.is_valid()
                         newcategory = new_category_form.save()
@@ -241,7 +232,7 @@ def add_recipe(request):
                         no_space_cats = True
                     else:
                         no_space_cats = False
-            
+
             if no_space_tags and no_space_cats:
                 messages.success(request, 'Successfully added recipe!')
             else:
@@ -249,8 +240,6 @@ def add_recipe(request):
                     to add your tags and/or categories. Please add these one \
                     word at a time!')
                 return redirect(reverse('edit_recipe', args=[recipe.id]))
-
-            # messages.success(request, 'Successfully added recipe!')
 
             # Handle redirect according to whether
             # Further Recipes is checked or not
@@ -313,9 +302,6 @@ def edit_recipe(request, recipe_id):
                             id__in=existing_tagname)
                         recipe.tag.add(existing_tagname_id)
                     if not existing_tagname:
-                        """new_tags_form.is_valid()
-                        newtag = new_tags_form.save()
-                        recipe.tag.add(newtag)"""
                         if ' ' not in new_tagname:
                             new_tags_form.is_valid()
                             newtag = new_tags_form.save()
@@ -339,9 +325,6 @@ def edit_recipe(request, recipe_id):
                                 id__in=existing_category_name))
                         recipe.category.add(existing_category_name_id)
                     if not existing_category_name:
-                        """new_category_form.is_valid()
-                        newcategory = new_category_form.save()
-                        recipe.category.add(newcategory)"""
                         if ' ' not in new_category_name:
                             new_category_form.is_valid()
                             newcategory = new_category_form.save()
@@ -349,15 +332,15 @@ def edit_recipe(request, recipe_id):
                             no_space_cats = True
                         else:
                             no_space_cats = False
-                    
+
                     if no_space_tags and no_space_cats:
                         messages.success(request, 'Successfully added recipe!')
                     else:
-                        messages.warning(request, f'''Your recipe was added, but we were not able \
-                            to add your tags and/or categories.
-
-                            Please add these one word at a time!''')
-                        return redirect(reverse('edit_recipe', args=[recipe.id]))
+                        messages.warning(request, 'Your recipe was added, but we were not able \
+                            to add your tags and/or categories. \
+                            Please add these one word at a time!')
+                        return redirect(reverse('edit_recipe',
+                                        args=[recipe.id]))
 
                 messages.success(request, 'Successfully updated recipe!')
                 return redirect(reverse('recipe', args=[recipe.id]))

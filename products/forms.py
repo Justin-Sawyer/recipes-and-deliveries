@@ -15,8 +15,6 @@ class ProductForm(forms.ModelForm):
     # https://medium.com/swlh/django-forms-for-many-to-many-fields-d977dec4b024
     category = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(),
-        # label='Choose some categories from the list',
-        # required=False,
         widget=forms.CheckboxSelectMultiple
     )
 
@@ -51,7 +49,7 @@ class CommentForm(forms.ModelForm):
 
         model = Comment
         fields = ('body', )
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -14,7 +14,6 @@ def contact(request):
         if form.is_valid():
             contact_form = form.save()
             mail_recd = Contact.objects.get(id=contact_form.id)
-            name = mail_recd.name
 
             # Send "message rec'd mail"
             cust_email = mail_recd.email
@@ -59,5 +58,3 @@ def contact(request):
         'form': form,
     }
     return render(request, 'contact/contact.html', context)
-
-

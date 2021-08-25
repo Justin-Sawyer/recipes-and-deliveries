@@ -27,6 +27,7 @@
                 <h2 class="font-weight-bold mb-4">Checkout</h2>
             </div>
         </div>
+
         <!-- Main page content -->
         <div class="row">
             <div class="col-12 col-md-6 order-md-last mb-5">
@@ -84,8 +85,6 @@
                         {% endif %}
                         <input type="hidden" id="discount-id" value="{{ discount }}" name="discount">
                         <input type="hidden" id="first-recipe-id" value="{% if first_recipe %}{{ first_recipe.id }}{% else %}no_recipe{% endif %}" name="first_recipe">
-                        
-                        
                         <p class="my-0 font-weight-bold">€{{ grand_total | floatformat:2 }}</p>
                     </div>
                 </div>
@@ -127,7 +126,6 @@
                         <legend class="fieldset-label small px-2 w-auto text-muted">Payment</legend>
                         <!-- A Stripe card element will go here -->
                         <div class="mb-3" id="card-element"></div>
-
                         <!-- Used to display form errors -->
                         <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
                         <input type="hidden" value="{{ client_secret }}" name="client_secret">

@@ -177,7 +177,6 @@
                                                     src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ post.title }}">
                                             </a>
                                         {% endif %}
-
                                         <!-- Post Title -->
                                         <div class="card-body pb-0">
                                             <h3 class="mb-0 font-weight-bold title-name">{{ post.title|title }}</h3>
@@ -185,10 +184,8 @@
                                         <div class="card-footer bg-white pt-0 border-0 text-left">
                                             <div class="row">
                                                 <div class="col">
-
                                                     <!-- Tagline -->
                                                     <p class="mb-0 text-left text-black tagline">{{ post.tagline|truncatechars:200 }}</p>
-
                                                     <!-- Categories -->
                                                     {% if post.category %}
                                                         <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
@@ -202,7 +199,6 @@
                                                             {% endfor %}
                                                         </p>
                                                     {% endif %}
-
                                                     <!-- Tags -->
                                                     {% if post.tag %}
                                                         <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
@@ -216,7 +212,6 @@
                                                             {% endfor %}
                                                         </p>
                                                     {% endif %}
-
                                                     <!-- Post author -->
                                                     {% if post.author.is_superuser %}
                                                         <small class="text-muted author">Posted by:
@@ -225,7 +220,6 @@
                                                                 <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
                                                             </a>
                                                         </small>
-                                                        
                                                     {% else %}
                                                         <small class="text-muted author">Posted by:
                                                             <a class="text-muted text-green font-weight-bold"
@@ -234,7 +228,6 @@
                                                             </a>
                                                         </small>
                                                     {% endif %}
-
                                                     <!-- Editing and deleting -->
                                                     {% if request.user.is_superuser or request.user.id is post.author.id %}
                                                         <div class="edit-delete">
@@ -252,7 +245,6 @@
                                                             </small>
                                                         </div>
                                                     {% endif %}
-                                                    
                                                     <!-- Date posted -->
                                                     <div class="post-date">
                                                         <small>{{ post.date_posted|date:"jS F, Y" }}</small>
@@ -329,7 +321,6 @@
                                                     src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
                                             </a>
                                         {% endif %}
-
                                         <!-- Post Title -->
                                         <div class="card-body pb-0">
                                             <h3 class="mb-0 font-weight-bold title-name">{{ recipe.title|title }}</h3>
@@ -337,10 +328,8 @@
                                         <div class="card-footer bg-white pt-0 border-0 text-left">
                                             <div class="row">
                                                 <div class="col">
-
                                                     <!-- Tagline -->
                                                     <p class="mb-0 text-left text-black tagline">{{ recipe.intro|truncatechars:200 }}</p>
-
                                                     <!-- Categories -->
                                                     {% if recipe.category %}
                                                         <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
@@ -354,7 +343,6 @@
                                                             {% endfor %}
                                                         </p>
                                                     {% endif %}
-
                                                     <!-- Tags -->
                                                     {% if recipe.tag %}
                                                         <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
@@ -368,7 +356,6 @@
                                                             {% endfor %}
                                                         </p>
                                                     {% endif %}
-
                                                     <!-- Post author -->
                                                     {% if recipe.author.is_superuser %}
                                                         <small class="text-muted author">Posted by:
@@ -385,7 +372,6 @@
                                                             </a>
                                                         </small>
                                                     {% endif %}
-
                                                     <!-- Editing and deleting -->
                                                     {% if request.user.is_superuser or request.user.id is recipe.author.id %}
                                                         <div class="edit-delete">
@@ -402,7 +388,6 @@
                                                             </small>
                                                         </div>
                                                     {% endif %}
-                                                    
                                                     <!-- Date posted -->
                                                     <div class="post-date">
                                                         <small>{{ recipe.date_posted|date:"jS F, Y" }}</small>

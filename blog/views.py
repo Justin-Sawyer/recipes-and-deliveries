@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db.models.functions import Lower
 from django.http import HttpResponseRedirect
 
 from .models import Post, Category, Tag
 from .forms import BlogPostForm, NewTagsForm, NewCategoriesForm, CommentForm
-from django.contrib.auth.models import User
 
 from random import shuffle
 
@@ -64,7 +64,8 @@ def all_blog_articles(request):
 
     template = 'blog/blog-articles.html'
 
-    paginator = Paginator(posts, 12)  # Show 12 contacts per page.
+    # Show 12 contacts per page.
+    paginator = Paginator(posts, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -128,20 +129,13 @@ def add_post(request):
         new_tag_form = NewTagsForm(request.POST)
         new_category_form = NewCategoriesForm(request.POST)
         if posts_form.is_valid():
-            # Gets username as author
             author = get_object_or_404(User, id=request.user.id)
-
-            # Retrieve form data
-            # posts_form = BlogPostForm(request.POST, request.FILES)
             form_temp = posts_form.save(commit=False)
-
-            # Append user (post author) to form for submitting
             form_temp.author = author
 
             # Check button for adding further posts
             add_more_posts = request.POST.getlist('add-more-posts')
 
-            # if posts_form.is_valid():
             postsform = posts_form.save()
             new_post = Post.objects.get(id=postsform.id)
 
@@ -280,10 +274,9 @@ def edit_post(request, post_id):
                 if no_space_tags and no_space_cats:
                     messages.success(request, 'Successfully added post!')
                 else:
-                    messages.warning(request, f'''Your post was added, but we were not able \
-                        to add your tags and/or categories.
-
-                        Please add these one word at a time!''')
+                    messages.warning(request, 'Your post was added, but we were not able \
+                        to add your tags and/or categories. Please add these \
+                        one word at a time!')
                     return redirect(reverse('edit_post', args=[postsform.id]))
 
                 messages.success(request, 'Successfully updated post!')

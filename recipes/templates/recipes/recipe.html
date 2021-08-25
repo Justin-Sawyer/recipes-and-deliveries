@@ -86,9 +86,9 @@
                         </div>
                     {% endif %}
                 </div>
-                
                 <p class="mb-3">{{ recipe.intro }}</p>
 
+                <!-- Hidden area of recipes to encourage people to join the community -->
                 {% if request.user.is_authenticated %}
                     <div class="row">
                         <div class="col-6 col-md-3">
@@ -112,14 +112,12 @@
                             <p>{{ recipe.total_time }}</p>
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <h3 class="subtitle">Ingredients</h3>
                         {% for i in recipe.ingredients.all %}
                             <p class="ingredient mb-0"><span class="qty">{{ i.get_quantity }}</span> {{ i.unit }} {{i.preparation }} {{ i.name }}</p>
                         {% endfor %}
                     </div>
-
                     <div class="mb-3">
                         <h3 class="subtitle">Directions</h3>
                         <div class="row">
@@ -176,7 +174,6 @@
                 {% if recipe.image_credit %}
                     <p class="text-muted image-credit"><small>Image: {{ recipe.image_credit }}</small></p>
                 {% endif %}
-
                 <!-- Last edited -->
                 {% if recipe.date_edited %}
                     <p class="text-muted post-edited"><small>Edited: {{ recipe.date_edited|date:"jS F, Y @ g:i a" }}</small></p>

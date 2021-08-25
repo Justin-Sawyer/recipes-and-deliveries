@@ -2,8 +2,6 @@
 {% load static %}
 {% load pagination_tags %}
 
-
-
 {% block extra_title %}
 | Recipes
 {% endblock %}
@@ -85,121 +83,115 @@
                 <!-- Recipes -->
                 <div class="row">
                     {% for recipe in page_obj %}
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="card h-100 border-0">
-
-                            <!-- Image -->
-                            {% if recipe.image %}
-                                <a href="{% url 'recipe' recipe.id %}">
-                                    <img class="card-img-top img-fluid card-image" src="{{ recipe.image.url }}"
-                                        alt="{{ recipe.title }}">
-                                </a>
-                            {% else %}
-                                <a href="{% url 'recipe' recipe.id %}">
-                                    <img class="card-img-top img-fluid card-image"
-                                        src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
-                                </a>
-                            {% endif %}
-
-                            <!-- Recipe Title -->
-                            <div class="card-body pb-0">
-                                <h3 class="mb-0 font-weight-bold title-name">{{ recipe.title|title }}</h3>
-                            </div>
-                            <div class="card-footer bg-white pt-0 border-0 text-left">
-                                <div class="row">
-                                    <div class="col">
-                                        <!-- Tagline -->
-                                        <p class="mb-0 text-left text-black tagline">{{ recipe.intro }}</p>
-
-                                        <!-- Categories -->
-                                        {% if recipe.category %}
-                                            <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
-                                                {% for cat in recipe.category.all %}
-                                                <a class="text-muted text-green font-weight-bold"
-                                                    href="{% url 'all_recipes' %}?category={{ cat.name }}">
-                                                    {{ cat.friendly_name|title }}
-                                                </a><span class="category-link-divider">|</span>
-                                                {% empty %}
-                                                    <small class="text-muted">No categories</small>
-                                                {% endfor %}
-                                            </p>
-                                        {% endif %}
-
-                                        <!-- Tags -->
-                                        {% if recipe.tag %}
-                                            <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
-                                                {% for t in recipe.tag.all %}
-                                                <a class="text-muted text-amber font-weight-bold"
-                                                    href="{% url 'all_recipes' %}?tag={{ t.tagname }}">
-                                                    {{ t.tagname|title }}
-                                                </a><span class="tag-link-divider">|</span>
-                                                {% empty %}
-                                                    <small class="text-muted">No tags</small>
-                                                {% endfor %}
-                                            </p>
-                                        {% endif %}
-
-                                        <!-- Post author -->
-                                        {% if recipe.author.is_superuser %}
-                                            <small class="text-muted author">Posted by:
-                                                <a class="text-muted text-green"
-                                                    href="{% url 'all_recipes' %}?author={{ recipe.author }}">
-                                                    <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
-                                                </a>
-                                            </small>
-                                        {% else %}
-                                            <small class="text-muted author">Posted by:
-                                                <a class="text-muted text-green font-weight-bold"
-                                                    href="{% url 'all_recipes' %}?author={{ recipe.author }}">
-                                                    {{ recipe.author }}
-                                                </a>
-                                            </small>
-                                        {% endif %}
-
-                                        <!-- Editing and deleting -->
-                                        {% if request.user.is_superuser or request.user.id is recipe.author.id %}
-                                            <div class="edit-delete">
-                                                <small>
-                                                    <!-- Superuser sees instantly whether superuser created post or whether post was user created
-                                                    Superuser created posts = author edit color,
-                                                    user created posts = primary color (matching color of product management) -->
-                                                    <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_recipe' recipe.id %}">Edit</a> |
-                                                    <a class="text-danger" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                            <div class="card h-100 border-0">
+                                <!-- Image -->
+                                {% if recipe.image %}
+                                    <a href="{% url 'recipe' recipe.id %}">
+                                        <img class="card-img-top img-fluid card-image" src="{{ recipe.image.url }}"
+                                            alt="{{ recipe.title }}">
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'recipe' recipe.id %}">
+                                        <img class="card-img-top img-fluid card-image"
+                                            src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ recipe.title }}">
+                                    </a>
+                                {% endif %}
+                                <!-- Recipe Title -->
+                                <div class="card-body pb-0">
+                                    <h3 class="mb-0 font-weight-bold title-name">{{ recipe.title|title }}</h3>
+                                </div>
+                                <div class="card-footer bg-white pt-0 border-0 text-left">
+                                    <div class="row">
+                                        <div class="col">
+                                            <!-- Tagline -->
+                                            <p class="mb-0 text-left text-black tagline">{{ recipe.intro }}</p>
+                                            <!-- Categories -->
+                                            {% if recipe.category %}
+                                                <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
+                                                    {% for cat in recipe.category.all %}
+                                                    <a class="text-muted text-green font-weight-bold"
+                                                        href="{% url 'all_recipes' %}?category={{ cat.name }}">
+                                                        {{ cat.friendly_name|title }}
+                                                    </a><span class="category-link-divider">|</span>
+                                                    {% empty %}
+                                                        <small class="text-muted">No categories</small>
+                                                    {% endfor %}
+                                                </p>
+                                            {% endif %}
+                                            <!-- Tags -->
+                                            {% if recipe.tag %}
+                                                <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
+                                                    {% for t in recipe.tag.all %}
+                                                    <a class="text-muted text-amber font-weight-bold"
+                                                        href="{% url 'all_recipes' %}?tag={{ t.tagname }}">
+                                                        {{ t.tagname|title }}
+                                                    </a><span class="tag-link-divider">|</span>
+                                                    {% empty %}
+                                                        <small class="text-muted">No tags</small>
+                                                    {% endfor %}
+                                                </p>
+                                            {% endif %}
+                                            <!-- Post author -->
+                                            {% if recipe.author.is_superuser %}
+                                                <small class="text-muted author">Posted by:
+                                                    <a class="text-muted text-green"
+                                                        href="{% url 'all_recipes' %}?author={{ recipe.author }}">
+                                                        <strong>Recipes</strong><i>and</i><strong>Deliveries</strong>
+                                                    </a>
                                                 </small>
+                                            {% else %}
+                                                <small class="text-muted author">Posted by:
+                                                    <a class="text-muted text-green font-weight-bold"
+                                                        href="{% url 'all_recipes' %}?author={{ recipe.author }}">
+                                                        {{ recipe.author }}
+                                                    </a>
+                                                </small>
+                                            {% endif %}
+                                            <!-- Editing and deleting -->
+                                            {% if request.user.is_superuser or request.user.id is recipe.author.id %}
+                                                <div class="edit-delete">
+                                                    <small>
+                                                        <!-- Superuser sees instantly whether superuser created post or whether post was user created
+                                                        Superuser created posts = author edit color,
+                                                        user created posts = primary color (matching color of product management) -->
+                                                        <a {% if request.user.id is recipe.author.id %}class="text-amber"{% else %} class="text-primary"{% endif %} href="{% url 'edit_recipe' recipe.id %}">Edit</a> |
+                                                        <a class="text-danger" href="{% url 'delete_recipe' recipe.id %}">Delete</a>
+                                                    </small>
+                                                </div>
+                                            {% endif %}
+                                            <!-- Date posted -->
+                                            <div class="post-date">
+                                                <small>{{ recipe.date_posted|date:"jS F, Y" }}</small>
                                             </div>
-                                        {% endif %}
-                                        
-                                        <!-- Date posted -->
-                                        <div class="post-date">
-                                            <small>{{ recipe.date_posted|date:"jS F, Y" }}</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {% if forloop.counter|divisibleby:1 %}
-                    <div class="col-12 d-sm-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:2 %}
-                    <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:3 %}
-                    <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
-                    {% if forloop.counter|divisibleby:4 %}
-                    <div class="col-12 d-none d-xl-block mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
+                        {% if forloop.counter|divisibleby:1 %}
+                        <div class="col-12 d-sm-none mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
+                        {% if forloop.counter|divisibleby:2 %}
+                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
+                        {% if forloop.counter|divisibleby:3 %}
+                        <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
+                        {% if forloop.counter|divisibleby:4 %}
+                        <div class="col-12 d-none d-xl-block mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
+
                 <!-- Pagination -->
                 <div class="row">
                     <div class="col-12">

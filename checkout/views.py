@@ -23,7 +23,6 @@ def cache_checkout_data(request):
     try:
         current_bag = bag_contents(request)
         discount = current_bag['discount']
-        # first_recipe = current_bag['first_recipe'] or None
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
@@ -153,36 +152,8 @@ def checkout(request):
                             code = recipe.discount_code
                             code_list.append(code)
                             recipe_list.append(recipe)
-                    # first_discount_code = code_list[0]
-                    # first_recipe = recipe_list[0]
                     if recipe_list:
                         first_recipe = recipe_list[0]
-                        # the_discount = request.POST.get('discount')
-                        # print(the_discount)
-                        # order.vote_discount_applied = discount or 0
-                        # discount = current_bag['discount']
-                        # print(discount)
-                        """grand_total = current_bag['grand_total']
-                        total = grand_total - discount
-                        stripe_total = round(total * 100)
-                        stripe.api_key = stripe_secret_key
-                        intent = stripe.PaymentIntent.create(
-                            amount=stripe_total,
-                            currency=settings.STRIPE_CURRENCY,
-                        )"""
-                        # print(total)
-                    # should be in checkout_success, the next 2 lines
-                    # first_recipe.discount_code = ""
-                    # first_recipe.save()
-                """if user_recipes:
-                    for recipe in user_recipes:
-                        if recipe.discount_code != "":
-                            code = recipe.discount_code
-                            code_list.append(code)
-                            first_discount_code = code_list[0]"""
-                    # recipe_with_discount_code = Recipe.objects.get(discount_code=first_discount_code)
-                    # recipe_with_discount_code.discount_code = ""
-                    # recipe_with_discount_code.save()
 
             except UserProfile.DoesNotExist:
                 order_form = OrderForm()
@@ -199,7 +170,6 @@ def checkout(request):
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
         'user_recipes': user_recipes,
-        # 'vote_threshold_precentage': vote_threshold_precentage,
         'first_discount_code': first_discount_code,
         'checkout_user': checkout_user,
         'recipe_with_discount_code': recipe_with_discount_code,

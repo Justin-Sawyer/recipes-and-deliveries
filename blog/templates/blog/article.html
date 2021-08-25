@@ -26,13 +26,10 @@
     <div class="container content mb-0 mb-md-3">
         <!-- Main Page row -->
         <div class="row mt-3">
-
             <!-- Main Article -->
             <div class="col-12 col-md-8">
-
                 <!-- Post Title -->
                 <h2 class="font-weight-bold title">{{ post.title|title }}</h2>
-
                 <!-- Categories -->
                 {% if post.category %}
                     <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
@@ -45,7 +42,6 @@
                         {% endfor %}
                     </p>
                 {% endif %}
-
                 <!-- Tags -->
                 {% if post.tag %}
                     <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
@@ -58,10 +54,8 @@
                         {% endfor %}
                     </p>
                 {% endif %}
-
                 <!-- Author & editing -->
                 <div class="mb-3">
-
                     <!-- Post Author -->
                     {% if post.author.is_superuser %}
                         <small class="text-muted author">Posted by: 
@@ -76,7 +70,6 @@
                             </a> on {{ post.date_posted|date:"jS F, Y" }}
                         </small>
                     {% endif %}
-
                     <!-- Editing and deleting -->
                     {% if request.user.is_superuser or request.user.id is post.author.id %}
                         <div class="edit-delete">
@@ -90,14 +83,12 @@
                         </div>
                     {% endif %}
                 </div>
-
                 <!-- Post content -->
                 <div class="row">
                     <div class="col-12 post-content"> 
                         {{ post.content|safe}}
                     </div>
                 </div>
-
                 <!-- Comments -->
                 <h3 class="subtitle">Comments:</h3>
                 {% if post.comments.all %}
@@ -118,7 +109,6 @@
                         <p>Want to add a comment? <a class="text-green" href="{% url 'account_signup' %}">Register</a> or <a class="text-green" href="{% url 'account_login' %}?next={{request.path}}">log in</a> first.</p>
                     {% endif %}
                 {% endif %}
-
                 <!-- Comment form -->
                 <div class="comment-block" style="display:none">
                     <form method="POST" action="{% url 'article' post.id %}" id="comment-form" class="form mb-2">
@@ -130,12 +120,10 @@
                         </div>
                     </form>
                 </div>
-
                 <!-- Image credit -->
                 {% if post.image_credit %}
                     <p class="text-muted image-credit mt-3"><small>Image: {{ post.image_credit }}</small></p>
                 {% endif %}
-
                 <!-- Last edited -->
                 {% if post.date_edited %}
                     <p class="text-muted post-edited"><small> Edited: {{ post.date_edited|date:"jS F, Y @ g:i a" }}</small></p>
@@ -149,7 +137,6 @@
                     {% for other_post in other_posts|slice:"3" %}
                     <div class="col-12">
                         <div class="card h-100 border-0">
-
                             <!-- Image -->
                             {% if other_post.image %}
                                 <a href="{% url 'article' other_post.id %}">
@@ -162,7 +149,6 @@
                                         src="{{ MEDIA_URL }}recipes-and-deliveries-banner.jpg" alt="{{ other_post.title }}">
                                 </a>
                             {% endif %}
-
                             <!-- Post Title -->
                             <div class="card-body pb-0">
                                 <h3 class="mb-0 font-weight-bold title-name">{{ other_post.title|title }}</h3>
@@ -170,10 +156,8 @@
                             <div class="card-footer bg-white pt-0 border-0 text-left">
                                 <div class="row">
                                     <div class="col">
-
                                         <!-- Tagline -->
                                         <p class="mb-0 text-left text-black tagline">{{ other_post.tagline }}</p>
-
                                         <!-- Categories -->
                                         {% if other_post.category %}
                                             <p class="category-list small mt-1 mb-0"><i class="bi bi-tags text-muted mr-1"></i>
@@ -187,7 +171,6 @@
                                                 {% endfor %}
                                             </p>
                                         {% endif %}
-
                                         <!-- Tags -->
                                         {% if other_post.tag %}
                                             <p class="tag-list small mt-1 mb-0"><i class="bi bi-tags-fill text-muted mr-1"></i>
@@ -201,7 +184,6 @@
                                                 {% endfor %}
                                             </p>
                                         {% endif %}
-
                                         <!-- Post author -->
                                         {% if other_post.author.is_superuser %}
                                             <small class="text-muted author">Posted by:
@@ -218,7 +200,6 @@
                                                 </a>
                                             </small>
                                         {% endif %}
-
                                         <!-- Editing and deleting -->
                                         {% if request.user.is_superuser or request.user.id is other_post.author.id %}
                                             <div class="edit-delete">
@@ -231,7 +212,6 @@
                                                 </small>
                                             </div>
                                         {% endif %}
-                                        
                                         <!-- Date posted -->
                                         <div class="post-date">
                                             <small>{{ other_post.date_posted|date:"jS F, Y" }}</small>

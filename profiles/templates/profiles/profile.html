@@ -25,6 +25,7 @@
             <h2 class="font-weight-bold">{{ user.username|title }}'s Profile</h2>
             <br>
             <div class="row">
+                <!-- User Profile-->
                 <div class="details col-12 col-md-6 mb-md-2 pt-2 pb-2">
                     <h3 class="subtitle">My Profile Details</h3>
                     <p class="mb-0">Username: <span class="font-weight-bold">{{user.username}}</span></p>
@@ -37,6 +38,7 @@
                     </form>
                 </div>
 
+                <!-- Order history-->
                 <div class="col-12 col-md-6 mt-2 mt-lg-0 mb-md-2 pt-2 pb-2">
                     <h3 class="subtitle">My Order History</h3>
                     {% if orders %}
@@ -79,8 +81,7 @@
                                         </td>
                                         <td>€{{ order.grand_total }}</td>
                                     </tr>
-                                {% endfor %}
-                                
+                                {% endfor %} 
                             </tbody>
                         </table>
                     </div>
@@ -94,6 +95,7 @@
                     {% endif %}
                 </div>
                 
+                <!-- If user's recipes has rec'd any votes -->
                 {% if user_recipes %}
                     <div class="col-12">
                         <h3 class="subtitle">Votes</h3>
@@ -101,8 +103,10 @@
                     </div>
                 {% endif %}
 
+                <!-- User's recipes and posts -->
                 <div class="col-12 mt-2 mt-lg-0">
                     <div class="row">
+                        <!-- User's recipes -->
                         <div class="recipes col-12 col-md-6 pt-2 pb-2">
                             <h3 class="subtitle">My Recipes</h3>
                             {% if user_recipes %}
@@ -210,6 +214,8 @@
                             {% endif %}
                             <br>
                         </div>
+
+                        <!-- User's blog posts -->
                         <div class="articles col-12 col-md-6 pt-2 pb-2">
                             <h3 class="subtitle">My Articles</h3>
                             {% if user_posts %}

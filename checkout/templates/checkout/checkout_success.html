@@ -26,9 +26,8 @@
                 <h2 class="font-weight-bold mb-4">Thank You</h2>
                 <p class="text-black">Your order information is below.</p> 
                 <p style="overflow-wrap: break-word;">A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
-            
-                <div class="order-confirmation-wrapper p-2 border">
-                    <!-- Order Info -->
+                <!-- Order Info -->
+                <div class="order-confirmation-wrapper p-2 border"> 
                     <div class="row">
                         <div class="col">
                             <small>Order Info:</small>
@@ -81,7 +80,6 @@
                             <small>Delivering To:</small>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Full Name</p>
@@ -90,7 +88,6 @@
                             <p class="mb-0">{{ order.full_name }}</p>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Address Line 1</p>
@@ -99,7 +96,6 @@
                             <p class="mb-0">{{ order.street_address1 }}</p>
                         </div>
                     </div>
-                    
                     {% if order.street_address2 %}
                     <div class="row">
                         <div class="col-12 col-lg-4">
@@ -110,7 +106,6 @@
                         </div>
                     </div>
                     {% endif %}
-
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Town or City</p>
@@ -119,7 +114,6 @@
                             <p class="mb-0">{{ order.town_or_city }}</p>
                         </div>
                     </div>
-
                     {% if order.county %}
                     <div class="row">
                         <div class="col-12 col-lg-4">
@@ -130,7 +124,6 @@
                         </div>
                     </div>
                     {% endif %}
-                    
                     {% if order.postcode %}
                     <div class="row">
                         <div class="col-12 col-lg-4">
@@ -141,7 +134,6 @@
                         </div>
                     </div>
                     {% endif %}
-                    
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Country</p>
@@ -150,7 +142,6 @@
                             <p class="mb-0">{{ order.country }}</p>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Phone Number:</p>
@@ -175,7 +166,6 @@
                             <p class="mb-0">€{{ order.order_total }}</p>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Delivery</p>
@@ -184,7 +174,6 @@
                             <p class="mb-0">€{{ order.delivery_cost }}</p>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Vote Discount</p>
@@ -193,7 +182,6 @@
                             <p class="mb-0">€{{ order.vote_discount_applied }}</p>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <p class="mb-0 font-weight-bold">Grand Total</p>
@@ -236,6 +224,7 @@
             <!-- More Articles and Recipes -->
             <div class="col-12 col-md-8 col-lg-6 mt-3">
                 <div class="row">
+                    <!-- Articles -->
                     <div class="col-12 col-md-6 more-articles">
                         <h2 class="font-weight-bold mb-4 mt-5 mt-md-0">Articles</h2>
                         <p class="d-none d-md-block">The lastest Articles</p>
@@ -331,6 +320,7 @@
                             </div>
                         {% endfor %}
                     </div>
+                    <!-- Recipes -->
                     <div class="col-12 col-md-6">
                         <h2 class="font-weight-bold mb-4 mt-5 mt-md-0">Recipes</h2>
                         <p class="d-none d-md-block">The latest Recipes</p>
