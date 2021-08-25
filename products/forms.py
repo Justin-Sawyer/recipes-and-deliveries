@@ -38,7 +38,7 @@ class ProductForm(forms.ModelForm):
             if field == 'sku':
                 placeholder = placeholders[field]
                 self.fields[field].widget.attrs['placeholder'] = placeholder
-
+        self.fields['description'].required = True
         self.fields['category'].choices = friendly_name
 
 

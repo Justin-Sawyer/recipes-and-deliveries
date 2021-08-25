@@ -124,21 +124,24 @@ def article(request, post_id):
 def add_post(request):
     """ Add a post to the blog """
     if request.method == 'POST':
-
-        # Gets username as author
-        author = get_object_or_404(User, id=request.user.id)
-
-        # Retrieve form data
         posts_form = BlogPostForm(request.POST, request.FILES)
-        form_temp = posts_form.save(commit=False)
-
-        # Append user (post author) to form for submitting
-        form_temp.author = author
-
-        # Check button for adding further posts
-        add_more_posts = request.POST.getlist('add-more-posts')
-
+        new_tag_form = NewTagsForm(request.POST)
+        new_category_form = NewCategoriesForm(request.POST)
         if posts_form.is_valid():
+            # Gets username as author
+            author = get_object_or_404(User, id=request.user.id)
+
+            # Retrieve form data
+            # posts_form = BlogPostForm(request.POST, request.FILES)
+            form_temp = posts_form.save(commit=False)
+
+            # Append user (post author) to form for submitting
+            form_temp.author = author
+
+            # Check button for adding further posts
+            add_more_posts = request.POST.getlist('add-more-posts')
+
+            # if posts_form.is_valid():
             postsform = posts_form.save()
             new_post = Post.objects.get(id=postsform.id)
 
@@ -221,8 +224,11 @@ def edit_post(request, post_id):
     """ Edit a blog post """
     post = get_object_or_404(Post, pk=post_id)
     if request.user == post.author or request.user.is_superuser:
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
         if request.method == 'POST':
             new_tag_form = NewTagsForm(request.POST)
+            new_category_form = NewCategoriesForm(request.POST)
             posts_form = BlogPostForm(request.POST,
                                       request.FILES,
                                       instance=post)

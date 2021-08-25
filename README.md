@@ -12,7 +12,7 @@ While the website is free to use and peruse, certain parts of the site are reser
 
 Although community based, the purpose of the website is commercial, thus readers are urged to sign up and order meal kits in order to access all parts of the website.
 
-As an encouragement for users to do so, the user has the possibility of having his or her submitted recipes being added to the database of recipes and earning credits - redeemable against purther purchases - any time that another, different member orders the user's now-added recipe.
+As an encouragement for users to do so, the user has the possibility of having his or her submitted recipes being added to the database of recipes and earning a discount once their recipe is added as a Recipe Box.
 
 # User Experience (UX)
 ## User stories
@@ -32,7 +32,7 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 2) Upon ordering a recipe kit, I either:
 
-	- Want the possibility of being an "anonymous" user. That is, should I so wish, I ant to be able to order a recipe kit without having to create an account.
+	- Want the possibility of being an "anonymous" user. That is, should I so wish, I want to be able to order a recipe kit without having to create an account.
 
 	- Want to become a registered user, with my details saved for both making future purchases and for contributing to the growing list of community recipes and blog posts.
 
@@ -44,7 +44,7 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 2) As a registered user, I would like the possibility to:
 
-	- Comment on blog posts and recipes created by other community members.
+	- Comment on blog posts created by other community members.
 
 	- Up-vote community-created recipes that I find particluarly mouth-watering in the hope that these recipes be added to the recipe database.
 
@@ -58,7 +58,7 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 	- Invoice address
 
-	- Email & Telephone details
+	- Email & telephone details
 
 4) I wish to be able to edit the above details both when I make a purchase and from within my Account page
 
@@ -78,13 +78,13 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 	- If I have created recipes and my recipes have been voted as being the most popular of the last month, I will be alerted that this is the case, and I will see my recipe featured on the recipe boxes purchasing page.
 
-2) As a frequent registered visitor who has recipes feautured on the recipe box purchasing page, I will be alerted whenever users order my recipe:
+2) As a frequent registered visitor whose recipes have received a certain number of votes and thus qualify to be added as Recipe Boxes:
 
 	- I understand that I, myself, have nothing to do except collect the reward (see next point). I understand that **Recipes***and***Deliveries** look after the dispatching of recipe boxes, and that all I have done is create the recipe itself.
 
-	- I understand that with each user order of the recipe I created, then I will be given a credit that is redeemable against any future orders I may make on the **Recipes***and***Deliveries** website.
+	- I understand that when the recipe I created is added as a Recipe Box, I will be given a credit that is redeemable against a future order I make on the **Recipes***and***Deliveries** website.
 
-	- I can see a tally of the total orders of my recipe on my User Account page. If I wish, I have the option of being alerted via email whenever other users order one of my recipes.
+	- I can see a tally of the total votes for my recipe on my User Account page. When any recipes I create reach the required number of votes, I will be alerted by email of this fact, and thus will know I have a discount to claim.
 
 ### Frequent Anonymous Visitors
 
@@ -98,7 +98,7 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 **Recipes***and***Deliveries** has the possibility of centralising the multitute of recipe websites that can be found online.
 
-Just as regular users can earn credits when other users order one of their recipes, **Recipes***and***Deliveries** could be a place that hghlights up and coming talents. Once a professional, accredited chef signs on to the service, **Recipes***and***Deliveries** could be a place where said chef might make an income. For the professional, in other words, there could be a small monetary reward instead of a credit whenever a user orders a professional's recipes. 
+Just as regular users can earn a credit when other users vote for one of their recipes, **Recipes***and***Deliveries** could be a place that hghlights up and coming talents. Once a professional, accredited chef signs on to the service, **Recipes***and***Deliveries** could be a place where said chef might make an income. For the professional, in other words, there could be a small monetary reward instead of a credit whenever a user orders a professional's recipes. 
 
 ## Design
 ### Overall Colour Scheme
@@ -891,12 +891,17 @@ To demonstrate:
 A recipe has 3 ingredients:
 
 Ingredient 1 (index 0)
+
 Ingredient 2 (index 1)
+
 Ingredient 3 (index 2)
 
 User clicks "Add Ingredient"
+
 New form (index 0)
+
 New form 1 (index 3)
+
 New form 2 (index 4)
 
 The developer was researching how to amend this when he noticed something else in the outputted html of dev tools.

@@ -146,3 +146,4 @@ class RecipeForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
         self.fields['category'].choices = friendly_name
         self.fields['title'].widget.attrs['autofocus'] = True
+        self.fields['directions'].required = True

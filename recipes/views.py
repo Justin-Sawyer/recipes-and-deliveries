@@ -173,19 +173,23 @@ def vote(request, pk):
 @login_required
 def add_recipe(request):
     """ A view to handled adding recipes """
-    # Gets username as author
-    author = get_object_or_404(User, id=request.user.id)
-
-    # Check button for adding further recipes
-    add_more_recipes = request.POST.getlist('add-more-recipes')
-
     if request.method == 'POST':
         recipe_form = RecipeForm(request.POST, request.FILES)
-        recipe_form_temp = recipe_form.save(commit=False)
-
-        # Append user (post author) to form for submitting
-        recipe_form_temp.author = author
+        new_tag_form = NewTagsForm(request.POST)
+        new_category_form = NewCategoriesForm(request.POST)
+        formset = IngredientFormSet(request.POST)
         if recipe_form.is_valid():
+            # Gets username as author
+            author = get_object_or_404(User, id=request.user.id)
+
+            # Check button for adding further recipes
+            add_more_recipes = request.POST.getlist('add-more-recipes')
+
+            recipe_form_temp = recipe_form.save(commit=False)
+
+            # Append user (post author) to form for submitting
+            recipe_form_temp.author = author
+            # if recipe_form.is_valid():
             recipe = recipe_form.save()
             formset = IngredientFormSet(request.POST, instance=recipe)
             if formset.is_valid():
@@ -282,7 +286,11 @@ def edit_recipe(request, recipe_id):
     ingredient_count = recipe.ingredients.all().count()
 
     if request.user == recipe.author or request.user.is_superuser:
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
         if request.method == 'POST':
+            new_tag_form = NewTagsForm(request.POST)
+            new_category_form = NewCategoriesForm(request.POST)
             recipe_form = RecipeForm(request.POST,
                                      request.FILES,
                                      instance=recipe)
