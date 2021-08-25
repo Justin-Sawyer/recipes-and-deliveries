@@ -1114,6 +1114,296 @@ Thus, the developer is choosing to leave this for now.
 | date_edited    | DateTimeField    | -    | -    | True    | -    | -    | -    | -    | -    |
 
 ### RECIPE Database Models
+#### Category
+
+| Key  | Type Field  | Relationship  | Blank  | Null  |
+|:----------|:----------|:----------|:----------|:----------|
+| name    | CharField    |  -     |  -     |  -     |
+| friendly_name    | CharField    |  -     | True    | True    |
+| sku    | CharField    |  -     | True    | True    |
+
+#### Tag
+| Key  | Type Field  | Max Length  |
+|:----------|:----------|:----------|
+| tagname    | CharField    | 254    |
+
+#### Recipe
+| Key  | Type Field  | Relationship  | Related Name  | on_delete  | default  | blank  | null  | max_length  | auto_now_add  |
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:-----------|
+| author    | ForeignKey    | User    | recipe_posts    | CASCADE    | ""    | True    | True    | -    | -    |
+| title    | CharField    | -    | -    | -    | -    | -    | -    | 150    | -    |
+| intro    | CharField    | -    | -    | -    | -    | -    | -    | 254    | -    |
+| prep_time    | CharField    | -    | -    | -    | -    | -    | -    | 20    | -    |
+| total_time    | CharField    | -    | -    | -    | ""    | True    | -    | 20    | -    |
+| cook_time    | CharField    | -    | -    | -    | ""    | False    | -    | 20    | -    |
+| servings    | IntegerField    | -    | -    | -    | -    | -    | -    | -    | -    |
+| category    | ManyToManyField    | Category    | -    | -    | -    | True    | -    | -    | -    |
+| tag    | ManyToManyField    | Tag    | -    | -    | -    | True    | -    | -    | -    |
+| directions    | RichTextField    | -    | -    | -    | -    | True    | True    | -    | -    |
+| image    | ImageField    | -    | -    | -    | -    | True    | True    | -    | -    |
+| image_credit    | CharField    | -    | -    | -    | ""    | True    | -    | -    | -    |
+| date    | DateTimeField    | -    | -    | -    | -    | -    | -    | -    | True    |
+| date_posted    | DateTimeField    | -    | -    | -    | timezone.now    | True    | True    | -    | -    |
+| date_edited    | DateTimeField    | -    | -   | -    | -    | -    | -    | -    | True    |
+| recipe_box    | OneToOneField    | Product    | box    | SET_NULL    | -    | True    | True    | -    | -    |
+| vote_count    | IntegerField    | -    | -    | -    | 0    | -    | -    | -    | -    |
+| votes    | ManyToManyField    | User    | recipe_post_votes    | -    | -    | True    | -    | -    | -    |
+| mail_sent    | BooleanField    | -    | -    | -    | False    | True    | True    | -    | -    |
+| discount_code    | CharField    | -    | -    | -    | ""    | True    | -    | 6    | -    |
+
+#### Ingredients
+| Key  | Type Field  | Relationship  | Related Name  | on_delete  | default  | blank  | max_length  |
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|
+| quantity    | FloatField    | -    | -    | -    | ""    | True    | -    |
+| unit    | CharField    | -    | -    | -    | ""    | True    | 15    |
+| name    | CharField    | -    | -    | -    | ""    | True    | 150    |
+| preparation    | CharField    | -    | -    | -    | ""    | True    | 150    |
+| recipe    | ForeignKey    | Recipe    | ingredients    | CASCADE    | -    | -    | -    |
+
+### ORDER Database Models
+
+| Key  | Type Field  | Relationship  | Related Name  | on_delete  | max_length  | max_digits  | editable  | null  | blank  | blank_label | decimal_places |
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:-----------|:-----------|:-----------|
+| order_number    | CharField    | -    | -    | -    | 32    | -    | False    | False    | -    | - | - |
+| user_profile    | ForeignKey    | UserProfile    | orders    | SET_NULL    | -    | -    | -    | True    | True    | - | - |
+| full_name    |CharField    | -    | -    | -    | 50    | -    | -    | False    | False    | - | - |
+| email    | EmailField    | -    | -    | -    | 254    | -    | -    | False    | False    | - | - |
+| phone_number    | CharField    | -    | -    | -    | 20    | -    | -    | False    | False    | - | - |
+| street_address1    | CharField    | -    | -    | -    | 80    | -    | -    | False    | False    |- | - |
+| street_address2    | CharField    | -    | -    | -    | 80    | -    | -    | True    | True    |- | - |
+| town_or_city    | CharField    | -    | -    | -    | 40    | -    | -    | False    | False    |- | - |
+| county    | CharField    | -    | -    | -    | 80    | -    | -    | True    | True    |- | - |
+| postcode    | CharField    | -    | -    | -    | 20    | -    | -    | True    | True    |- | - |
+| country    | CountryField    | -    | -    | -    | -    | -    | -    | False    | False    | Country* | - |
+| date    | DateTimeField    | -    | -    | -    | -    | -    | -    | -    | -    |- | - |
+| delivery_cost    | DecimalField    | -    | -    | -    | -    | 6    | -    | False    | -    |- | 2 |
+| order_total    | DecimalField    | -    | -    | -    | -    | 10    | -    | False    | -    |- | 2 |
+| vote_discount_applied    | DecimalField    | -    | -    | -    | -    | 10    | -    | False    | -    |- | 2 |
+| grand_total    | DecimalField    | -    | -    | -    | -    | 10    | -    | False    | -    |- | 2 |
+| original_bag    | TextField    | -    | -    | -    | -    | -    | -    | False    | -    |- |  - |
+| stripe_pid    | CharField    | -    | -    | -    | 254    | -    | -    | False    | False    |- |  - |
+
+### Notes on models
+#### Category, Tag and their associate models
+The developer realizes that he has used seemingly the same models for Products, Blog and Recipes. There is a reason for the duplication:
+
+The developer wants to keep control of the listings of Recipe Boxes. He has allowed adding of Categories and Tags for Recipes and Blog articles, but wishes to keep some semblance of order according to the menu items in the navigation for Recipe Boxes. While it is possible to filter Recipe Boxes by their Categories by clicking on a category, the developer does not wish to leave users the possibility of having almost identical categories in the Recipe Box list of categories (ie, Mediterranean vs Medditerannean). Keeping this semblance of order is less important for the community side of the site, as it is the community who "control" their input.
+
+#### Order: null & true values
+
+Django frowns upon `null=True, blank=True` values.
+
+The Django documentation states that `default=""` should be used instead. While the developer has done so for every other model of this project, he found that doing so in the Order model caused Stripe to fail in its sending of webhooks.
+
+The developer believes that this is a case of "functionality trumps warnings", and has decided to leave the Order model with these warnings, for the time being. Once the developer is more at ease with both Stripe and Django, he will revisit this. See "Future Plans".
+
+#### ckeditor in Recipe, Product and Blog models
+
+The developer looked for a way to make ckeditor functionality `null=False, blank=False`, but found that when he did so, this caused his forms to fail. Instead, he has added `required=True` to all forms using ckeditor.
+
+#### Product & Recipe relationship
+
+The developer is aware that as his models are now, he has to add both Recipes and Products in two different places (both in admin and in the HTML rendering). To alleviate any errors caused if admin add one but not the other, the developer has used an `if`statment in the HTML:
+
+```
+<h3 class="subtitle">What's in the box?</h3>
+    <ul class="list-group">
+        <li class="list-group-item border-0 p-0">
+            <i class="far fa-check-square text-green"></i> All the 
+            {% if product.box.id %}
+                <a class="text-green" href="{% url 'recipe' product.box.id %}">ingredients</a>
+            {% else %}
+                ingredients
+            {% endif %} to make this recipe
+        </li>
+        <li class="list-group-item border-0 p-0 mb-3"><i class="far fa-check-square text-green"></i> The Recipe Card</li>
+    </ul>
+```
+
+The developer is aware that this is perhaps not the ideal situation: in a perfect world, when admin adds a product, it should be automatically attached to its' associated recipe.
+
+However, since it may be users themselves who add recipes but admin who add products, one is not necessarily associated with the other.
+
+The developer is aware that this is a situation that needs to be revisted, and it is noted in the future plans for this project.
+
+## Data Structures (JSON)
+### PRODUCT
+#### Categories
+
+```
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "asian",
+      "friendly_name": "Asian",
+      "sku": "a1"
+    }
+  }
+]
+```
+
+#### Products
+
+```
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "",
+      "sku": "rad000000001",
+      "price": "10.99",
+      "rating": "4.60",
+      "has_gluten": false,
+      "gluten_free_option": false,
+      "description": "",
+      "image_url": "",
+      "image_credit": "",
+      "image": "",
+      "category": []
+    }
+  }
+]
+```
+
+### BLOG
+#### Categories
+
+```
+[
+  {
+    "model": "blog.category",
+    "pk": 1,
+    "fields": {
+      "name": "asian",
+      "friendly_name": "Asian",
+      "sku": "bga1"
+    }
+  }
+]
+```
+
+#### Tags
+
+```
+[
+  {
+    "model": "blog.tag",
+    "pk": 1,
+    "fields": {
+      "tagname": "salad"
+    }
+  }
+]
+```
+
+#### Post
+
+```
+[
+  {
+    "model": "blog.post",
+    "pk": 2,
+    "fields": {
+      "author": 1,
+      "title": "",
+      "tagline": "",
+      "image": "",
+      "image_credit": "",
+      "content": "",
+      "date": "2021-07-25T12:38:15.089Z",
+      "date_posted": "2021-07-25T14:21:49Z",
+      "date_edited": "2021-08-12T19:26:08.999Z",
+      "category": [],
+      "tag": []
+    }
+  }
+]
+```
+
+### RECIPE
+
+#### Categories
+```
+[
+  {
+    "model": "recipes.category",
+    "pk": 1,
+    "fields": {
+      "name": "asian",
+      "friendly_name": "Asian",
+      "sku": "ra1"
+    }
+  }
+]
+```
+
+#### Tags
+
+```
+[
+  {
+    "model": "recipes.tag",
+    "pk": 1,
+    "fields": {
+      "tagname": "salad"
+    }
+  }
+]
+```
+
+#### Recipe
+
+```
+[
+  {
+    "model": "recipes.recipe",
+    "pk": 128,
+    "fields": {
+      "author": 1,
+      "title": "",
+      "intro": "",
+      "prep_time": "5 mins",
+      "cook_time": "10 mins",
+      "total_time": "15 mins",
+      "servings": 4,
+      "directions": "",
+      "image": "",
+      "image_credit": "",
+      "date": "2021-08-13T17:19:35.957Z",
+      "date_posted": "2021-08-13T17:19:35Z",
+      "date_edited": "2021-08-21T13:51:32.714Z",
+      "recipe_box": null,
+      "vote_count": 2,
+      "mail_sent": true,
+      "discount_code": "",
+      "category": [],
+      "tag": [],
+      "votes": []
+    }
+  }
+]
+```
+
+#### Ingredient
+
+```
+[
+  {
+    "model": "recipes.ingredient",
+    "pk": 93,
+    "fields": {
+      "quantity": 6,
+      "unit": "whole",
+      "name": "tomatoes",
+      "preparation": "quartered",
+      "recipe": 49
+    }
+  }
+]
+```
 
 # Deployment
 The deployment process listed below assumes that you have

@@ -89,7 +89,6 @@ class Ingredient(models.Model):
     unit = models.CharField(max_length=15, default="", blank=True)
     name = models.CharField(max_length=150, default="", blank=True)
     preparation = models.CharField(max_length=150, default="", blank=True)
-
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
                                related_name='ingredients')
 

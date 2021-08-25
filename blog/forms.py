@@ -3,8 +3,6 @@ from .widgets import CustomClearableFileInput
 # from django.contrib.auth.models import User
 from .models import Post, Category, Tag, Comment
 
-from ckeditor.fields import RichTextField
-
 
 class NewCategoriesForm(forms.ModelForm):
 
@@ -117,7 +115,7 @@ class CommentForm(forms.ModelForm):
 
         model = Comment
         fields = ('body', )
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
