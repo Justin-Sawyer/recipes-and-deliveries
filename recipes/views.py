@@ -352,7 +352,6 @@ def edit_recipe(request, recipe_id):
             formset = IngredientFormSet(instance=recipe)
             new_category_form = NewCategoriesForm
             new_tag_form = NewTagsForm
-            messages.warning(request, f'You are editing {recipe.title}')
     else:
         messages.error(request, 'Sorry, only the recipe author can do that!')
         return redirect(reverse('home'))

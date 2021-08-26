@@ -270,17 +270,24 @@ def edit_post(request, post_id):
                             no_space_cats = True
                         else:
                             no_space_cats = False
-
-                if no_space_tags and no_space_cats:
-                    messages.success(request, 'Successfully added post!')
-                else:
+                if not no_space_cats and not no_space_tags:
                     messages.warning(request, 'Your post was added, but we were not able \
-                        to add your tags and/or categories. Please add these \
+                        to add your categories and/or tags. Please add these \
                         one word at a time!')
                     return redirect(reverse('edit_post', args=[postsform.id]))
-
-                messages.success(request, 'Successfully updated post!')
-                return redirect(reverse('article', args=[post.id]))
+                elif no_space_cats and not no_space_tags:
+                    messages.warning(request, 'Your post was added, but we were not able \
+                        to add your tags. Please add these \
+                        one word at a time!')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+                elif no_space_tags and not no_space_cats:
+                    messages.warning(request, 'Your post was added, but we were not able \
+                        to add your categories. Please add these \
+                        one word at a time!')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+                else:
+                    messages.success(request, 'Successfully updated post!')
+                    return redirect(reverse('article', args=[post.id]))
             else:
                 messages.error(request, 'Failed to edit post \
                     Please ensure the form is valid.')
@@ -288,7 +295,6 @@ def edit_post(request, post_id):
             new_category_form = NewCategoriesForm
             new_tag_form = NewTagsForm
             posts_form = BlogPostForm(instance=post)
-            messages.warning(request, f'You are editing {post.title}')
     else:
         messages.error(request, 'Sorry, only the post author can do that!')
         return redirect(reverse('home'))
