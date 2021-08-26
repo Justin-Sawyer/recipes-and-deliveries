@@ -46,7 +46,7 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 	- Comment on blog posts created by other community members.
 
-	- Up-vote community-created recipes that I find particluarly mouth-watering in the hope that these recipes be added to the recipe database.
+	- Up-vote community-created recipes that I find particluarly mouth-watering in the hope that these recipes will be added to the recipe database.
 
 	- Create and edit my own recipe concoctions and have them voted on by other community members.
 
@@ -92,7 +92,7 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 	- I accept that doing so means that some part of the site will remain inacessible to me until I decide to register.
 
-	- If I do decide to register, I get full access to the site, but am not obligated to contribute
+	- If I do decide to register, I will get full access to the site, but am not obligated to contribute.
 
 ## Professionals and Aspiring Chefs
 
@@ -103,7 +103,7 @@ Just as regular users can earn a credit when other users vote for one of their r
 ## Design
 ### Overall Colour Scheme
 		
-The project uses a simple design, with colours that are designed to make the end user either think of food or are intuitive in what their purpose is. 
+The project uses a simple design, with colours that are designed to make the end user either think of food or that are intuitive in what their purpose is. 
 
 Thus, green is the natural choice for its primary colour. Green is the colour of both most vegetables and most herbs, and is universally known as "Go". Thus the user knows that generally speaking, clicking something green will take the user there. Equally, if the user is registered and wants to contribute to the community, this green signifies "create".
 
@@ -122,11 +122,11 @@ Otherwise, for general text and banners, [Raleway](https://fonts.google.com/spec
 ### Imagery
 #### Recipe Box Photos
 		
-Imagery is extremely important on any website, but especially so on commercial, food oriented ones: Nothing makes the tongue water more than seeing a beautifully presented meal. The images inspire the end user to both try the recipe, and more importantly, join the community and become an active member.
+Imagery is extremely important on any website, but especially so on commercial, food orientated ones: Nothing makes the tongue water more than seeing a beautifully presented meal. The images inspire the end user to both try the recipe, and more importantly, join the community and become an active member.
 
 The "all recipe boxes" page is a showcase for all the recipe boxes that are available for order, and each is represented by an image and star rating (see Testing, below).
 
-Ideally, each individual recipe box page should have the final end meal for that recipe as its banner image. However, this is a community website, where users are encouraged to participate by adding their own recipes to that section of the site and eventaully to the repository. 
+Ideally, each individual recipe box page should have the final end meal for that recipe as its banner image. However, this is a community website, where users are encouraged to participate by adding their own recipes to that section of the site and eventually to the repository. 
 
 Thus, when uploading a recipe to the website, the community member is prompted to add an image of the prepared meal. 
 
@@ -138,7 +138,7 @@ It is for this reason that images on the Recipe Box pages might have been either
 
 #### Backgrounds
 
-Again, to reinforce the desire for food - and thus purchasing a recips box -  an image of fresh produce has been used as the background rather than a plain white one. Care has been taken to ensure that banner or headline text is not rendered ilisible by the background image. All "generic" screen sizes have been tested (ie, xs (mobile), sm (tablet portrait), md (tablet landscape, lg (desktop) and xl) but there may be certain "in-between" screen resolutions where this text may be obscured by the background image.
+Again, to reinforce the desire for food - and thus purchasing a recipe box -  an image of fresh produce has been used as the background rather than a plain white one. Care has been taken to ensure that banner or headline text is not rendered illegible by the background image. All "generic" screen sizes have been tested (ie, xs (mobile), sm (tablet portrait), md (tablet landscape, lg (desktop) and xl) but there may be certain "in-between" screen resolutions where this text may be obscured by the background image.
 
 #### Recipe Box Cards
 
@@ -217,7 +217,7 @@ This website is fully responsive and interactive.
 
 [Django](https://www.djangoproject.com/) is the framework upon which this website is built.
 
-[django-allauth](https://django-allauth.readthedocs.io/en/latest/index.html) was used for user authentication.
+[Django-allauth](https://django-allauth.readthedocs.io/en/latest/index.html) was used for user authentication.
 
 [Stripe](https://stripe.com/en-gb) was used for the payment system.
 
@@ -255,7 +255,7 @@ This website was tested using the following tools:
 
 	<img src="documentation/screenshots/testing/checkout_success.png">
 
-    While these results might just be simple anomalies, the developer has added researching particularly ckeditor to his list of future plans. See future plans, below.
+    While these results might just be simple anomalies, the developer has added researching ckeditor to his list of future plans. See future plans, below.
 
 ### Testing User Stories
 #### First Time Visitors
@@ -306,7 +306,7 @@ This website was tested using the following tools:
 
 		- Comments are possible on user (or admin) created blog articles.
 
-	- Up-vote community-created recipes that I find particluarly mouth-watering in the hope that these recipes be added to the recipe database.
+	- Up-vote community-created recipes that I find particluarly mouth-watering in the hope that these recipes will be added to the recipe database.
 
 		- The user can vote on recipes published by other users. If the user then decides to change their mind, they can and their vote is removed.
 
@@ -632,13 +632,13 @@ From here, the devloper could delete the original JavaScript code from the indiv
 
 ### Changing photos on  blog articles
 
-The developer feels that this is a community site, and as such, when a user adds an image to a blog article, the user should either be forced into crediting the image. The image can be either an image the user took, or an image downloaded from the internet or elsewhere. Whichever, a credit should be given. 
+The developer feels that this is a community site, and as such, when a user adds an image to a blog article, the user should be forced into crediting the image. The image can be either an image the user took, or an image downloaded from the internet or elsewhere. Whichever, a credit should be given. 
 
 The developer originally set the blog app's Post model to have an obligatory Image Credit CharField. However, doing so threw up a number of conundrums.
 
 For example, what if the user was not adding an image, but allowing the banner image to be the page background for the blog article? Why would the user need to credit this?
 
-Further, if later the user decided to edit the post and choose to remove an added image, the Image Credit field would still be needed. 
+Further, if later the user decided to edit the post and chose to remove an added image, the Image Credit field would still be needed. 
 
 Thus, the developer realised that the best way to avoid these issues was to change the Post model to allow Image Credit to be blank and null. He then wrote some JavaScript to force the user to add a credit when an image was added. This JavaScript was appended to the JavaScript used in the original Boutique Ado project, on which this project is based.
 
@@ -734,7 +734,7 @@ The developer tested this code to destruction on the live site, and has verified
 
 Originally, the developer was going to have a search page for each section of the site. Thus, if a user is visiting the blog articles, searching would reveal the appropriate results. Likewise, if a user is visiting Recipe Boxes, searching would return only results from the "commercial" side of the site.
 
-However, it soon became apparent that this would be too complicated for users. Some users may not remember whether that are visiting the commercial side or the community side. Others, however, may be reading an article on the community side (the blog) and decide to look for Recipe Boxes that might be similar to the blog article. Thus, for example, the site contains a blog article about the dish "Adobo" and a Recipe Box for "Chicken Adobo". It would be frustrating for the user to search for the equivalent matching product (or article, depending where the user was starting from) but not be able to find it in the search.
+However, it soon became apparent that this would be too complicated for users. Some users may not remember whether they are visiting the commercial side or the community side. Others, however, may be reading an article on the community side (the blog) and decide to look for Recipe Boxes that might be similar to the blog article. Thus, for example, the site contains a blog article about the dish "Adobo" and a Recipe Box for "Chicken Adobo". It would be frustrating for the user to search for the equivalent matching product (or article, depending where the user was starting from) but not be able to find it in the search.
 
 Thus the developer decided to make a dedicated search tempate, that would return all concerned seacrh results.
 
@@ -744,11 +744,11 @@ The developer however thought it best that searching by tag or cateogory would t
 
 Whereas the commercial side of the website is controlled by the site admin, the blog and recipe side is designed to be communal. Thus, admin decides upon categories for Recipe Boxes, and these are "set in stone", so to speak. They are categorised by region, by diet, and by meal.
 
-However, blogs are different to products in the way that they are grouped. Just as "Asian" might be ideal as a category, it does not necessarily work well as a tag. It would be better to allow a further tag, such as "rice", to describe the particular article. Doing so means that users can skip from categories to tags and from tags to categories.
+However, blogs are different from products in the way that they are grouped. Just as "Asian" might be ideal as a category, it does not necessarily work well as a tag. It would be better to allow a further tag, such as "rice", to describe the particular article. Doing so means that users can skip from categories to tags and from tags to categories.
 
-This clearly means that it should be the post author who decides upon tags to include. And it was here that the developer had the most difficulty with his code.
+This clearly means that it should be the post author who decides upon which tags to include. And it was here that the developer had the most difficulty with his code.
 
-Since this is the developer's first Django project, it is fair to say that the developer has found Django to be at times extremely complicated. At other times, it is a joy to use. It is fir this reason that the developer is not going to expand on every error or problem he encountered while writing the code for adding and editing tags and categories. However, he is going to document his many tries in the beneath code block:
+Since this is the developer's first Django project, it is fair to say that the developer has found Django to be at times extremely complicated. At other times, it is a joy to use. It is for this reason that the developer is not going to expand on every error or problem he encountered while writing the code for adding and editing tags and categories. However, he is going to document his many tries in the following code block:
 
 ```
 @login_required
@@ -955,7 +955,7 @@ def add_post(request):
 
 The result of the above code is that a user can either choose from the list of categories or tags AND also add their own. The code recognises whether user entered tags/categories are on the pre-existing list. If they are, they are not duplicated. If they are not, they are added to the corresponding model (Tag or Category) and to the Post object itself.
 
-There is one still to be resolved situation regarding this code, however, and this will be resolved in the developer's future plans for the site. 
+There is one situation still to be resolved regarding this code, however, and this will be resolved in the developer's future plans for the site. 
 
 The developer realises that any text entered as tags or categories is treated as a string, rather than as array entries. Thus, if a user creates a post about chocolate milkshakes and chooses tags as "chocolate milk milkshake" the resulting tag is just that, rather than ["chocolate", "milk", "milkshake"]. 
 
@@ -963,7 +963,7 @@ The developer feels the solution to this might be the Django "taggable "add-on, 
 
 With the above code working fully, it was amended to suit the edit_post() view and tested fully there too.
 
-(As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue color is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
+(As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue colour is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
 
 ## Formset and Inlines
 ### Formset
@@ -1046,7 +1046,7 @@ The reason for this became evident when editing a recipe. For the dynamic formse
 
 ```
 
-As can be seen from the above code, each time a user click the Add Ingredient button, an extra form row is created. Setting the `extra=`value to a certain number in the forms.py renders the number of original forms to be displayed. Thus, if `extra=`is set to one, one form will be displayed. Likewise, if set to 3, three extra forms will be displayed. This is of course a wonderful solution for *creating* recipes, but not so when editing them.
+As can be seen from the above code, each time a user clicks the Add Ingredient button, an extra form row is created. Setting the `extra=`value to a certain number in the forms.py renders the number of original forms to be displayed. Thus, if `extra=`is set to one, one form will be displayed. Likewise, if set to 3, three extra forms will be displayed. This is of course a wonderful solution for *creating* recipes, but not so when editing them.
 
 Since a recipe is being saved before it can be edited, clicking the Add Ingredient button on the edit page would essntially clone the whole ingredients list and add the relevant extra rows. 
 
@@ -1194,7 +1194,7 @@ While both adding recipes and editing them function as they should, the develope
 Thus, the developer is leaving the code as is, and will revisit and amend it when he has a better, fuller understanding of Django and all Django can offer.
 
 ### Inlines
-Regarding the functionality of ensuring ingredients are listed for each recipe, the developer admits to also being confused. Unless he has misunderstood something, he believes that he has set ingredient quantities, units and names to be required. his is indeed what the HTML page renders. 
+Regarding the functionality of ensuring ingredients are listed for each recipe, the developer admits to also being confused. Unless he has misunderstood something, he believes that he has set ingredient quantities, units and names to be required. this is indeed what the HTML page renders. 
 
 Thus, the developer was surprised to find that he could indeed add a recipe without ingredients. The cause of this may originate from testing the above functionality: to get the above working the developer tried hundreds of different things. The developer may have missed "resetting" a line of code after trying and failing.
 
@@ -1211,7 +1211,7 @@ $('input[name="ingredients-0-name"]').prop('required', true);
 ## Known Bugs
 If a user creates multiple versions of the same item (whether that be a recipe, a blog post or a Recipe Box) and assigns each with different categories or tags, upon clicking categories or tags associated with the duplicated entries, the template rendering can become confused. 
 
-The develpoer realises that one solution for this is to add `unique=True` to the name or title of products, articles or recipes. However, while the site is still small and while the developer want to encourage users to participate in the community side of the site, the developer feels that adding `unique=True`may discourage users from participating. There are of course many different ways to make a spaghetti bolognese and stopping a user from creating such a recipe because the name is taken will discourage the user from further participation.
+The develpoer realises that one solution for this is to add `unique=True` to the name or title of products, articles or recipes. However, while the site is still small and while the developer wants to encourage users to participate in the community side of the site, the developer feels that adding `unique=True`may discourage users from participating. There are of course many different ways to make a spaghetti bolognese and stopping a user from creating such a recipe because the name is taken will discourage the user from further participation.
 
 Thus, the developer is choosing to leave this for now.
 
@@ -1373,7 +1373,7 @@ The developer looked for a way to make ckeditor functionality `null=False, blank
 
 #### Product & Recipe relationship
 
-The developer is aware that as his models are now, he has to add both Recipes and Products in two different places (both in admin and in the HTML rendering). To alleviate any errors caused if admin add one but not the other, the developer has used an `if`statment in the HTML:
+The developer is aware that as his models are now, he has to add Recipes and Products in two different places (both in admin and in the HTML rendering). To alleviate any errors caused if admin add one but not the other, the developer has used an `if`statment in the HTML:
 
 ```
 <h3 class="subtitle">What's in the box?</h3>
@@ -1390,7 +1390,7 @@ The developer is aware that as his models are now, he has to add both Recipes an
     </ul>
 ```
 
-The developer is aware that this is perhaps not the ideal situation: in a perfect world, when admin adds a product, it should be automatically attached to its' associated recipe.
+The developer is aware that this is perhaps not the ideal situation: in a perfect world, when admin adds a product, it should be automatically attached to its associated recipe.
 
 However, since it may be users themselves who add recipes but admin who add products, one is not necessarily associated with the other.
 
@@ -1833,7 +1833,7 @@ The app will now be live, but currently shows no styling or images, because `DIS
 
 7. Click "Add Statement" then in Step 3, click "Generate Policy"
 
-8. Cope the Policy JSON Document into the Bucket Policy of the first window
+8. Copy the Policy JSON Document into the Bucket Policy of the first window
 
 9. Allow access to all resources in the bucket by adding a slash and an asterisk (`/*`) to the end of the Resource key
 
@@ -1873,7 +1873,7 @@ The app will now be live, but currently shows no styling or images, because `DIS
 
 5. Click "Import"
 
-6. Since access is only required for this bucket, change the JSON `"Resource": ` key from an asterick to the below by copying the Bucket ARN (see Bucket Permissions, above) and pasting it into the JSON
+6. Since access is only required for this bucket, change the JSON `"Resource": ` key from an asterisk to the below by copying the Bucket ARN (see Bucket Permissions, above) and pasting it into the JSON
 
 	```
 	"Resource": [
@@ -1899,7 +1899,7 @@ The app will now be live, but currently shows no styling or images, because `DIS
 
 2. Select the relevant group name
 
-3. In the "Permissions" tab, click "Add permissions" and the choose "Attach policy" from the menu
+3. In the "Permissions" tab, click "Add permissions" and then choose "Attach policy" from the menu
 
 4. Select the required policy then click "Add policy"
 
@@ -1993,7 +1993,7 @@ Since the styling and images are available within the app (thanks to the use of 
     	location = settings.MEDIAFILES_LOCATION
 	```
 
-5. Tell app/settings.py that for static file storage it use the above custom storage Classes and that the location it should save static files to is in a folder called static. Inside the same `if USE_AWS in os.environ:` statement, add
+5. Tell app/settings.py that for static file storage it should use the above custom storage Classes and that the location it should save static files to is in a folder called static. Inside the same `if USE_AWS in os.environ:` statement, add
 
 	```
 	STATICFILES_STORAGE = 'custom_storages.StaticStorage'
@@ -2165,6 +2165,45 @@ Either click "Open with GitHub Desktop" and follow the prompts in the GitHub Des
 	# Freeze dependencies to keep them available when publishing
 	pip3 freeze > requirements.txt
 	```
+
+    # Credits
+## Code
+
+Much of this project has been taken from the [Code Institute Boutique Ado](https://github.com/Code-Institute-Solutions/boutique_ado_v1) walkthrough project. It very much serves as the base of this website. However, while the product, checkout and bag apps of Boutique Ado serve as the foundation, each has been reworked to suit this website. 
+
+[Bootstrap](https://getbootstrap.com/) was used extensively throughout this project for its responsive properties. Many elements were taken from this library, such as Cards and Buttons, but each element has been heavily modified for the needs of this website.
+
+[W3Schools.com](https://www.w3schools.com/) was used extensively for research for this project.
+
+[Stack Overflow](https://stackoverflow.com/) has been a fountain of knowledge in the production of this project.
+
+Where other 'non-original' code has been used, it has been credited within the HTML, CSS, JavaScript and Python files.
+
+## Media
+Unless otherwise stated, all images are my own.
+
+## Plagiarism
+This is a community recipe building site. While the ideal situation is that users will photograph their recipe creations themselves, the developer cannot be held responsible if users take images from other sources, such as copyrighted materials. Similarly, while the developer has requested that users give credit for any images they may use for their created recipes, the developer cannot guarantee the accuracy of these credits, and thus cannot be held responsible if credits are inaccurate.
+
+During testing, the developer asked friends, family and colleagues to test this application by adding recipes. While the developer believes to the best of his knowledge that all recipes created by others use their own images, or use and credit royalty free images, the developer cannot be certain of this, and cannot be held responsible if this is not the case.
+
+## Content
+All code content written by the developer unless otherwise stated.
+
+Blog articles and recipes are credited on the live site when not the developer's own.
+
+## Acknowledgements
+[Code Institute](https://codeinstitute.net/) for the tuition, and Aaron, the mentor I have been assigned, without whose advice I would not have been able to complete this project. A special thanks to him for helping me with the removal of the now deleted compromised settings.py file.
+
+A special mention for the Code Institute tutors, Igor (Igor_ci) and Tim (Tim_ci) for their patience, time and availability.
+
+Also to [Chris Zielinski](https://www.linkedin.com/in/ckz8780/) who wrote the Boutique Ado project for Code Institute. It was a pleasure to work with him to better understand Stripe and webhooks, and to create the schematic for other students.
+
+[This little fellow](https://www.sciencephoto.com/media/1008843/view/colorectal-cancer-cell-sem) for making me see sense.
+
+GG for the constant presence and encouragement. You are a pearl.
+
+My family for the encouragement and help in seeing this project become a reality.
 
  
 
