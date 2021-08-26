@@ -258,7 +258,165 @@ This website was tested using the following tools:
     While these results might just be simple anomalies, the developer has added researching particularly ckeditor to his list of future plans. See future plans, below.
 
 ### Testing User Stories
+#### First Time Visitors
 
+1) As a first time visitor, I want at first glance to understand the principle of the site:
+
+	- I want to know that the recipes listed as products are meal kits and that all ingredients are included when I order a kit. Upon receipt of the kit, all I then need to do is follow the cooking instructions.
+
+		- This is clearly noted on each Recipe Box page.
+
+	- I want to understand about the delivery service and especially about how cold chain and hygiene rules are respected.
+
+		- There is a dedicated "guarantee" page that deals with this.
+
+	- I want to be made aware about the benefits of using the service, such as the reduction of food waste and any economies I might make through the use of the service.
+
+		- There is a dedicated "guarantee" page that deals with this.
+
+	- I want to be reassured that wherever possible, local ingredients and suppliers are used, and that all fresh ingredients are traceable.
+
+		- There is a dedicated "guarantee" page that deals with this.
+
+	- I want the possibility to sign up to the service to access all the features of the website, whether I decide to purchase a Recipe Box or not.
+
+		- The user can decide to join the community while placing an order, or can choose to register through the navigation of the site.
+
+2) Upon ordering a Recipe Box, I either:
+
+	- Want the possibility of being an "anonymous" user. That is, should I so wish, I want to be able to order a Recipe Box without having to create an account.
+
+		- Anonymous checkout is allowed, and the anonymous user of course receives confirmation of the order through their email.
+
+	- Want to become a registered user, with my details saved for both making future purchases and for contributing to the growing list of community recipes and blog posts.
+
+		- The user's details are saved automatically should they wish to join the community. Further, where the user can create or edit blog posts or articles, or comment, the user's username is automatically added.
+
+#### Returning Registered Visitors
+
+1) As a returniing registered visitor, I would like to alert the community of the quality of the recipe box(es) I ordered:
+
+	- I would like to be able to leave comments on the recipe details page.
+
+		- Comments are possible on Recipe Box pages to review the product.
+
+2) As a registered user, I would like the possibility to:
+
+	- Comment on blog posts created by other community members.
+
+		- Comments are possible on user (or admin) created blog articles.
+
+	- Up-vote community-created recipes that I find particluarly mouth-watering in the hope that these recipes be added to the recipe database.
+
+		- The user can vote on recipes published by other users. If the user then decides to change their mind, they can and their vote is removed.
+
+	- Create and edit my own recipe concoctions and have them voted on by other community members.
+
+		- The user can do this. The developer has tried to make this process as seamless as possible, for example by allowing users to write in their own times for preparation (ie, 1 hr 20 mins, 65 mins etc) rthrough a TextField ather than forcing the user to use DateTimeFields where they would be forced to add "time strings" (for example 01:50:00). The developer will revisit the format of adding recipes, however, as he would like to find a better way of adding units (eg ml, oz, tbsp, pinch) or not. See Future Plans.
+
+		- As soon as the recipe has been created, the user then has an "edit" link both on the main listings page for all the recipes, the recipe's page itself and on the recipe listings of their profile page.
+
+	- Delete blog posts and recipes should I need to.
+
+		- The user then has a "delete" link both on the main listings page for all the recipes, the recipe's page itself and on the recipe listings of their profile page.
+
+3) Upon making further orders, I wish that the following information be retrieved automatically, so that I do not have to go through the tedium of re-enetering the details:
+
+	- Delivery address
+
+	- Invoice address
+
+	- Email & telephone details
+
+		- All of the above are possible so long as the user has chosen to save their details either when placing a previous order or through joining the site as a registered user.
+
+4) I wish to be able to edit my details
+
+	- I want this to be true both when I make a purchase and from my profile page.
+
+		- This is possible. Thus, if a user decides to send a Recipe Box to another person, they can do so. When the user makes the order, they can choose to change the delivery address details to the intended recipient, and then not save the details, thus keeping their own details intact. 
+
+#### Returning "Anonymous" Visitors
+
+1) As a returning anonymous user, I understand that remaining anonymous means just that. However:
+
+	- If I have previously made a purchase, my invoice address and delivery address has been retained for the purpose of invoicing and delivery. I understand that this information is stored by necessity only.
+
+		- This is the case. However, as a caveat, see "Testing: Stripe" below.
+
+	- Upon returning to the app, I understand that I will be prompted to create an account in order to access all the features of the website, and contribute to the community should I decide to.
+
+		- The developer has refrained from using popups or jumbotrons to encourage sign-ups, choosing instead to be more subtle: If an unregistered user wishes to either see a user created recipe's ingredients list or method of preparation, the user is asked to either register or sign in first. The same is true for leaving comments on the blog articles or Recipe Boxes, and for voting on future recipes. 
+
+		- Furthermore, to discourage anti-social behaviour, the then signed-in user is reminded that if they decide to post a comment, their usernames are recorded and displayed with the comment.
+
+		- With the exception of the main navigation registration or login links, when a user decides to create an account or login, the user is then redirected back to the page they came from.
+
+#### Frequent Registered Visitors
+
+1) As a frequent registered visitor, I will be a participating member of the **Recipes***and***Deliveries** community:
+
+	- I will have made regular orders of Recipe Boxes, and am likely to have created either recipes or blog entries. I want to be able to access my posting and pruchasing history quickly and easily.
+
+		- The user has access to their entire history on the site from their profile page. Here, they can access their entire puchase history and see the details of each by simply clicking the (truncated) order number. 
+
+		- Following this they can see how many total votes their published recipes have received. 
+
+		- Further, on their profile page, they have instant access to the most recent six of their published blog articles. By clicking the button, they can access all articles they have created. 
+
+		- For their published recipes, these are ordered firstly by vote count. Thus, the user sees instantly the votes their individuals recipes may have received. If the user has only two (for example) recipes that have been voted on, they then see their four most recently published recipes. Again, clicking the button takes the user to the entire history of their published recipes.
+
+	- If I have created recipes and my recipes have been voted as being the most popular of the last month, I will be alerted that this is the case, and I will see my recipe featured on the recipe boxes purchasing page.
+
+		- The user is alerted by email that their recipe has achieved the amount of votes to warrant a discount on their next purchase.
+
+		- Since the site is only small at the moment, adding these recipes as Recipe Boxes to be ordered is currently being done manually. However, the developer is looking into ways to automate this. See Future Plans.
+
+2) As a frequent registered visitor whose recipes have received a certain number of votes and thus qualify to be added as Recipe Boxes:
+
+	- I understand that I, myself, have nothing to do except collect the reward (see next point). I understand that **Recipes***and***Deliveries** look after the dispatching of recipe boxes, and that all I have done is create the recipe itself.
+
+		- Upon being alerted that the recipe has attained the required votes, the user is told that the discount is applied automatically at their next checkout (see next point). In the user's email it is clearly stated that **Recipes***and***Deliveries** take care of the rest.
+
+	- I understand that when the recipe I created is added as a Recipe Box, I will be given a credit that is redeemable against a future order I make on the **Recipes***and***Deliveries** website.
+
+		- Upon being alerted that the recipe has attained the required votes, the user is told that the discount is applied automatically at their next checkout. As the user makes a purchase, the user can see the discount being deducted automatically as the place items in their shopping bag. Further, the user can see the final discount amount relative to their order and see the discount has been deducted from the Grand Total. This is confirmed to the user after checkout: the confirmation email contains the above details.
+
+	- I can see a tally of the total votes for my recipe on my User Account page.
+
+		- The user can see both the total number of recipes all their recipes combined have achieved, and how many recipes their most popular six recipes have individually.
+
+		- As the site grow, the developer will revisit this: if there is a prolific recipe creator who garners many recipes with votes, it may be necessary to add the vote count for each recipe on the recipe's page and on the page listing all the recipes. Alternatively, to list more than six recipes on the user's profile page. See Future Plans
+
+#### Frequent Anonymous Visitors
+
+1) I have a good understanding of the functionality of the site, but have chosen for whatever reason to remain anonymous:
+
+	- I accept that doing so means that some part of the site will remain inacessible to me until I decide to register.
+
+		- This is the case. As the site grows, the parts that are inaccessible may change, however. It will probably be more practical to allow anonymous users acces to the online recipe (rather than its card included in the box), for example.
+
+	- If I do decide to register, I get full access to the site, but am not obligated to contribute
+
+		- While the ideal would be for everyone to contribure to the community, this is probably not practical in reality. Some members will always choose to remain "in the shadows", and they are welcome to do so. 
+
+### Professionals and Aspiring Chefs
+
+1. **Recipes***and***Deliveries** has the possibility of centralising the multitute of recipe websites that can be found online.
+
+	- Just as regular users can earn a credit when other users vote for one of their recipes, **Recipes***and***Deliveries** could be a place that hghlights up and coming talents. Once a professional, accredited chef signs on to the service, **Recipes***and***Deliveries** could be a place where said chef might make an income. For the professional, in other words, there could be a small monetary reward whenever a user orders a professional's recipes instead of a one off discount on purchases.
+
+		- While this is very much a "best case scenario", the developer believes that this might be a possibility. The developer enjoys cooking, and enjoys finding new recipes, but does not enjoy perusing the multitude of recipe websites currently online. Each is either packed full of advertisments that make the site slow to use and user-UNfriendly, or is designed to sell a product (such as frying pans) that are not necessarily part of what a user might be looking for. If these sites could be centralised, it would be better for everyone: 
+
+			- The creator creates and earns off of their creations
+
+			- This dispatcher (**Recipes***and***Deliveries**) dispatches as earns off of the orders
+
+			- The user uses, chooses to create or not, and is rewarded
+
+			- The environment is helped through less waste packaging and transportation
+
+			- Local businesses (suppliers) benefit
 
 ### Testing Functionality
 
@@ -1221,14 +1379,14 @@ The developer is aware that as his models are now, he has to add both Recipes an
 <h3 class="subtitle">What's in the box?</h3>
     <ul class="list-group">
         <li class="list-group-item border-0 p-0">
-            <i class="far fa-check-square text-green"></i> All the 
+            <i class="far fa-check-circle text-green"></i> All the 
             {% if product.box.id %}
                 <a class="text-green" href="{% url 'recipe' product.box.id %}">ingredients</a>
             {% else %}
                 ingredients
             {% endif %} to make this recipe
         </li>
-        <li class="list-group-item border-0 p-0 mb-3"><i class="far fa-check-square text-green"></i> The Recipe Card</li>
+        <li class="list-group-item border-0 p-0 mb-3"><i class="far fa-check-circle text-green"></i> The Recipe Card</li>
     </ul>
 ```
 
@@ -1416,6 +1574,12 @@ The developer is aware that this is a situation that needs to be revisted, and i
   }
 ]
 ```
+
+### Note about Postgres Database and Commit
+
+The developer unfortunately committed and pushed the Postgres database to GitHub. However, he quickly realised his mistake and destroyed that database. He then built a new database for the live site. On top of this, he also made sure to delete the compromised file using the process listed here: [Delete sensitive files from GitHub](https://stackoverflow.com/a/872700/14773450).
+
+
 
 # Deployment
 The deployment process listed below assumes that you have
