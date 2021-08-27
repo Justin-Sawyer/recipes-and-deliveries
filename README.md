@@ -418,12 +418,12 @@ This website was tested using the following tools:
 
 			- Local businesses (suppliers) benefit
 
-### Testing Functionality
+## Testing Functionality
 
 This project has been a labour of love and has taken many, many hours to complete. Code was tested exhaustively to check for errors and bugs:
 
 
-#### Star Ratings
+### Star Ratings
 
 The developer wrote a little JavaScript script to display star icons according to the Recipe Box rating. Thus, if a Recipe Box had a rating of 3/5, three amber stars would be displayed.
 
@@ -730,7 +730,7 @@ Otherwise, if a user removes an image, the Image Credit is removed, and is set t
 
 The developer tested this code to destruction on the live site, and has verified that with each option, (add image, remove image, handle accidental clicks) the correct Image credit is shown on the blog post's page. If a user posts an image, the credit is displayed. If the image is removed, no credit is displayed (since the default site banner image is being used). 
 
-## Search
+### Search
 
 Originally, the developer was going to have a search page for each section of the site. Thus, if a user is visiting the blog articles, searching would reveal the appropriate results. Likewise, if a user is visiting Recipe Boxes, searching would return only results from the "commercial" side of the site.
 
@@ -740,7 +740,7 @@ Thus the developer decided to make a dedicated search tempate, that would return
 
 The developer however thought it best that searching by tag or cateogory would take the user to the dedicated "side" of the website. Since tags are not featured on Recipe Boxes, but categories are, clicking a tag takes the user to the community side, for example.
 
-## Blog Tags and Categories
+### Blog Tags and Categories
 
 Whereas the commercial side of the website is controlled by the site admin, the blog and recipe side is designed to be communal. Thus, admin decides upon categories for Recipe Boxes, and these are "set in stone", so to speak. They are categorised by region, by diet, and by meal.
 
@@ -965,7 +965,7 @@ With the above code working fully, it was amended to suit the edit_post() view a
 
 (As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue colour is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
 
-## Formset and Inlines
+### Formset and Inlines
 ### Formset
 The Recipes models consist of 4 models: Tag, Category, Recipe and Ingredient. While Tag and Category are essentially the same as for the Blog, the developer has chosen not to relate these (between the Blog app and the Recipes app) for now. Depending on the evolution of the project, the developer may choose to relate them in further updates.
 
@@ -1194,19 +1194,780 @@ While both adding recipes and editing them function as they should, the develope
 Thus, the developer is leaving the code as is, and will revisit and amend it when he has a better, fuller understanding of Django and all Django can offer.
 
 ### Inlines
-Regarding the functionality of ensuring ingredients are listed for each recipe, the developer admits to also being confused. Unless he has misunderstood something, he believes that he has set ingredient quantities, units and names to be required. this is indeed what the HTML page renders. 
+Regarding the functionality of ensuring ingredients are listed for each recipe, the developer researched his use of inlines. Effectively, a recipe consists of at least one ingredient, but possibly many more than one. So, how best to use Django's powers for this? The developer looked at both Django's documentation and consulted many articles on Stack Overflow, but found very little that seemed to fit this particular idea. 
 
-Thus, the developer was surprised to find that he could indeed add a recipe without ingredients. The cause of this may originate from testing the above functionality: to get the above working the developer tried hundreds of different things. The developer may have missed "resetting" a line of code after trying and failing.
+The developer realises that if he were to give his form for Ingredients the `required=True` value, then this would mean that each recipe had to have 25 ingredients.The same is of course true for adding `blank=False, null=False` to the model. While the developer believes that this functionality must exist in Django, he was unsure about how to go about creating it.
 
 Again, when the developer better understands Django, this will be revisited.
 
-For now, however, the devloper has added the following JavaScript in order to force a required state for the FIRST ingredient formset (since we do not want to force a user to have to add exactly 25 ingredients for each recipe):
+For now, however, the developer has added the following JavaScript in order to force a required state for the FIRST ingredient formset (since we do not want to force a user to have to add exactly 25 ingredients for each recipe):
 
 ```
 $('input[name="ingredients-0-quantity"]').prop('required', true);
 $('input[name="ingredients-0-unit"]').prop('required', true);
 $('input[name="ingredients-0-name"]').prop('required', true);
 ```
+### Discount
+
+On any commercial website, ensuring that the client is charged the correct amout for a purchase, and that these same values are applied in the database are without doubt the most important. It is for this that the developer spent a huge amoutn of the time writing this project refining the discount situation.
+
+#### Votes added to recipe
+
+1. A user adds a recipe to the community
+2. Other users vote for recipes to be added as Recipe Boxes (ie, a Product)
+	1. The voter's id is added to `Recipe.votes`
+	2. The total votes received is calculated in `Recipe.vote_count`
+3. Once a user's recipe receives the set amount of votes:
+	1. An email alert is sent to the recipe author
+		1. Email alerts author that discount awaits on next purchase
+		2. The discount is calculated automatically, ie. the user needs do nothing except purchase something
+	2. A boolean value (True) is set in `Recipe.mail_sent` to ensure that the discount email can only be sent once, thus ensuring that if a recipe is n the threshold of attaining the required votes, a voter cannot add and remove a vote in order to fire several emails for discounts. (As an extra precaution, the recipe's author cannot vote for their own recipes: the HTML templating does not allow the user to see the vote button for their own recipes)
+	3. A six-digit code is added to `Recipe.discount_code`
+
+To test this, the developer first ensured that he could vote upon his own recipes to make life easire by not having to log in and out of his own account constantly.
+
+He created the following block of view in the views.py file (explanation of the code is within the code block):
+
+```
+@login_required
+def vote(request, pk):
+    """ A view to handle the voting for recipes functionality """
+    # Get the recipe
+    recipe = get_object_or_404(Recipe, id=request.POST.get('recipe_id'))
+    # Set a default "start value" for if votes
+    voted = False
+    # Functionality for when user has already registered a vote for that recipe
+    if recipe.votes.filter(id=request.user.id).exists():
+        recipe.votes.remove(request.user)
+        recipe.vote_count -= 1
+        recipe.save()
+        voted = False
+        messages.success(request, 'Your vote has been removed!')
+    # Functionality for when user registers (or re-registers) a vote for that recipe
+    else:
+        recipe.votes.add(request.user)
+        recipe.vote_count += 1
+        recipe.save()
+        voted = True
+        messages.success(request, 'Your vote has been registered!')
+
+        # Send mail at threshold of votes functionality
+        mail_sent = recipe.mail_sent
+        total_votes = recipe.total_votes()
+        # For testing purposes, the value was set to 2 votes
+        if total_votes == 1000:
+            if mail_sent is False:
+                # Generate discount code
+                discount_code = randrange(100000, 1000000, 6)
+                # Save discount code to recipe
+                recipe.discount_code = discount_code
+                recipe.save()
+                # Send mail to author
+                cust_email = recipe.author.email
+                subject = render_to_string(
+                    'recipes/congratulation_emails/congrats_email_subject.txt',
+                    {'recipe': recipe})
+                body = render_to_string(
+                    'recipes/congratulation_emails/congrats_email_body.txt',
+                    {'recipe': recipe,
+                     'contact_email': settings.DEFAULT_FROM_EMAIL})
+                # Send mail to admin
+                admin_subject = render_to_string(
+                    'recipes/congratulation_emails/add_recipe_subject.txt',
+                    {'recipe': recipe})
+                admin_body = render_to_string(
+                    'recipes/congratulation_emails/add_recipe_body.txt',
+                    {'recipe': recipe,
+                     'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+                send_mail(
+                    subject,
+                    body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [cust_email],
+                    fail_silently=True,
+                )
+                # Ensure mail is sent only once
+                recipe.mail_sent = True
+                recipe.save()
+
+                mail_admins(
+                    admin_subject,
+                    admin_body,
+                    )
+
+    return HttpResponseRedirect(reverse('recipe', args=[str(pk)]))
+```
+
+The developer tested this by setting a recipe to have received one previous vote, and by adding `{{ recipe.discount_code }}` to the body of the email to be sent.
+
+He then voted upon a recipe, chcked the admin for that recipe and checked receipt of emails.
+
+He saw that the vote had been registered, the vote count had been amended, the discount code had been added and the mail_sent boolean had been set to True.
+
+He also saw that the email was registering a discount code in its body.
+
+He then removed his vote and checked the admin once again. To his satisfaction, he saw that the vote count had been amended, the voter's id had been removed from vote, but that the email_sent field was still True and the discount code was still in the database.
+
+Again, he returned to the recipe itself and re-registered a vote.
+
+He was satisfield to see that the vote count increased once again, his id had once again been added to vote, and that this time he did not receive an email.
+
+He then amended his HTML to ensure that he could see both the total of all votes received and the vote count for each vote on his profile page.
+
+Satisfied that the adding of a vote/email/discount code functionality worked, he moved on to the next step.
+
+#### How discount is applied: when the checkout form validates
+
+1. User goes through the purchasing process
+2. Discount is calculated as the user adds Recipe Boxes to his cart
+3. Discount is deducted from Grand Total at point of checking out.
+4. User sees discount applied both in confirmation mail and checkout_success.html
+
+Ensuring that the discount was being calculated as the user adds products to his cart was fairly straightforward. It necessitated simply adding a few lines of code to the (Boutique Ado based) Order model, amending the update_total() function, changing the bag app's contexts.py code and then amending the checkout() view and the checkout_success() view:
+
+Checkout app Order model:
+
+```
+class Order(models.Model):
+    ....
+    # Discount applied field
+    vote_discount_applied = models.DecimalField(max_digits=10,
+                                                decimal_places=2,
+                                                null=False, default=0)
+    ...
+
+    def _generate_order_number(self):
+        ...
+
+    def update_total(self):
+        """
+        Update grand total each time a line item is added,
+        accounting for delivery costs.
+        """
+        ...
+
+        # Amend grand total if discount is applicable
+        if self.vote_discount_applied:
+            o_total = self.order_total
+            d_cost = self.delivery_cost
+            vote_discount = self.vote_discount_applied
+            self.grand_total = o_total + d_cost - vote_discount
+        else:
+            self.grand_total = self.order_total + self.delivery_cost
+        self.save()
+
+    def save(self, *args, **kwargs):
+        ...
+
+    def __str__(self):
+        return self.order_number
+```
+
+Bag app contexts.py:
+
+```
+def bag_contents(request):
+    """ A view to handle bag contents """
+    bag_items = []
+    total = 0
+    product_count = 0
+    discount = 0
+    user_recipes = 0
+    bag = request.session.get('bag', {})
+
+    for item_id, item_data in bag.items():
+        # Just getting quantity, no gf_option
+        if isinstance(item_data, int):
+            product = get_object_or_404(Product, pk=item_id)
+            total += item_data * product.price
+            product_count += item_data
+            bag_items.append({
+                'item_id': item_id,
+                'quantity': item_data,
+                'product': product,
+            })
+        else:
+            product = get_object_or_404(Product, pk=item_id)
+            for gf_option, quantity in item_data['diet_requirements'].items():
+                total += quantity * product.price
+                product_count += quantity
+                bag_items.append({
+                    'item_id': item_id,
+                    'quantity': quantity,
+                    'product': product,
+                    'gf_option': gf_option
+                })
+
+    if total < settings.FREE_DELIVERY_THRESHOLD:
+        delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
+        free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
+    else:
+        delivery = 0
+        free_delivery_delta = 0
+    grand_total = total + delivery
+
+    # Dealing with discount code for votes for recipes
+    if request.user.is_authenticated:
+        # Ensure user is eligible for the discount
+        user = get_object_or_404(User, id=request.user.id)
+        user_recipes = user.recipe_posts.all()
+        if user_recipes:
+            for recipe in user_recipes:
+                # If there is a discount code applied to any of user's recipes
+                # update running total applying discount as user adds products
+                if recipe.discount_code != "":
+                    threshold = settings.VOTE_THRESHOLD_PERCENTAGE
+                    discount = total * Decimal(threshold / 100) or 0
+            grand_total = total + delivery - discount
+        else:
+            grand_total = total + delivery
+
+    context = {
+        'bag_items': bag_items,
+        'total': total,
+        'product_count': product_count,
+        'delivery': delivery,
+        'free_delivery_delta': free_delivery_delta,
+        'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
+        'vote_threshold_precentage': settings.VOTE_THRESHOLD_PERCENTAGE,
+        'grand_total': grand_total,
+        'discount': discount,
+        'user_recipes': user_recipes,
+    }
+
+    return context
+```
+
+Checkout app checkout() view
+
+```
+def checkout(request):
+    user_recipes = None
+    first_discount_code = None
+    checkout_user = None
+    recipe_with_discount_code = None
+    first_recipe = None
+
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+    if request.method == 'POST':
+        bag = request.session.get('bag', {})
+
+        form_data = {
+            'full_name': request.POST['full_name'],
+            'email': request.POST['email'],
+            'phone_number': request.POST['phone_number'],
+            'street_address1': request.POST['street_address1'],
+            'street_address2': request.POST['street_address2'],
+            'town_or_city': request.POST['town_or_city'],
+            'county': request.POST['county'],
+            'postcode': request.POST['postcode'],
+            'country': request.POST['country'],
+        }
+        order_form = OrderForm(form_data)
+        if order_form.is_valid():
+            order = order_form.save(commit=False)
+            # Get client secret
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            order.stripe_pid = pid
+            order.original_bag = json.dumps(bag)
+            # Get bag contents
+            current_bag = bag_contents(request)
+            # Get discount value from bag's contents
+            discount = current_bag['discount']
+            order.vote_discount_applied = discount
+            order.save()
+            for item_id, item_data in bag.items():
+                try:
+                    product = Product.objects.get(id=item_id)
+                    if isinstance(item_data, int):
+                        order_line_item = OrderLineItem(
+                            order=order,
+                            product=product,
+                            quantity=item_data,
+                        )
+                        order_line_item.save()
+                    else:
+                        for gf_option, quantity in item_data[
+                                'diet_requirements'].items():
+                            order_line_item = OrderLineItem(
+                                order=order,
+                                product=product,
+                                quantity=quantity,
+                                diet_option=gf_option
+                            )
+                            order_line_item.save()
+                except Product.DoesNotExist:
+                    messages.error(request, (
+                        "One of the products in the bag isn't in our database. \
+                        Please call us for assistance!"
+                    ))
+                    order.delete()
+                    return redirect(reverse('view_bag'))
+
+            request.session['save_info'] = 'save-info' in request.POST
+            return redirect(reverse('checkout_success',
+                                    args=[order.order_number]))
+        else:
+            messages.error(request, 'There was an error in your form. \
+                Please double check your information.')
+
+    else:
+        bag = request.session.get('bag', {})
+        if not bag:
+            messages.error(request, "There's nothing in your bag yet")
+            return redirect(reverse('products'))
+
+        current_bag = bag_contents(request)
+        total = current_bag['grand_total']
+
+        stripe_total = round(total * 100)
+        stripe.api_key = stripe_secret_key
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
+
+        # Attempt to prefill the form with any info the
+        # user maintains in their profile
+        if request.user.is_authenticated:
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+
+                order_form = OrderForm(initial={
+                    'full_name': profile.default_full_name,
+                    'email': profile.user.email,
+                    'phone_number': profile.default_phone_number,
+                    'country': profile.default_country,
+                    'postcode': profile.default_postcode,
+                    'town_or_city': profile.default_town_or_city,
+                    'street_address1': profile.default_street_address1,
+                    'street_address2': profile.default_street_address2,
+                    'county': profile.default_county,
+                })
+
+                # Get user id
+                checkout_user = get_object_or_404(User, id=request.user.id)
+                # Check if user has published recipes
+                user_recipes = checkout_user.recipe_posts.all()
+                # Create empty list in memory
+                code_list = []
+                recipe_list = []
+                if user_recipes:
+                    for recipe in user_recipes:
+                        # If user recipes contain discount code
+                        if recipe.discount_code != "":
+                            # append values to above lists
+                            code = recipe.discount_code
+                            code_list.append(code)
+                            recipe_list.append(recipe)
+                    # If recipe list is not empty
+                    if recipe_list:
+                        # Get first index recipe 
+                        first_recipe = recipe_list[0]
+
+            except UserProfile.DoesNotExist:
+                order_form = OrderForm()
+        else:
+            order_form = OrderForm()
+
+    if not stripe_public_key:
+        messages.warning(request, 'Stripe public key is missing. \
+            Did you forget to set it in your environment?')
+
+    template = 'checkout/checkout.html'
+    context = {
+        'order_form': order_form,
+        'stripe_public_key': stripe_public_key,
+        'client_secret': intent.client_secret,
+        'user_recipes': user_recipes,
+        'first_discount_code': first_discount_code,
+        'checkout_user': checkout_user,
+        'recipe_with_discount_code': recipe_with_discount_code,
+        'first_recipe': first_recipe,
+    }
+
+    return render(request, template, context)
+```
+
+This ensured that the user's discount code was being found from his id. It also ensured that if the user has two or more recipes with discount codes, then only the first code would be taken into account while going through the checkout process. In other words, if the user is eligible for 3 discounts, he would receive one discount for each of his next three checkouts. When the list of discount, the context.py file above would no longer bear witness to any discount to be applied.
+
+Checkout app checkout_success() view:
+
+```
+def checkout_success(request, order_number):
+    """
+    Handle successful checkouts
+    """
+    save_info = request.session.get('save_info')
+    order = get_object_or_404(Order, order_number=order_number)
+    posts = Post.objects.all().order_by('-pk')
+    recipes = Recipe.objects.all().order_by('-pk')
+
+    if request.user.is_authenticated:
+        profile = UserProfile.objects.get(user=request.user)
+        # Attach the user's profile to the order
+        order.user_profile = profile
+        order.save()
+
+        # Get code for discount from recipe with votes
+        # As per checkout() view, above except (see next comment below)
+        checkout_user = get_object_or_404(User, id=request.user.id)
+        user_recipes = checkout_user.recipe_posts.all()
+        code_list = []
+        recipe_list = []
+        if user_recipes:
+            for recipe in user_recipes:
+                if recipe.discount_code != "":
+                    code = recipe.discount_code
+                    code_list.append(code)
+                    recipe_list.append(recipe)
+            if recipe_list:
+                first_recipe = recipe_list[0]
+                # If checkout is successful, remove the discount code from that recipe
+                # thus ensuring mulitple discounts are not possible
+                first_recipe.discount_code = ""
+                first_recipe.save()
+
+    if save_info:
+        profile_data = {
+            'default_full_name': order.full_name,
+            'default_phone_number': order.phone_number,
+            'default_country': order.country,
+            'default_postcode': order.postcode,
+            'default_town_or_city': order.town_or_city,
+            'default_street_address1': order.street_address1,
+            'default_street_address2': order.street_address2,
+            'default_county': order.county,
+        }
+        user_profile_form = UserProfileForm(profile_data, instance=profile)
+        if user_profile_form.is_valid():
+            user_profile_form.save()
+
+    messages.success(request, f'Order succesfully processed! \
+        Your order number is {order_number}. A confirmation \
+        email will be sent to {order.email}.')
+
+    if 'bag' in request.session:
+        del request.session['bag']
+
+    template = 'checkout/checkout_success.html'
+    context = {
+        'order': order,
+        'posts': posts,
+        'recipes': recipes,
+    }
+
+    return render(request, template, context)
+```
+
+Once the above had been added to his code, the developer once again went through the checkout process listed above. He added the necessary votes (minus one vote so he could vote in the HTML) and reset admin to reflect not having received an email and ensured the discount code was absent.
+
+He then voted upon a recipe, saw the correct values had been applied in admin, and then went through the checkout process.
+
+As he went through the checkout process, he could see the correct values being applied in the bag popup and on the checkout (payment) page. However, as he went through the Stripe payment process, his discount was not being applied in the database, and he was being charged the full amount without the discount.
+
+The developer had missed that he needed to:
+1. Somehow retrieve the discount amount
+2. Insert the discount amount into the model in order for the model's grand_total to be amended.
+
+He went back to his code.
+
+In the HTML of checkout.html, he added a hidden input field that retrieves the discount amout:
+
+`<input type="hidden" id="discount-id" value="{{ discount }}" name="discount">`
+
+He then made sure to retrieve this value in the cache_checkout_data() view. Since this view was caching the bag_contents() from above, he needed to call the discount amount from bag_contents:
+
+```
+@require_POST
+def cache_checkout_data(request):
+    try:
+        current_bag = bag_contents(request)
+        # Retrieve dsicount from hidden input above
+        discount = current_bag['discount']
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'bag': json.dumps(request.session.get('bag', {})),
+            'save_info': request.POST.get('save_info'),
+            'username': request.user,
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, 'Sorry, your payment cannot be processed right \
+            now. Please try again later.')
+        return HttpResponse(content=e, status=400)
+```
+
+Adding these lines of code ensured that the correct amounts were being inserted into the database. 
+
+The developer once again went through the whole vote/discount/checkout process as listed above.
+
+He was satisfied to see that the correct amounts were being reflected in the database. 
+
+He then checked his email to see what he was actually being charged. All was good here, too.
+
+He realised that something else was missing from the whole process. He was being TOLD he was being charged the correct amount, but what actually aws he being charged? It's very easy to write an email to say "you've been charged €x" but then actually charge someone €y...
+
+He thus turned his attention to Stripe.
+
+#### Stripe
+
+Below is a schematic the developer created while studying the Code Institution Boutique Ado project, upon which this project is based. The developer made this schematic with the creator of that project, who is listed below in the credits. The schematic shows the whole checkout process and how values are inserted into the database.
+
+<img src="documentation/stripe/flow-diagram-for-stripe-payments.png">
+
+As can be seen, the user just clicks a couple of buttons, fills in the checkout form and voilà, he is charged the correct amount. The server then inserts the order into the database. But, meanwhile, the Stripe payment process takes a different route. It takes the values from the bag, passes via the payment process and then checks the database to see if there is an order with the same details.
+
+Once this happens, a confirmation email is sent **from the view that handles Stripe payments** to the client. In other words, if Stripe does not know about any applicable discount, then the user will always be charged the full amount. 
+
+The developer was at first confused as to why he was receiving an order confirmation email, since the email was being sent from the webhook handler which handles the Stripe functionality. But he soon realised that Stripe is only checking to see if the order IN the database. If it is, the email is sent. If it isn't the order is taken FROM the webhook, inserted into the database and then a confirmation email is sent. **Stripe does not check the individual values of the order when it checks if the order is there**. It sees the order and sends the mail. It sees no order, inserts the order, then sends the mail.
+
+So, Stripe was seeing an order. "Fine! I can send an email!"
+
+Since the contents of the order are taken from the database, but the charge itself is handled by Stripe, both have to be in unison. 
+
+They were. But...
+
+What would happen if someone closed the checkout page before the payment is processed? What would happen if the form was deliberately made to fail? Stripe has been set up to deal with payment and then insert the order into the database if it finds no order. So Srtipe needs to be able to deal with this discount value when inserting the missed order.
+
+Thus, the developer realised he needed to tell Stripe about the discount. To do so, he added a simple line of code to the cache_checkout_data() view. He inserted 
+
+`'discount': discount`
+
+into the metadata.
+
+He then told the stripe javascript where to get this value from (ie, the hidden input value, above), and added the discount to the Order.objects.create() block of code in the handle_payment_intent_succeeded() view in  webhook_handler.py:
+
+```
+def handle_payment_intent_succeeded(self, event):
+        """
+        Handle the payment intent succeeded webhook event
+        """
+        intent = event.data.object
+        pid = intent.id
+        bag = intent.metadata.bag
+        save_info = intent.metadata.save_info
+
+        # Get discount
+        discount = intent.metadata.discount
+
+        first_recipe = intent.metadata.first_recipe
+
+        billing_details = intent.charges.data[0].billing_details
+        shipping_details = intent.shipping
+        grand_total = round(intent.charges.data[0].amount/100, 2)
+
+        # Clean data in the shipping fields
+        for field, value in shipping_details.address.items():
+            if value == "":
+                shipping_details.address[field] = None
+
+        # Update profile information if save_info was checked
+        profile = None
+        username = intent.metadata.username
+        if username != 'AnonymousUser':
+            profile = UserProfile.objects.get(user__username=username)
+            if save_info:
+                profile.default_phone_number__iexact = shipping_details.phone
+                profile.default_country__iexact = (shipping_details.
+                                                   address.country)
+                profile.default_postcode__iexact = (shipping_details.
+                                                    address.postal_code)
+                profile.default_town_or_city__iexact = (shipping_details.
+                                                        address.city)
+                profile.default_street_address1__iexact = (shipping_details.
+                                                           address.line1)
+                profile.default_street_address2__iexact = (shipping_details.
+                                                           address.line2)
+                profile.default_county__iexact = shipping_details.address.state
+                profile.save()
+
+        order_exists = False
+        attempt = 1
+        while attempt < 5:
+            try:
+                order = Order.objects.get(
+                    full_name__iexact=shipping_details.name,
+                    email__iexact=billing_details.email,
+                    phone_number__iexact=shipping_details.phone,
+                    street_address1__iexact=shipping_details.address.line1,
+                    street_address2__iexact=shipping_details.address.line2,
+                    town_or_city__iexact=shipping_details.address.city,
+                    county__iexact=shipping_details.address.state,
+                    postcode__iexact=shipping_details.address.postal_code,
+                    country__iexact=shipping_details.address.country,
+                    grand_total=grand_total,
+                    original_bag=bag,
+                    stripe_pid=pid,
+                )
+                order_exists = True
+                break
+            except Order.DoesNotExist:
+                # Increment attempt by 1, pause for 1 second, try again
+                attempt += 1
+                time.sleep(1)
+        if order_exists:
+            self._send_confirmation_email(order)
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]} | \
+                    SUCCESS: Verified order already in database',
+                status=200)
+        else:
+            order = None
+            try:
+                order = Order.objects.create(
+                    full_name=shipping_details.name,
+                    user_profile=profile,
+                    email=billing_details.email,
+                    phone_number=shipping_details.phone,
+                    street_address1=shipping_details.address.line1,
+                    street_address2=shipping_details.address.line2,
+                    town_or_city=shipping_details.address.city,
+                    county=shipping_details.address.state,
+                    postcode=shipping_details.address.postal_code,
+                    country=shipping_details.address.country,
+                    original_bag=bag,
+                    stripe_pid=pid,
+                    # Try to insert discount
+                    vote_discount_applied=discount,
+                )
+                if first_recipe != "no_recipe":
+                    recipe = Recipe.objects.filter(id=first_recipe)[0]
+                    recipe.discount_code = ""
+                    recipe.save()
+
+                for item_id, item_data in json.loads(bag).items():
+                    product = Product.objects.get(id=item_id)
+                    if isinstance(item_data, int):
+                        order_line_item = OrderLineItem(
+                            order=order,
+                            product=product,
+                            quantity=item_data,
+                        )
+                        order_line_item.save()
+                    else:
+                        for gf_option, quantity in item_data[
+                                'diet_requirements'].items():
+                            order_line_item = OrderLineItem(
+                                order=order,
+                                product=product,
+                                quantity=quantity,
+                                diet_option=gf_option
+                            )
+                            order_line_item.save()
+
+            except Exception as e:
+                if order:
+                    order.delete()
+                return HttpResponse(
+                    content=f'Webhook received: {event["type"]} | \
+                        ERROR: {e}',
+                    status=500)
+
+        self._send_confirmation_email(order)
+        return HttpResponse(
+            content=f'Webhook received: {event["type"]} | \
+                SUCCESS: Created order in webhook',
+            status=200)
+```
+
+The developer then reset the vote count etc and placed another order with discount. He could now see the discount being included in the metadata from Stripe, and could also see the correct value being inserted into the database when the form was passing.
+
+He then forced the form to fail. The developer now saw that the webhook was being returned as a failure: failed to create order in database.
+
+The developer turned to the console and saw the following error listed:
+
+```
+File “/workspace/recipes_and_deliveries/checkout/models.py”, line 64, in update_total
+    self.grand_total = self.order_total + self.delivery_cost - self.vote_discount_applied
+TypeError: unsupported operand type(s) for -: ‘float’ and ‘decimal.Decimal’
+```
+
+Since Stripe isn't concerned with what or how much a discount might be, it just collects a payment, the webhook was passing whenever the form validated and the webhook found the order in the database.
+
+The above error is saying:
+
+"Although the payment went through ok, and the user has been charged the grand_total amound, Stripe was nonetheless unable to place the order into the database because the discount variable is not in the correct format for the database field."
+
+As the discount value is uploaded to Stripe, it is uploaded as a string. Thus, if a user has a discount of decimal value (eg) 7.99, the matadata is reading "7.99", which is of course a string.
+
+A string value cannot be inserted into a DecimalField... so it needs converting into the correct format.
+
+Thus, in the same view function as above, the developer added the conversion:
+
+```
+# Get discount
+# Rename "discount" to "stripe_discount
+stripe_discount = intent.metadata.discount
+stripe_discount_float = float(stripe_discount)
+discount_rounded = round(stripe_discount_float, 2)
+discount = Decimal(discount_rounded).quantize(Decimal('.01'))
+```
+
+Having done so, the developer tested once again and now found that everything passed: the webhook passed and placed the order into the database.
+
+The developer tested this to exhaustion, adding the necessary votes, changing whether an email had been sent, and checking the webhook and database.
+
+Everything was working, except...
+
+When the form was being forced to fail, the discount code was not being removed from the recipe, and thus the user could get repeated discounts by forcing the form to fail.
+
+Once again, the developer added another hidden input into the checkout.html's template:
+
+`<input type="hidden" id="first-recipe-id" value="{% if first_recipe %}{{ first_recipe.id }}{% else %}no_recipe{% endif %}" name="first_recipe">`
+
+He then retrievd that value from stripe's javascriptand inserted that into the data to be posted:
+
+```
+var firstRecipe = $('input[name="first_recipe"]').val();
+
+var postData = {
+    'csrfmiddlewaretoken': csrfToken,
+    'client_secret': clientSecret,
+    'save_info': saveInfo,
+    'discount': discount,
+    'first_recipe': firstRecipe,
+};
+```
+
+He update the cache_checkout_data() to add this value to Stripe's metadata:
+
+```
+@require_POST
+def cache_checkout_data(request):
+    try:
+        current_bag = bag_contents(request)
+        discount = current_bag['discount']
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'bag': json.dumps(request.session.get('bag', {})),
+            'save_info': request.POST.get('save_info'),
+            'username': request.user,
+            'discount': discount,
+            # get recipe with discount's id
+            'first_recipe': request.POST.get('first_recipe') or "no_recipe",
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, 'Sorry, your payment cannot be processed right \
+            now. Please try again later.')
+        return HttpResponse(content=e, status=400)
+```
+
+And finally, he told webhook_handler's handle_payment_intent_succeeded() what to do with this value: Reset the discount_code to "" if there is a `first_recipe` or do nothing if there is no `first_recipe`:
+
+```
+if first_recipe != "no_recipe":
+    recipe = Recipe.objects.filter(id=first_recipe)[0]
+    recipe.discount_code = ""
+    recipe.save()
+```
+
+He tested once again. All was correct. Everything functioned as it should. The developer then went for a long lie down!!
 
 ## Known Bugs
 If a user creates multiple versions of the same item (whether that be a recipe, a blog post or a Recipe Box) and assigns each with different categories or tags, upon clicking categories or tags associated with the duplicated entries, the template rendering can become confused. 
@@ -1577,7 +2338,7 @@ The developer is aware that this is a situation that needs to be revisted, and i
 
 ### Note about Postgres Database and Commit
 
-The developer unfortunately committed and pushed the Postgres database to GitHub. However, he quickly realised his mistake and destroyed that database. He then built a new database for the live site. On top of this, he also made sure to delete the compromised file using the process listed here: [Delete sensitive files from GitHub](https://stackoverflow.com/a/872700/14773450).
+The developer unfortunately committed and pushed the Postgres database to GitHub. However, he quickly realised his mistake and destroyed that database. He then built a new database for the live site. On top of this, he also made sure to delete the compromised `settings.py` file using the process listed here: [Delete sensitive files from GitHub](https://stackoverflow.com/a/872700/14773450).
 
 
 
@@ -2166,7 +2927,7 @@ Either click "Open with GitHub Desktop" and follow the prompts in the GitHub Des
 	pip3 freeze > requirements.txt
 	```
 
-    # Credits
+# Credits
 ## Code
 
 Much of this project has been taken from the [Code Institute Boutique Ado](https://github.com/Code-Institute-Solutions/boutique_ado_v1) walkthrough project. It very much serves as the base of this website. However, while the product, checkout and bag apps of Boutique Ado serve as the foundation, each has been reworked to suit this website. 

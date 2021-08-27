@@ -49,7 +49,6 @@ form.addEventListener('submit', function(ev) {
     var saveInfo = Boolean($('#id_save_info').attr('checked'));
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
 
-    //var discount = parseFloat($('input[name="discount"]').val());
     var discountString = $('input[name="discount"]').val();
     var discountFloat = parseFloat(discountString).toFixed(2);
     var discount = Number(discountFloat);
