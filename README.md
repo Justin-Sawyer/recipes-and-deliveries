@@ -997,7 +997,7 @@ To his astonishment, this simple solution worked, and recipe ingredient updating
 
 While researching this project, the developer toyed with the idea of using dynamic formsets, but decided instead to set a maximum and minimum for the form.
 
-The reason for this became evident when editing a recipe. For the dynamic formset, as originally intended, the devloper had again followed an online tutorial and amended his code to suit his needs. The code is reproduced below, in order to document the problems the developer had, and how he solved the problem. The code does not feature in the finsihed project.
+The reason for this became evident when editing a recipe. For the dynamic formset, as originally intended, the developer had again followed an online tutorial and amended his code to suit his needs. The code is reproduced below, in order to document the problems the developer had, and how he solved the problem. The code does not feature in the finsihed project.
 
 ```
 <script>
@@ -1967,7 +1967,7 @@ if first_recipe != "no_recipe":
     recipe.save()
 ```
 
-He tested once again. All was correct. Everything functioned as it should. The developer then went for a long lie down!!
+He tested once again. All was correct. Everything functioned as it should.
 
 ## Known Bugs
 If a user creates multiple versions of the same item (whether that be a recipe, a blog post or a Recipe Box) and assigns each with different categories or tags, upon clicking categories or tags associated with the duplicated entries, the template rendering can become confused. 
@@ -2120,7 +2120,7 @@ The developer realizes that he has used seemingly the same models for Products, 
 
 The developer wants to keep control of the listings of Recipe Boxes. He has allowed adding of Categories and Tags for Recipes and Blog articles, but wishes to keep some semblance of order according to the menu items in the navigation for Recipe Boxes. While it is possible to filter Recipe Boxes by their Categories by clicking on a category, the developer does not wish to leave users the possibility of having almost identical categories in the Recipe Box list of categories (ie, Mediterranean vs Medditerannean). Keeping this semblance of order is less important for the community side of the site, as it is the community who "control" their input.
 
-#### Order: null & true values
+#### Order: null & blank values
 
 Django frowns upon `null=True, blank=True` values.
 
@@ -2926,6 +2926,44 @@ Either click "Open with GitHub Desktop" and follow the prompts in the GitHub Des
 	# Freeze dependencies to keep them available when publishing
 	pip3 freeze > requirements.txt
 	```
+
+# Future Plans
+
+## ckeditor
+
+The developer will research using either a different Rich Text Editor or find ways in which ckeditor is less of a drain on page rendering.
+
+## The "add recipe" process
+
+1. The developer would like to find a way in which units (such as ml, kg etc) can better be added to recipes. At the moment, in his models, a simple CharField is being used for this. This is adequate for the time being, but the developer is researching the conversion of units. For example, converting ml into cups for the America, market. 
+
+2. Rendering of units as fractions, decimals or text. The developer is aware of the app "django-fractions' but this seems to have only limited browser support. Additionally, in recipes, many times we talk of adding "half a tablespoon" of a certain ingredient. For the sake of simplicity, the field in question at the moment is a FloatField which allows for both floating point numbers and whole numbers. 
+
+3. The ingredient adding process will be revisited in its entirety depending on customer feedback. Maybe it would be better to remove the prop `required` from the unit field, for example. 
+
+## Recipe Box / Recipe relationship
+
+The developer is not sure whether it would be possible to achieve this, but the developer would like to autmate the process that creates a relationship between these two models. Ideally, the flow would be as follows:
+
+1. User adds recipe
+2. At vote threshold being reached, the regular process of alerting the user happens (for the user's discount)
+3. Recipe "becomes" Recipe Box through automated process
+
+Since the process would necessitate outside factors (like establishing a cost) and possibly greater research (packaging, sourcing ingredients), the developer is choosing to leave the current functionality as it is. For example, not everyone is a professional photographer, and for a Recipe Box product to sell well, the Recipe Box recipe would probably need a photo shoot. This is not something that can be asked of a user who adds their recipes.
+
+## Vote count
+
+At the moment, the site is new and little used. But as they site grows, the developer will revisit whether it is necessary to truncate the number of recipes shown on a user's profile at a greater level than the current 6. 
+
+## Tags
+
+While the adding of tags and/or categories has been achieved, the developer would like to find a more elegant way of adding these. He is actively researching the Django add-on "taggable". 
+
+## Null and blank
+
+As stated, the developer found that using the preferred Django settings in the Order model causes Stripe webhooks to fail. This means that although a purchase is added to the database, the user never receives a confirmation email. This will be revisited, as the developer would like to eliminate the warnings this causes in the console.
+
+As an aside, regarding GDPR: the developer is aware of the privacy rules that need to be followed regarding GDPR. However, it was only when adding the UserProfile model to admin that the developer came to understand why Stripe webhooks were failing. During testing, he asked a fellow developer to place an order, and the colleague did but reported receiving no confirmation mail. Through a process of elimnation, the developer discovered that his colleague had left the `street_address2`, `county` and `postcode` fields blank when ordering. This was discovered when rendering the UserProfiel model in the admin. Thus, until the developer is satisfied that there are no further problems with this, the UserProfile model will remain available to admin.
 
 # Credits
 ## Code
