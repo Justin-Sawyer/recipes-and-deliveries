@@ -226,6 +226,11 @@ def edit_post(request, post_id):
             posts_form = BlogPostForm(request.POST,
                                       request.FILES,
                                       instance=post)
+            
+            # Check button for adding further tags or categories
+            add_more_tags = request.POST.getlist('add-more-tags')
+            add_more_cats = request.POST.getlist('add-more-cats')
+
             if posts_form.is_valid():
                 postsform = posts_form.save()
                 new_post = Post.objects.get(id=postsform.id)
@@ -284,6 +289,10 @@ def edit_post(request, post_id):
                     messages.warning(request, 'Your post was added, but we were not able \
                         to add your categories. Please add these \
                         one word at a time!')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+                elif add_more_tags or add_more_cats:
+                    messages.warning(request, 'Your tag/category was added, \
+                        you can now add another')
                     return redirect(reverse('edit_post', args=[postsform.id]))
                 else:
                     messages.success(request, 'Successfully updated post!')

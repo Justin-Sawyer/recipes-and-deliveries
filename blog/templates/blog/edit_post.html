@@ -46,11 +46,15 @@
                             {{ posts_form.category | as_crispy_field}}
                         </div>
                         {{ new_category_form|crispy }}
+                        <label class="form-check-label mb-2" for="id-add-more-cats">Add another category?</label>
+                        <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-cats" name="add-more-cats">
                     </div>
                     <div class="col-12 col-md-6">
                         <div id="tag-height">
                         {{ posts_form.tag | as_crispy_field }}</div>
                         {{ new_tag_form.tagname | as_crispy_field }}
+                        <label class="form-check-label mb-2" for="id-add-more-tags">Add another tag?</label>
+                        <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-tags" name="add-more-tags">
                     </div>
                     <div class="col-12 col-md-3">
                         <p class="mb-2">Choose Image</p>

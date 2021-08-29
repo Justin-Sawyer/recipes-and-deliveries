@@ -730,6 +730,8 @@ Otherwise, if a user removes an image, the Image Credit is removed, and is set t
 
 The developer tested this code to destruction on the live site, and has verified that with each option, (add image, remove image, handle accidental clicks) the correct Image credit is shown on the blog post's page. If a user posts an image, the credit is displayed. If the image is removed, no credit is displayed (since the default site banner image is being used). 
 
+The developer applied the same code to the Recipes app, too.
+
 ### Search
 
 Originally, the developer was going to have a search page for each section of the site. Thus, if a user is visiting the blog articles, searching would reveal the appropriate results. Likewise, if a user is visiting Recipe Boxes, searching would return only results from the "commercial" side of the site.
@@ -740,7 +742,7 @@ Thus the developer decided to make a dedicated search tempate, that would return
 
 The developer however thought it best that searching by tag or cateogory would take the user to the dedicated "side" of the website. Since tags are not featured on Recipe Boxes, but categories are, clicking a tag takes the user to the community side, for example.
 
-### Blog Tags and Categories
+### Tags and Categories (part 1)
 
 Whereas the commercial side of the website is controlled by the site admin, the blog and recipe side is designed to be communal. Thus, admin decides upon categories for Recipe Boxes, and these are "set in stone", so to speak. They are categorised by region, by diet, and by meal.
 
@@ -955,15 +957,335 @@ def add_post(request):
 
 The result of the above code is that a user can either choose from the list of categories or tags AND also add their own. The code recognises whether user entered tags/categories are on the pre-existing list. If they are, they are not duplicated. If they are not, they are added to the corresponding model (Tag or Category) and to the Post object itself.
 
-There is one situation still to be resolved regarding this code, however, and this will be resolved in the developer's future plans for the site. 
-
 The developer realises that any text entered as tags or categories is treated as a string, rather than as array entries. Thus, if a user creates a post about chocolate milkshakes and chooses tags as "chocolate milk milkshake" the resulting tag is just that, rather than ["chocolate", "milk", "milkshake"]. 
 
-The developer feels the solution to this might be the Django "taggable "add-on, but has decided this will be looked into at a further date.
-
-With the above code working fully, it was amended to suit the edit_post() view and tested fully there too.
+With the above code working fully, it was adapteed to suit the edit_post() view and tested fully there too.
 
 (As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue colour is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
+
+### Tags and Categories (part 2)
+
+Originally, the developer had intended to leave further work on the above as part of his Future Plans. But when he ran his code through the HTML testing tool, he noticed an error that having multiple user added tags was causing. 
+
+If a user had added (for example) "Street Food" as a tag, then although the functionality of searching that tag was still there, there was nonetheless an error:
+
+<img src="documentation/screenshots/testing/tag-error.png">
+
+The developer thus decided to revisit and amend the previously written code.
+
+The first step was to discover whether the tags posted contain a space or not. If they do, then the user is adding more than one tag. 
+
+If this is the case, the tags should not be added to the object. However, the user should be alerted that the tags have not been added. Essentially, the user should be alerted that the post (or recipe) had been saved, but that the tags could not be added. 
+
+As a result, the user should be taken to the edit page where they could instantly amend the tags. On said edit page, the user should have the possibility of returning to the edit page if they want to add multiple extra tags or categores, instead of returning to the post or recipe's page. 
+
+Only when the user has finished adding extra tags or categories should they be taken to the post or recipe's page where they can see their article.
+
+Thus, the add views were changed. Below is the original add_post view, as quoted above. But the same editing is true for both blog posts and recipes. For the sake of simplicity, the developer is just quoting one example:
+
+```
+@login_required
+def add_post(request):
+    """ Add a post to the blog """
+
+    if request.method == 'POST':
+        """ Gets username as author """
+        author = get_object_or_404(User, id=request.user.id)
+
+        """ Retrieve form data """
+        posts_form = BlogPostForm(request.POST, request.FILES)
+        form_temp = posts_form.save(commit=False)
+
+        """ append user (post author) to form for submitting """
+        form_temp.author = author
+
+        """ Check button for adding further posts """
+        add_more_posts = request.POST.getlist('add-more-posts')
+
+        
+        if posts_form.is_valid():
+            postsform = posts_form.save()
+            new_post = Post.objects.get(id=postsform.id)
+
+            """ Handle new vs existing tags """
+            new_tags_form = NewTagsForm(request.POST)
+            if new_tags_form.data['tagname']:
+                new_tagname = new_tags_form.data['tagname']
+                tagname_collection = Tag.objects.all()
+                existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                if existing_tagname:
+                    existing_tagname_id = tagname_collection.get(id__in=existing_tagname)
+                    new_post.tag.add(existing_tagname_id)
+                if not existing_tagname:
+                    new_tags_form.is_valid()
+                    newtag = new_tags_form.save()
+                    new_post.tag.add(newtag)
+                
+            """ Handle new vs exiting categories """
+            new_category_form = NewCategoriesForm(request.POST)
+            if new_category_form.data['friendly_name']:
+                new_category_name = new_category_form.data['friendly_name']
+                category_collection = Category.objects.all()
+                existing_category_name = (
+                    Category.objects.filter(friendly_name=new_category_name))
+                if existing_category_name:
+                    existing_category_name_id = (
+                        category_collection.get(id__in=existing_category_name))
+                    new_post.category.add(existing_category_name_id)
+                if not existing_category_name:
+                    new_category_form.is_valid()
+                    newcategory = new_category_form.save()
+                    new_post.category.add(newcategory)
+
+            messages.success(request, 'Successfully added post!')
+
+            """ Handle redirect according to whether Further Posts is checked or not """
+            if add_more_posts:
+                return redirect(reverse('add_post'))
+            else:
+                return redirect(reverse('blog-articles'))
+        else:
+            messages.error(request, 'Failed to add your post \
+                Please ensure the form is valid.')
+    else:
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
+        posts_form = BlogPostForm
+    
+    template = 'blog/add_post.html'
+    
+    context = {
+        'posts_form': posts_form,
+        'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
+    }
+
+    return render(request, template, context) 
+```
+
+The above code was considerable rewritten:
+
+```
+@login_required
+def add_post(request):
+    """ Add a post to the blog """
+    if request.method == 'POST':
+        posts_form = BlogPostForm(request.POST, request.FILES)
+        new_tag_form = NewTagsForm(request.POST)
+        new_category_form = NewCategoriesForm(request.POST)
+        if posts_form.is_valid():
+            author = get_object_or_404(User, id=request.user.id)
+            form_temp = posts_form.save(commit=False)
+            form_temp.author = author
+
+            # Check button for adding further posts
+            add_more_posts = request.POST.getlist('add-more-posts')
+
+            postsform = posts_form.save()
+            new_post = Post.objects.get(id=postsform.id)
+
+            # Handle new vs existing tags
+            no_space_tags = True
+            new_tags_form = NewTagsForm(request.POST)
+            if new_tags_form.data['tagname']:
+                new_tagname = new_tags_form.data['tagname']
+                tagname_collection = Tag.objects.all()
+                existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                if existing_tagname:
+                    existing_tagname_id = tagname_collection.get(
+                        id__in=existing_tagname)
+                    new_post.tag.add(existing_tagname_id)
+                if not existing_tagname:
+                    if ' ' not in new_tagname:
+                        new_tags_form.is_valid()
+                        newtag = new_tags_form.save()
+                        new_post.tag.add(newtag)
+                        no_space_tags = True
+                    else:
+                        no_space_tags = False
+
+            # Handle new vs exiting categories
+            no_space_cats = True
+            new_category_form = NewCategoriesForm(request.POST)
+            if new_category_form.data['friendly_name']:
+                new_category_name = new_category_form.data['friendly_name']
+                category_collection = Category.objects.all()
+                existing_category_name = (
+                    Category.objects.filter(friendly_name=new_category_name))
+                if existing_category_name:
+                    existing_category_name_id = (
+                        category_collection.get(id__in=existing_category_name))
+                    new_post.category.add(existing_category_name_id)
+                if not existing_category_name:
+                    if ' ' not in new_category_name:
+                        new_category_form.is_valid()
+                        newcategory = new_category_form.save()
+                        new_post.category.add(newcategory)
+                        no_space_cats = True
+                    else:
+                        no_space_cats = False
+
+            # Handle redirect if tags or categories contain spaces
+            if no_space_tags and no_space_cats:
+                messages.success(request, 'Successfully added post!')
+            else:
+                messages.warning(request, 'Your post was added, but we were not able \
+                    to add your tags and/or categories. Please add these one \
+                    word at a time!')
+                return redirect(reverse('edit_post', args=[postsform.id]))
+
+            # Handle redirect according to whether
+            # Further Posts is checked or not
+            if add_more_posts:
+                return redirect(reverse('add_post'))
+            else:
+                return redirect(reverse('blog-articles'))
+        else:
+            messages.error(request, 'Failed to add your post \
+                Please ensure the form is valid.')
+    else:
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
+        posts_form = BlogPostForm
+
+    template = 'blog/add_post.html'
+
+    context = {
+        'posts_form': posts_form,
+        'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
+    }
+
+    return render(request, template, context)
+```
+
+The developer tested this by adding a few new posts. One with no extra tags or categories, one with a single extra tag, another with a single exra category, and one each of two extra tags or categories.
+
+He found that if he added no extras, he was redirected to the correct place. He found that if he added just one extra tag or category, he was redirected to the correct place. And he found that if he added multiple extra, he was directed to the edit page, where he saw a message saying that although the post had been added, his tags or categories had not been saved. The same message alerted him how to go about adding these correctly.
+
+Satisfied that everything was working as it should, the developer moved on to the edit functionality.
+
+Since the user was being redirected to the edit page if the user added multiple tags or categories, the developer added an input checkbox to the edit HTML page for both categories and tags:
+
+```
+<label class="form-check-label mb-2" for="id-add-more-cats">Add another category?</label>
+<input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-cats" name="add-more-cats">
+```
+
+He then amended his edit code:
+
+```
+@login_required
+def edit_post(request, post_id):
+    """ Edit a blog post """
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user == post.author or request.user.is_superuser:
+        new_category_form = NewCategoriesForm
+        new_tag_form = NewTagsForm
+        if request.method == 'POST':
+            new_tag_form = NewTagsForm(request.POST)
+            new_category_form = NewCategoriesForm(request.POST)
+            posts_form = BlogPostForm(request.POST,
+                                      request.FILES,
+                                      instance=post)
+            
+            # Check buttons for adding further tags or categories
+            add_more_tags = request.POST.getlist('add-more-tags')
+            add_more_cats = request.POST.getlist('add-more-cats')
+
+            if posts_form.is_valid():
+                postsform = posts_form.save()
+                new_post = Post.objects.get(id=postsform.id)
+
+                no_space_tags = True
+                new_tags_form = NewTagsForm(request.POST)
+                if new_tags_form.data['tagname']:
+                    new_tagname = new_tags_form.data['tagname']
+                    tagname_collection = Tag.objects.all()
+                    existing_tagname = Tag.objects.filter(tagname=new_tagname)
+                    if existing_tagname:
+                        existing_tagname_id = (
+                            tagname_collection.get(id__in=existing_tagname))
+                        new_post.tag.add(existing_tagname_id)
+                    if not existing_tagname:
+                        if ' ' not in new_tagname:
+                            new_tags_form.is_valid()
+                            newtag = new_tags_form.save()
+                            new_post.tag.add(newtag)
+                            no_space_tags = True
+                        else:
+                            no_space_tags = False
+
+                no_space_cats = True
+                new_category_form = NewCategoriesForm(request.POST)
+                if new_category_form.data['friendly_name']:
+                    new_category_name = new_category_form.data['friendly_name']
+                    category_collection = Category.objects.all()
+                    existing_category_name = (
+                        Category.objects.filter(
+                            friendly_name=new_category_name))
+                    if existing_category_name:
+                        existing_category_name_id = (
+                            category_collection.get(
+                                id__in=existing_category_name))
+                        new_post.category.add(existing_category_name_id)
+                    if not existing_category_name:
+                        if ' ' not in new_category_name:
+                            new_category_form.is_valid()
+                            newcategory = new_category_form.save()
+                            new_post.category.add(newcategory)
+                            no_space_cats = True
+                        else:
+                            no_space_cats = False
+
+                # For clarity, the individual error is flagged in the message
+                if not no_space_cats and not no_space_tags:
+                    messages.warning(request, 'Your post was added, but we were not able \
+                        to add your categories and/or tags. Please add these \
+                        one word at a time!')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+                elif no_space_cats and not no_space_tags:
+                    messages.warning(request, 'Your post was added, but we were not able \
+                        to add your tags. Please add these \
+                        one word at a time!')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+                elif no_space_tags and not no_space_cats:
+                    messages.warning(request, 'Your post was added, but we were not able \
+                        to add your categories. Please add these \
+                        one word at a time!')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+                # If no errors, but user wishes to add more tags or categories
+                elif add_more_tags or add_more_cats:
+                    messages.warning(request, 'Your tag/category was added, \
+                        you can now add another')
+                    return redirect(reverse('edit_post', args=[postsform.id]))
+                else:
+                    messages.success(request, 'Successfully updated post!')
+                    return redirect(reverse('article', args=[post.id]))
+            else:
+                messages.error(request, 'Failed to edit post \
+                    Please ensure the form is valid.')
+        else:
+            new_category_form = NewCategoriesForm
+            new_tag_form = NewTagsForm
+            posts_form = BlogPostForm(instance=post)
+    else:
+        messages.error(request, 'Sorry, only the post author can do that!')
+        return redirect(reverse('home'))
+
+    template = 'blog/edit_post.html'
+    context = {
+        'posts_form': posts_form,
+        'new_tag_form': new_tag_form,
+        'new_category_form': new_category_form,
+        'post': post,
+        'edit_article': True,
+    }
+
+    return render(request, template, context)
+```
+
+The developer once again went through the same testing process, adding and editing posts and recipes, trying to make the forms fail. He was satisfied that each "failure" brought about the correct result, ie, if he added multiples instead of singles, he was returned to the edit page, with the correct message. He was also satisfied that of there wer no erros, but the user wished to add further single tags or categories, he was brought back to the correct page. And further, he was satisfied that if he left the checkbox unchecked, he was brought to the correct page.
 
 ### Formset and Inlines
 ### Formset
@@ -2964,6 +3286,12 @@ While the adding of tags and/or categories has been achieved, the developer woul
 As stated, the developer found that using the preferred Django settings in the Order model causes Stripe webhooks to fail. This means that although a purchase is added to the database, the user never receives a confirmation email. This will be revisited, as the developer would like to eliminate the warnings this causes in the console.
 
 As an aside, regarding GDPR: the developer is aware of the privacy rules that need to be followed regarding GDPR. However, it was only when adding the UserProfile model to admin that the developer came to understand why Stripe webhooks were failing. During testing, he asked a fellow developer to place an order, and the colleague did but reported receiving no confirmation mail. Through a process of elimnation, the developer discovered that his colleague had left the `street_address2`, `county` and `postcode` fields blank when ordering. This was discovered when rendering the UserProfiel model in the admin. Thus, until the developer is satisfied that there are no further problems with this, the UserProfile model will remain available to admin.
+
+## Automated testing
+
+The developer has spent an inordinate amount of time testing this code physically. In other words, for each block of code written, he would add or edit a user, recipe, blog article or product.
+
+The developer knows that automated testing is possible in Django, which would much reduce the time needed to test code physically. This is the developers first priority.
 
 # Credits
 ## Code
