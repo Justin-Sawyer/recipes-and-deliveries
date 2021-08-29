@@ -70,7 +70,7 @@
                                                 <div class="col">
                                                     <!-- Tagline -->
                                                     <p class="mb-0 text-left text-black tagline">
-                                                        {{ product.description|truncatechars:200 }}
+                                                        {{ product.description|truncatechars:200|safe }}
                                                     </p>
                                                     <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
                                                     {% if product.category %}
@@ -106,11 +106,9 @@
                                         </div>
                                     </div>
                                 </div>                        
-                                {% if forloop.counter|divisibleby:2 %}
-                                    <div class="col-12 d-none d-sm-none d-md-none d-lg-block mb-5">
-                                        <hr>
-                                    </div>
-                                {% endif %}
+                                <div class="col-12 mb-5">
+                                    <hr>
+                                </div>   
                             {% endfor %}
                         {% else %}
                         <div class="col-12">
@@ -252,12 +250,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                  
-                                    {% if forloop.counter|divisibleby:2 %}
-                                        <div class="col-12 d-none d-sm-none d-md-none d-lg-block mb-5">
-                                            <hr>
-                                        </div>
-                                    {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-5">
+                                    <hr>
                                 </div>
                             {% endfor %}
                         {% else %}
@@ -395,12 +391,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                  
-                                    {% if forloop.counter|divisibleby:2 %}
-                                        <div class="col-12 d-none d-sm-none d-md-none d-lg-block mb-5">
-                                            <hr>
-                                        </div>
-                                    {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-5">
+                                    <hr>
                                 </div>
                             {% endfor %}
                         {% else %}

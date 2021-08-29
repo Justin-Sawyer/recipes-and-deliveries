@@ -630,7 +630,7 @@ This had the desired effect: all Recipe Box cards on the "All Recipe Boxes" page
 
 From here, the devloper could delete the original JavaScript code from the individual Recipe Box page, add the class `rating` to the rating section of the HTML, then create a separate script file in the `includes` folder and call the script from both the `products.html` template and the individual `product_detail.html` template.
 
-### Changing photos on  blog articles
+### Changing photos on  user added content
 
 The developer feels that this is a community site, and as such, when a user adds an image to a blog article, the user should be forced into crediting the image. The image can be either an image the user took, or an image downloaded from the internet or elsewhere. Whichever, a credit should be given. 
 
@@ -738,7 +738,7 @@ Originally, the developer was going to have a search page for each section of th
 
 However, it soon became apparent that this would be too complicated for users. Some users may not remember whether they are visiting the commercial side or the community side. Others, however, may be reading an article on the community side (the blog) and decide to look for Recipe Boxes that might be similar to the blog article. Thus, for example, the site contains a blog article about the dish "Adobo" and a Recipe Box for "Chicken Adobo". It would be frustrating for the user to search for the equivalent matching product (or article, depending where the user was starting from) but not be able to find it in the search.
 
-Thus the developer decided to make a dedicated search tempate, that would return all concerned seacrh results.
+Thus the developer decided to make a dedicated search tempate, that would return all concerned search results.
 
 The developer however thought it best that searching by tag or cateogory would take the user to the dedicated "side" of the website. Since tags are not featured on Recipe Boxes, but categories are, clicking a tag takes the user to the community side, for example.
 

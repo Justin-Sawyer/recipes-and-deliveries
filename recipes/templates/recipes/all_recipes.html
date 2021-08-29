@@ -2,6 +2,10 @@
 {% load static %}
 {% load pagination_tags %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'recipes/css/recipes.css' %}">
+{% endblock %}
+
 {% block extra_title %}
 | Recipes
 {% endblock %}

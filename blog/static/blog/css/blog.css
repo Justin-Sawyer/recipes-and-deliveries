@@ -5,3 +5,7 @@
 #post-form input::placeholder {
     color: #aab7c4;
 }
+
+.card-body {
+    flex: none !important;
+}
