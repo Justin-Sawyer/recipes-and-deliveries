@@ -22,49 +22,51 @@
   * [Technologies Used](#technologies-used)
     + [Languages](#languages)
     + [Frameworks, Libraries & Programs](#frameworks--libraries---programs)
-  * [Testing](#testing)
-    + [Code Validation](#code-validation)
-    + [Testing User Stories](#testing-user-stories)
-      - [First Time Visitors](#first-time-visitors-1)
-      - [Returning Registered Visitors](#returning-registered-visitors-1)
-      - [Returning "Anonymous" Visitors](#returning--anonymous--visitors-1)
-      - [Frequent Registered Visitors](#frequent-registered-visitors-1)
-      - [Frequent Anonymous Visitors](#frequent-anonymous-visitors-1)
-    + [Professionals and Aspiring Chefs](#professionals-and-aspiring-chefs-1)
+- [Testing](#testing)
+  * [Code Validation](#code-validation)
+  * [Testing User Stories](#testing-user-stories)
+    + [First Time Visitors](#first-time-visitors-1)
+    + [Returning Registered Visitors](#returning-registered-visitors-1)
+    + [Returning "Anonymous" Visitors](#returning--anonymous--visitors-1)
+    + [Frequent Registered Visitors](#frequent-registered-visitors-1)
+    + [Frequent Anonymous Visitors](#frequent-anonymous-visitors-1)
+  * [Professionals and Aspiring Chefs](#professionals-and-aspiring-chefs-1)
   * [Testing Functionality](#testing-functionality)
-    + [Star Ratings](#star-ratings)
-    + [Changing photos on  user added content](#changing-photos-on--user-added-content)
-    + [Search](#search)
-    + [Tags and Categories (part 1)](#tags-and-categories--part-1-)
-    + [Tags and Categories (part 2)](#tags-and-categories--part-2-)
-    + [Formset and Inlines](#formset-and-inlines)
+  * [Star Ratings](#star-ratings)
+  * [Changing photos on user added content](#changing-photos-on-user-added-content)
+  * [Search](#search)
+  * [Tags and Categories](#tags-and-categories)
+    + [Part 1](#part-1)
+  * [Tags and Categories](#tags-and-categories-1)
+    + [Part 2](#part-2)
+  * [Formset and Inlines](#formset-and-inlines)
     + [Formset](#formset)
     + [Inlines](#inlines)
-    + [Discount](#discount)
-      - [Votes added to recipe](#votes-added-to-recipe)
-      - [How discount is applied: when the checkout form validates](#how-discount-is-applied--when-the-checkout-form-validates)
-      - [Stripe](#stripe)
+  * [Discount](#discount)
+    + [Votes added to recipe](#votes-added-to-recipe)
+    + [How discount is applied: when the checkout form validates](#how-discount-is-applied--when-the-checkout-form-validates)
+    + [Stripe](#stripe)
   * [Known Bugs](#known-bugs)
-  * [Back End](#back-end)
-    + [RECIPE BOXES Database Models](#recipe-boxes-database-models)
-      - [Category](#category)
-      - [Product](#product)
-    + [USER Database Models](#user-database-models)
-    + [BLOG Database Models](#blog-database-models)
-      - [Category](#category-1)
-      - [Tag](#tag)
-      - [Posts](#posts)
-    + [RECIPE Database Models](#recipe-database-models)
-      - [Category](#category-2)
-      - [Tag](#tag-1)
-      - [Recipe](#recipe)
-      - [Ingredients](#ingredients)
-    + [ORDER Database Models](#order-database-models)
-    + [Notes on models](#notes-on-models)
-      - [Category, Tag and their associate models](#category--tag-and-their-associate-models)
-      - [Order: null & blank values](#order--null---blank-values)
-      - [ckeditor in Recipe, Product and Blog models](#ckeditor-in-recipe--product-and-blog-models)
-      - [Product & Recipe relationship](#product---recipe-relationship)
+- [Back End](#back-end)
+  * [RECIPE BOXES Database Models](#recipe-boxes-database-models)
+    + [Category](#category)
+    + [Product](#product)
+  * [USER Database Models](#user-database-models)
+  * [BLOG Database Models](#blog-database-models)
+    + [Category](#category-1)
+    + [Tag](#tag)
+    + [Posts](#posts)
+  * [RECIPE Database Models](#recipe-database-models)
+    + [Category](#category-2)
+    + [Tag](#tag-1)
+    + [Recipe](#recipe)
+    + [Ingredients](#ingredients)
+  * [ORDER Database Models](#order-database-models)
+  * [Notes on models](#notes-on-models)
+    + [Category, Tag and their associate models](#category--tag-and-their-associate-models)
+    + [Order: null & blank values](#order--null---blank-values)
+    + [ckeditor in Recipe, Product and Blog models](#ckeditor-in-recipe--product-and-blog-models)
+    + [Product & Recipe relationship](#product---recipe-relationship)
   * [Data Structures (JSON)](#data-structures--json-)
     + [PRODUCT](#product)
       - [Categories](#categories)
@@ -134,6 +136,7 @@
   * [Acknowledgements](#acknowledgements)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 
 This is the website and application for **Recipes***and***Deliveries**, a community driven website and app offering the ability to purchase meal kits, contribute to the repository of recipes available for purchasing as well as to its blog.
@@ -357,8 +360,8 @@ This website is fully responsive and interactive.
 
 [Pexels](https://www.pexels.com/) was used to source the Recipe Box card images, unless otherwise stated.
 
-## Testing
-### Code Validation
+# Testing
+## Code Validation
 
 This website was tested using the following tools:
 
@@ -391,8 +394,8 @@ This website was tested using the following tools:
 
     While these results might just be simple anomalies, the developer has added researching ckeditor to his list of future plans. See future plans, below.
 
-### Testing User Stories
-#### First Time Visitors
+## Testing User Stories
+### First Time Visitors
 
 1) As a first time visitor, I want at first glance to understand the principle of the site:
 
@@ -426,7 +429,7 @@ This website was tested using the following tools:
 
 		- The user's details are saved automatically should they wish to join the community. Further, where the user can create or edit blog posts or articles, or comment, the user's username is automatically added.
 
-#### Returning Registered Visitors
+### Returning Registered Visitors
 
 1) As a returniing registered visitor, I would like to alert the community of the quality of the recipe box(es) I ordered:
 
@@ -470,7 +473,7 @@ This website was tested using the following tools:
 
 		- This is possible. Thus, if a user decides to send a Recipe Box to another person, they can do so. When the user makes the order, they can choose to change the delivery address details to the intended recipient, and then not save the details, thus keeping their own details intact. 
 
-#### Returning "Anonymous" Visitors
+### Returning "Anonymous" Visitors
 
 1) As a returning anonymous user, I understand that remaining anonymous means just that. However:
 
@@ -486,7 +489,7 @@ This website was tested using the following tools:
 
 		- With the exception of the main navigation registration or login links, when a user decides to create an account or login, the user is then redirected back to the page they came from.
 
-#### Frequent Registered Visitors
+### Frequent Registered Visitors
 
 1) As a frequent registered visitor, I will be a participating member of the **Recipes***and***Deliveries** community:
 
@@ -522,7 +525,7 @@ This website was tested using the following tools:
 
 		- As the site grow, the developer will revisit this: if there is a prolific recipe creator who garners many recipes with votes, it may be necessary to add the vote count for each recipe on the recipe's page and on the page listing all the recipes. Alternatively, to list more than six recipes on the user's profile page. See Future Plans
 
-#### Frequent Anonymous Visitors
+### Frequent Anonymous Visitors
 
 1) I have a good understanding of the functionality of the site, but have chosen for whatever reason to remain anonymous:
 
@@ -534,7 +537,7 @@ This website was tested using the following tools:
 
 		- While the ideal would be for everyone to contribure to the community, this is probably not practical in reality. Some members will always choose to remain "in the shadows", and they are welcome to do so. 
 
-### Professionals and Aspiring Chefs
+## Professionals and Aspiring Chefs
 
 1. **Recipes***and***Deliveries** has the possibility of centralising the multitute of recipe websites that can be found online.
 
@@ -557,7 +560,7 @@ This website was tested using the following tools:
 This project has been a labour of love and has taken many, many hours to complete. Code was tested exhaustively to check for errors and bugs:
 
 
-### Star Ratings
+## Star Ratings
 
 The developer wrote a little JavaScript script to display star icons according to the Recipe Box rating. Thus, if a Recipe Box had a rating of 3/5, three amber stars would be displayed.
 
@@ -764,7 +767,7 @@ This had the desired effect: all Recipe Box cards on the "All Recipe Boxes" page
 
 From here, the devloper could delete the original JavaScript code from the individual Recipe Box page, add the class `rating` to the rating section of the HTML, then create a separate script file in the `includes` folder and call the script from both the `products.html` template and the individual `product_detail.html` template.
 
-### Changing photos on  user added content
+## Changing photos on user added content
 
 The developer feels that this is a community site, and as such, when a user adds an image to a blog article, the user should be forced into crediting the image. The image can be either an image the user took, or an image downloaded from the internet or elsewhere. Whichever, a credit should be given. 
 
@@ -866,7 +869,7 @@ The developer tested this code to destruction on the live site, and has verified
 
 The developer applied the same code to the Recipes app, too.
 
-### Search
+## Search
 
 Originally, the developer was going to have a search page for each section of the site. Thus, if a user is visiting the blog articles, searching would reveal the appropriate results. Likewise, if a user is visiting Recipe Boxes, searching would return only results from the "commercial" side of the site.
 
@@ -876,7 +879,8 @@ Thus the developer decided to make a dedicated search tempate, that would return
 
 The developer however thought it best that searching by tag or cateogory would take the user to the dedicated "side" of the website. Since tags are not featured on Recipe Boxes, but categories are, clicking a tag takes the user to the community side, for example.
 
-### Tags and Categories (part 1)
+## Tags and Categories
+### Part 1
 
 Whereas the commercial side of the website is controlled by the site admin, the blog and recipe side is designed to be communal. Thus, admin decides upon categories for Recipe Boxes, and these are "set in stone", so to speak. They are categorised by region, by diet, and by meal.
 
@@ -1097,7 +1101,8 @@ With the above code working fully, it was adapteed to suit the edit_post() view 
 
 (As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue colour is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
 
-### Tags and Categories (part 2)
+## Tags and Categories
+### Part 2
 
 Originally, the developer had intended to leave further work on the above as part of his Future Plans. But when he ran his code through the HTML testing tool, he noticed an error that having multiple user added tags was causing. 
 
@@ -1421,7 +1426,7 @@ def edit_post(request, post_id):
 
 The developer once again went through the same testing process, adding and editing posts and recipes, trying to make the forms fail. He was satisfied that each "failure" brought about the correct result, ie, if he added multiples instead of singles, he was returned to the edit page, with the correct message. He was also satisfied that of there wer no erros, but the user wished to add further single tags or categories, he was brought back to the correct page. And further, he was satisfied that if he left the checkbox unchecked, he was brought to the correct page.
 
-### Formset and Inlines
+## Formset and Inlines
 ### Formset
 The Recipes models consist of 4 models: Tag, Category, Recipe and Ingredient. While Tag and Category are essentially the same as for the Blog, the developer has chosen not to relate these (between the Blog app and the Recipes app) for now. Depending on the evolution of the project, the developer may choose to relate them in further updates.
 
@@ -1663,11 +1668,11 @@ $('input[name="ingredients-0-quantity"]').prop('required', true);
 $('input[name="ingredients-0-unit"]').prop('required', true);
 $('input[name="ingredients-0-name"]').prop('required', true);
 ```
-### Discount
+## Discount
 
 On any commercial website, ensuring that the client is charged the correct amout for a purchase, and that these same values are applied in the database are without doubt the most important. It is for this that the developer spent a huge amoutn of the time writing this project refining the discount situation.
 
-#### Votes added to recipe
+### Votes added to recipe
 
 1. A user adds a recipe to the community
 2. Other users vote for recipes to be added as Recipe Boxes (ie, a Product)
@@ -1773,7 +1778,7 @@ He then amended his HTML to ensure that he could see both the total of all votes
 
 Satisfied that the adding of a vote/email/discount code functionality worked, he moved on to the next step.
 
-#### How discount is applied: when the checkout form validates
+### How discount is applied: when the checkout form validates
 
 1. User goes through the purchasing process
 2. Discount is calculated as the user adds Recipe Boxes to his cart
@@ -2169,7 +2174,7 @@ He realised that something else was missing from the whole process. He was being
 
 He thus turned his attention to Stripe.
 
-#### Stripe
+### Stripe
 
 Below is a schematic the developer created while studying the Code Institution Boutique Ado project, upon which this project is based. The developer made this schematic with the creator of that project, who is listed below in the credits. The schematic shows the whole checkout process and how values are inserted into the database.
 
@@ -2432,9 +2437,9 @@ The develpoer realises that one solution for this is to add `unique=True` to the
 
 Thus, the developer is choosing to leave this for now.
 
-## Back End
-### RECIPE BOXES Database Models
-#### Category
+# Back End
+## RECIPE BOXES Database Models
+### Category
 
 | Key  | Type Field  | Relationship  | Blank  | Null  |
 |:----------|:----------|:----------|:----------|:----------|
@@ -2442,7 +2447,7 @@ Thus, the developer is choosing to leave this for now.
 | friendly_name    | CharField    |  -     | True    | True    |
 | sku    | CharField    |  -     | True    | True    |
 
-#### Product
+### Product
 | Key  | Type Field  | Relationship  | Max Digits  | Decimal Places  | Blank  | Null  |Default  |
 |:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|
 | category    | ManyToManyField    | Categories    |  -     |  -     |  -     |  -     |  - |
@@ -2457,7 +2462,7 @@ Thus, the developer is choosing to leave this for now.
 | has_gluten    | BooleanField    |  -     |    -   |  -     | True    | True    | False |
 | gluten_free_option    | BooleanField    |  -     |  -     |  -     | True    | True    | False|
  
-### USER Database Models
+## USER Database Models
 | Key  | Type Field  | Relationship  | Max Digits  | Blank  | Null  | Default  |
 |:----------|:----------|:----------|:----------|:----------|:----------|:----------|
 | user    | OneToOneField    | User    | -    | -    | -    | -    |
@@ -2471,8 +2476,8 @@ Thus, the developer is choosing to leave this for now.
 | default_country    | CountryField    | -    | -    | True    | -    | ""    |
 
 
-### BLOG Database Models
-#### Category
+## BLOG Database Models
+### Category
 
 | Key  | Type Field  | Relationship  | Blank  | Null  |
 |:----------|:----------|:----------|:----------|:----------|
@@ -2480,12 +2485,12 @@ Thus, the developer is choosing to leave this for now.
 | friendly_name    | CharField    |  -     | True    | True    |
 | sku    | CharField    |  -     | True    | True    |
 
-#### Tag
+### Tag
 | Key  | Type Field  | Max Length  |
 |:----------|:----------|:----------|
 | tagname    | CharField    | 254    |
 
-#### Posts
+### Posts
 | Key  | Type Field  | Relationship  | Max Length  | auto_now  | auto_now_add  | Null  | Blank  | Default  | related_name  |
 |:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:-----------|
 | author    | ForeignKey    | User    | -    | -    | -    | -    | -    | -    | blog_posts    |
@@ -2500,8 +2505,8 @@ Thus, the developer is choosing to leave this for now.
 | date_posted    | DateTimeField    | -    | -    | -    | -    | True    | True    | timezone.now    | -    |
 | date_edited    | DateTimeField    | -    | -    | True    | -    | -    | -    | -    | -    |
 
-### RECIPE Database Models
-#### Category
+## RECIPE Database Models
+### Category
 
 | Key  | Type Field  | Relationship  | Blank  | Null  |
 |:----------|:----------|:----------|:----------|:----------|
@@ -2509,12 +2514,12 @@ Thus, the developer is choosing to leave this for now.
 | friendly_name    | CharField    |  -     | True    | True    |
 | sku    | CharField    |  -     | True    | True    |
 
-#### Tag
+### Tag
 | Key  | Type Field  | Max Length  |
 |:----------|:----------|:----------|
 | tagname    | CharField    | 254    |
 
-#### Recipe
+### Recipe
 | Key  | Type Field  | Relationship  | Related Name  | on_delete  | default  | blank  | null  | max_length  | auto_now_add  |
 |:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:-----------|
 | author    | ForeignKey    | User    | recipe_posts    | CASCADE    | ""    | True    | True    | -    | -    |
@@ -2538,7 +2543,7 @@ Thus, the developer is choosing to leave this for now.
 | mail_sent    | BooleanField    | -    | -    | -    | False    | True    | True    | -    | -    |
 | discount_code    | CharField    | -    | -    | -    | ""    | True    | -    | 6    | -    |
 
-#### Ingredients
+### Ingredients
 | Key  | Type Field  | Relationship  | Related Name  | on_delete  | default  | blank  | max_length  |
 |:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|
 | quantity    | FloatField    | -    | -    | -    | ""    | True    | -    |
@@ -2547,7 +2552,7 @@ Thus, the developer is choosing to leave this for now.
 | preparation    | CharField    | -    | -    | -    | ""    | True    | 150    |
 | recipe    | ForeignKey    | Recipe    | ingredients    | CASCADE    | -    | -    | -    |
 
-### ORDER Database Models
+## ORDER Database Models
 
 | Key  | Type Field  | Relationship  | Related Name  | on_delete  | max_length  | max_digits  | editable  | null  | blank  | blank_label | decimal_places |
 |:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:----------|:-----------|:-----------|:-----------|
@@ -2570,13 +2575,13 @@ Thus, the developer is choosing to leave this for now.
 | original_bag    | TextField    | -    | -    | -    | -    | -    | -    | False    | -    |- |  - |
 | stripe_pid    | CharField    | -    | -    | -    | 254    | -    | -    | False    | False    |- |  - |
 
-### Notes on models
-#### Category, Tag and their associate models
+## Notes on models
+### Category, Tag and their associate models
 The developer realizes that he has used seemingly the same models for Products, Blog and Recipes. There is a reason for the duplication:
 
 The developer wants to keep control of the listings of Recipe Boxes. He has allowed adding of Categories and Tags for Recipes and Blog articles, but wishes to keep some semblance of order according to the menu items in the navigation for Recipe Boxes. While it is possible to filter Recipe Boxes by their Categories by clicking on a category, the developer does not wish to leave users the possibility of having almost identical categories in the Recipe Box list of categories (ie, Mediterranean vs Medditerannean). Keeping this semblance of order is less important for the community side of the site, as it is the community who "control" their input.
 
-#### Order: null & blank values
+### Order: null & blank values
 
 Django frowns upon `null=True, blank=True` values.
 
@@ -2584,11 +2589,11 @@ The Django documentation states that `default=""` should be used instead. While 
 
 The developer believes that this is a case of "functionality trumps warnings", and has decided to leave the Order model with these warnings, for the time being. Once the developer is more at ease with both Stripe and Django, he will revisit this. See "Future Plans".
 
-#### ckeditor in Recipe, Product and Blog models
+### ckeditor in Recipe, Product and Blog models
 
 The developer looked for a way to make ckeditor functionality `null=False, blank=False`, but found that when he did so, this caused his forms to fail. Instead, he has added `required=True` to all forms using ckeditor.
 
-#### Product & Recipe relationship
+### Product & Recipe relationship
 
 The developer is aware that as his models are now, he has to add Recipes and Products in two different places (both in admin and in the HTML rendering). To alleviate any errors caused if admin add one but not the other, the developer has used an `if`statment in the HTML:
 
