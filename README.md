@@ -2,11 +2,11 @@
 
 <img src="documentation/image-aid/screenshot.png">
 
-- [User Experience (UX)](#user-experience-ux-)
+- [User Experience](#user-experience)
   * [User stories](#user-stories)
     + [First Time Visitors](#first-time-visitors)
     + [Returning Registered Visitors](#returning-registered-visitors)
-    + [Returning "Anonymous" Visitors](#returning-anonymous-visitors)
+    + [Returning Anonymous Visitors](#returning-anonymous-visitors)
     + [Frequent Registered Visitors](#frequent-registered-visitors)
     + [Frequent Anonymous Visitors](#frequent-anonymous-visitors)
   * [Professionals and Aspiring Chefs](#professionals-and-aspiring-chefs)
@@ -21,13 +21,13 @@
   * [Features](#features)
   * [Technologies Used](#technologies-used)
     + [Languages](#languages)
-    + [Frameworks, Libraries & Programs](#frameworks-libraries-programs)
+    + [Frameworks Libraries & Programs](#frameworks-libraries---programs)
 - [Testing](#testing)
   * [Code Validation](#code-validation)
   * [Testing User Stories](#testing-user-stories)
     + [First Time Visitors](#first-time-visitors-1)
     + [Returning Registered Visitors](#returning-registered-visitors-1)
-    + [Returning "Anonymous" Visitors](#returning-anonymous-visitors-1)
+    + [Returning Anonymous Visitors](#returning-anonymous-visitors-1)
     + [Frequent Registered Visitors](#frequent-registered-visitors-1)
     + [Frequent Anonymous Visitors](#frequent-anonymous-visitors-1)
   * [Professionals and Aspiring Chefs](#professionals-and-aspiring-chefs-1)
@@ -37,14 +37,13 @@
   * [Search](#search)
   * [Tags and Categories](#tags-and-categories)
     + [Part 1](#part-1)
-  * [Tags and Categories](#tags-and-categories-1)
     + [Part 2](#part-2)
   * [Formset and Inlines](#formset-and-inlines)
     + [Formset](#formset)
     + [Inlines](#inlines)
   * [Discount](#discount)
     + [Votes added to recipe](#votes-added-to-recipe)
-    + [How discount is applied: when the checkout form validates](#how-discount-is-applied-when-the-checkout-form-validates)
+    + [How discount is applied: when the checkout form validates](#how-discount-is-applied--when-the-checkout-form-validates)
     + [Stripe](#stripe)
   * [Known Bugs](#known-bugs)
 - [Back End](#back-end)
@@ -63,11 +62,11 @@
     + [Ingredients](#ingredients)
   * [ORDER Database Models](#order-database-models)
   * [Notes on models](#notes-on-models)
-    + [Category, Tag and their associate models](#category-tag-and-their-associate-models)
-    + [Order: null & blank values](#order-null-blank-values)
-    + [ckeditor in Recipe, Product and Blog models](#ckeditor-in-recipe-product-and-blog-models)
-    + [Product & Recipe relationship](#product-recipe-relationship)
-  * [Data Structures (JSON)](#data-structures-json-)
+    + [Category Tag and their associated models](#category-tag-and-their-associated-models)
+    + [Order model null & blank values](#order-model-null---blank-values)
+    + [ckeditor in models](#ckeditor-in-models)
+    + [Product & Recipe relationship](#product---recipe-relationship)
+  * [JSON Data Structures](#json-data-structures)
     + [PRODUCT](#product)
       - [Categories](#categories)
       - [Products](#products)
@@ -83,15 +82,15 @@
     + [Note about Postgres Database and Commit](#note-about-postgres-database-and-commit)
 - [Deployment](#deployment)
   * [Deploying to Heroku](#deploying-to-heroku)
-    + [Create the app at heroku.com](#create-the-app-at-herokucom)
-    + [Enable the postgres database in app/settings.py](#enable-the-postgres-database-in-app-settingspy)
+    + [Create the app](#create-the-app)
+    + [Enable the postgres database](#enable-the-postgres-database)
     + [Migrating data](#migrating-data)
     + [Using the environment for the DATABASES dictionary](#using-the-environment-for-the-databases-dictionary)
     + [Create a web dyno to run gunicorn and serve the app](#create-a-web-dyno-to-run-gunicorn-and-serve-the-app)
     + [Log in to heroku through the CLI and disable static file collection](#log-in-to-heroku-through-the-cli-and-disable-static-file-collection)
-    + [Allow heroku and GitHub (for development) to host the live site](#allow-heroku-and-github-for-development-to-host-the-live-site)
+    + [Allow heroku to host the live site and GitHub to host the development site](#allow-heroku-to-host-the-live-site-and-github-to-host-the-development-site)
     + [Set up automatic deployment](#set-up-automatic-deployment)
-    + [Set SECRET_KEY variables in heroku and GitPod](#set-secret-key-variables-in-heroku-and-gitpod)
+    + [Set SECRET KEY variables in heroku and GitPod](#set-secret-key-variables-in-heroku-and-gitpod)
     + [Debug settings](#debug-settings)
     + [Commit](#commit)
   * [Storing static files and images](#storing-static-files-and-images)
@@ -99,16 +98,16 @@
     + [Bucket Properties](#bucket-properties)
     + [Bucket Permissions](#bucket-permissions)
   * [Identity and Access Management](#identity-and-access-management)
-    + [Creating AWS Groups, Policies and Users in order to access the images and static files](#creating-aws-groups-policies-and-users-in-order-to-access-the-images-and-static-files)
+    + [Creating AWS Groups Policies and Users in order to access the images and static files](#creating-aws-groups-policies-and-users-in-order-to-access-the-images-and-static-files)
     + [Creating the User Group](#creating-the-user-group)
     + [Creating the Policy](#creating-the-policy)
     + [Attaching the Policy to the User Group](#attaching-the-policy-to-the-user-group)
     + [Creating the User for the User Group](#creating-the-user-for-the-user-group)
   * [Configure Django to connect to S3](#configure-django-to-connect-to-s3)
-    + [Add settings to settings.py so that the live (deployed to heroku) site connects to S3.](#add-settings-to-settingspy-so-that-the-live-deployed-to-heroku-site-connects-to-s3)
+    + [Add settings to settings.py so that the live site connects to S3](#add-settings-to-settingspy-so-that-the-live-site-connects-to-s3)
     + [Adding the AWS keys to heroku's Config Vars](#adding-the-aws-keys-to-heroku-s-config-vars)
     + [Tell django where static files will come from in production](#tell-django-where-static-files-will-come-from-in-production)
-  * [Caching, Media Files & Admin](#caching-media-files-admin)
+  * [Caching, Media Files & Admin](#caching--media-files---admin)
     + [Caching](#caching)
     + [Adding Media Files to S3](#adding-media-files-to-s3)
     + [Confirm admin status](#confirm-admin-status)
@@ -119,11 +118,11 @@
   * [Emails](#emails)
     + [The email account](#the-email-account)
     + [The live site](#the-live-site)
-  * [Clone this GitHub Repository](#clone-this-github-repository)
+- [Cloning](#cloning)
 - [Future Plans](#future-plans)
   * [ckeditor](#ckeditor)
-  * [The "add recipe" process](#the-add-recipe-process)
-  * [Recipe Box / Recipe relationship](#recipe-box-recipe-relationship)
+  * [The add recipe process](#the-add-recipe-process)
+  * [Recipe Box to Recipe relationship](#recipe-box-to-recipe-relationship)
   * [Vote count](#vote-count)
   * [Tags](#tags-2)
   * [Null and blank](#null-and-blank)
@@ -139,6 +138,7 @@
 
 
 
+
 This is the website and application for **Recipes***and***Deliveries**, a community driven website and app offering the ability to purchase meal kits, contribute to the repository of recipes available for purchasing as well as to its blog.
 
 While the website is free to use and peruse, certain parts of the site are reserved for account holders. These include:
@@ -151,7 +151,7 @@ Although community based, the purpose of the website is commercial, thus readers
 
 As an encouragement for users to do so, the user has the possibility of having his or her submitted recipes being added to the database of recipes and earning a discount once their recipe is added as a Recipe Box.
 
-# User Experience (UX)
+# User Experience
 ## User stories
 ### First Time Visitors
 
@@ -199,7 +199,7 @@ As an encouragement for users to do so, the user has the possibility of having h
 
 4) I wish to be able to edit the above details both when I make a purchase and from within my Account page
 
-### Returning "Anonymous" Visitors
+### Returning Anonymous Visitors
 
 1) As a returning anonymous user, I understand that remaining anonymous means just that. However:
 
@@ -326,7 +326,7 @@ This website is fully responsive and interactive.
 
 [Python](https://en.wikipedia.org/wiki/Python_(programming_language))
 
-### Frameworks, Libraries & Programs
+### Frameworks Libraries & Programs
 
 [Markdown Editor](https://iwaki.info/markdown-editor-mac/en/index.html) was used for the writing of this README.md file.
 
@@ -473,7 +473,7 @@ This website was tested using the following tools:
 
 		- This is possible. Thus, if a user decides to send a Recipe Box to another person, they can do so. When the user makes the order, they can choose to change the delivery address details to the intended recipient, and then not save the details, thus keeping their own details intact. 
 
-### Returning "Anonymous" Visitors
+### Returning Anonymous Visitors
 
 1) As a returning anonymous user, I understand that remaining anonymous means just that. However:
 
@@ -1101,7 +1101,6 @@ With the above code working fully, it was adapteed to suit the edit_post() view 
 
 (As an aside to the above, since both admin and post authors can edit posts, the developer has allowed a blue colour to be used for admin controlled changes. For instance, when admin add or edit Recipe Boxes, a blue colour is used to denote that this is "admin only", so to speak. Since admin are able to edit user-posted material, the developer has deliberately used different colours for editing blog articles, to distinguish between posts posted by admin, and posts posted by users. The end user does not see this differentiation: when a user adds a post, green is used, editing is amber, and deleting is red, as set out in the colour choices already mentioned in this README. Only admin ever see blue.)
 
-## Tags and Categories
 ### Part 2
 
 Originally, the developer had intended to leave further work on the above as part of his Future Plans. But when he ran his code through the HTML testing tool, he noticed an error that having multiple user added tags was causing. 
@@ -2576,12 +2575,12 @@ Thus, the developer is choosing to leave this for now.
 | stripe_pid    | CharField    | -    | -    | -    | 254    | -    | -    | False    | False    |- |  - |
 
 ## Notes on models
-### Category, Tag and their associate models
+### Category Tag and their associated models
 The developer realizes that he has used seemingly the same models for Products, Blog and Recipes. There is a reason for the duplication:
 
 The developer wants to keep control of the listings of Recipe Boxes. He has allowed adding of Categories and Tags for Recipes and Blog articles, but wishes to keep some semblance of order according to the menu items in the navigation for Recipe Boxes. While it is possible to filter Recipe Boxes by their Categories by clicking on a category, the developer does not wish to leave users the possibility of having almost identical categories in the Recipe Box list of categories (ie, Mediterranean vs Medditerannean). Keeping this semblance of order is less important for the community side of the site, as it is the community who "control" their input.
 
-### Order: null & blank values
+### Order model null & blank values
 
 Django frowns upon `null=True, blank=True` values.
 
@@ -2589,7 +2588,7 @@ The Django documentation states that `default=""` should be used instead. While 
 
 The developer believes that this is a case of "functionality trumps warnings", and has decided to leave the Order model with these warnings, for the time being. Once the developer is more at ease with both Stripe and Django, he will revisit this. See "Future Plans".
 
-### ckeditor in Recipe, Product and Blog models
+### ckeditor in models
 
 The developer looked for a way to make ckeditor functionality `null=False, blank=False`, but found that when he did so, this caused his forms to fail. Instead, he has added `required=True` to all forms using ckeditor.
 
@@ -2618,7 +2617,7 @@ However, since it may be users themselves who add recipes but admin who add prod
 
 The developer is aware that this is a situation that needs to be revisted, and it is noted in the future plans for this project.
 
-## Data Structures (JSON)
+## JSON Data Structures
 ### PRODUCT
 #### Categories
 
@@ -2812,7 +2811,7 @@ The deployment process listed below assumes that you have
 
 
 ## Deploying to Heroku
-### Create the app at heroku.com 
+### Create the app
 1. Create app and give it a name, then select your region.
 2. Add Posrtgres to the app by searching for it from the “Resources” tab
 3. From the settings tab, click “Reveal Config Vars” and copy down the whole DATABASE_URL value
@@ -2830,7 +2829,7 @@ The deployment process listed below assumes that you have
 
     `pip3 freeze > requirements.txt`
 
-### Enable the postgres database in app/settings.py
+### Enable the postgres database
 1. Import dj_database_url in settings.py
 
     `import dj_database_url`
@@ -2936,7 +2935,7 @@ The deployment process listed below assumes that you have
 
 	`heroku config:set DISABLE_COLLECTSTATIC=1 app name-of-your-app`
 
-### Allow heroku and GitHub (for development) to host the live site
+### Allow heroku to host the live site and GitHub to host the development site
 
 1. In settings.py add the app to ALLOWED_HOSTS
 
@@ -2966,7 +2965,7 @@ The deployment process listed below assumes that you have
 
 2. Click enable automatic deploys
 
-### Set SECRET_KEY variables in heroku and GitPod
+### Set SECRET KEY variables in heroku and GitPod
 
 1. For each of the above, generate a secret key (for example, [from here](https://miniwebtool.com/django-secret-key-generator/))
 
@@ -3071,7 +3070,7 @@ The app will now be live, but currently shows no styling or images, because `DIS
 
 ## Identity and Access Management
 
-### Creating AWS Groups, Policies and Users in order to access the images and static files
+### Creating AWS Groups Policies and Users in order to access the images and static files
 
 1. From the "Services" dropdown of [aws.amazon.com](aws.amazon.com), search and select "IAM"
 
@@ -3161,7 +3160,7 @@ The app will now be live, but currently shows no styling or images, because `DIS
 
 3. Add `storages` to the list of `INSTALLED_APPS` in app/settings.py
 
-### Add settings to settings.py so that the live (deployed to heroku) site connects to S3.
+### Add settings to settings.py so that the live site connects to S3
 
 Since the styling and images are available within the app (thanks to the use of the inbuilt sqlite database), they will always be visible while in development. Thus, it is ONLY the live deployed site that needs to connect to S3
 
@@ -3354,7 +3353,7 @@ For users to create accounts and use the site, they will need to receive emails.
 
 5. Test by creating a new account and verifiying email reception. Click the verification link in the email to verify the account and then log in
 
-## Clone this GitHub Repository 
+# Cloning 
 
 This repository can be cloned by following these steps:
 
@@ -3394,7 +3393,7 @@ Either click "Open with GitHub Desktop" and follow the prompts in the GitHub Des
 
 The developer will research using either a different Rich Text Editor or find ways in which ckeditor is less of a drain on page rendering.
 
-## The "add recipe" process
+## The add recipe process
 
 1. The developer would like to find a way in which units (such as ml, kg etc) can better be added to recipes. At the moment, in his models, a simple CharField is being used for this. This is adequate for the time being, but the developer is researching the conversion of units. For example, converting ml into cups for the America, market. 
 
@@ -3402,7 +3401,7 @@ The developer will research using either a different Rich Text Editor or find wa
 
 3. The ingredient adding process will be revisited in its entirety depending on customer feedback. Maybe it would be better to remove the prop `required` from the unit field, for example. 
 
-## Recipe Box / Recipe relationship
+## Recipe Box to Recipe relationship
 
 The developer is not sure whether it would be possible to achieve this, but the developer would like to autmate the process that creates a relationship between these two models. Ideally, the flow would be as follows:
 
