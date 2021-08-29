@@ -291,8 +291,8 @@ def edit_post(request, post_id):
                         one word at a time!')
                     return redirect(reverse('edit_post', args=[postsform.id]))
                 elif add_more_tags or add_more_cats:
-                    messages.warning(request, 'Your tag/category was added, \
-                        you can now add another')
+                    messages.warning(request, 'Your tag/category was added. \
+                        You can now add another')
                     return redirect(reverse('edit_post', args=[postsform.id]))
                 else:
                     messages.success(request, 'Successfully updated post!')

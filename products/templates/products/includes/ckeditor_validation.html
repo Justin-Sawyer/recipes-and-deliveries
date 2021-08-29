@@ -1,0 +1,9 @@
+<script>
+    // Credit: https://stackoverflow.com/a/65212105/14773450
+    $('#main-form').submit(function() {
+        if (jQuery("#cke_1_contents iframe").contents().find("body").text() === "") {
+            $('.ckeditor-message').show();
+            return false;
+        }
+    });
+  </script>

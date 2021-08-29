@@ -31,7 +31,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form id="main_form" method="POST" action="{% url 'add_recipe' %}" class="form mb-2" enctype="multipart/form-data">
+            <form id="main_form" name="main_form" method="POST" action="{% url 'add_recipe' %}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
@@ -111,6 +111,9 @@
                 </div>
                 <label class="form-check-label" for="id-add-more-recipes">Add another recipe?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-recipes" name="add-more-recipes">
+                <div class="ckeditor-message">
+                    Please add how to make your recipe in the box above!
+                </div>
                 <div class="text-right">
                     <a class="btn btn-red" href="">Cancel</a>
                     <button class="btn btn-green" type="submit">Add Recipe</button>
@@ -126,6 +129,7 @@
     {% include 'recipes/includes/checkbox_height.html' %}
     {% include 'recipes/includes/image_credit_add.html' %}
     {% include 'recipes/includes/new_ingredients_add.html' %}
+    {% include 'recipes/includes/ckeditor_validation.html' %}
     <script>
         // Change color of checkbox. Works in Chrome and Safari desktop
         $('input[type="checkbox"]').css('filter', 'hue-rotate(300deg)');

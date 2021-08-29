@@ -285,6 +285,10 @@ def edit_recipe(request, recipe_id):
                                      instance=recipe)
             formset = IngredientFormSet(request.POST, instance=recipe)
 
+            # Check button for adding further tags or categories
+            add_more_tags = request.POST.getlist('add-more-tags')
+            add_more_cats = request.POST.getlist('add-more-cats')
+
             if recipe_form.is_valid():
                 recipe = recipe_form.save()
                 if formset.is_valid():
@@ -333,17 +337,43 @@ def edit_recipe(request, recipe_id):
                         else:
                             no_space_cats = False
 
-                    if no_space_tags and no_space_cats:
-                        messages.success(request, 'Successfully added recipe!')
-                    else:
-                        messages.warning(request, 'Your recipe was added, but we were not able \
-                            to add your tags and/or categories. \
-                            Please add these one word at a time!')
-                        return redirect(reverse('edit_recipe',
-                                        args=[recipe.id]))
+                # if no_space_tags and no_space_cats:
+                #     messages.success(request, 'Successfully added recipe!')
+                if not no_space_cats and not no_space_tags:
+                    messages.warning(request, 'Your recipe was added, but we were not able \
+                        to add your categories and/or tags. \
+                        Please add these one word at a time!')
+                    return redirect(reverse('edit_recipe',
+                                    args=[recipe.id]))
+                elif no_space_cats and not no_space_tags:
+                    messages.warning(request, 'Your recipe was added, but we were not able \
+                        to add your tags. Please add these \
+                        one word at a time!')
+                    return redirect(reverse('edit_recipe',
+                                    args=[recipe.id]))
+                elif no_space_tags and not no_space_cats:
+                    messages.warning(request, 'Your recipe was added, but we were not able \
+                        to add your categories. Please add these \
+                        one word at a time!')
+                    return redirect(reverse('edit_recipe',
+                                    args=[recipe.id]))
+                elif add_more_tags or add_more_cats:
+                    messages.warning(request, 'Your tag/category was added. \
+                        You can now add another')
+                    return redirect(reverse('edit_recipe', args=[recipe.id]))
+                # else:
+                    # messages.warning(request, 'Your recipe was added, but we were not able \
+                        # to add your tags and/or categories. \
+                        # Please add these one word at a time!')
+                    # return redirect(reverse('edit_recipe',
+                                    # args=[recipe.id]))
 
-                messages.success(request, 'Successfully updated recipe!')
-                return redirect(reverse('recipe', args=[recipe.id]))
+                # messages.success(request, 'Successfully updated recipe!')
+                # return redirect(reverse('recipe', args=[recipe.id]))"""
+
+                else:
+                    messages.success(request, 'Successfully updated recipe!')
+                    return redirect(reverse('recipe', args=[recipe.id]))
             else:
                 messages.error(request, 'Failed to edit your recipe \
                     Please ensure the form is valid.')

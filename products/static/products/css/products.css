@@ -1,0 +1,11 @@
+select.form-control[multiple], select.form-control[size] {
+    height: 254px;
+}
+
+.card-body {
+    flex: none !important;
+}
+
+.ckeditor-message {
+    display: none;
+}

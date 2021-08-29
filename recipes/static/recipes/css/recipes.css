@@ -9,3 +9,7 @@
 .card-body {
     flex: none !important;
 }
+
+.ckeditor-message {
+    display: none;
+}

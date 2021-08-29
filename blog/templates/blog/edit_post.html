@@ -32,7 +32,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{% url 'edit_post' post.id %}" id="post-form" class="form mb-2" enctype="multipart/form-data">
+            <form name="post-form" method="POST" action="{% url 'edit_post' post.id %}" id="post-form" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
@@ -68,6 +68,9 @@
                         {{ posts_form.content | as_crispy_field }}
                     </div>
                 </div>
+                <div class="ckeditor-message">
+                    Please add your article in the box above!
+                </div>
                 <div class="text-right">
                     <a class="btn btn-red" href="{% url 'blog-articles' %}">Cancel</a>
                     <button class="btn btn-amber" type="submit">Update Article</button>
@@ -82,6 +85,7 @@
     {{ block.super }}
     {% include 'blog/includes/checkbox_height.html' %}
     {% include 'blog/includes/image_credit_edit.html' %}
+    {% include 'blog/includes/ckeditor_validation.html' %}
     <script>
         // Color checkbox
         $('input[type="checkbox"]').css('filter', 'hue-rotate(178deg)');

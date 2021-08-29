@@ -32,7 +32,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form id="main_form" method="POST" action="{% url 'edit_recipe' recipe.id%}" class="form mb-2" enctype="multipart/form-data">
+            <form id="main_form" name="main_form" method="POST" action="{% url 'edit_recipe' recipe.id%}" class="form mb-2" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-12 col-md-3">
@@ -67,12 +67,16 @@
                             {{ recipe_form.category | as_crispy_field}}
                         </div>
                         {{ new_category_form|crispy }}
+                        <label class="form-check-label mb-2" for="id-add-more-cats">Add another category?</label>
+                        <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-cats" name="add-more-cats">
                     </div>
                     <div class="col-12 col-md-6">
                         <div id="tag-height">
                             {{ recipe_form.tag | as_crispy_field }}
                         </div>
                         {{ new_tag_form.tagname | as_crispy_field }}
+                        <label class="form-check-label mb-2" for="id-add-more-tags">Add another tag?</label>
+                        <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-tags" name="add-more-tags">
                     </div>
                 </div>
 
@@ -116,9 +120,12 @@
                         {{ recipe_form.directions|as_crispy_field}}
                     </div>
                 </div>
+                <div class="ckeditor-message">
+                    Please add how to make your recipe in the box above!
+                </div>
                 <div class="text-right">
                     <a class="btn btn-red" href="{% url 'all_recipes' %}">Cancel</a>
-                    <button class="btn btn-amber" type="submit">Update Recipe</button>
+                    <button class="btn btn-amber" id="submit-form" type="submit">Update Recipe</button>
                 </div>
             </form>
         </div>
@@ -131,6 +138,7 @@
     {% include 'recipes/includes/checkbox_height.html' %}
     {% include 'recipes/includes/image_credit_edit.html' %}
     {% include 'recipes/includes/new_ingredients_edit.html' %}
+    {% include 'recipes/includes/ckeditor_validation.html' %}
     <script>
         // Change color of checkbox. Works in Chrome and Safari desktop
         $('input[type="checkbox"]').css('filter', 'hue-rotate(178deg)');

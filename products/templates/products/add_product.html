@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'products/css/add_product.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 
 {% block extra_title %}
@@ -32,7 +32,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
+            <form id="main-form" name="main-form" method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
                 <div class="row">
                     {% csrf_token %}
                     {{ form.media}}
@@ -48,6 +48,9 @@
                 </div>
                 <label class="form-check-label" for="id-add-more-products">Add more products?</label>
                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-add-more-products" name="add-more-products" checked>
+                <div class="ckeditor-message">
+                    Please add your article in the box above!
+                </div>
                 <div class="text-right">
                     <a class="btn btn-red" href="{% url 'products' %}">Cancel</a>
                     <button class="btn btn-info" type="submit">Add Product</button>
@@ -61,5 +64,6 @@
 {% block postloadjs %}
     {{ block.super }}
     {% include 'products/includes/image_handling.html' %}
+    {% include 'products/includes/ckeditor_validation.html' %}
 {% endblock %}
 

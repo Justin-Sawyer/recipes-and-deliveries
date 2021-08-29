@@ -32,7 +32,7 @@
     <!-- Main page content -->
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{% url 'edit_product' product.id %}" class="form mb-2" enctype="multipart/form-data">
+            <form id="main-form" name="main-form" method="POST" action="{% url 'edit_product' product.id %}" class="form mb-2" enctype="multipart/form-data">
                 <div class="row">
                     {% csrf_token %}
                     {{ form.media}}
@@ -45,6 +45,9 @@
                         {% endif %}
                     </div>
                     {% endfor %}
+                </div>
+                <div class="ckeditor-message">
+                    Please add your article in the box above!
                 </div>
                 <div class="text-right">
                     <a class="btn btn-red" href="{% url 'products' %}">Cancel</a>
@@ -59,5 +62,6 @@
 {% block postloadjs %}
     {{ block.super }}
     {% include 'products/includes/image_handling.html' %}
+    {% include 'products/includes/ckeditor_validation.html' %}
 {% endblock %}
 
