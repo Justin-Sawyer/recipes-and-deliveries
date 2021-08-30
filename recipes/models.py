@@ -21,7 +21,7 @@ class Category(models.Model):
         return self.name
 
     def get_friendly_name(self):
-        self.friendly_name = self.friendly_name.capitalize()
+        self.friendly_name = self.friendly_name.title()
         return self.friendly_name
 
     def save(self):

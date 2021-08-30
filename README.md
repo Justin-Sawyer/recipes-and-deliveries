@@ -449,7 +449,7 @@ This website was tested using the following tools:
 
 	- Create and edit my own recipe concoctions and have them voted on by other community members.
 
-		- The user can do this. The developer has tried to make this process as seamless as possible, for example by allowing users to write in their own times for preparation (ie, 1 hr 20 mins, 65 mins etc) rthrough a TextField ather than forcing the user to use DateTimeFields where they would be forced to add "time strings" (for example 01:50:00). The developer will revisit the format of adding recipes, however, as he would like to find a better way of adding units (eg ml, oz, tbsp, pinch) or not. See Future Plans.
+		- The user can do this. The developer has tried to make this process as painless as possible, for example by allowing users to write in their own times for preparation (ie, 1 hr 20 mins, 65 mins etc) through a TextField other than forcing the user to use DateTimeFields where they would be forced to add "time strings" (for example 01:50:00). The developer will revisit the format of adding recipes, however, as he would like to find a better way of adding units (eg ml, oz, tbsp, pinch) or not. See Future Plans.
 
 		- As soon as the recipe has been created, the user then has an "edit" link both on the main listings page for all the recipes, the recipe's page itself and on the recipe listings of their profile page.
 
@@ -483,7 +483,7 @@ This website was tested using the following tools:
 
 	- Upon returning to the app, I understand that I will be prompted to create an account in order to access all the features of the website, and contribute to the community should I decide to.
 
-		- The developer has refrained from using popups or jumbotrons to encourage sign-ups, choosing instead to be more subtle: If an unregistered user wishes to either see a user created recipe's ingredients list or method of preparation, the user is asked to either register or sign in first. The same is true for leaving comments on the blog articles or Recipe Boxes, and for voting on future recipes. 
+		- The developer has refrained from using popups or jumbotrons to encourage sign-ups, choosing instead to be more subtle. If an unregistered user wishes to either see a user created recipe's ingredients list or method of preparation, the user is asked to either register or sign in first. The same is true for leaving comments on the blog articles or Recipe Boxes, and for voting on future recipes. 
 
 		- Furthermore, to discourage anti-social behaviour, the then signed-in user is reminded that if they decide to post a comment, their usernames are recorded and displayed with the comment.
 
@@ -493,7 +493,7 @@ This website was tested using the following tools:
 
 1) As a frequent registered visitor, I will be a participating member of the **Recipes***and***Deliveries** community:
 
-	- I will have made regular orders of Recipe Boxes, and am likely to have created either recipes or blog entries. I want to be able to access my posting and pruchasing history quickly and easily.
+	- I will have made regular orders of Recipe Boxes, and am likely to have created either recipes or blog entries. I want to be able to access my posting and purchasing history quickly and easily.
 
 		- The user has access to their entire history on the site from their profile page. Here, they can access their entire puchase history and see the details of each by simply clicking the (truncated) order number. 
 
@@ -501,7 +501,7 @@ This website was tested using the following tools:
 
 		- Further, on their profile page, they have instant access to the most recent six of their published blog articles. By clicking the button, they can access all articles they have created. 
 
-		- For their published recipes, these are ordered firstly by vote count. Thus, the user sees instantly the votes their individuals recipes may have received. If the user has only two (for example) recipes that have been voted on, they then see their four most recently published recipes. Again, clicking the button takes the user to the entire history of their published recipes.
+		- For their published recipes, these are ordered firstly by vote count. Thus, the user sees instantly the votes their individual recipes may have received. If the user has only two (for example) recipes that have been voted on, they then see their four most recently published recipes. Again, clicking the button takes the user to the entire history of their published recipes.
 
 	- If I have created recipes and my recipes have been voted as being the most popular of the last month, I will be alerted that this is the case, and I will see my recipe featured on the recipe boxes purchasing page.
 
@@ -517,13 +517,13 @@ This website was tested using the following tools:
 
 	- I understand that when the recipe I created is added as a Recipe Box, I will be given a credit that is redeemable against a future order I make on the **Recipes***and***Deliveries** website.
 
-		- Upon being alerted that the recipe has attained the required votes, the user is told that the discount is applied automatically at their next checkout. As the user makes a purchase, the user can see the discount being deducted automatically as the place items in their shopping bag. Further, the user can see the final discount amount relative to their order and see the discount has been deducted from the Grand Total. This is confirmed to the user after checkout: the confirmation email contains the above details.
+		- Upon being alerted that the recipe has attained the required votes, the user is told that the discount is applied automatically at their next checkout. As the user makes a purchase, the user can see the discount being deducted automatically as they place items in their shopping bag. Further, the user can see the final discount amount relative to their order and see that the discount has been deducted from the Grand Total. This is confirmed to the user after checkout: the confirmation email contains the above details.
 
 	- I can see a tally of the total votes for my recipe on my User Account page.
 
 		- The user can see both the total number of recipes all their recipes combined have achieved, and how many recipes their most popular six recipes have individually.
 
-		- As the site grow, the developer will revisit this: if there is a prolific recipe creator who garners many recipes with votes, it may be necessary to add the vote count for each recipe on the recipe's page and on the page listing all the recipes. Alternatively, to list more than six recipes on the user's profile page. See Future Plans
+		- As the site grows, the developer will revisit this if there is a prolific recipe creator who garners many recipes with votes, it may be necessary to add the vote count for each recipe on the recipe's page and on the page listing all the recipes. Alternatively, to list more than six recipes on the user's profile page. See Future Plans.
 
 ### Frequent Anonymous Visitors
 
@@ -533,9 +533,9 @@ This website was tested using the following tools:
 
 		- This is the case. As the site grows, the parts that are inaccessible may change, however. It will probably be more practical to allow anonymous users acces to the online recipe (rather than its card included in the box), for example.
 
-	- If I do decide to register, I get full access to the site, but am not obligated to contribute
+	- If I do decide to register, I get full access to the site, but am not obligated to contribute.
 
-		- While the ideal would be for everyone to contribure to the community, this is probably not practical in reality. Some members will always choose to remain "in the shadows", and they are welcome to do so. 
+		- While the ideal would be for everyone to contribute to the community, this is probably not practical in reality. Some members will always choose to remain "in the shadows", and they are welcome to do so. 
 
 ## Professionals and Aspiring Chefs
 
@@ -545,9 +545,9 @@ This website was tested using the following tools:
 
 		- While this is very much a "best case scenario", the developer believes that this might be a possibility. The developer enjoys cooking, and enjoys finding new recipes, but does not enjoy perusing the multitude of recipe websites currently online. Each is either packed full of advertisments that make the site slow to use and user-UNfriendly, or is designed to sell a product (such as frying pans) that are not necessarily part of what a user might be looking for. If these sites could be centralised, it would be better for everyone: 
 
-			- The creator creates and earns off of their creations
+			- The creator creates and earns from their creations
 
-			- This dispatcher (**Recipes***and***Deliveries**) dispatches as earns off of the orders
+			- This dispatcher (**Recipes***and***Deliveries**) dispatches and earns from the orders
 
 			- The user uses, chooses to create or not, and is rewarded
 
@@ -1201,7 +1201,7 @@ def add_post(request):
     return render(request, template, context) 
 ```
 
-The above code was considerable rewritten:
+The above code was considerably rewritten:
 
 ```
 @login_required
@@ -1299,7 +1299,7 @@ def add_post(request):
 
 The developer tested this by adding a few new posts. One with no extra tags or categories, one with a single extra tag, another with a single exra category, and one each of two extra tags or categories.
 
-He found that if he added no extras, he was redirected to the correct place. He found that if he added just one extra tag or category, he was redirected to the correct place. And he found that if he added multiple extra, he was directed to the edit page, where he saw a message saying that although the post had been added, his tags or categories had not been saved. The same message alerted him how to go about adding these correctly.
+He found that if he added no extras, he was redirected to the correct place. He found that if he added just one extra tag or category, he was redirected to the correct place. And he found that if he added multiple extras, he was directed to the edit page, where he saw a message saying that although the post had been added, his tags or categories had not been saved. The same message alerted him how to go about adding these correctly.
 
 Satisfied that everything was working as it should, the developer moved on to the edit functionality.
 
@@ -1423,7 +1423,7 @@ def edit_post(request, post_id):
     return render(request, template, context)
 ```
 
-The developer once again went through the same testing process, adding and editing posts and recipes, trying to make the forms fail. He was satisfied that each "failure" brought about the correct result, ie, if he added multiples instead of singles, he was returned to the edit page, with the correct message. He was also satisfied that of there wer no erros, but the user wished to add further single tags or categories, he was brought back to the correct page. And further, he was satisfied that if he left the checkbox unchecked, he was brought to the correct page.
+The developer once again went through the same testing process, adding and editing posts and recipes, trying to make the forms fail. He was satisfied that each "failure" brought about the correct result, ie, if he added multiples instead of singles, he was returned to the edit page, with the correct message. He was also satisfied that of there were no errors, but the user wished to add further single tags or categories, he was brought back to the correct page. And further, he was satisfied that if he left the checkbox unchecked, he was brought to the correct page.
 
 ## Formset and Inlines
 ### Formset
@@ -1669,7 +1669,7 @@ $('input[name="ingredients-0-name"]').prop('required', true);
 ```
 ## Discount
 
-On any commercial website, ensuring that the client is charged the correct amout for a purchase, and that these same values are applied in the database are without doubt the most important. It is for this that the developer spent a huge amoutn of the time writing this project refining the discount situation.
+On any commercial website, ensuring that the client is charged the correct amount for a purchase, and that these same values are applied in the database are without doubt the most important. It is for this that the developer spent a huge amoutn of the time writing this project refining the discount situation.
 
 ### Votes added to recipe
 
@@ -1681,12 +1681,12 @@ On any commercial website, ensuring that the client is charged the correct amout
 	1. An email alert is sent to the recipe author
 		1. Email alerts author that discount awaits on next purchase
 		2. The discount is calculated automatically, ie. the user needs do nothing except purchase something
-	2. A boolean value (True) is set in `Recipe.mail_sent` to ensure that the discount email can only be sent once, thus ensuring that if a recipe is n the threshold of attaining the required votes, a voter cannot add and remove a vote in order to fire several emails for discounts. (As an extra precaution, the recipe's author cannot vote for their own recipes: the HTML templating does not allow the user to see the vote button for their own recipes)
+	2. A boolean value (True) is set in `Recipe.mail_sent` to ensure that the discount email can only be sent once, thus ensuring that if a recipe is on the threshold of attaining the required votes, a voter cannot add and remove a vote in order to fire several emails for discounts. (As an extra precaution, the recipe's author cannot vote for their own recipes: the HTML templating does not allow the user to see the vote button for their own recipes)
 	3. A six-digit code is added to `Recipe.discount_code`
 
-To test this, the developer first ensured that he could vote upon his own recipes to make life easire by not having to log in and out of his own account constantly.
+To test this, the developer first ensured that he could vote upon his own recipes to make life easier by not having to log in and out of his own account constantly.
 
-He created the following block of view in the views.py file (explanation of the code is within the code block):
+He created the following block of code in the views.py file (explanation of the code is within the code block):
 
 ```
 @login_required
@@ -2051,7 +2051,7 @@ def checkout(request):
     return render(request, template, context)
 ```
 
-This ensured that the user's discount code was being found from his id. It also ensured that if the user has two or more recipes with discount codes, then only the first code would be taken into account while going through the checkout process. In other words, if the user is eligible for 3 discounts, he would receive one discount for each of his next three checkouts. When the list of discount, the context.py file above would no longer bear witness to any discount to be applied.
+This ensured that the user's discount code was being found from his id. It also ensured that if the user has two or more recipes with discount codes, then only the first code would be taken into account while going through the checkout process. In other words, if the user is eligible for 3 discounts, he would receive one discount for each of his next three checkouts. When the list of discounts was empty, the context.py file above would no longer bear witness to any discount to be applied.
 
 Checkout app checkout_success() view:
 
@@ -2169,7 +2169,7 @@ He was satisfied to see that the correct amounts were being reflected in the dat
 
 He then checked his email to see what he was actually being charged. All was good here, too.
 
-He realised that something else was missing from the whole process. He was being TOLD he was being charged the correct amount, but what actually aws he being charged? It's very easy to write an email to say "you've been charged €x" but then actually charge someone €y...
+He realised that something else was missing from the whole process. He was being TOLD he was being charged the correct amount, but what actually was he being charged? It's very easy to write an email to say "you've been charged €x" but then actually charge someone €y...
 
 He thus turned his attention to Stripe.
 
@@ -2183,7 +2183,7 @@ As can be seen, the user just clicks a couple of buttons, fills in the checkout 
 
 Once this happens, a confirmation email is sent **from the view that handles Stripe payments** to the client. In other words, if Stripe does not know about any applicable discount, then the user will always be charged the full amount. 
 
-The developer was at first confused as to why he was receiving an order confirmation email, since the email was being sent from the webhook handler which handles the Stripe functionality. But he soon realised that Stripe is only checking to see if the order IN the database. If it is, the email is sent. If it isn't the order is taken FROM the webhook, inserted into the database and then a confirmation email is sent. **Stripe does not check the individual values of the order when it checks if the order is there**. It sees the order and sends the mail. It sees no order, inserts the order, then sends the mail.
+The developer was at first confused as to why he was receiving an order confirmation email, since the email was being sent from the webhook handler which handles the Stripe functionality. But he soon realised that Stripe is only checking to see if the order is IN the database. If it is, the email is sent. If it isn't the order is taken FROM the webhook, inserted into the database and then a confirmation email is sent. **Stripe does not check the individual values of the order when it checks if the order is there**. It sees the order and sends the mail. It sees no order, inserts the order, then sends the mail.
 
 So, Stripe was seeing an order. "Fine! I can send an email!"
 
@@ -2191,7 +2191,7 @@ Since the contents of the order are taken from the database, but the charge itse
 
 They were. But...
 
-What would happen if someone closed the checkout page before the payment is processed? What would happen if the form was deliberately made to fail? Stripe has been set up to deal with payment and then insert the order into the database if it finds no order. So Srtipe needs to be able to deal with this discount value when inserting the missed order.
+What would happen if someone closed the checkout page before the payment is processed? What would happen if the form was deliberately made to fail? Stripe has been set up to deal with payment and then insert the order into the database if it finds no order. So Stripe needs to be able to deal with this discount value when inserting the missed order.
 
 Thus, the developer realised he needed to tell Stripe about the discount. To do so, he added a simple line of code to the cache_checkout_data() view. He inserted 
 
@@ -2369,7 +2369,7 @@ discount = Decimal(discount_rounded).quantize(Decimal('.01'))
 
 Having done so, the developer tested once again and now found that everything passed: the webhook passed and placed the order into the database.
 
-The developer tested this to exhaustion, adding the necessary votes, changing whether an email had been sent, and checking the webhook and database.
+The developer tested this to exhaustion, adding the necessary votes, changing whether or not an email had been sent, and checking the webhook and database.
 
 Everything was working, except...
 
@@ -2393,7 +2393,7 @@ var postData = {
 };
 ```
 
-He update the cache_checkout_data() to add this value to Stripe's metadata:
+He updated the cache_checkout_data() to add this value to Stripe's metadata:
 
 ```
 @require_POST
@@ -3395,7 +3395,7 @@ The developer will research using either a different Rich Text Editor or find wa
 
 ## The add recipe process
 
-1. The developer would like to find a way in which units (such as ml, kg etc) can better be added to recipes. At the moment, in his models, a simple CharField is being used for this. This is adequate for the time being, but the developer is researching the conversion of units. For example, converting ml into cups for the America, market. 
+1. The developer would like to find a way in which units (such as ml, kg etc) can better be added to recipes. At the moment, in his models, a simple CharField is being used for this. This is adequate for the time being, but the developer is researching the conversion of units. For example, converting ml into cups for the American market. 
 
 2. Rendering of units as fractions, decimals or text. The developer is aware of the app "django-fractions' but this seems to have only limited browser support. Additionally, in recipes, many times we talk of adding "half a tablespoon" of a certain ingredient. For the sake of simplicity, the field in question at the moment is a FloatField which allows for both floating point numbers and whole numbers. 
 
@@ -3403,7 +3403,7 @@ The developer will research using either a different Rich Text Editor or find wa
 
 ## Recipe Box to Recipe relationship
 
-The developer is not sure whether it would be possible to achieve this, but the developer would like to autmate the process that creates a relationship between these two models. Ideally, the flow would be as follows:
+The developer is not sure whether it would be possible to achieve this, but the developer would like to automate the process that creates a relationship between these two models. Ideally, the flow would be as follows:
 
 1. User adds recipe
 2. At vote threshold being reached, the regular process of alerting the user happens (for the user's discount)
@@ -3413,7 +3413,7 @@ Since the process would necessitate outside factors (like establishing a cost) a
 
 ## Vote count
 
-At the moment, the site is new and little used. But as they site grows, the developer will revisit whether it is necessary to truncate the number of recipes shown on a user's profile at a greater level than the current 6. 
+At the moment, the site is new and little used. But as the site grows, the developer will revisit whether it is necessary to truncate the number of recipes shown on a user's profile at a greater level than the current 6. 
 
 ## Tags
 
@@ -3455,7 +3455,7 @@ During testing, the developer asked friends, family and colleagues to test this 
 ## Content
 All code content written by the developer unless otherwise stated.
 
-Blog articles and recipes are credited on the live site when not the developer's own.
+Blog articles and recipes are credited on the live site when not the developer's own, as are images.
 
 ## Acknowledgements
 [Code Institute](https://codeinstitute.net/) for the tuition, and Aaron, the mentor I have been assigned, without whose advice I would not have been able to complete this project. A special thanks to him for helping me with the removal of the now deleted compromised settings.py file.
